@@ -1,0 +1,17 @@
+{
+  "reservation_number": 37353::int,
+  "reservation_date": "2016-01-31",
+  "reservation_confirmation": "A3833",
+  "flight_number": "AC1765",
+  "flight_date": "2016-10-30",
+  "payment_location": "/payments/da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "passengers": [
+    { 
+      "first_name": "",
+      "last_name": "",
+      "age": 18,
+      "passport_number": "",
+      "seat_class": "economy"
+    }
+  ]
+}
