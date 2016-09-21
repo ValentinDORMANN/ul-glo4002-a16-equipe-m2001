@@ -14,9 +14,8 @@ public class ReservationServer implements Runnable {
 	}
 
 	public void run() {
-		int httpPort = 8080;
-		// int httpPort =
-		// Integer.valueOf(System.getProperty("reservation.port"));
+		//int httpPort = 8080;
+		 int httpPort = Integer.valueOf(System.getProperty("reservation.port"));
 
 		Server server = new Server(httpPort);
 		ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
