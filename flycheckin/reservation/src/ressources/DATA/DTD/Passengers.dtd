@@ -1,0 +1,7 @@
+<!ELEMENT passengers (passenger*)>
+<!ELEMENT passenger (name+, firstname+, age+, passportNumber+)>
+<!ATTLIST passenger hashCode CDATA #REQUIRED>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT firstname (#PCDATA)>
+<!ELEMENT age (#PCDATA)>
+<!ELEMENT passportNumber (#PCDATA)>

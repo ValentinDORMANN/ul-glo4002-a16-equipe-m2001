@@ -1,0 +1,9 @@
+<!ELEMENT bookingList (booking*)>
+<!ELEMENT booking (bookingDate+, bookingConfirm+, paymentLocation+, flightDate+, flightNumber+, companyName?)>
+<!ATTLIST booking number CDATA #REQUIRED>
+<!ELEMENT bookingDate (#PCDATA)>
+<!ELEMENT bookingConfirm (#PCDATA)>
+<!ELEMENT paymentLocation (#PCDATA)>
+<!ELEMENT flightDate (#PCDATA)>
+<!ELEMENT flightNumber (#PCDATA)>
+<!ELEMENT companyName (#PCDATA)>
