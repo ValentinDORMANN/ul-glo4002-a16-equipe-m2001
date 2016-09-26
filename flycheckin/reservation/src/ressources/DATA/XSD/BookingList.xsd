@@ -1,0 +1,21 @@
+<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="../DTD/BookingList">
+  <xs:element name="bookingList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="booking">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:date" name="bookingDate"/>
+              <xs:element type="xs:string" name="bookingConfirm"/>
+              <xs:element type="xs:string" name="paymentLocation"/>
+              <xs:element type="xs:date" name="flightDate"/>
+              <xs:element type="xs:string" name="flightNumber"/>
+              <xs:element type="xs:string" name="companyName"/>
+            </xs:sequence>
+            <xs:attribute type="xs:int" name="number" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
