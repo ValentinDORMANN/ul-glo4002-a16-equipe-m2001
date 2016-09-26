@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE passengers SYSTEM "DTD/Passengers.dtd" >
+<passengers>
+  <passenger hashCode="John/DOE/B0074994">
+    <name>DOE</name>
+    <firstname>John</firstname>
+    <age>48</age>
+    <passportNumber>B0074994</passportNumber>
+  </passenger>
+</passengers>

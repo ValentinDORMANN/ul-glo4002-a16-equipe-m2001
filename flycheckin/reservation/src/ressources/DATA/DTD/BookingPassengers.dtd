@@ -1,0 +1,7 @@
+<!ELEMENT bookingPassengers (bookingNumber*)>
+<ATTLIST bookingNumber id CDATA #REQUIRED>
+<!ELEMENT bookingNumber (passenger*)>
+<!ELEMENT passenger (passengerHash+,  seatClass+,  seatNumber+)>
+<!ELEMENT passengerHash (#PCDATA)>
+<!ELEMENT seatClass (#PCDATA)>
+<!ELEMENT seatNumber (#PCDATA)>

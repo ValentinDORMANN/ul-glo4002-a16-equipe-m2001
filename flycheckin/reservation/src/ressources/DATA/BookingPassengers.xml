@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bookingPassengers SYSTEM "DTD/BookingPassengers.dtd" >
+<bookingPassengers>
+  <bookingNumber id="03147">
+    <passenger>
+      <passengerHash>John/DOE/B0074994</passengerHash>
+      <seatClass>economic</seatClass>
+      <seatNumber></seatNumber>
+    </passenger>
+  </bookingNumber>
+</bookingPassengers>
