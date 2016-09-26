@@ -1,10 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE passengers SYSTEM "DTD/Passengers.dtd" >
-<passengers>
-  <passenger hashCode="John/DOE/B0074994">
-    <name>DOE</name>
-    <firstname>John</firstname>
-    <age>48</age>
-    <passportNumber>B0074994</passportNumber>
-  </passenger>
-</passengers>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="passengers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="passenger">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="[A-Z]*"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element type="xs:string" name="firstname">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="([A-Z]{1}[a-z -]+)?"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element type="xs:byte" name="age">
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="0"/>
+                    <xs:maxInclusive value="120"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element type="xs:string" name="passportNumber">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="[a-zA-Z0-9]{9}"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="hashCode"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
