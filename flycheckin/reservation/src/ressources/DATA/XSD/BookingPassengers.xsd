@@ -9,7 +9,7 @@
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element type="xs:string" name="passengerHash"/>
-                    <xs:element type="xs:string" name="seatClass">
+                    <xs:element name="seatClass">
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
                           <xs:enumeration value="economic"/>
@@ -18,7 +18,7 @@
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element type="xs:string" name="seatNumber">
+                    <xs:element name="seatNumber">
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
                           <xs:pattern value="[A-Z]{1}-[0-9]+"/>

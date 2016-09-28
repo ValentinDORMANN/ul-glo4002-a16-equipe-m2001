@@ -5,7 +5,7 @@
     <passenger>
       <passengerHash>John/DOE/B0074994</passengerHash>
       <seatClass>economic</seatClass>
-      <seatNumber></seatNumber>
+      <seatNumber>A-10</seatNumber>
     </passenger>
   </bookingNumber>
 </bookingPassengers>
