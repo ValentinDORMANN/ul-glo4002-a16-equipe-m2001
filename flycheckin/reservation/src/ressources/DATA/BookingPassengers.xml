@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE bookingPassengers SYSTEM "DTD/BookingPassengers.dtd" >
 <bookingPassengers>
-  <bookingNumber id="03147">
-    <passenger>
-      <passengerHash>John/DOE/B0074994</passengerHash>
+  <bookingNumber id="44444">
+    <flight>
+      <flightDate>2016-10-25</flightDate>
+      <flightNumber>AF-315</flightNumber>
+      <companyName>Air France</companyName>
+    </flight>
+    <passenger hashCode="AF-315:B0074994">
+      <name>DOE</name>
+      <firstname>John</firstname>
+      <age>48</age>
+      <passportNumber>B0074994</passportNumber>
       <seatClass>economic</seatClass>
       <seatNumber>A-10</seatNumber>
+    </passenger>
+    <passenger hashCode="AF-315:B0074584">
+      <name>AGBOTON</name>
+      <firstname>Charly</firstname>
+      <age>40</age>
+      <passportNumber>B0074584</passportNumber>
+      <seatClass>first</seatClass>
+      <seatNumber></seatNumber>
+    </passenger>
+  </bookingNumber>
+    <passenger hashCode="AF-315:F0015994">
+      <name>DORMANN</name>
+      <firstname>Valentin</firstname>
+      <age>22</age>
+      <passportNumber>F0015994</passportNumber>
+      <seatClass>business</seatClass>
+      <seatNumber></seatNumber>
     </passenger>
   </bookingNumber>
 </bookingPassengers>
