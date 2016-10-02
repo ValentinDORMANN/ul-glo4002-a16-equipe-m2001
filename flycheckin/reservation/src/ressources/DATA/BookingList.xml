@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE passengers SYSTEM "DTD/BookingList.dtd">
 <bookingList>
-  <booking number="33782">
+  <booking number="333333">
     <bookingDate>2016-09-25</bookingDate>
-    <bookingConfirm>A44919</bookingConfirm>
+    <bookingConfirm>A12345</bookingConfirm>
     <paymentLocation>/payments/da39a3aa5e6b4b0d3255chag21118210afd80709</paymentLocation>
-    <flightDate>2016-10-25</flightDate>
-    <flightNumber>AF-315</flightNumber>
-    <companyName>Air France</companyName>
   </booking>
+  <booking number="55555">
+    <bookingDate>2016-10-12</bookingDate>
+    <bookingConfirm>Z44444</bookingConfirm>
+    <paymentLocation>/payments/da39a3aa5e6b4b0d3255chag21118210afd80709</paymentLocation>
+  </booking>  
 </bookingList>
