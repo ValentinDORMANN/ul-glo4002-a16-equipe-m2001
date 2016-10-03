@@ -17,7 +17,7 @@ public class Booking /* implements BookingInterface */ {
 			String flight_number, String flight_date, String payment_location) throws ParseException {
 
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			this.reservation_number = reservation_number;
 			this.reservation_date = sdf.parse(reservation_date);
 			this.reservation_confirmation = reservation_confirmation;
@@ -29,27 +29,52 @@ public class Booking /* implements BookingInterface */ {
 		}
 	}
 
-	public void recordBooking() {
-
+	public int getReservation_number() {
+		return reservation_number;
 	}
 
-	public void recordPassenger() {
-
+	public void setReservation_number(int reservation_number) {
+		this.reservation_number = reservation_number;
 	}
 
-	public void removeBooking() {
-
+	public Date getReservation_date() {
+		return reservation_date;
 	}
 
-	public void changeFlightDate() {
-
+	public void setReservation_date(Date reservation_date) {
+		this.reservation_date = reservation_date;
 	}
 
-	public void changeFlightNumber() {
-
+	public String getReservation_confirmation() {
+		return reservation_confirmation;
 	}
 
-	public void getBooking() {
-
+	public void setReservation_confirmation(String reservation_confirmation) {
+		this.reservation_confirmation = reservation_confirmation;
 	}
+
+	public String getFlight_number() {
+		return flight_number;
+	}
+
+	public void setFlight_number(String flight_number) {
+		this.flight_number = flight_number;
+	}
+
+	public Date getFlight_date() {
+		return flight_date;
+	}
+
+	public void setFlight_date(Date flight_date) {
+		this.flight_date = flight_date;
+	}
+
+	public String getPayment_location() {
+		return payment_location;
+	}
+
+	public void setPayment_location(String payment_location) {
+		this.payment_location = payment_location;
+	}
+
 }
