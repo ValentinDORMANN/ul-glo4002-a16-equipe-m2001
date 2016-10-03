@@ -30,34 +30,34 @@ public class BookingTest {
 
 	@Test
 	public void lookIfReservationNumberIsTheSame() {
-		assertEquals(this.RESERVATION_NUMBER, this.booking.getReservation_number());
+		assertEquals(this.RESERVATION_NUMBER, this.booking.getReservationNumber());
 	}
 
 	@Test
 	public void lookIfReservationDateIsTheSame() throws ParseException {
 		Date date = this.simpleDateFormat.parse(this.RESERVATION_DATE);
-		assertEquals(date, this.booking.getReservation_date());
+		assertEquals(date, this.booking.getReservationDate());
 	}
 
 	@Test
 	public void lookIfReservationConfirmationIsTheSame() {
-		assertEquals(this.RESERVATION_CONFIRMATION, this.booking.getReservation_confirmation());
+		assertEquals(this.RESERVATION_CONFIRMATION, this.booking.getReservationConfirmation());
 	}
 
 	@Test
 	public void lookIfFlightNumberIsTheSame() {
-		assertEquals(this.FLIGHT_NUMBER, this.booking.getFlight_number());
+		assertEquals(this.FLIGHT_NUMBER, this.booking.getFlightNumber());
 	}
 
 	@Test
 	public void lookIfFlightDateIsTheSame() throws ParseException {
 		Date date = this.simpleDateFormat.parse(this.FLIGHT_DATE);
-		assertEquals(date, this.booking.getFlight_date());
+		assertEquals(date, this.booking.getFlightDate());
 	}
 
 	@Test
 	public void lookIfPaymentLocationIsTheSame() {
-		assertEquals(this.PAYMENT_LOCATION, this.booking.getPayment_location());
+		assertEquals(this.PAYMENT_LOCATION, this.booking.getPaymentLocation());
 	}
 
 }

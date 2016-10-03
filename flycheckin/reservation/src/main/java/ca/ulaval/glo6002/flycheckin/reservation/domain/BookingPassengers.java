@@ -2,49 +2,49 @@ package ca.ulaval.glo6002.flycheckin.reservation.domain;
 
 public class BookingPassengers {
 
-	private String first_name;
-	private String last_name;
+	private String firstName;
+	private String lastName;
 	private int age;
-	private String passport_number;
-	private String seat_class;
-	private String flight_number;
+	private String passportNumber;
+	private String seatClass;
+	private String flightNumber;
 
-	public BookingPassengers(String first_name, String last_name, int age, String passport_number, String seat_class,
-			String flight_number) {
-		this.first_name = first_name;
-		this.last_name = last_name;
+	public BookingPassengers(String firstName, String lastName, int age, String passportNumber, String seatClass,
+			String flightNumber) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.age = age;
-		this.passport_number = passport_number;
-		this.seat_class = seat_class;
-		this.flight_number = flight_number;
+		this.passportNumber = passportNumber;
+		this.seatClass = seatClass;
+		this.flightNumber = flightNumber;
 	}
 
-	public String getFirst_name() {
-		return first_name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
 	public int getAge() {
 		return age;
 	}
 
-	public String getPassport_number() {
-		return passport_number;
+	public String getPassportNumber() {
+		return passportNumber;
 	}
 
-	public String getSeat_class() {
-		return seat_class;
+	public String getSeatClass() {
+		return seatClass;
 	}
 
-	public String getFlight_number() {
-		return this.flight_number;
+	public String getFlightNumber() {
+		return this.flightNumber;
 	}
 
 	public String generateHash() {
-		return this.passport_number + ":" + this.flight_number;
+		return this.passportNumber + ":" + this.flightNumber;
 	}
 
 }

@@ -22,12 +22,12 @@ public class BookingPassengersTest {
 
 	@Test
 	public void lookIfFirstNameIsTheSame() {
-		assertEquals(this.FIRST_NAME, this.booking_passengers.getFirst_name());
+		assertEquals(this.FIRST_NAME, this.booking_passengers.getFirstName());
 	}
 
 	@Test
 	public void lookIfLastNameIsTheSame() {
-		assertEquals(this.LAST_NAME, this.booking_passengers.getLast_name());
+		assertEquals(this.LAST_NAME, this.booking_passengers.getLastName());
 	}
 
 	@Test
@@ -37,17 +37,17 @@ public class BookingPassengersTest {
 
 	@Test
 	public void lookIfPassportNumberIsTheSame() {
-		assertEquals(this.PASSPORT_NUMBER, this.booking_passengers.getPassport_number());
+		assertEquals(this.PASSPORT_NUMBER, this.booking_passengers.getPassportNumber());
 	}
 
 	@Test
 	public void lookIfSeatClassIsTheSame() {
-		assertEquals(this.SEAT_CLASS, this.booking_passengers.getSeat_class());
+		assertEquals(this.SEAT_CLASS, this.booking_passengers.getSeatClass());
 	}
 
 	@Test
 	public void lookIfFlightNumberIsTheSame() {
-		assertEquals(this.FLIGHT_NUMBER, this.booking_passengers.getFlight_number());
+		assertEquals(this.FLIGHT_NUMBER, this.booking_passengers.getFlightNumber());
 	}
 
 }
