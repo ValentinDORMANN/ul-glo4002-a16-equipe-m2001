@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +23,7 @@ public class BookingTest {
 	@Before
 	public void InitializeBooking() throws ParseException {
 		this.booking = new Booking(this.RESERVATION_NUMBER, this.RESERVATION_DATE, this.RESERVATION_CONFIRMATION,
-				this.FLIGHT_NUMBER, this.FLIGHT_DATE, this.PAYMENT_LOCATION);
+				this.PAYMENT_LOCATION);
 
 	}
 
@@ -35,24 +34,12 @@ public class BookingTest {
 
 	@Test
 	public void lookIfReservationDateIsTheSame() throws ParseException {
-		Date date = this.simpleDateFormat.parse(this.RESERVATION_DATE);
-		assertEquals(date, this.booking.getReservationDate());
+		assertEquals(this.RESERVATION_DATE, this.booking.getReservationDate());
 	}
 
 	@Test
 	public void lookIfReservationConfirmationIsTheSame() {
 		assertEquals(this.RESERVATION_CONFIRMATION, this.booking.getReservationConfirmation());
-	}
-
-	@Test
-	public void lookIfFlightNumberIsTheSame() {
-		assertEquals(this.FLIGHT_NUMBER, this.booking.getFlightNumber());
-	}
-
-	@Test
-	public void lookIfFlightDateIsTheSame() throws ParseException {
-		Date date = this.simpleDateFormat.parse(this.FLIGHT_DATE);
-		assertEquals(date, this.booking.getFlightDate());
 	}
 
 	@Test

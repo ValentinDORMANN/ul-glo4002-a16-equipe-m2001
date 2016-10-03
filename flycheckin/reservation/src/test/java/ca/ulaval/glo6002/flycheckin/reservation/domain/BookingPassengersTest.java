@@ -12,12 +12,13 @@ public class BookingPassengersTest {
 	private String PASSPORT_NUMBER = "B10074008";
 	private String SEAT_CLASS = "economy";
 	private String FLIGHT_NUMBER = "AC1765";
+	private String FLIGHT_DATE = "2016-10-30";
 	private BookingPassengers booking_passengers;
 
 	@Before
-	public void InitializeBookingPaasengers() {
+	public void InitializeBookingPassengers() {
 		this.booking_passengers = new BookingPassengers(this.FIRST_NAME, this.LAST_NAME, this.AGE, this.PASSPORT_NUMBER,
-				this.SEAT_CLASS, this.FLIGHT_NUMBER);
+				this.SEAT_CLASS, this.FLIGHT_NUMBER, this.FLIGHT_DATE);
 	}
 
 	@Test
@@ -48,6 +49,11 @@ public class BookingPassengersTest {
 	@Test
 	public void lookIfFlightNumberIsTheSame() {
 		assertEquals(this.FLIGHT_NUMBER, this.booking_passengers.getFlightNumber());
+	}
+
+	@Test
+	public void lookIfFlightDateIsTheSame() {
+		assertEquals(this.FLIGHT_DATE, this.booking_passengers.getFlightDate());
 	}
 
 }
