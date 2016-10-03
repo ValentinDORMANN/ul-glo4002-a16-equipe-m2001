@@ -8,15 +8,17 @@ public class BookingPassengers {
 	private String passportNumber;
 	private String seatClass;
 	private String flightNumber;
+	private String flightDate;
 
 	public BookingPassengers(String firstName, String lastName, int age, String passportNumber, String seatClass,
-			String flightNumber) {
+			String flightNumber, String flightDate) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
 		this.passportNumber = passportNumber;
 		this.seatClass = seatClass;
 		this.flightNumber = flightNumber;
+		this.flightDate = flightDate;
 	}
 
 	public String getFirstName() {
@@ -41,6 +43,10 @@ public class BookingPassengers {
 
 	public String getFlightNumber() {
 		return this.flightNumber;
+	}
+
+	public String getFlightDate() {
+		return this.flightDate;
 	}
 
 	public String generateHash() {
