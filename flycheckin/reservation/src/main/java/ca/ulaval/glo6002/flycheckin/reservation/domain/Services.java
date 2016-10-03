@@ -2,9 +2,9 @@ package ca.ulaval.glo6002.flycheckin.reservation.domain;
 
 import org.json.JSONObject;
 
-public class Service {
+public class Services {
 
-	public Service() {
+	public Services() {
 
 	}
 
