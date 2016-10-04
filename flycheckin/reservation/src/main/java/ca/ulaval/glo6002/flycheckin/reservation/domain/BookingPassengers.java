@@ -1,50 +1,26 @@
 package ca.ulaval.glo6002.flycheckin.reservation.domain;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 public class BookingPassengers {
 
-	private String firstName;
-	private String lastName;
-	private int age;
-	private String passportNumber;
-	private String seatClass;
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
 	private String flightNumber;
+	private Date flightDate;
+	private List<Passenger> passengers;
 
-	public BookingPassengers(String firstName, String lastName, int age, String passportNumber, String seatClass,
-			String flightNumber) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
-		this.passportNumber = passportNumber;
-		this.seatClass = seatClass;
+	public BookingPassengers(List<Passenger> passengers, String flightNumber, String flightDate) throws ParseException {
+
 		this.flightNumber = flightNumber;
+		this.flightDate = formatter.parse(flightDate);
+		this.passengers = passengers;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public boolean saveBookingPassengers() {
+		return true;
 	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public String getPassportNumber() {
-		return passportNumber;
-	}
-
-	public String getSeatClass() {
-		return seatClass;
-	}
-
-	public String getFlightNumber() {
-		return this.flightNumber;
-	}
-
-	public String generateHash() {
-		return this.passportNumber + ":" + this.flightNumber;
-	}
-
 }
