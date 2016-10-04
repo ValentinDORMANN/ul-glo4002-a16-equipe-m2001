@@ -15,20 +15,8 @@ public class Booking /* implements BookingInterface */ {
 		this.paymentLocation = paymentLocation;
 	}
 
-	public int getReservationNumber() {
-		return reservationNumber;
-	}
-
-	public String getReservationDate() {
-		return reservationDate;
-	}
-
-	public String getReservationConfirmation() {
-		return reservationConfirmation;
-	}
-
-	public String getPaymentLocation() {
-		return paymentLocation;
+	public int saveBooking() {
+		return 0;
 	}
 
 }
