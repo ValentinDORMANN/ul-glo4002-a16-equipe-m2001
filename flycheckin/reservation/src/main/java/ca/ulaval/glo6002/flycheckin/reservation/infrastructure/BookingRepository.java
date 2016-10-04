@@ -18,9 +18,12 @@ public class BookingRepository {
 	static Map<Integer, Booking> listBooking;
 	static Map<Integer, Booking> listBookingPassengers;
 
-	public boolean saveNewBooking(Booking booking, BookingPassengers bookingPassengers) {
+	public int saveNewBooking(Booking booking, BookingPassengers bookingPassengers) {
 		int number = booking.getReservationNumber();
-		return saveNewBookingPassengers(number, bookingPassengers);
+		if (saveNewBookingPassengers(number, bookingPassengers))
+			return number;
+		else
+			return 0;
 	}
 
 	public boolean saveNewBookingPassengers(int bookingNumber, BookingPassengers bookingPassengers) {
