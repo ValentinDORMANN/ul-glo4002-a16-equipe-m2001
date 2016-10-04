@@ -19,8 +19,4 @@ public class BookingPassengers {
 		this.flightDate = formatter.parse(flightDate);
 		this.passengers = passengers;
 	}
-
-	public boolean saveBookingPassengers() {
-		return true;
-	}
 }

@@ -19,8 +19,4 @@ public class Booking /* implements BookingInterface */ {
 		return this.reservationNumber;
 	}
 
-	public boolean saveBooking() {
-		return true;
-	}
-
 }

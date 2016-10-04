@@ -10,20 +10,22 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ca.ulaval.glo6002.flycheckin.reservation.infrastructure.BookingRepository;
+
 public class Services {
 
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-	public Services() {
+	private BookingRepository bookingRepository;
 
+	public Services() {
+		this.bookingRepository = new BookingRepository();
 	}
 
 	public int createReservation(JSONObject json) throws JSONException, ParseException {
 		Booking booking = JsonToBooking(json);
 		BookingPassengers bookingPassengers = JsonToBookingPassenger(json);
-		boolean check1 = booking.saveBooking();
-		boolean check2 = bookingPassengers.saveBookingPassengers();
-		return json.getInt("reservation_number");
+		return this.bookingRepository.saveNewBooking(booking, bookingPassengers);
 	}
 
 	public Booking JsonToBooking(JSONObject json) throws JSONException {
