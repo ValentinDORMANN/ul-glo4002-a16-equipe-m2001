@@ -2,15 +2,18 @@
   <xs:element name="bookingList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="booking">
-          <xs:complexType>
+        <xs:element name="booking" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType mixed="true">
             <xs:sequence>
-              <xs:element type="xs:date" name="bookingDate"/>
-              <xs:element type="xs:string" name="bookingConfirm"/>
-              <xs:element type="xs:string" name="paymentLocation"/>
-              <xs:element type="xs:date" name="flightDate"/>
-              <xs:element type="xs:string" name="flightNumber"/>
-              <xs:element type="xs:string" name="companyName"/>
+              <xs:element type="xs:date" name="bookingDate" maxOccurs="1" minOccurs="1"/>
+              <xs:element name="bookingConfirm" maxOccurs="1" minOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="[A-Z]{1}[0-9]{5}"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element type="xs:string" name="paymentLocation" maxOccurs="1" minOccurs="1"/>
             </xs:sequence>
             <xs:attribute type="xs:int" name="number" use="required"/>
           </xs:complexType>

@@ -23,7 +23,6 @@
       <seatClass>first</seatClass>
       <seatNumber></seatNumber>
     </passenger>
-  </bookingNumber>
     <passenger hashCode="AF-315:F0015994">
       <name>DORMANN</name>
       <firstname>Valentin</firstname>

@@ -1,7 +1,14 @@
 <!ELEMENT bookingPassengers (bookingNumber*)>
 <ATTLIST bookingNumber id CDATA #REQUIRED>
-<!ELEMENT bookingNumber (passenger*)>
-<!ELEMENT passenger (passengerHash+,  seatClass+,  seatNumber*)>
-<!ELEMENT passengerHash (#PCDATA)>
+<!ELEMENT bookingNumber (flight+, passenger*)>
+<!ELEMENT flight (flightDate+, flightNumber+, companyName+)>
+<!ELEMENT flightDate (#PCDATA)>
+<!ELEMENT flightNumber (#PCDATA)>
+<!ELEMENT companyName (#PCDATA)>
+<!ELEMENT passenger (name+, firstname+, age+, passengerHash+, seatClass+, seatNumber*)>
+<ATTLIST passenger hashCode CDATA #REQUIRED>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT firstname (#PCDATA)>
+<!ELEMENT age (#PCDATA)>
 <!ELEMENT seatClass (#PCDATA)>
 <!ELEMENT seatNumber (#PCDATA)>
