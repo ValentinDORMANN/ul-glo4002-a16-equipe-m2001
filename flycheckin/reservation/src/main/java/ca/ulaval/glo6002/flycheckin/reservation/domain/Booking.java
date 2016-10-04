@@ -15,8 +15,8 @@ public class Booking /* implements BookingInterface */ {
 		this.paymentLocation = paymentLocation;
 	}
 
-	public int saveBooking() {
-		return 0;
+	public boolean saveBooking() {
+		return true;
 	}
 
 }

@@ -18,8 +18,12 @@ public class Services {
 
 	}
 
-	public void createReservation(JSONObject json) {
-
+	public int createReservation(JSONObject json) throws JSONException, ParseException {
+		Booking booking = JsonToBooking(json);
+		BookingPassengers bookingPassengers = JsonToBookingPassenger(json);
+		boolean check1 = booking.saveBooking();
+		boolean check2 = bookingPassengers.saveBookingPassengers();
+		return json.getInt("reservation_number");
 	}
 
 	public Booking JsonToBooking(JSONObject json) throws JSONException {
@@ -30,7 +34,14 @@ public class Services {
 
 	}
 
-	public List<Passenger> JsonToBookingPassengers(JSONObject json) throws JSONException, ParseException {
+	public BookingPassengers JsonToBookingPassenger(JSONObject json) throws JSONException, ParseException {
+		List<Passenger> passengers = JsonToPassengers(json);
+		BookingPassengers bookingPassengers = new BookingPassengers(passengers, json.getString("flight_number"),
+				json.getString("flightDate"));
+		return bookingPassengers;
+	}
+
+	public List<Passenger> JsonToPassengers(JSONObject json) throws JSONException, ParseException {
 		List<Passenger> list_passengers = new ArrayList<Passenger>();
 		Date date = formatter.parse(json.getString("flight_date"));
 		Calendar cal = Calendar.getInstance();
