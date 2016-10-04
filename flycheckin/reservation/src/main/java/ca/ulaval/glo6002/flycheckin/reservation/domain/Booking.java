@@ -15,6 +15,10 @@ public class Booking /* implements BookingInterface */ {
 		this.paymentLocation = paymentLocation;
 	}
 
+	public int getReservationNumber() {
+		return this.reservationNumber;
+	}
+
 	public boolean saveBooking() {
 		return true;
 	}
