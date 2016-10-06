@@ -32,7 +32,7 @@ public class ServicesTest {
 		this.mock_json_array = mock(JSONArray.class);
 		this.mock_json_passenger = mock(JSONObject.class);
 
-		this.services = new Services(this.bookingRepository);
+		this.services = new Services();
 
 		willReturn("2015-09-09").given(this.json).getString("flight_date");
 		willReturn(this.mock_json_array).given(this.json).getJSONArray("passengers");
