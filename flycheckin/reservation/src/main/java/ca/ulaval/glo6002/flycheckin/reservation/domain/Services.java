@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,15 +49,17 @@ public class Services {
 		Date date = formatter.parse(json.getString("flight_date"));
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		for (int i = 0; i < json.getJSONArray("passengers").length(); i++) {
-			JSONObject buffer = json.getJSONArray("passengers").getJSONObject(i);
+		JSONArray json_passengers = json.getJSONArray("passengers");
+		for (int i = 0; i < json_passengers.length(); i++) {
+			JSONObject buffer = json_passengers.getJSONObject(i);
 
 			String hash = buffer.getString("passport_number") + ":" + buffer.getString("flight_number") + ":"
-					+ Integer.toString(cal.get(Calendar.MONTH)) + ":" + Integer.toString(cal.get(Calendar.DATE));
+					+ Integer.toString(cal.get(Calendar.MONTH)) + Integer.toString(cal.get(Calendar.DATE));
 
 			Passenger passenger = new Passenger(buffer.getString("first_name"), buffer.getString("last_name"),
 					buffer.getInt("age"), buffer.getString("passport_number"), buffer.getString("seat_class"), hash);
 			list_passengers.add(passenger);
+
 		}
 		return list_passengers;
 	}
