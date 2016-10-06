@@ -1,5 +1,6 @@
 package ca.ulaval.glo6002.flycheckin.reservation.infrastructure;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import ca.ulaval.glo6002.flycheckin.reservation.domain.Booking;
@@ -7,26 +8,17 @@ import ca.ulaval.glo6002.flycheckin.reservation.domain.BookingPassengers;
 
 public class BookingRepository {
 
-	// private Booking book;
-	// private BookingPassengers flyPassengers;
-
-	/*
-	 * public BookingRepository(Booking booking, BookingPassengers
-	 * bookingPassengers) { this.book = booking; this.flyPassengers =
-	 * bookingPassengers; }
-	 */
-	static Map<Integer, Booking> listBooking;
-	static Map<Integer, Booking> listBookingPassengers;
+	public static Map<Integer, Booking> bookingList = new HashMap<Integer, Booking>();;
+	public static Map<Integer, BookingPassengers> bookingPassengersList = new HashMap<Integer, BookingPassengers>();
 
 	public int saveNewBooking(Booking booking, BookingPassengers bookingPassengers) {
 		int number = booking.getReservationNumber();
-		if (saveNewBookingPassengers(number, bookingPassengers))
-			return number;
-		else
-			return 0;
+		bookingList.put(number, booking);
+		bookingPassengersList.put(number, bookingPassengers);
+		return number;
 	}
 
-	public boolean saveNewBookingPassengers(int bookingNumber, BookingPassengers bookingPassengers) {
-		return false;
-	}
+	/*
+	 * private boolean isNull(Object obj) { return obj == null; }
+	 */
 }
