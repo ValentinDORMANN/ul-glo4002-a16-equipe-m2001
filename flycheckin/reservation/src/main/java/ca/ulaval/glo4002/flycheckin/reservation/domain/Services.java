@@ -53,8 +53,7 @@ public class Services {
 		for (int i = 0; i < json_passengers.length(); i++) {
 			JSONObject buffer = json_passengers.getJSONObject(i);
 
-			String hash = buffer.getString("passport_number") + ":" + buffer.getString("flight_number") + ":"
-					+ Integer.toString(cal.get(Calendar.MONTH)) + Integer.toString(cal.get(Calendar.DATE));
+			String hash = buffer.getString("passport_number") + ":" + buffer.getString("reservation_number");
 
 			Passenger passenger = new Passenger(buffer.getString("first_name"), buffer.getString("last_name"),
 					buffer.getInt("age"), buffer.getString("passport_number"), buffer.getString("seat_class"), hash);
@@ -62,5 +61,10 @@ public class Services {
 
 		}
 		return list_passengers;
+	}
+
+	public JSONObject getReservation() {
+		JSONObject json = new JSONObject();
+		return json;
 	}
 }
