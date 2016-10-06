@@ -51,5 +51,6 @@
 	<modules>
 		<module>reservation</module>
 		<module>app</module>
+		<module>boarding</module>
 	</modules>
 </project>
