@@ -18,8 +18,8 @@ public class Services {
 
 	private BookingRepository bookingRepository;
 
-	public Services() {
-		this.bookingRepository = new BookingRepository();
+	public Services(BookingRepository bookingRepository) {
+		this.bookingRepository = bookingRepository;
 	}
 
 	public int createReservation(JSONObject json) throws JSONException, ParseException {
@@ -31,7 +31,7 @@ public class Services {
 	public Booking JsonToBooking(JSONObject json) throws JSONException {
 
 		Booking booking = new Booking(json.getInt("reservation_number"), json.getString("reservation_date"),
-				json.getString("reservation_confirmation"), json.getString("paymentLocation"));
+				json.getString("reservation_confirmation"), json.getString("payment_location"));
 		return booking;
 
 	}
@@ -39,7 +39,7 @@ public class Services {
 	public BookingPassengers JsonToBookingPassenger(JSONObject json) throws JSONException, ParseException {
 		List<Passenger> passengers = JsonToPassengers(json);
 		BookingPassengers bookingPassengers = new BookingPassengers(passengers, json.getString("flight_number"),
-				json.getString("flightDate"));
+				json.getString("flight_date"));
 		return bookingPassengers;
 	}
 
@@ -50,8 +50,10 @@ public class Services {
 		cal.setTime(date);
 		for (int i = 0; i < json.getJSONArray("passengers").length(); i++) {
 			JSONObject buffer = json.getJSONArray("passengers").getJSONObject(i);
+
 			String hash = buffer.getString("passport_number") + ":" + buffer.getString("flight_number") + ":"
 					+ Integer.toString(cal.get(Calendar.MONTH)) + ":" + Integer.toString(cal.get(Calendar.DATE));
+
 			Passenger passenger = new Passenger(buffer.getString("first_name"), buffer.getString("last_name"),
 					buffer.getInt("age"), buffer.getString("passport_number"), buffer.getString("seat_class"), hash);
 			list_passengers.add(passenger);
