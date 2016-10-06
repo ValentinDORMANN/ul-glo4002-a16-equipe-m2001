@@ -30,7 +30,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>ca.ulaval.glo6002.flycheckin.app.Main</mainClass>
+					<mainClass>ca.ulaval.glo4002.flycheckin.app.Main</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
