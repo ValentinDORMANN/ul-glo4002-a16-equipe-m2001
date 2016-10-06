@@ -63,8 +63,11 @@ public class Services {
 		return list_passengers;
 	}
 
-	public JSONObject getReservation() {
+	public JSONObject getReservation(int numberReservation) {
 		JSONObject json = new JSONObject();
+		BookingPassengers bookingPassengers = this.bookingRepository.getBookingInfos(numberReservation);
+		json = bookingPassengers.toJSON();
+		json.put("reservation_number", numberReservation);
 		return json;
 	}
 }

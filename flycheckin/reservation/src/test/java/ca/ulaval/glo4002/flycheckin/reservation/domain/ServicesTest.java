@@ -13,9 +13,6 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.reservation.domain.Booking;
-import ca.ulaval.glo4002.flycheckin.reservation.domain.BookingPassengers;
-import ca.ulaval.glo4002.flycheckin.reservation.domain.Services;
 import ca.ulaval.glo4002.flycheckin.reservation.infrastructure.BookingRepository;
 
 public class ServicesTest {
@@ -74,6 +71,11 @@ public class ServicesTest {
 		this.booking_passenger = this.services.JsonToBookingPassenger(this.json);
 		verify(this.json).getString("flight_number");
 		verify(this.json, atLeast(2)).getString("flight_date");
+
+	}
+
+	@Test
+	public void test() {
 
 	}
 
