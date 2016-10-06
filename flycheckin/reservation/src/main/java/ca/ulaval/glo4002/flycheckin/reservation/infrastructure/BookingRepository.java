@@ -18,6 +18,10 @@ public class BookingRepository {
 		return number;
 	}
 
+	public BookingPassengers getBookingInfos(int bookingNumber) {
+		return bookingPassengersList.get(bookingNumber);
+	}
+
 	/*
 	 * private boolean isNull(Object obj) { return obj == null; }
 	 */
