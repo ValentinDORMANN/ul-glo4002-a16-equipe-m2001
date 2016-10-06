@@ -19,8 +19,8 @@ public class Services {
 
 	private BookingRepository bookingRepository;
 
-	public Services(BookingRepository bookingRepository) {
-		this.bookingRepository = bookingRepository;
+	public Services() {
+		this.bookingRepository = new BookingRepository();
 	}
 
 	public int createReservation(JSONObject json) throws JSONException, ParseException {
