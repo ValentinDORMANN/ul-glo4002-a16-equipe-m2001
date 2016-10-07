@@ -3,19 +3,14 @@ package ca.ulaval.glo4002.flycheckin.reservation.api;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Services;
-import javassist.NotFoundException;
 
 @Path("/events/reservation-created")
 public class BookingResource {
@@ -34,16 +29,6 @@ public class BookingResource {
 		} else {
 			return Response.status(400).build();
 		}
-	}
-
-	@GET
-	@Path("/reservations/{reservation_number}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getNumberResevation(@QueryParam("reservationNumber") String reservationNumber)
-			throws JSONException, ParseException, NumberFormatException, NotFoundException {
-		service = new Services();
-		JSONObject jsonObject = service.getReservation(Integer.parseInt(reservationNumber));
-		return Response.ok(jsonObject.toString()).build();
 	}
 
 	public boolean validateReservationDate(String reservationDate) {
