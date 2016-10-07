@@ -14,4 +14,16 @@ public class BoardingRepository {
 		boardingPassengersList.put(hash, boardingPassenger);
 		return hash;
 	}
+
+	public String passengerAlreadyChecked(BoardingPassenger boardingPassenger) {
+		String passengerFoundHash = "0";
+		String hash = boardingPassenger.getHash();
+		for (int i = 0; i < boardingPassengersList.size(); i++) {
+			if (boardingPassengersList.get(i).getHash().equals(hash)) {
+				passengerFoundHash = hash;
+				break;
+			}
+		}
+		return passengerFoundHash;
+	}
 }

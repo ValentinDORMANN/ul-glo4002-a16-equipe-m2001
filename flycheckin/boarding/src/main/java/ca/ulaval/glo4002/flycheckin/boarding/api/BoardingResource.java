@@ -7,6 +7,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
 
+import ca.ulaval.glo4002.flycheckin.boarding.domain.BoardingPassenger;
+
 @Path("/checkins")
 @Produces(MediaType.APPLICATION_JSON)
 public class BoardingResource {
@@ -21,11 +23,52 @@ public class BoardingResource {
 	public void createBooking(String message) {
 	}
 
+	public boolean validateJsonBoarding(JSONObject json) {
+		String passengerHash = json.getString("passenger_hash");
+		String agentId = json.getString("by");
+		boolean isOK = validatePassengerHash(passengerHash) && validateAgentId(agentId);
+		return isOK;
+	}
+
+	public boolean validateJsonPassenger(JSONObject json) {
+		String fullname = json.getString("fullname");
+		String passportNumber = json.getString("passeport_number");
+		String hash = json.getString("passenger_number");
+		return (fullname.split(":").length == 2) && validateFullname(fullname) && validatePassportNumber(passportNumber)
+				&& validatePassengerHash(hash);
+	}
+
 	public boolean validatePassengerHash(String passengerHash) {
-		return passengerHash.matches("^[A-Za-z0-9]+/[A-Za-z0-9]+$");
+		return passengerHash.matches("^[A-Za-z0-9]+:[A-Za-z0-9]+$");// passport:reservationNumber
 	}
 
 	public boolean validateAgentId(String agentId) {
 		return agentId.matches("^[0-9]+$");
 	}
+
+	public boolean validatePassportNumber(String passportNumber) {
+		return passportNumber.matches("^[A-Z0-9]{8,9}$");
+	}
+
+	public boolean validateFullname(String fullname) {
+		return fullname.matches("^[A-Z][a-z]+([-. ][A-Z][a-z]+)*:[A-Z]+$");
+	}
+
+	// passengerHash format "passportNumber:reservationNumber"
+	public JSONObject queryBookingPassenger(String passengerHash) {
+		JSONObject jsonQuery = new JSONObject();
+		jsonQuery.put("passenger_hash", passengerHash);
+		return jsonQuery;
+	}
+
+	public BoardingPassenger receptionBookingPassenger(JSONObject json) {
+		String fullname = json.getString("fullname");
+		String[] fullnameSplited = fullname.split(":");
+		String firstname = fullnameSplited[0];
+		String lastname = fullnameSplited[1];
+		String passportNumber = json.getString("passeport_number");
+		String hash = json.getString("passenger_hash");
+		return new BoardingPassenger(firstname, lastname, passportNumber, hash);
+	}
+
 }
