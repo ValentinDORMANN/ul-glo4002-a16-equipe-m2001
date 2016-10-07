@@ -25,15 +25,15 @@ public class BookingResource {
 
 	@POST
 	public Response createBooking(String bookingRequest) throws JSONException, ParseException {
-
 		jsonRequest = new JSONObject(bookingRequest);
 		int reservationNumber = 0;
 		service = new Services();
 		reservationNumber = service.createReservation(jsonRequest);
-
-		// String informationOfBookingNumber= "reservations" +"/{"+"
-		// reservation_number::";
-		return Response.ok(reservationNumber).build();
+		if (reservationNumber == 0) {
+			return Response.ok(reservationNumber).build();
+		} else {
+			return Response.status(400).build();
+		}
 	}
 
 	@GET
@@ -54,21 +54,20 @@ public class BookingResource {
 
 	}
 
-/*	public String extractFlightDate(String flightDate) throws RuntimeException {
-		String date = flightDate.substring(0, 9);
-		if (validateReservationDate(date)) {
-			return flightDate.substring(0, 9);
-		} else {
-			throw new RuntimeException();
-		}
-
-	}*/
+	/*
+	 * public String extractFlightDate(String flightDate) throws
+	 * RuntimeException { String date = flightDate.substring(0, 9); if
+	 * (validateReservationDate(date)) { return flightDate.substring(0, 9); }
+	 * else { throw new RuntimeException(); }
+	 * 
+	 * }
+	 */
 
 	public boolean validateflightDate(String flightDate) {
 		boolean validateDate = true;
 		try {
 			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ");
-			 java.util.Date dateformatter = date.parse(flightDate);
+			java.util.Date dateformatter = date.parse(flightDate);
 		} catch (Exception e) {
 			validateDate = false;
 		}
@@ -77,15 +76,15 @@ public class BookingResource {
 	}
 
 	public boolean validateBookingNumber(String bookingNumber) {
-		 if (!bookingNumber.matches("^[0-9]+$")){
-			validatedJson =false;
-		 }
-		 return validatedJson;
+		if (!bookingNumber.matches("^[0-9]+$")) {
+			validatedJson = false;
+		}
+		return validatedJson;
 
 	}
 
 	public boolean validateFirstName(String firstname) {
-		if(!firstname.matches("^[a-zA-Z]+$")){
+		if (!firstname.matches("^[a-zA-Z]+$")) {
 			validatedJson = false;
 		}
 		return validatedJson;
@@ -93,15 +92,15 @@ public class BookingResource {
 	}
 
 	public boolean validateLastName(String name) {
-		 if(!name.matches("^[a-zA-Z]+$")){
-			 validatedJson = false;
-		 }
-		 return validatedJson;
+		if (!name.matches("^[a-zA-Z]+$")) {
+			validatedJson = false;
+		}
+		return validatedJson;
 
 	}
 
 	public boolean validatePassport(String passport) {
-		if(passport.isEmpty()){
+		if (passport.isEmpty()) {
 			validatedJson = false;
 		}
 		return validatedJson;
@@ -109,7 +108,7 @@ public class BookingResource {
 	}
 
 	public boolean validateReservationJson() {
-		return validatedJson; 
-		
+		return validatedJson;
+
 	}
 }
