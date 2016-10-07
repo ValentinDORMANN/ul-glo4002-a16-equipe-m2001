@@ -41,7 +41,7 @@ public class BookingPassengers {
 		return json;
 	}
 
-	public int getPassengerInfosIndex(String hashCode) {
+	private int getPassengerInfosIndex(String hashCode) {
 		int index = -1;
 		List<Passenger> passengers = this.passengers;
 		for (int i = 0; i < passengers.size(); i++) {
@@ -54,14 +54,10 @@ public class BookingPassengers {
 	public Passenger getPassengerInfos(String hashCode) throws NotFoundException {
 		Passenger passenger;
 		int index = getPassengerInfosIndex(hashCode);
-		passenger = this.passengers.get(index);
-		if (isNull(passenger))
+		if (index == -1)
 			throw new NotFoundException("PASSENGER NOT FOUND");
+		passenger = this.passengers.get(index);
 		return passenger;
-	}
-
-	private boolean isNull(Object obj) {
-		return obj == null;
 	}
 
 }

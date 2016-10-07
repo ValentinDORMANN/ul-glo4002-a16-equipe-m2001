@@ -20,6 +20,7 @@ public class BookingPassengersTest {
 	private final String FLIGHT_NUMBER = "AC1765";
 	private final String FLIGHT_DATE = "2016-10-30";
 	private final String PERSON_HASH = "B1007408:12345";
+	private final String WRONG_HASH = "B1007408:55555";
 	private BookingPassengers bookingPassengers;
 	private final Passenger PERSON = new Passenger(FIRST_NAME, LAST_NAME, AGE, PASSPORT_NUMBER, SEAT_CLASS,
 			PERSON_HASH);
@@ -38,5 +39,11 @@ public class BookingPassengersTest {
 
 		// Then
 		assertEquals(PERSON_HASH, anotherPerson.getHashCode());
+	}
+
+	@Test(expected = NotFoundException.class)
+	public void WithWrongPassengerHashWhenGetPassengerInfoThenReturnException() throws NotFoundException {
+		// When
+		Passenger anotherPerson = bookingPassengers.getPassengerInfos(WRONG_HASH);
 	}
 }
