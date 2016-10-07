@@ -18,7 +18,6 @@ import ca.ulaval.glo4002.flycheckin.reservation.domain.Services;
 import javassist.NotFoundException;
 
 @Path("/events/reservation-created")
-@Produces(MediaType.APPLICATION_JSON)
 public class BookingResource {
 	private Services service;
 	private JSONObject jsonRequest;
@@ -30,7 +29,7 @@ public class BookingResource {
 		int reservationNumber = 0;
 		service = new Services();
 		reservationNumber = service.createReservation(jsonRequest);
-		if (reservationNumber == 0) {
+		if (reservationNumber != 0) {
 			return Response.ok(reservationNumber).build();
 		} else {
 			return Response.status(400).build();
