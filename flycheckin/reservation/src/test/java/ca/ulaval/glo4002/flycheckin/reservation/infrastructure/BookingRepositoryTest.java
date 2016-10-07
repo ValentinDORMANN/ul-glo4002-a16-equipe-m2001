@@ -13,18 +13,15 @@ import ca.ulaval.glo4002.flycheckin.reservation.domain.Booking;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.BookingPassengers;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Passenger;
 
-//import ca.ulaval.glo6002.flycheckin.reservation.domain.Booking;
-//import ca.ulaval.glo6002.flycheckin.reservation.domain.BookingPassengers;
-
 public class BookingRepositoryTest {
 	private final int VALID_KEY = 44444;
 	private final int INVALID_KEY = 99999;
 	private final Booking BOOKING_TST = new Booking(VALID_KEY, "date", "confirm", "paymentLoc");
-	private final Passenger PERSON = new Passenger("Taylor", "Mahugnon", 12, "B0074584", "economic", "B0074584:AF-305:1121");
+	private final String PERSON_HASH = "B0074584:44444";
+	private final Passenger PERSON = new Passenger("Taylor", "Mahugnon", 12, "B0074584", "economic", PERSON_HASH);
 	BookingPassengers BOOKING_PASSENGERS_TST;
 	private int checkValue;
 	private BookingRepository bookingRepo;
-
 	// Booking mockBooking = mock(Booking.class);
 
 	@Before
@@ -42,8 +39,13 @@ public class BookingRepositoryTest {
 	}
 
 	@Test
+	public void WhenSavedNewBookingThenHashMapMustContainBookingPassengersTest() {
+		assertTrue(BookingRepository.bookingPassengersList.containsValue(BOOKING_PASSENGERS_TST));
+	}
+
+	@Test
 	public void WhenSavedNewBookingThenMapsShouldHaveSameSize() {
-		assertEquals(bookingRepo.bookingList.size(), bookingRepo.bookingPassengersList.size());
+		assertEquals(BookingRepository.bookingList.size(), BookingRepository.bookingPassengersList.size());
 	}
 
 	@Test
