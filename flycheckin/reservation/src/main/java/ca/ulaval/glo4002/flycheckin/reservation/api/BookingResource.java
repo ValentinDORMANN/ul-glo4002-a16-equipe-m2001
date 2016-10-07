@@ -4,38 +4,26 @@ import java.text.SimpleDateFormat;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-//import javax.ws.rs.Produces;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-//import org.json.JSONObject;
-
-import javax.ws.rs.Consumes;
-//import javax.ws.rs.GET;
-
-import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
-import java.net.URI;
-
-//@Produces(MediaType.APPLICATION_JSON)
-
-@Consumes(MediaType.APPLICATION_JSON)
+@Path("/events/reservation-created")
+@Produces(MediaType.APPLICATION_JSON)
 public class BookingResource {
-	// private JSONObject json;
-	 
+
 	@POST
-	@Path("/events/reservation-created")
 	public String createBooking(String bookingRequest) {
 
-		Response response = null;
+		// Response response = null;
 		JSONObject json = new JSONObject(bookingRequest);
-		//URI url = URI.create(bookingRequest);
-		//response = Response.created(url).build();
+		// URI url = URI.create(bookingRequest);
+		// response = Response.created(url).build();
 		return json.toString();
-
 	}
 
-	/*public boolean validateReservationDate(String reservationDate) {
+	public boolean validateReservationDate(String reservationDate) {
 		// String date =json.getString("reservation_date");
 		if (reservationDate.matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")) {
 			return true;
@@ -84,6 +72,5 @@ public class BookingResource {
 	public boolean validatePassport(String passport) {
 		return !passport.isEmpty();
 
-	}*/
-
+	}
 }
