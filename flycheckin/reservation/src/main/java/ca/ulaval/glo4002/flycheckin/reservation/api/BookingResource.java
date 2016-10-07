@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,13 +21,15 @@ public class BookingResource {
 	private boolean validatedJson = true;
 
 	@POST
-	public Response createBooking(String bookingRequest) throws JSONException, ParseException {
+	public Response createBooking(@Context UriInfo uriInfo, String bookingRequest)
+			throws JSONException, ParseException {
 		jsonRequest = new JSONObject(bookingRequest);
 		int reservationNumber = 0;
 		service = new Services();
 		reservationNumber = service.createReservation(jsonRequest);
 		if (reservationNumber != 0) {
-			return Response.ok(reservationNumber).build();
+			return Response.status(201).entity(uriInfo.getBaseUri().toString() + "reservations/" + reservationNumber)
+					.build();
 		} else {
 			return Response.status(400).build();
 		}

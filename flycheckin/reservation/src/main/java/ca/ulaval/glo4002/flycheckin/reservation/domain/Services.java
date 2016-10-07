@@ -26,14 +26,17 @@ public class Services {
 
 	/* Set Reservation */
 
-	public int createReservation(JSONObject json) throws JSONException, ParseException {
-		Booking booking = JsonToBooking(json);
-		BookingPassengers bookingPassengers = JsonToBookingPassenger(json);
-		return this.bookingRepository.saveNewBooking(booking, bookingPassengers);
+	public int createReservation(JSONObject json) {
+		try {
+			Booking booking = JsonToBooking(json);
+			BookingPassengers bookingPassengers = JsonToBookingPassenger(json);
+			return this.bookingRepository.saveNewBooking(booking, bookingPassengers);
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	public Booking JsonToBooking(JSONObject json) throws JSONException {
-
 		Booking booking = new Booking(json.getInt("reservation_number"), json.getString("reservation_date"),
 				json.getString("reservation_confirmation"), json.getString("payment_location"));
 		return booking;

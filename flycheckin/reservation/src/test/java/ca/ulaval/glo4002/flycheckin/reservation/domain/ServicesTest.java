@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.infrastructure.BookingRepository;
+import javassist.NotFoundException;
 
 public class ServicesTest {
 
@@ -90,10 +91,10 @@ public class ServicesTest {
 	/* Get Reservation */
 
 	@Test
-	public void test() throws JSONException, ParseException {
+	public void test() throws JSONException, ParseException, NotFoundException {
 		this.booking_passenger = this.services.JsonToBookingPassenger(this.json);
 		int number = this.bookingRepository.saveNewBooking(this.booking, this.booking_passenger);
-		// assertEquals(this.booking_passenger.getFlight(),
-		// this.bookingRepository.getBookingInfos(number).getFlight());
+		// assertEquals(this.booking_passenger,
+		// this.bookingRepository.getBookingInfos(number));
 	}
 }
