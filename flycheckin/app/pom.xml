@@ -4,7 +4,7 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>ca.ulaval.glo6002</groupId>
+		<groupId>ca.ulaval.glo4002</groupId>
 		<artifactId>flycheckin</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
@@ -30,7 +30,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>ca.ulaval.glo6002.flycheckin.app.Main</mainClass>
+					<mainClass>ca.ulaval.glo4002.flycheckin.app.Main</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -43,9 +43,14 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>ca.ulaval.glo6002</groupId>
+			<groupId>ca.ulaval.glo4002</groupId>
 			<artifactId>reservation</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+    <dependency>
+      <groupId>ca.ulaval.glo4002</groupId>
+      <artifactId>boarding</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
 	</dependencies>
 </project>

@@ -1,21 +1,19 @@
-package ca.ulaval.glo6002.flycheckin.reservation;
+package ca.ulaval.glo4002.flycheckin.boarding;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
-public class ReservationServer implements Runnable {
+public class BoardingServer implements Runnable {
 
 	public static void main(String[] args) {
-		new ReservationServer().run();
+		new BoardingServer().run();
 	}
 
 	public void run() {
-		//int httpPort = 8080;
-		 int httpPort = Integer.valueOf(System.getProperty("reservation.port"));
+		int httpPort = 8090; // 8080 already reserved
 
 		Server server = new Server(httpPort);
 		ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
@@ -31,8 +29,8 @@ public class ReservationServer implements Runnable {
 	}
 
 	private void configurerJersey(ServletContextHandler servletContextHandler) {
-		ServletContainer container = new ServletContainer(new ResourceConfig()
-				.packages("ca.ulaval.glo6002.flycheckin.reservation").register(JacksonFeature.class));
+		ServletContainer container = new ServletContainer(
+				new ResourceConfig().packages("ca.ulaval.glo4002.flycheckin.boarding"));
 		ServletHolder jerseyServletHolder = new ServletHolder(container);
 		servletContextHandler.addServlet(jerseyServletHolder, "/*");
 	}

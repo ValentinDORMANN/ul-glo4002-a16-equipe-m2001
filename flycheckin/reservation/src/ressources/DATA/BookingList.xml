@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE passengers SYSTEM "DTD/BookingList.dtd">
 <bookingList>
-  <booking number="333333">
+  <booking number="33333">
     <bookingDate>2016-09-25</bookingDate>
     <bookingConfirm>A12345</bookingConfirm>
     <paymentLocation>/payments/da39a3aa5e6b4b0d3255chag21118210afd80709</paymentLocation>

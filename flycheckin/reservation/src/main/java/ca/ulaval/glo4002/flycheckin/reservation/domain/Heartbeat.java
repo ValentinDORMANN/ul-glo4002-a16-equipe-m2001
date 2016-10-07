@@ -1,4 +1,4 @@
-package ca.ulaval.glo6002.flycheckin.reservation;
+package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
 public class Heartbeat {
 	public final String token;
