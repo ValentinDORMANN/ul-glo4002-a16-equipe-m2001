@@ -5,6 +5,7 @@ import java.util.Map;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Booking;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.BookingPassengers;
+import javassist.NotFoundException;
 
 public class BookingRepository {
 
@@ -18,11 +19,23 @@ public class BookingRepository {
 		return number;
 	}
 
-	public BookingPassengers getBookingInfos(int bookingNumber) {
-		return bookingPassengersList.get(bookingNumber);
+	public BookingPassengers getBookingInfos(int bookingNumber) throws NotFoundException {
+		BookingPassengers bookingPassengers;
+		bookingPassengers = bookingPassengersList.get(bookingNumber);
+		if (isNull(bookingPassengers))
+			throw new NotFoundException("BOOKING NOT FOUND");
+		return bookingPassengers;
 	}
 
-	/*
-	 * private boolean isNull(Object obj) { return obj == null; }
-	 */
+	private boolean isNull(Object obj) {
+		return obj == null;
+	}
+
+	// public Passenger getPassengerInfos(String passengerHash) {
+	// int bookingNumber = Integer.parseInt(passengerHash.split(":")[0]);
+	// BookingPassengers bookingPassangers =this.getBookingInfos(bookingNumber);
+
+	// return bookingPassenger;
+	// }
+
 }

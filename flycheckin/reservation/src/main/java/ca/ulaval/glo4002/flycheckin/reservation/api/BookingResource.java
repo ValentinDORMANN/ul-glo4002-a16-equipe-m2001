@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Services;
+import javassist.NotFoundException;
 
 @Path("/events/reservation-created")
 @Produces(MediaType.APPLICATION_JSON)
@@ -40,7 +41,7 @@ public class BookingResource {
 	@Path("/reservations/{reservation_number}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getNumberResevation(@QueryParam("reservationNumber") String reservationNumber)
-			throws JSONException, ParseException {
+			throws JSONException, ParseException, NumberFormatException, NotFoundException {
 		service = new Services();
 		JSONObject jsonObject = service.getReservation(Integer.parseInt(reservationNumber));
 		return Response.ok(jsonObject.toString()).build();

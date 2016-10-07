@@ -12,12 +12,15 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Booking;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.BookingPassengers;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Passenger;
+import javassist.NotFoundException;
 
 public class BookingRepositoryTest {
 	private final int VALID_KEY = 44444;
 	private final int INVALID_KEY = 99999;
 	private final Booking BOOKING_TST = new Booking(VALID_KEY, "date", "confirm", "paymentLoc");
 	private final String PERSON_HASH = "B0074584:44444";
+	private final String WRONG_HASH1 = "B9974584:44444";
+	private final String WRONG_HASH2 = "B0074584:55555";
 	private final Passenger PERSON = new Passenger("Taylor", "Mahugnon", 12, "B0074584", "economic", PERSON_HASH);
 	BookingPassengers BOOKING_PASSENGERS_TST;
 	private int checkValue;
@@ -49,7 +52,7 @@ public class BookingRepositoryTest {
 	}
 
 	@Test
-	public void WhenGetBookingInfosWithValidKeyShouldReturnInfos() {
+	public void WhenGetBookingInfosWithValidKeyShouldReturnInfos() throws NotFoundException {
 		// When
 		BookingPassengers checkBookingInfos = bookingRepo.getBookingInfos(VALID_KEY);
 
@@ -57,13 +60,10 @@ public class BookingRepositoryTest {
 		assertEquals(BOOKING_PASSENGERS_TST, checkBookingInfos);
 	}
 
-	@Test
-	public void WhenGetBookingInfosWithInvalidKeyShouldReturnNull() {
+	@Test(expected = NotFoundException.class)
+	public void WhenGetBookingInfosWithInvalidKeyShouldReturnNotFoundException() throws NotFoundException {
 		// When
-		BookingPassengers checkBookingInfos = bookingRepo.getBookingInfos(INVALID_KEY);
-
-		// Then
-		assertEquals(null, checkBookingInfos);
+		bookingRepo.getBookingInfos(INVALID_KEY);
 	}
 
 }

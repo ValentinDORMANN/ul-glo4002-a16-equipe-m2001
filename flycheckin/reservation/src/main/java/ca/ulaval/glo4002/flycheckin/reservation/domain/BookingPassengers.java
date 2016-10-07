@@ -8,6 +8,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javassist.NotFoundException;
+
 public class BookingPassengers {
 
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -37,6 +39,29 @@ public class BookingPassengers {
 		json.put("flight_number", this.flightNumber);
 		json.put("flight_date", this.flightDate);
 		return json;
+	}
+
+	public int getPassengerInfosIndex(String hashCode) {
+		int index = -1;
+		List<Passenger> passengers = this.passengers;
+		for (int i = 0; i < passengers.size(); i++) {
+			if (passengers.get(i).getHashCode() == hashCode)
+				index = i;
+		}
+		return index;
+	}
+
+	public Passenger getPassengerInfos(String hashCode) throws NotFoundException {
+		Passenger passenger;
+		int index = getPassengerInfosIndex(hashCode);
+		passenger = this.passengers.get(index);
+		if (isNull(passenger))
+			throw new NotFoundException("PASSENGER NOT FOUND");
+		return passenger;
+	}
+
+	private boolean isNull(Object obj) {
+		return obj == null;
 	}
 
 }

@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ca.ulaval.glo4002.flycheckin.reservation.infrastructure.BookingRepository;
+import javassist.NotFoundException;
 
 public class Services {
 
@@ -67,7 +68,7 @@ public class Services {
 
 	/* Get Reservation */
 
-	public JSONObject getReservation(int numberReservation) {
+	public JSONObject getReservation(int numberReservation) throws NotFoundException {
 		JSONObject json = new JSONObject();
 		BookingPassengers bookingPassengers = this.bookingRepository.getBookingInfos(numberReservation);
 		json = bookingPassengers.toJSON();
