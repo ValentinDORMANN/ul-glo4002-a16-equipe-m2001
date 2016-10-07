@@ -31,11 +31,7 @@
         <groupId>org.mockito</groupId>
         <artifactId>mockito-all</artifactId>
     </dependency>
-<<<<<<< HEAD
-  </dependencies>
-</project>
-=======
-    <dependency>
+	  <dependency>
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
         <version>20160810</version>
@@ -43,4 +39,5 @@
   </dependencies>
 </project>
 
->>>>>>> ee79c0bf1682cf4b14b1711e09f4a21951b067b9
+
+
