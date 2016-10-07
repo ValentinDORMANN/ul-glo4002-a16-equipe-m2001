@@ -1,27 +1,45 @@
 package ca.ulaval.glo4002.flycheckin.reservation.api;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import ca.ulaval.glo4002.flycheckin.reservation.domain.Services;
 
 @Path("/events/reservation-created")
 @Produces(MediaType.APPLICATION_JSON)
 public class BookingResource {
+	private Services service ;
+	private JSONObject json;
 
 	@POST
-	public String createBooking(String bookingRequest) {
+	public String createBooking(String bookingRequest)  {
 
-		// Response response = null;
-		JSONObject json = new JSONObject(bookingRequest);
-		// URI url = URI.create(bookingRequest);
-		// response = Response.created(url).build();
-		return json.toString();
+		json = new JSONObject(bookingRequest);
+		int reservationNumber =0;
+		try {
+			service = new Services();
+			reservationNumber = service.createReservation(json);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return ""+reservationNumber ;
 	}
+/*	@GET
+	public String getNumberResevation(Services service ,@QueryParam("token") String token) throws JSONException, ParseException{
+		int reservationNumber = service.createReservation(json);
+		return "/reservations/{reservation_number::"+reservationNumber+"}";
+	}*/
 
 	public boolean validateReservationDate(String reservationDate) {
 		// String date =json.getString("reservation_date");
@@ -32,7 +50,7 @@ public class BookingResource {
 
 	}
 
-	public String extractFlightDate(String flightDate) throws RuntimeException {
+	/*public String extractFlightDate(String flightDate) throws RuntimeException {
 		String date = flightDate.substring(0, 9);
 		if (validateReservationDate(date)) {
 			return flightDate.substring(0, 9);
@@ -72,5 +90,5 @@ public class BookingResource {
 	public boolean validatePassport(String passport) {
 		return !passport.isEmpty();
 
-	}
+	}*/
 }
