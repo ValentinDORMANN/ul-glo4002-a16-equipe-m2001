@@ -1,24 +1,53 @@
 package ca.ulaval.glo4002.flycheckin.boarding.api;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONObject;
+
+import ca.ulaval.glo4002.flycheckin.boarding.domain.Services;
 
 @Path("/checkins")
 @Produces(MediaType.APPLICATION_JSON)
 public class BoardingResource {
 
+	private static final String RESERVATION_SERVER = "localhost:8888";
+	private Services services;
 	private JSONObject json;
 
 	public BoardingResource(JSONObject json) {
 		this.json = json;
+		this.services = new Services();
+	}
+
+	// TODO
+	@POST
+	public Response getBoarding(String boardingRequest) {
+		this.json = new JSONObject(boardingRequest);
+		if (!validateJsonBoarding(json)) {
+			return Response.status(400).build();
+		} else {
+			return Response.ok(queryBoardingPassenger(json.getString("passenger_hash")).toString()).build();
+		}
 	}
 
 	@POST
-	public void createBooking(String message) {
+	public Response getReservationResponse(@Context UriInfo uriInfo, String reservationResponse) {
+		this.json = new JSONObject(reservationResponse);
+		if (!validatePassengerHash(json.getString("passenger_hash"))) {
+			return Response.status(404).build();
+		} else if (!validateJsonPassenger(json)) {
+			return Response.status(400).build();
+		} else {
+			int checkinId = this.services.createBoarding(json);
+			return Response.ok(uriInfo.getBaseUri().toString() + "checkins/" + checkinId).build();
+		}
 	}
 
 	public boolean validateJsonBoarding(JSONObject json) {
@@ -52,7 +81,9 @@ public class BoardingResource {
 	}
 
 	// passengerHash format "passportNumber:reservationNumber"
-	public JSONObject queryBookingPassenger(String passengerHash) {
+	@GET
+	@Path(RESERVATION_SERVER + "/reservation/passengerInfo/{passengerHash}")
+	public JSONObject queryBoardingPassenger(String passengerHash) {
 		JSONObject jsonQuery = new JSONObject();
 		jsonQuery.put("passenger_hash", passengerHash);
 		return jsonQuery;

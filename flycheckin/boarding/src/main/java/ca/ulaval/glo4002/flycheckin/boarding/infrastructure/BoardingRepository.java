@@ -7,12 +7,12 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.BoardingPassenger;
 
 public class BoardingRepository {
 
-	public static Map<String, BoardingPassenger> boardingPassengersList = new HashMap<String, BoardingPassenger>();
+	public static Map<Integer, BoardingPassenger> boardingPassengersList = new HashMap<Integer, BoardingPassenger>();
 
-	public String saveNewBoarding(BoardingPassenger boardingPassenger) {
-		String hash = boardingPassenger.getHash();
-		boardingPassengersList.put(hash, boardingPassenger);
-		return hash;
+	public int saveNewBoarding(BoardingPassenger boardingPassenger) {
+		int checkinId = boardingPassenger.getCheckinId();
+		boardingPassengersList.put(checkinId, boardingPassenger);
+		return checkinId;
 	}
 
 }

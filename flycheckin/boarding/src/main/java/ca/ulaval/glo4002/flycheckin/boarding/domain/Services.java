@@ -12,15 +12,19 @@ public class Services {
 		this.boardingRepository = new BoardingRepository();
 	}
 
-	public BoardingPassenger receptionBookingPassenger(JSONObject json) {
+	public String receptionHashPassenger(JSONObject json) {
+		return json.getString("passenger_hash").trim();
+	}
+
+	public BoardingPassenger receptionBoardingPassenger(JSONObject json) {
 		String fullname = json.getString("fullname").trim();
 		String passportNumber = json.getString("passeport_number").trim();
 		String hash = json.getString("passenger_hash").trim();
 		return new BoardingPassenger(fullname, passportNumber, hash);
 	}
 
-	public String createBoarding(JSONObject json) {
-		BoardingPassenger boardingPassenger = receptionBookingPassenger(json);
+	public int createBoarding(JSONObject json) {
+		BoardingPassenger boardingPassenger = receptionBoardingPassenger(json);
 		return this.boardingRepository.saveNewBoarding(boardingPassenger);
 	}
 }
