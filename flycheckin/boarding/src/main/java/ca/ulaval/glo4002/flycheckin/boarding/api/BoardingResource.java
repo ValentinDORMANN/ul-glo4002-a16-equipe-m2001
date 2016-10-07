@@ -7,11 +7,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.BoardingPassenger;
-
 @Path("/checkins")
 @Produces(MediaType.APPLICATION_JSON)
 public class BoardingResource {
+
 	private JSONObject json;
 
 	public BoardingResource(JSONObject json) {
@@ -33,8 +32,7 @@ public class BoardingResource {
 		String fullname = json.getString("fullname").trim();
 		String passportNumber = json.getString("passeport_number").trim();
 		String hash = json.getString("passenger_number").trim();
-		return (fullname.split(":").length == 2) && validateFullname(fullname) && validatePassportNumber(passportNumber)
-				&& validatePassengerHash(hash);
+		return validateFullname(fullname) && validatePassportNumber(passportNumber) && validatePassengerHash(hash);
 	}
 
 	public boolean validatePassengerHash(String passengerHash) {
@@ -50,7 +48,7 @@ public class BoardingResource {
 	}
 
 	public boolean validateFullname(String fullname) {
-		return fullname.matches("^[A-Z][a-z]+([-. ][A-Z][a-z]+)*:[A-Z]+$");
+		return fullname.matches("^[A-Z][a-z]+([-. ][A-Z][a-z]+)* [A-Z]+$");
 	}
 
 	// passengerHash format "passportNumber:reservationNumber"
@@ -60,13 +58,4 @@ public class BoardingResource {
 		return jsonQuery;
 	}
 
-	public BoardingPassenger receptionBookingPassenger(JSONObject json) {
-		String fullname = json.getString("fullname").trim();
-		String[] fullnameSplited = fullname.split(":");
-		String firstname = fullnameSplited[0];
-		String lastname = fullnameSplited[1];
-		String passportNumber = json.getString("passeport_number").trim();
-		String hash = json.getString("passenger_hash").trim();
-		return new BoardingPassenger(firstname, lastname, passportNumber, hash);
-	}
 }

@@ -1,14 +1,12 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
 public class BoardingPassenger {
-	private String firstName;
-	private String lastName;
+	private String fullname;
 	private String passportNumber;
 	private String hash;
 
-	public BoardingPassenger(String firstName, String lastName, String passportNumber, String hash) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public BoardingPassenger(String fullname, String passportNumber, String hash) {
+		this.fullname = fullname;
 		this.passportNumber = passportNumber;
 		this.hash = hash;
 	}

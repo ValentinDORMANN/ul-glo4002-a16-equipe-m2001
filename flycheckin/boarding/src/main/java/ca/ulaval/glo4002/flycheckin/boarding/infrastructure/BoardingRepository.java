@@ -9,7 +9,7 @@ public class BoardingRepository {
 
 	public static Map<String, BoardingPassenger> boardingPassengersList = new HashMap<String, BoardingPassenger>();
 
-	public String saveNewBooking(BoardingPassenger boardingPassenger) {
+	public String saveNewBoarding(BoardingPassenger boardingPassenger) {
 		String hash = boardingPassenger.getHash();
 		boardingPassengersList.put(hash, boardingPassenger);
 		return hash;
