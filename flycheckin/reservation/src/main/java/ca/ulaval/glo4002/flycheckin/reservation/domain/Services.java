@@ -23,6 +23,8 @@ public class Services {
 		this.bookingRepository = new BookingRepository();
 	}
 
+	/* Set Reservation */
+
 	public int createReservation(JSONObject json) throws JSONException, ParseException {
 		Booking booking = JsonToBooking(json);
 		BookingPassengers bookingPassengers = JsonToBookingPassenger(json);
@@ -53,7 +55,8 @@ public class Services {
 		for (int i = 0; i < json_passengers.length(); i++) {
 			JSONObject buffer = json_passengers.getJSONObject(i);
 
-			String hash = buffer.getString("passport_number") + ":" + buffer.getString("reservation_number");
+			String hash = buffer.getString("passport_number") + ":"
+					+ Integer.toString(buffer.getInt("reservation_number"));
 
 			Passenger passenger = new Passenger(buffer.getString("first_name"), buffer.getString("last_name"),
 					buffer.getInt("age"), buffer.getString("passport_number"), buffer.getString("seat_class"), hash);
@@ -62,6 +65,8 @@ public class Services {
 		}
 		return list_passengers;
 	}
+
+	/* Get Reservation */
 
 	public JSONObject getReservation(int numberReservation) {
 		JSONObject json = new JSONObject();

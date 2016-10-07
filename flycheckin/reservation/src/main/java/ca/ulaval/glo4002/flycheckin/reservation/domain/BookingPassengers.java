@@ -23,6 +23,10 @@ public class BookingPassengers {
 		this.passengers = passengers;
 	}
 
+	public String getFlight() {
+		return flightNumber;
+	}
+
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		JSONArray json_passengers = new JSONArray();
@@ -34,4 +38,5 @@ public class BookingPassengers {
 		json.put("flight_date", this.flightDate);
 		return json;
 	}
+
 }

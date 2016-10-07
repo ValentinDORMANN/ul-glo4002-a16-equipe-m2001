@@ -33,4 +33,8 @@ public class Passenger {
 		json.put("seat_class", this.seatClass);
 		return json;
 	}
+
+	public String getHashCode() {
+		return this.hashCode;
+	}
 }

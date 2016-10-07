@@ -18,6 +18,10 @@ import ca.ulaval.glo4002.flycheckin.reservation.infrastructure.BookingRepository
 public class ServicesTest {
 
 	private static final int NB_passengers = 1;
+	private static final int RESERVATION_NUMBER = 37353;
+	private static final String FLIGHT_DATE = "2015-09-09";
+	private static final String PASSPORT_NUMBER = "B0074584";
+	private static final String FLIGHT_NUMBER = "AR5673";
 
 	private Booking booking;
 	private BookingPassengers booking_passenger;
@@ -39,13 +43,16 @@ public class ServicesTest {
 
 		this.services = new Services();
 
-		willReturn("2015-09-09").given(this.json).getString("flight_date");
+		willReturn(RESERVATION_NUMBER).given(this.json).getInt("reservation_number");
+		willReturn(FLIGHT_DATE).given(this.json).getString("flight_date");
 		willReturn(this.mock_json_array).given(this.json).getJSONArray("passengers");
 		willReturn(NB_passengers).given(this.mock_json_array).length();
 		willReturn(this.mock_json_passenger).given(this.mock_json_array).getJSONObject(NB_passengers - 1);
-		willReturn("B0074584").given(this.mock_json_passenger).getString("passport_number");
-		willReturn("AR5673").given(this.mock_json_passenger).getString("flight_number");
+		willReturn(PASSPORT_NUMBER).given(this.mock_json_passenger).getString("passport_number");
+		willReturn(FLIGHT_NUMBER).given(this.mock_json_passenger).getString("flight_number");
 	}
+
+	/* Set Reservation */
 
 	@Test
 	public void givenJSONWhenCreateReservationThenVerifyIfJsonToBookingCalled() throws JSONException, ParseException {
@@ -75,8 +82,18 @@ public class ServicesTest {
 	}
 
 	@Test
-	public void test() {
-
+	public void givenReservationNumberWhenCreateReservationThenCompareNumber() throws JSONException, ParseException {
+		int number = this.services.createReservation(this.json);
+		assertEquals(this.RESERVATION_NUMBER, number);
 	}
 
+	/* Get Reservation */
+
+	@Test
+	public void test() throws JSONException, ParseException {
+		this.booking_passenger = this.services.JsonToBookingPassenger(this.json);
+		int number = this.bookingRepository.saveNewBooking(this.booking, this.booking_passenger);
+		// assertEquals(this.booking_passenger.getFlight(),
+		// this.bookingRepository.getBookingInfos(number).getFlight());
+	}
 }
