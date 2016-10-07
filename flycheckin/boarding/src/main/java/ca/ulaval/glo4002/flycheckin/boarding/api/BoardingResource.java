@@ -24,16 +24,16 @@ public class BoardingResource {
 	}
 
 	public boolean validateJsonBoarding(JSONObject json) {
-		String passengerHash = json.getString("passenger_hash");
-		String agentId = json.getString("by");
+		String passengerHash = json.getString("passenger_hash").trim();
+		String agentId = json.getString("by").trim();
 		boolean isOK = validatePassengerHash(passengerHash) && validateAgentId(agentId);
 		return isOK;
 	}
 
 	public boolean validateJsonPassenger(JSONObject json) {
-		String fullname = json.getString("fullname");
-		String passportNumber = json.getString("passeport_number");
-		String hash = json.getString("passenger_number");
+		String fullname = json.getString("fullname").trim();
+		String passportNumber = json.getString("passeport_number").trim();
+		String hash = json.getString("passenger_number").trim();
 		return (fullname.split(":").length == 2) && validateFullname(fullname) && validatePassportNumber(passportNumber)
 				&& validatePassengerHash(hash);
 	}
@@ -62,12 +62,12 @@ public class BoardingResource {
 	}
 
 	public BoardingPassenger receptionBookingPassenger(JSONObject json) {
-		String fullname = json.getString("fullname");
+		String fullname = json.getString("fullname").trim();
 		String[] fullnameSplited = fullname.split(":");
 		String firstname = fullnameSplited[0];
 		String lastname = fullnameSplited[1];
-		String passportNumber = json.getString("passeport_number");
-		String hash = json.getString("passenger_hash");
+		String passportNumber = json.getString("passeport_number").trim();
+		String hash = json.getString("passenger_hash").trim();
 		return new BoardingPassenger(firstname, lastname, passportNumber, hash);
 	}
 
