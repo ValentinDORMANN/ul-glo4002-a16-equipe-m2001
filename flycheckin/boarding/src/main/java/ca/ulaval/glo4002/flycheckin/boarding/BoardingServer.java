@@ -13,8 +13,12 @@ public class BoardingServer implements Runnable {
 	}
 
 	public void run() {
+<<<<<<< HEAD
+		int httpPort = 8090; // 8080 already reserved
+=======
 		// int httpPort = 8090; // 8080 already reserved
 		int httpPort = Integer.valueOf(System.getProperty("boarding.port"));
+>>>>>>> ee79c0bf1682cf4b14b1711e09f4a21951b067b9
 
 		Server server = new Server(httpPort);
 		ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
