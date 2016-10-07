@@ -44,6 +44,6 @@ public class BookingPassengersTest {
 	@Test(expected = NotFoundException.class)
 	public void WithWrongPassengerHashWhenGetPassengerInfoThenReturnException() throws NotFoundException {
 		// When
-		Passenger anotherPerson = bookingPassengers.getPassengerInfos(WRONG_HASH);
+		bookingPassengers.getPassengerInfos(WRONG_HASH);
 	}
 }
