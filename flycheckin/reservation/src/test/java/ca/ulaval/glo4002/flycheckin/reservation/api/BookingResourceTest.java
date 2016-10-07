@@ -23,19 +23,19 @@ import ca.ulaval.glo4002.flycheckin.reservation.api.BookingResource;
 public class BookingResourceTest {
 	private BookingResource bookingResource;
 	private JSONObject mockJson=mock(JSONObject.class);
-	private JSONObject mockJsonWrongDate=mock(JSONObject.class);  
+	private JSONObject mockJsonWrong=mock(JSONObject.class);  
 	public final static String DATE = "2016/01/30";
 	
 	@Before
 	public void initialization(){
-		//bookingResource = new BookingResource(mockJson);
+		bookingResource = new BookingResource();
 		
 	}
 
-/*	@Test(expected=Exception.class)
+	@Test(expected=Exception.class)
 	public void givenJsonMessageWhenReadThenValidateReservationDate() {
-		willThrow(Exception.class).given(bookingResource).validateReservationDate(mockJsonWrongDate.getString("reservation_date"));
-		bookingResource.validateReservationDate(mockJsonWrongDate.getString("reservation_date"));
+		willThrow(Exception.class).given(bookingResource).validateReservationDate(mockJsonWrong.getString("reservation_date"));
+		bookingResource.validateReservationDate(mockJsonWrong.getString("reservation_date"));
 		
 		String reservation_number= mockJson.getString("reservation_number");
 		String date = mockJson.getString("reservation_date");
@@ -46,48 +46,44 @@ public class BookingResourceTest {
 	
 	@Test(expected=Exception.class)
 	public void givenJsonMessageWhenReadThenValidateFlightDate() {
-		willThrow(Exception.class).given(bookingResource).validateflightDate(mockJsonWrongDate.getString("flight_date"));
-		bookingResource.validateflightDate(mockJsonWrongDate.getString("flight_date"));
+		willThrow(Exception.class).given(bookingResource).validateflightDate(mockJsonWrong.getString("flight_date"));
+		bookingResource.validateflightDate(mockJsonWrong.getString("flight_date"));
 	}
 	
 	@Test(expected=Exception.class)
 	public void givenJsonMessageWhenReadThenValidateBookingNumber() {
-		willThrow(Exception.class).given(bookingResource).validateBookingNumber(mockJsonWrongDate.getString("reservation_number"));
-		bookingResource.validateBookingNumber(mockJsonWrongDate.getString("reservation_number"));
+		willThrow(Exception.class).given(bookingResource).validateBookingNumber(mockJsonWrong.getString("reservation_number"));
+		bookingResource.validateBookingNumber(mockJsonWrong.getString("reservation_number"));
 		
 	}
 	
 	@Test(expected=Exception.class)
 	public void givenJsonMessageWhenReadThenValidateFirstName() {
-		willThrow(Exception.class).given(bookingResource).validateFirstName(mockJsonWrongDate.getString("firstname"));
-		bookingResource.validateFirstName(mockJsonWrongDate.getString("firstname"));
+		willThrow(Exception.class).given(bookingResource).validateFirstName(mockJsonWrong.getString("firstname"));
+		bookingResource.validateFirstName(mockJsonWrong.getString("firstname"));
 		
 	}
 	
 	@Test(expected=Exception.class)
 	public void givenJsonMessageWhenReadThenValidateLastName() {
-		willThrow(Exception.class).given(bookingResource).validateLastName(mockJsonWrongDate.getString("name"));
-		bookingResource.validateLastName(mockJsonWrongDate.getString("name"));
+		willThrow(Exception.class).given(bookingResource).validateLastName(mockJsonWrong.getString("name"));
+		bookingResource.validateLastName(mockJsonWrong.getString("name"));
 		
 	}
 	
 	@Test(expected=Exception.class)
 	public void givenJsonMessageWhenReadThenValidatePassPort() {
-		willThrow(Exception.class).given(bookingResource).validatePassport(mockJsonWrongDate.getString("name"));
-		bookingResource.validatePassport(mockJsonWrongDate.getString("name"));
+		willThrow(Exception.class).given(bookingResource).validatePassport(mockJsonWrong.getString("name"));
+		bookingResource.validatePassport(mockJsonWrong.getString("name"));
 		
 	}
 	
-	@Test()
-	public void givenJsonMessageWhenExtractFliyingDateThenValidateDate() throws RuntimeException{
-	//	willThrow(RuntimeException.class).given(bookingResource).validateReservationDate(mockJsonWrongDate.getString("flight_date"));
-	//s	bookingResource.extractFlightDate(mockJsonWrongDate.getString("flight_date"));
+	@Test(expected=RuntimeException.class)
+	public void givenRequestMessageWhenHavingBadRequestThenException() throws RuntimeException{
+		willThrow(RuntimeException.class).given(bookingResource).validateReservationJson();
+		bookingResource.validateReservationJson();//à voir
 		
-		String reservation_number= mockJson.getString("reservation_number");
-		String date = mockJson.getString("reservation_date");
-		String reservation_confirmation=mockJson.getString("reservation_confirmation");
-		String flight_number = mockJson.getString("AC1765");
-		String flight_date = mockJson.getString("2016-10-30T00:00:00Z");
-	}*/
+
+	}
 
 }
