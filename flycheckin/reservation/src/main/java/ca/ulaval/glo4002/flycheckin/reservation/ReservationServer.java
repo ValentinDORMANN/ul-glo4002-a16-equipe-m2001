@@ -14,8 +14,8 @@ public class ReservationServer implements Runnable {
 	}
 
 	public void run() {
-		//int httpPort = 8080;
-		 int httpPort = Integer.valueOf(System.getProperty("reservation.port"));
+		// int httpPort = 8080;
+		int httpPort = Integer.valueOf(System.getProperty("reservation.port"));
 
 		Server server = new Server(httpPort);
 		ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
@@ -32,7 +32,7 @@ public class ReservationServer implements Runnable {
 
 	private void configurerJersey(ServletContextHandler servletContextHandler) {
 		ServletContainer container = new ServletContainer(new ResourceConfig()
-				.packages("ca.ulaval.glo6002.flycheckin.reservation").register(JacksonFeature.class));
+				.packages("ca.ulaval.glo4002.flycheckin.reservation").register(JacksonFeature.class));
 		ServletHolder jerseyServletHolder = new ServletHolder(container);
 		servletContextHandler.addServlet(jerseyServletHolder, "/*");
 	}
