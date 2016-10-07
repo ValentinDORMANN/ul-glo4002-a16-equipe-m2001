@@ -79,7 +79,6 @@ public class ServicesTest {
 		this.booking_passenger = this.services.JsonToBookingPassenger(this.json);
 		verify(this.json).getString("flight_number");
 		verify(this.json, atLeast(2)).getString("flight_date");
-
 	}
 
 	@Test

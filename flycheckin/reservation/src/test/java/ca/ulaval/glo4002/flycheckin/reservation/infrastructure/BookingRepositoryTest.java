@@ -19,8 +19,6 @@ public class BookingRepositoryTest {
 	private final int INVALID_KEY = 99999;
 	private final Booking BOOKING_TST = new Booking(VALID_KEY, "date", "confirm", "paymentLoc");
 	private final String PERSON_HASH = "B0074584:44444";
-	private final String WRONG_HASH1 = "B9974584:44444";
-	private final String WRONG_HASH2 = "B0074584:55555";
 	private final Passenger PERSON = new Passenger("Taylor", "Mahugnon", 12, "B0074584", "economic", PERSON_HASH);
 	BookingPassengers BOOKING_PASSENGERS_TST;
 	private int checkValue;

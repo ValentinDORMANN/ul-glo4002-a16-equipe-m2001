@@ -31,11 +31,4 @@ public class BookingRepository {
 		return obj == null;
 	}
 
-	// public Passenger getPassengerInfos(String passengerHash) {
-	// int bookingNumber = Integer.parseInt(passengerHash.split(":")[0]);
-	// BookingPassengers bookingPassangers =this.getBookingInfos(bookingNumber);
-
-	// return bookingPassenger;
-	// }
-
 }
