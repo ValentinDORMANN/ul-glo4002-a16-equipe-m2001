@@ -55,8 +55,7 @@ public class Services {
 		for (int i = 0; i < json_passengers.length(); i++) {
 			JSONObject buffer = json_passengers.getJSONObject(i);
 
-			String hash = buffer.getString("passport_number") + ":"
-					+ Integer.toString(buffer.getInt("reservation_number"));
+			String hash = buffer.getString("passport_number") + ":" + json.getInt("reservation_number");
 
 			Passenger passenger = new Passenger(buffer.getString("first_name"), buffer.getString("last_name"),
 					buffer.getInt("age"), buffer.getString("passport_number"), buffer.getString("seat_class"), hash);
