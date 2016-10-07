@@ -11,20 +11,21 @@ public class Passenger {
 	private int age;
 	private String passportNumber;
 	private String seatClass;
-	private String hash;
+	private String hashCode;
 
-	public Passenger(String firstName, String lastName, int age, String passportNumber, String seatClass, String hash) {
+	public Passenger(String firstName, String lastName, int age, String passportNumber, String seatClass,
+			String hashCode) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
 		this.passportNumber = passportNumber;
 		this.seatClass = seatClass;
-		this.hash = hash;
+		this.hashCode = hashCode;
 	}
 
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
-		json.put("passenger_hash", this.hash);
+		json.put("passenger_hash", this.hashCode);
 		json.put("first_name", this.firstName);
 		json.put("last_name", this.lastName);
 		json.put("child", (this.age < AGE_CHILD));
