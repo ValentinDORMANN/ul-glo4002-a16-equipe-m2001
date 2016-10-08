@@ -45,7 +45,7 @@ public class BookingPassengers {
 		int index = -1;
 		List<Passenger> passengers = this.passengers;
 		for (int i = 0; i < passengers.size(); i++) {
-			if (passengers.get(i).getHashCode() == hashCode)
+			if (passengers.get(i).getHashCode().equals(hashCode))
 				index = i;
 		}
 		return index;
