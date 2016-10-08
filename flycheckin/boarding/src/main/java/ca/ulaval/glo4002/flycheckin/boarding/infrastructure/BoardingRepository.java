@@ -14,5 +14,4 @@ public class BoardingRepository {
 		boardingPassengersList.put(checkinId, boardingPassenger);
 		return checkinId;
 	}
-
 }
