@@ -8,11 +8,15 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.BoardingPassenger;
 public class BoardingRepository {
 
 	public static Map<Integer, BoardingPassenger> boardingPassengersList = new HashMap<Integer, BoardingPassenger>();
+	static private int nbInstance = 1;
 
 	public int saveNewBoarding(BoardingPassenger boardingPassenger) {
-		int checkinId = boardingPassenger.getCheckinId();
-		boardingPassengersList.put(checkinId, boardingPassenger);
-		return checkinId;
+		boolean checkinDone = boardingPassengersList.containsValue(boardingPassenger);
+		if (!checkinDone) {
+			boardingPassengersList.put(nbInstance, boardingPassenger);
+			nbInstance += 1;
+			return nbInstance;
+		} else
+			return 0;
 	}
-
 }
