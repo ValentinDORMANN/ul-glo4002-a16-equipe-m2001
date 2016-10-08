@@ -1,14 +1,14 @@
 package ca.ulaval.glo4002.flycheckin.boarding.api;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Services;
@@ -18,13 +18,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.Services;
 public class BoardingResource {
 
 	private static final String RESERVATION_SERVER = "localhost:8888";
-	private Services services;
+	private Services services = new Services();
 	private JSONObject json;
-
-	public BoardingResource(JSONObject json) {
-		this.json = json;
-		this.services = new Services();
-	}
 
 	// TODO
 	@POST
@@ -33,22 +28,27 @@ public class BoardingResource {
 		if (!validateJsonBoarding(json)) {
 			return Response.status(400).build();
 		} else {
-			return Response.ok(queryBoardingPassenger(json.getString("passenger_hash")).toString()).build();
+			String passengerHash = json.getString("passenger_hash");
+			String url = RESERVATION_SERVER + "/reservation/passengerInfo/" + passengerHash;
+			HttpClient httpClient = HttpClientBuilder.create().build();
+			HttpGet request = new HttpGet(url);
+
+			// HttpResponse response = httpClient.execute(request);
+			return Response.ok(json.getString("passenger_hash").toString()).build();
 		}
 	}
 
-	@POST
-	public Response getReservationResponse(@Context UriInfo uriInfo, String reservationResponse) {
-		this.json = new JSONObject(reservationResponse);
-		if (!validatePassengerHash(json.getString("passenger_hash"))) {
-			return Response.status(404).build();
-		} else if (!validateJsonPassenger(json)) {
-			return Response.status(400).build();
-		} else {
-			int checkinId = this.services.createBoarding(json);
-			return Response.ok(uriInfo.getBaseUri().toString() + "checkins/" + checkinId).build();
-		}
-	}
+	/*
+	 * @POST public Response getReservationResponse(@Context UriInfo uriInfo,
+	 * String reservationResponse) { this.json = new
+	 * JSONObject(reservationResponse); if
+	 * (!validatePassengerHash(json.getString("passenger_hash"))) { return
+	 * Response.status(404).build(); } else if (!validateJsonPassenger(json)) {
+	 * return Response.status(400).build(); } else { int checkinId =
+	 * this.services.createBoarding(json); return
+	 * Response.ok(uriInfo.getBaseUri().toString() + "checkins/" +
+	 * checkinId).build(); } }
+	 */
 
 	public boolean validateJsonBoarding(JSONObject json) {
 		String passengerHash = json.getString("passenger_hash").trim();
@@ -78,15 +78,6 @@ public class BoardingResource {
 
 	public boolean validateFullname(String fullname) {
 		return fullname.matches("^[A-Z][a-z]+([-. ][A-Z][a-z]+)* [A-Z]+$");
-	}
-
-	// passengerHash format "passportNumber:reservationNumber"
-	@GET
-	@Path(RESERVATION_SERVER + "/reservation/passengerInfo/{passengerHash}")
-	public JSONObject queryBoardingPassenger(String passengerHash) {
-		JSONObject jsonQuery = new JSONObject();
-		jsonQuery.put("passenger_hash", passengerHash);
-		return jsonQuery;
 	}
 
 }

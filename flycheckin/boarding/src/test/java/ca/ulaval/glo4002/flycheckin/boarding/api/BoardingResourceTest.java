@@ -14,7 +14,7 @@ public class BoardingResourceTest {
 
 	@Before
 	public void initialization() {
-		boardingResource = new BoardingResource(mockJson);
+		boardingResource = new BoardingResource();
 	}
 
 	@Test(expected = Exception.class)

@@ -78,4 +78,11 @@ public class Services {
 		json.put("reservation_number", numberReservation);
 		return json;
 	}
+
+	public JSONObject getPassengerInfoFromHash(String passengerHash) throws NotFoundException {
+		int bookingNumber = Integer.parseInt(passengerHash.split(":")[1]);
+		BookingPassengers bookingPassengers = this.bookingRepository.getBookingInfos(bookingNumber);
+		Passenger passenger = bookingPassengers.getPassengerInfos(passengerHash);
+		return passenger.toJSON();
+	}
 }
