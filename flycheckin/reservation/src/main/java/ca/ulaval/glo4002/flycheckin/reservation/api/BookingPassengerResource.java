@@ -22,10 +22,10 @@ public class BookingPassengerResource {
 	@GET
 	public Response getNumberResevation(@Context HttpServletRequest request)
 			throws JSONException, ParseException, NumberFormatException, NotFoundException {
-		String url_arrayWhichContainsNumberReservation[] = request.getRequestURL().toString().split("/");
+		String urlArrayWhichContainsNumberReservation[] = request.getRequestURL().toString().split("/");
 		Services service = new Services();
 		JSONObject jsonObject = service.getReservation(Integer
-				.parseInt(url_arrayWhichContainsNumberReservation[url_arrayWhichContainsNumberReservation.length - 1]));
+				.parseInt(urlArrayWhichContainsNumberReservation[urlArrayWhichContainsNumberReservation.length - 1]));
 		return Response.ok(jsonObject.toString()).build();
 	}
 
