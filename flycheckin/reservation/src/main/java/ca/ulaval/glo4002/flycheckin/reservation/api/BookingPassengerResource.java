@@ -17,8 +17,6 @@ import javassist.NotFoundException;
 
 @Path("/reservations/{reservation_number}")
 public class BookingPassengerResource {
-	private Services service;
-	private JSONObject jsonRequest;
 	private boolean validatedJson = true;
 
 	@GET
@@ -37,20 +35,11 @@ public class BookingPassengerResource {
 		return validatedJson;
 
 	}
-
-	/*
-	 * public String extractFlightDate(String flightDate) throws
-	 * RuntimeException { String date = flightDate.substring(0, 9); if
-	 * (validateReservationDate(date)) { return flightDate.substring(0, 9); }
-	 * else { throw new RuntimeException(); }
-	 * 
-	 * }
-	 */
-
 	public boolean validateflightDate(String flightDate) {
 		boolean validateDate = true;
 		try {
 			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ");
+			@SuppressWarnings("unused")
 			java.util.Date dateformatter = date.parse(flightDate);
 		} catch (Exception e) {
 			validateDate = false;
