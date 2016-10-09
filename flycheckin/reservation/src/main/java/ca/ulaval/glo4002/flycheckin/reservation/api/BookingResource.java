@@ -35,7 +35,7 @@ public class BookingResource {
 		}
 	}
 
-	public boolean validateReservationDate(String reservationDate) {
+	private boolean validateReservationDate(String reservationDate) {
 		if (!reservationDate.matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")) {
 			validatedJson = false;
 		}
@@ -43,7 +43,7 @@ public class BookingResource {
 
 	}
 
-	public boolean validateflightDate(String flightDate) {
+	private boolean validateflightDate(String flightDate) {
 		boolean validateDate = true;
 		try {
 			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ");
@@ -56,7 +56,7 @@ public class BookingResource {
 
 	}
 
-	public boolean validateBookingNumber(String bookingNumber) {
+	private boolean validateBookingNumber(String bookingNumber) {
 		if (!bookingNumber.matches("^[0-9]+$")) {
 			validatedJson = false;
 		}
@@ -64,7 +64,7 @@ public class BookingResource {
 
 	}
 
-	public boolean validateFirstName(String firstname) {
+	private boolean validateFirstName(String firstname) {
 		if (!firstname.matches("^[a-zA-Z]+$")) {
 			validatedJson = false;
 		}
@@ -72,7 +72,7 @@ public class BookingResource {
 
 	}
 
-	public boolean validateLastName(String name) {
+	private boolean validateLastName(String name) {
 		if (!name.matches("^[a-zA-Z]+$")) {
 			validatedJson = false;
 		}
@@ -80,7 +80,7 @@ public class BookingResource {
 
 	}
 
-	public boolean validatePassport(String passport) {
+	private boolean validatePassport(String passport) {
 		if (passport.isEmpty()) {
 			validatedJson = false;
 		}
@@ -88,7 +88,7 @@ public class BookingResource {
 
 	}
 
-	public boolean validateReservationJson() {
+	private boolean validateReservationJson() {
 		return validatedJson;
 
 	}

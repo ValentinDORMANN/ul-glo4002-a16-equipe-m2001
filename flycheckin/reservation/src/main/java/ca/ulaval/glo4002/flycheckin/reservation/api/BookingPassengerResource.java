@@ -22,20 +22,22 @@ public class BookingPassengerResource {
 	@GET
 	public Response getNumberResevation(@Context HttpServletRequest request)
 			throws JSONException, ParseException, NumberFormatException, NotFoundException {
-		String url_array[] = request.getRequestURL().toString().split("/");
+		String urlArrayWhichContainsNumberReservation[] = request.getRequestURL().toString().split("/");
 		Services service = new Services();
-		JSONObject jsonObject = service.getReservation(Integer.parseInt(url_array[url_array.length - 1]));
+		JSONObject jsonObject = service.getReservation(Integer
+				.parseInt(urlArrayWhichContainsNumberReservation[urlArrayWhichContainsNumberReservation.length - 1]));
 		return Response.ok(jsonObject.toString()).build();
 	}
 
-	public boolean validateReservationDate(String reservationDate) {
+	private boolean validateReservationDate(String reservationDate) {
 		if (!reservationDate.matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")) {
 			validatedJson = false;
 		}
 		return validatedJson;
 
 	}
-	public boolean validateflightDate(String flightDate) {
+
+	private boolean validateflightDate(String flightDate) {
 		boolean validateDate = true;
 		try {
 			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ");
@@ -48,7 +50,7 @@ public class BookingPassengerResource {
 
 	}
 
-	public boolean validateBookingNumber(String bookingNumber) {
+	private boolean validateBookingNumber(String bookingNumber) {
 		if (!bookingNumber.matches("^[0-9]+$")) {
 			validatedJson = false;
 		}
@@ -56,7 +58,7 @@ public class BookingPassengerResource {
 
 	}
 
-	public boolean validateFirstName(String firstname) {
+	private boolean validateFirstName(String firstname) {
 		if (!firstname.matches("^[a-zA-Z]+$")) {
 			validatedJson = false;
 		}

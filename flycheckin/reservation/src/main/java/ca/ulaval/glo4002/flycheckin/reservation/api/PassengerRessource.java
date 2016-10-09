@@ -20,9 +20,10 @@ public class PassengerRessource {
 
 	@GET
 	public Response getPassengerInfoFromHash(@Context HttpServletRequest request) throws NotFoundException {
-		String url_array[] = request.getRequestURL().toString().split("/");
+		String urlArrayWhichContainsPassengerHash[] = request.getRequestURL().toString().split("/");
 		Services service = new Services();
-		JSONObject jsonObject = service.getPassengerInfoFromHash(url_array[url_array.length - 1]);
+		JSONObject jsonObject = service.getPassengerInfoFromHash(
+				urlArrayWhichContainsPassengerHash[urlArrayWhichContainsPassengerHash.length - 1]);
 		return Response.ok(jsonObject.toString()).build();
 	}
 }
