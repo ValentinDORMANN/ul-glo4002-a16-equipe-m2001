@@ -22,9 +22,10 @@ public class BookingPassengerResource {
 	@GET
 	public Response getNumberResevation(@Context HttpServletRequest request)
 			throws JSONException, ParseException, NumberFormatException, NotFoundException {
-		String url_array[] = request.getRequestURL().toString().split("/");
+		String url_arrayWhichContainsNumberReservation[] = request.getRequestURL().toString().split("/");
 		Services service = new Services();
-		JSONObject jsonObject = service.getReservation(Integer.parseInt(url_array[url_array.length - 1]));
+		JSONObject jsonObject = service.getReservation(Integer
+				.parseInt(url_arrayWhichContainsNumberReservation[url_arrayWhichContainsNumberReservation.length - 1]));
 		return Response.ok(jsonObject.toString()).build();
 	}
 
@@ -35,6 +36,7 @@ public class BookingPassengerResource {
 		return validatedJson;
 
 	}
+
 	public boolean validateflightDate(String flightDate) {
 		boolean validateDate = true;
 		try {
