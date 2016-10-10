@@ -18,16 +18,15 @@ public class BookingResourceTest {
 	public final String FLIGHT_DATE = "2016-10-30T00:00:00Z";
 	public final String RESERVATION_DATE = "2016-01-31";
 	public final int RESERVATION_NUMBER = 37353;
-	public final String FIRST_NAME = "Hypolyte";
-	public final String LAST_NAME = "Tchoutouo";
+	public final String FLIGHT_NUMBER = "AC1765";
 
 	@Before
 	public void initialization() {
 		bookingResource = new BookingResource();
-		jsonTest.put("reservation_number", "37353");
-		jsonTest.put("reservation_date", "2016-01-31");
-		jsonTest.put("flight_date", "2016-10-30T00:00:00Z");
-		jsonTest.put("flight_number", "AC1765");
+		jsonTest.put("reservation_number", RESERVATION_NUMBER);
+		jsonTest.put("reservation_date", RESERVATION_DATE);
+		jsonTest.put("flight_date", FLIGHT_DATE);
+		jsonTest.put("flight_number", FLIGHT_NUMBER);
 	}
 
 	@Test(expected = Exception.class)
