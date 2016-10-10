@@ -31,7 +31,7 @@ public class BoardingRepositoryTest {
 	public void WhenSavedNewBoardingTwoTimesThenReturnNull() {
 		// When
 		int checkinDone = boardingRepository.saveNewBoarding(passengerHash);
-		assertEquals(checkinDone, 0);
+		assertEquals(CHECKIN_DONE_RETURN, checkinDone);
 	}
 
 }
