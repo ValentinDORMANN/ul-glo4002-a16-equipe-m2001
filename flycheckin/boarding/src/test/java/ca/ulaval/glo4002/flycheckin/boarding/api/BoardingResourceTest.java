@@ -11,6 +11,7 @@ public class BoardingResourceTest {
 
 	private BoardingResource boardingResource;
 	private JSONObject mockJson = mock(JSONObject.class);
+	private JSONObject mockJsonValid = mock(JSONObject.class);
 
 	@Before
 	public void initialization() {

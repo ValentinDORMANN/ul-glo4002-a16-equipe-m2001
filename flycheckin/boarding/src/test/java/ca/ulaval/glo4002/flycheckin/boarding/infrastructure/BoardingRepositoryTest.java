@@ -8,32 +8,31 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.BoardingPassenger;
+import javassist.NotFoundException;
 
 public class BoardingRepositoryTest {
 	private final int CHECKIN_DONE_RETURN = 0;
-	BoardingPassenger boardingPassengerTst;
-	private BoardingRepository boardingRepo;
+	BoardingPassenger boardingPassengerTest;
+	private BoardingRepository boardingRepository;
 
 	@Before
-	public void initiateTest() throws ParseException {
-		boardingRepo = new BoardingRepository();
-		boardingPassengerTst = new BoardingPassenger("JOE PATER", "B2F1J4L5", "HACH_PASSENGER");
-		boardingRepo.saveNewBoarding(boardingPassengerTst);
+	public void initiateTest() throws ParseException, NotFoundException {
+		boardingRepository = new BoardingRepository();
+		boardingPassengerTest = new BoardingPassenger("JOE PATER", "B2F1J4L5", "HACH_PASSENGER");
+		boardingRepository.saveNewBoarding(boardingPassengerTest);
 	}
 
 	@Test
 	public void WhenSavedNewBoardingThenReturnCheckinId() {
 		// Then
-		assertTrue(BoardingRepository.boardingPassengersList.containsValue(boardingPassengerTst));
+		assertTrue(BoardingRepository.boardingPassengersList.containsValue(boardingPassengerTest));
 	}
 
 	@Test
 	public void WhenSavedNewBoardingTwoTimesThenReturnNull() {
 		// When
-		int checkinDone = boardingRepo.saveNewBoarding(boardingPassengerTst);
-
-		// Then
-		assertEquals(CHECKIN_DONE_RETURN, checkinDone);
+		int checkinDone = boardingRepository.saveNewBoarding(boardingPassengerTest);
+		assertEquals(checkinDone, 0);
 	}
 
 }

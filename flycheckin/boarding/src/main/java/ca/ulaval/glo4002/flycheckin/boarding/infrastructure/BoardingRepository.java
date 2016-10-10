@@ -9,6 +9,7 @@ public class BoardingRepository {
 
 	public static Map<Integer, BoardingPassenger> boardingPassengersList = new HashMap<Integer, BoardingPassenger>();
 	private static int nbInstance = 1000;
+	private static final int BOARDING_NOT_FOUND = 0;
 
 	public int saveNewBoarding(BoardingPassenger boardingPassenger) {
 		boolean checkinDone = boardingPassengersList.containsValue(boardingPassenger);
@@ -17,6 +18,6 @@ public class BoardingRepository {
 			nbInstance += 1;
 			return nbInstance;
 		} else
-			return 0;
+			return BOARDING_NOT_FOUND;
 	}
 }
