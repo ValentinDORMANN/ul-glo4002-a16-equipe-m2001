@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.infrastructure.BoardingRepository;
+import javassist.NotFoundException;
 
 public class ServicesTest {
 	private final String PASSENGER_FULL_NAME = "John DOE";
@@ -31,7 +32,7 @@ public class ServicesTest {
 	}
 
 	@Test
-	public void WhenCreatingBoardingThenVerifySave() {
+	public void WhenCreatingBoardingThenVerifySave() throws NotFoundException {
 		// When
 		service.createBoarding(json);
 
@@ -40,7 +41,7 @@ public class ServicesTest {
 	}
 
 	@Test
-	public void WhenCreateBoardingThenReturnCheckinNumber() {
+	public void WhenCreateBoardingThenReturnCheckinNumber() throws NotFoundException {
 		// When
 		int checkin = service.createBoarding(json);
 
