@@ -18,37 +18,32 @@ import ca.ulaval.glo4002.flycheckin.reservation.domain.Services;
 public class BookingResource {
 	private Services service;
 	private JSONObject jsonRequest;
-	private boolean validatedJson = true;
 
 	@POST
 	public Response createBooking(@Context UriInfo uriInfo, String bookingRequest)
 			throws JSONException, ParseException {
 		jsonRequest = new JSONObject(bookingRequest);
-		int reservationNumber = 0;
-		service = new Services();
-		reservationNumber = service.createReservation(jsonRequest);
-		if (reservationNumber != 0) {
-			return Response.status(201).entity(uriInfo.getBaseUri().toString() + "reservations/" + reservationNumber)
-					.build();
+		if (validateJson(jsonRequest)) {
+			int reservationNumber = 0;
+			service = new Services();
+			reservationNumber = service.createReservation(jsonRequest);
+			if (reservationNumber != 0) {
+				return Response.status(201)
+						.entity(uriInfo.getBaseUri().toString() + "reservations/" + reservationNumber).build();
+			} else {
+				return Response.status(400).build();
+			}
 		} else {
 			return Response.status(400).build();
 		}
 	}
 
-	private boolean validateReservationDate(String reservationDate) {
-		if (!reservationDate.matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")) {
-			validatedJson = false;
-		}
-		return validatedJson;
-
-	}
-
-	private boolean validateflightDate(String flightDate) {
+	private boolean validateFlightDate(JSONObject bookingRequest) {
 		boolean validateDate = true;
 		try {
 			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ");
 			@SuppressWarnings("unused")
-			java.util.Date dateformatter = date.parse(flightDate);
+			java.util.Date dateformatter = date.parse(bookingRequest.getString("flight_date"));
 		} catch (Exception e) {
 			validateDate = false;
 		}
@@ -56,40 +51,23 @@ public class BookingResource {
 
 	}
 
-	private boolean validateBookingNumber(String bookingNumber) {
-		if (!bookingNumber.matches("^[0-9]+$")) {
-			validatedJson = false;
-		}
-		return validatedJson;
+	private boolean validateReservationDate(JSONObject bookingRequest) {
+		return ((String) bookingRequest.get("reservation_date")).matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}$");
 
 	}
 
-	private boolean validateFirstName(String firstname) {
-		if (!firstname.matches("^[a-zA-Z]+$")) {
-			validatedJson = false;
-		}
-		return validatedJson;
+	private boolean validateBookingNumber(JSONObject bookingRequest) {
+		return bookingRequest.getString("reservation_number").matches("^[0-9]+$");
+
+	}
+	private boolean validateFlightNumber(JSONObject bookingRequest) {
+		return !bookingRequest.getString("flight_number").isEmpty();
 
 	}
 
-	private boolean validateLastName(String name) {
-		if (!name.matches("^[a-zA-Z]+$")) {
-			validatedJson = false;
-		}
-		return validatedJson;
-
-	}
-
-	private boolean validatePassport(String passport) {
-		if (passport.isEmpty()) {
-			validatedJson = false;
-		}
-		return validatedJson;
-
-	}
-
-	private boolean validateReservationJson() {
-		return validatedJson;
+	public boolean validateJson(JSONObject bookingRequest) {
+		return validateFlightDate(bookingRequest) && validateReservationDate(bookingRequest)
+				&& validateBookingNumber(bookingRequest) && validateFlightNumber(bookingRequest);
 
 	}
 }

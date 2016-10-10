@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
-public class Booking /* implements BookingInterface */ {
+public class Booking {
 
 	private int reservationNumber;
 	private String reservationDate;
