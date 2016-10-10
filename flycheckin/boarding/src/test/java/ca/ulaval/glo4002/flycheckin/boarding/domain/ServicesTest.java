@@ -16,9 +16,8 @@ public class ServicesTest {
 	private final String PASSEPORT_NUMBER = "B0074584";
 	private final int CHECKIN_NUMBER = 1200;
 	private JSONObject json;
-	private BoardingRepository mockRepository = mock(BoardingRepository.class);
+	private BoardingRepository mockBoardingRepository;
 	private Services service;
-	private BoardingPassenger boardingPassenger;
 
 	@Before
 	public void initiateTest() {
@@ -26,9 +25,18 @@ public class ServicesTest {
 		json.put("fullname", PASSENGER_FULL_NAME);
 		json.put("passenger_hash", PASSENGER_HASH);
 		json.put("passeport_number", PASSEPORT_NUMBER);
-		service = new Services();
-		boardingPassenger = service.receptionBoardingPassenger(json);
-		when(mockRepository.saveNewBoarding(boardingPassenger)).thenReturn(CHECKIN_NUMBER);
+		mockBoardingRepository = mock(BoardingRepository.class);
+		service = new Services(mockBoardingRepository);
+		when(mockBoardingRepository.saveNewBoarding(PASSENGER_HASH)).thenReturn(CHECKIN_NUMBER);
+	}
+
+	@Test
+	public void WhenGetHashPassengerFromJsonThenReturnHashPassenger() {
+		// When
+		String passengerHash = service.receptionHashPassenger(json);
+
+		// Then
+		assertEquals(PASSENGER_HASH, passengerHash);
 	}
 
 	@Test
@@ -37,7 +45,7 @@ public class ServicesTest {
 		service.createBoarding(json);
 
 		// Then
-		verify(mockRepository).saveNewBoarding(boardingPassenger);
+		verify(mockBoardingRepository).saveNewBoarding(PASSENGER_HASH);
 	}
 
 	@Test

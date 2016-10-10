@@ -3,18 +3,16 @@ package ca.ulaval.glo4002.flycheckin.boarding.infrastructure;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.BoardingPassenger;
-
 public class BoardingRepository {
 
-	public static Map<Integer, BoardingPassenger> boardingPassengersList = new HashMap<Integer, BoardingPassenger>();
+	public static Map<Integer, String> boardingPassengersList = new HashMap<Integer, String>();
 	private static int nbInstance = 1000;
 	private static final int BOARDING_NOT_FOUND = 0;
 
-	public int saveNewBoarding(BoardingPassenger boardingPassenger) {
-		boolean checkinDone = boardingPassengersList.containsValue(boardingPassenger);
+	public int saveNewBoarding(String passengerHash) {
+		boolean checkinDone = boardingPassengersList.containsValue(passengerHash);
 		if (!checkinDone) {
-			boardingPassengersList.put(nbInstance, boardingPassenger);
+			boardingPassengersList.put(nbInstance, passengerHash);
 			nbInstance += 1;
 			return nbInstance;
 		} else
