@@ -29,6 +29,10 @@ public class BookingPassengers {
 		return flightNumber;
 	}
 
+	public Date flightDate() {
+		return flightDate;
+	}
+
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		JSONArray json_passengers = new JSONArray();

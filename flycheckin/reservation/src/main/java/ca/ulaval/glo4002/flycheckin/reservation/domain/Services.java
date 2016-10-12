@@ -83,6 +83,8 @@ public class Services {
 		int bookingNumber = Integer.parseInt(passengerHash.split(":")[1]);
 		BookingPassengers bookingPassengers = this.bookingRepository.getBookingInfos(bookingNumber);
 		Passenger passenger = bookingPassengers.getPassengerInfos(passengerHash);
-		return passenger.toJSONForBoardingResource();
+		JSONObject json = passenger.toJSONForBoardingResource();
+		json.put("date", bookingPassengers.flightDate());
+		return json;
 	}
 }
