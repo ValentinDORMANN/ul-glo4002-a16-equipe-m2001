@@ -89,11 +89,11 @@ public class BoardingResource {
 			int checkinId = this.services.createBoarding(passenger);
 			System.out.println("S06: Done");
 			return Response.ok(uriInfo.getBaseUri().toString() + "checkins/" + checkinId).build(); // save
-		} catch (JSONException e) { // info missing | invalid POST | boarding
-									// already done
+		} catch (JSONException e) {
+			// info missing | invalid POST | boarding already done
 			return Response.status(400).build();
-		} catch (NotFoundException e) { // passenger with passengerHash not
-										// found
+		} catch (NotFoundException e) {
+			// passenger with passengerHash not found
 			return Response.status(404).build();
 		}
 	}
@@ -104,7 +104,7 @@ public class BoardingResource {
 		return validatePassengerHash(passengerHash) && validateAgentId(agentId);
 	}
 
-	// TODO
+	// TODO add date
 	public boolean validateJsonPassenger(JSONObject json) {
 		String fullname = json.getString("fullname").trim();
 		String passportNumber = json.getString("passeport_number").trim();
@@ -126,5 +126,10 @@ public class BoardingResource {
 
 	private boolean validateFullname(String fullname) {
 		return fullname.matches("^[A-Z][a-z]+([-. ][A-Z][a-z]+)* [A-Z]+$");
+	}
+
+	// TODO
+	private boolean validateDate(String date) {
+		return true;
 	}
 }
