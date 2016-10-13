@@ -72,4 +72,13 @@ public class BookingResourceTest {
 		assertTrue(bookingResource.validateJson(jsonTest));
 	}
 
+	/*
+	 * @Test public void WhenCreatingBookingThenVerifyServiceCreateReservation()
+	 * throws NotFoundException { // When UriInfo uriInfo;
+	 * bookingResource.createBooking(uriInfo, bookingRequest); jsonTest= new
+	 * JSONObject(bookingRequest)
+	 * 
+	 * // Then verify(mockService).createReservation(jsonTest); }
+	 */
+
 }
