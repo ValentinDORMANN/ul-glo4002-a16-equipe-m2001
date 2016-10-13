@@ -41,33 +41,28 @@ public class BookingResource {
 	private boolean validateFlightDate(JSONObject bookingRequest) {
 		boolean validateDate = true;
 		try {
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ");
-			@SuppressWarnings("unused")
-			java.util.Date dateformatter = date.parse(bookingRequest.getString("flight_date"));
+			SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+			java.util.Date date = dateformat.parse(bookingRequest.getString("flight_date"));
 		} catch (Exception e) {
 			validateDate = false;
 		}
 		return validateDate;
-
 	}
 
 	private boolean validateReservationDate(JSONObject bookingRequest) {
 		return ((String) bookingRequest.get("reservation_date")).matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}$");
-
 	}
 
 	private boolean validateBookingNumber(JSONObject bookingRequest) {
-		return bookingRequest.getString("reservation_number").matches("^[0-9]+$");
-
+		return (bookingRequest.getInt("reservation_number") > 0);
 	}
+
 	private boolean validateFlightNumber(JSONObject bookingRequest) {
 		return !bookingRequest.getString("flight_number").isEmpty();
-
 	}
 
 	public boolean validateJson(JSONObject bookingRequest) {
 		return validateFlightDate(bookingRequest) && validateReservationDate(bookingRequest)
 				&& validateBookingNumber(bookingRequest) && validateFlightNumber(bookingRequest);
-
 	}
 }
