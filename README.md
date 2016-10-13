@@ -21,7 +21,7 @@
 **no    ¦ nom							 ¦ status**
 - Story1:  Heartbeat : 					 	   terminé
 - Story2:  Réservation: Événement - nouvelle réservation :  	   terminé
-- Story3:  Réservation: Obtenir l'information sur une réservation :terminé
+- Story3:  Réservation: Obtenir l'information sur une réservation :  en cours (encore en test)
 - Story4:  Checkin: Enregistrement par un agent : 		   en cours (encore en test)
 
 ## 3 Résumé
@@ -39,12 +39,9 @@ mvn test
 
 4.1 Violation de principes
 
-Nous avons initialement utilisé une base de donnée XML ce qui a impliqué une perte de temps.
+Nous avons initialement utilisé une base de donnée XML ce qui a impliqué une perte de temps .
 
 4.2 Décisions à communiquer
-
-- Nous n'avons pas mis de jeu de données test dans notre projet
-- La story 4 est incomplète, nous sommes en train de la travailler
 
 
 4.3 Demandes spéciales autorisées par le corps enseignant
