@@ -107,8 +107,8 @@ public class BoardingResource {
 	// TODO add date
 	public boolean validateJsonPassenger(JSONObject json) {
 		String fullname = json.getString("fullname").trim();
-		String passportNumber = json.getString("passeport_number").trim();
-		String hash = json.getString("passenger_number").trim();
+		String passportNumber = json.getString("passport_number").trim();
+		String hash = json.getString("passenger_hash").trim();
 		return validateFullname(fullname) && validatePassportNumber(passportNumber) && validatePassengerHash(hash);
 	}
 

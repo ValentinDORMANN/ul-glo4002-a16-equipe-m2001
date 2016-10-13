@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.api;
 
 import static org.junit.Assert.*;
-import static org.mockito.BDDMockito.*;
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -17,7 +16,6 @@ public class BoardingResourceTest {
 	public final int AGENT_ID = 10;
 	public final String PASSENGER_FULLNAME = "Virgil VOILLOT";
 	public final String PASSENGER_PASSPORT = "7HTDEFRE";
-	public final String PASSENGER_NUMBER = "74563";
 	public final String RESERVATION_DATE = "2016-01-31";
 
 	@Before
@@ -27,60 +25,65 @@ public class BoardingResourceTest {
 		jsonBoarding.put("by", Integer.toString(AGENT_ID));
 
 		jsonPassenger.put("fullname", PASSENGER_FULLNAME);
-		jsonPassenger.put("passeport_number", PASSENGER_PASSPORT);
-		jsonPassenger.put("passenger_number", PASSENGER_NUMBER);
+		jsonPassenger.put("passport_number", PASSENGER_PASSPORT);
+		jsonPassenger.put("passenger_hash", PASSENGER_HASH);
 		// TODO date
 	}
 
 	@Test(expected = Exception.class)
-	public void givenBoardingJsonMessageWhenReadThenValidatePassengerHash() {
-		willThrow(Exception.class).given(boardingResource).validateJsonBoarding(jsonBoarding);
+	public void givenPostWithMissingPassengerInfoThenThrowException() {
+		// Given
 		jsonBoarding.remove("passenger_hash");
 
+		// When
 		boardingResource.validateJsonBoarding(jsonBoarding);
 	}
 
 	@Test(expected = Exception.class)
-	public void givenBoardingJsonMessageWhenReadThenValidateAgentId() {
-		willThrow(Exception.class).given(boardingResource).validateJsonBoarding(jsonBoarding);
+	public void givenPostWithMissingAgentIdThenThrowException() {
+		// Given
 		jsonBoarding.remove("by");
 
+		// When
 		boardingResource.validateJsonBoarding(jsonBoarding);
 	}
 
 	@Test
-	public void givenInValidateBoardingMessageWhenHavingValideRequestThenVerify() throws RuntimeException {
+	public void givenValidBoardingMessageWhenValidThenReturnTrue() throws RuntimeException {
 		assertTrue(boardingResource.validateJsonBoarding(jsonBoarding));
 	}
 
 	@Test(expected = Exception.class)
-	public void givenPassengerJsonMessageWhenReadThenValidateFullname() {
-		willThrow(Exception.class).given(boardingResource).validateJsonPassenger(jsonPassenger);
+	public void givenJsonWithEmptyFullNameWhenValidateThenReturnException() {
+		// Given
 		jsonPassenger.remove("fullname");
 
+		// When
 		boardingResource.validateJsonPassenger(jsonPassenger);
 	}
 
 	@Test(expected = Exception.class)
-	public void givenPassengerJsonMessageWhenReadThenValidatePassportNumber() {
-		willThrow(Exception.class).given(boardingResource).validateJsonPassenger(jsonPassenger);
-		jsonPassenger.remove("passeport_number");
+	public void givenJsonWithEmptyPassportNumberWhenValidateThenReturnException() {
+		// Given
+		jsonPassenger.remove("passport_number");
 
+		// When
 		boardingResource.validateJsonPassenger(jsonPassenger);
 	}
 
 	@Test(expected = Exception.class)
-	public void givenPassengerJsonMessageWhenReadThenValidatePassengerNumber() {
-		willThrow(Exception.class).given(boardingResource).validateJsonPassenger(jsonPassenger);
-		jsonPassenger.remove("passenger_number");
+	public void givenJsonWithEmptyPassengerHashWhenValidateThenReturnException() {
+		// Given
+		jsonPassenger.remove("passenger_hash");
 
+		// When
 		boardingResource.validateJsonPassenger(jsonPassenger);
 	}
 
 	// TODO date
 
 	@Test
-	public void givenInValidatePassengertMessageWhenHavingValideRequestThenVerify() throws RuntimeException {
-		assertFalse(boardingResource.validateJsonPassenger(jsonPassenger));
+	public void givenValidAnswerThenValidationShouldReturnTrue() throws RuntimeException {
+		assertTrue(boardingResource.validateJsonPassenger(jsonPassenger));
 	}
 }
