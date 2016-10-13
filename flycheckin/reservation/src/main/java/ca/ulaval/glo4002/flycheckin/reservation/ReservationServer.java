@@ -6,6 +6,9 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
+import org.json.JSONObject;
+
+import ca.ulaval.glo4002.flycheckin.reservation.domain.Services;
 
 public class ReservationServer implements Runnable {
 
@@ -14,6 +17,7 @@ public class ReservationServer implements Runnable {
 	}
 
 	public void run() {
+		setData();
 		int httpPort = Integer.valueOf(System.getProperty("reservation.port"));
 
 		Server server = new Server(httpPort);
@@ -23,7 +27,7 @@ public class ReservationServer implements Runnable {
 			server.start();
 			server.join();
 		} catch (Exception e) {
-			e.printStackTrace(); 
+			e.printStackTrace();
 		} finally {
 			server.destroy();
 		}
@@ -34,5 +38,18 @@ public class ReservationServer implements Runnable {
 				.packages("ca.ulaval.glo4002.flycheckin.reservation").register(JacksonFeature.class));
 		ServletHolder jerseyServletHolder = new ServletHolder(container);
 		servletContextHandler.addServlet(jerseyServletHolder, "/*");
+	}
+
+	private void setData() {
+		String stringJSON = "{'reservation_number': 74563,'reservation_date': '2016-01-31','reservation_confirmation': 'A3833','flight_number': 'AC1765','flight_date': '2016-10-30T00:00:00Z','payment_location': '/payments/da39a3ee5e6b4b0d3255bfef95601890afd80709','passengers': [{ 'first_name': 'Virgil','last_name': 'VOILLOT','age': 18,'passport_number': '7HTDEFRE','seat_class': 'economy'}]}";
+		JSONObject json = new JSONObject(stringJSON);
+		Services service = new Services();
+		service.createReservation(json);
+		stringJSON = "{'reservation_number': 65329,'reservation_date': '2016-01-31','reservation_confirmation': 'A3933','flight_number': 'AC1765','flight_date': '2016-10-30T00:00:00Z','payment_location': '/payments/da39a3ee5e6b4b0d3255bfef95601890afd80709','passengers': [{'first_name': 'Autre','last_name': 'FRANCE','age': 18,'passport_number': '5KDTERWSA','seat_class': 'economy'}]}";
+		json = new JSONObject(stringJSON);
+		service.createReservation(json);
+		stringJSON = "{'reservation_number': 44444,'reservation_date': '2016-09-19','reservation_confirmation': 'B4444','flight_number': 'AF5555','flight_date': '2016-11-23T15:42:00Z','payment_location': '/payments/cf49a3ee5e6b4b0d4521hdbc95601890afd85462','passengers': [{'first_name': 'AGBOTON','last_name': 'Mahugnon','age': 8,'passport_number': 'B0074584','seat_class': 'business'}]}";
+		json = new JSONObject(stringJSON);
+		service.createReservation(json);
 	}
 }

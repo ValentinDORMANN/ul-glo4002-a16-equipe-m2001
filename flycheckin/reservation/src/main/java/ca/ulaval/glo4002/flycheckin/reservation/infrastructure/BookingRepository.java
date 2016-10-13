@@ -9,7 +9,7 @@ import javassist.NotFoundException;
 
 public class BookingRepository {
 
-	public static Map<Integer, Booking> bookingList = new HashMap<Integer, Booking>();;
+	public static Map<Integer, Booking> bookingList = new HashMap<Integer, Booking>();
 	public static Map<Integer, BookingPassengers> bookingPassengersList = new HashMap<Integer, BookingPassengers>();
 
 	public int saveNewBooking(Booking booking, BookingPassengers bookingPassengers) {

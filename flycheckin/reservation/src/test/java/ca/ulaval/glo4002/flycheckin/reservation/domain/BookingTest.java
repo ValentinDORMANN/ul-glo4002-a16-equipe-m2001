@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Before;
 
-import ca.ulaval.glo4002.flycheckin.reservation.domain.Booking;
-
 public class BookingTest {
 
 	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -16,7 +14,6 @@ public class BookingTest {
 	private String FLIGHT_NUMBER = "AC1765";
 	private String FLIGHT_DATE = "2016-10-30";
 	private String PAYMENT_LOCATION = "payments/da3944";
-
 	private Booking booking;
 
 	@Before

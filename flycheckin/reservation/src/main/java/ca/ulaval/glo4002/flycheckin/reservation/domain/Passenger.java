@@ -34,6 +34,14 @@ public class Passenger {
 		return json;
 	}
 
+	public JSONObject toJSONForBoardingResource() {
+		JSONObject json = new JSONObject();
+		json.put("passenger_hash", this.hashCode);
+		json.put("fullname", this.firstName + " " + this.lastName);
+		json.put("passport_number", this.passportNumber);
+		return json;
+	}
+
 	public String getHashCode() {
 		return this.hashCode;
 	}
