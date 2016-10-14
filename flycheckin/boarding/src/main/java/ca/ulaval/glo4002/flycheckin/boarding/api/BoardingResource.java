@@ -39,7 +39,9 @@ public class BoardingResource {
 			String response_string = EntityUtils.toString(entityAnswer, "UTF-8");
 			JSONObject passengerJson = new JSONObject(response_string);
 			int checkinId = this.services.createBoarding(passengerJson);
-			System.out.println(checkinId);
+			if (checkinId == 0) {
+				return Response.status(404).build();
+			}
 			return Response.ok(uriInfo.getBaseUri().toString() + "checkins/" + checkinId).build();
 		} catch (JSONException e) {
 			return Response.status(404).build();

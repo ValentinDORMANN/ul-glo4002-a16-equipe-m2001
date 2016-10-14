@@ -26,9 +26,7 @@ public class BookingResource {
 	public Response createBooking(@Context UriInfo uriInfo, JSONObject jsonRequest)
 			throws JSONException, ParseException {
 		if (validateJson(jsonRequest)) {
-			int reservationNumber = 0;
-			// service = new Services();
-			reservationNumber = service.createReservation(jsonRequest);
+			int reservationNumber = service.createReservation(jsonRequest);
 			if (reservationNumber != 0) {
 				return Response.status(201)
 						.entity(uriInfo.getBaseUri().toString() + "reservations/" + reservationNumber).build();
