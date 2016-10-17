@@ -18,13 +18,17 @@ import ca.ulaval.glo4002.flycheckin.reservation.domain.Services;
 public class BookingResource {
 	private Services service;
 
+	public BookingResource() {
+	}
+
 	public BookingResource(Services service) {
 		this.service = service;
 	}
 
 	@POST
-	public Response createBooking(@Context UriInfo uriInfo, JSONObject jsonRequest)
+	public Response createBooking(@Context UriInfo uriInfo, String stringJsonRequest)
 			throws JSONException, ParseException {
+		JSONObject jsonRequest = new JSONObject(stringJsonRequest);
 		if (validateJson(jsonRequest)) {
 			int reservationNumber = service.createReservation(jsonRequest);
 			if (reservationNumber != 0) {
