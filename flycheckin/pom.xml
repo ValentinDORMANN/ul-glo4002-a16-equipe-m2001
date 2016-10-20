@@ -74,4 +74,8 @@
 			 </dependency>
 		</dependencies>
 	</dependencyManagement>
+  <modules>
+    <module>reservation</module>
+    <module>app</module>
+  </modules>
 </project>

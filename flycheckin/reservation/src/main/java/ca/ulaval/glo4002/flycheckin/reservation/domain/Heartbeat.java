@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
 public class Heartbeat {
-  private final String token;
-  private final long date;
+  public final String token;
+  public final long date;
 
   public Heartbeat(String token) {
     this.token = token;
