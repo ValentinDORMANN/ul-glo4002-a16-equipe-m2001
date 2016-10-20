@@ -1,27 +1,16 @@
 package ca.ulaval.glo4002.flycheckin.reservation.api;
 
-import static org.junit.Assert.assertEquals;
+/*public class HeartbeatResourceTest extends JerseyTest {
+  // private ResourceConfig resourceConfig;
+  private Response response;
 
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Response;
+  @Test
+  public void givenValidRequestWhenHeartbeatIsInvokeThenReturnStatusOk() {
+    // resourceConfig = new ResourceConfig(HeartbeatResource.class);
 
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
-import org.junit.Before;
+    response = target("/heartbeat").queryParam("token", "").request().get();
 
-public class HeartbeatResourceTest extends JerseyTest{
-	//private HeartbeatResource heartbeatResource;
-	private  Response response;
-	@Before
-	public Application initialiaze(){
-		return new ResourceConfig(HeartbeatResource.class);
-		
-	}
-	public void givenArequestWhenHeartbeatIsInvokeThenReturnStatus(){
-		response = target("/heartbeat").queryParam("token", "").request().get();
-		
-		assertEquals(response.getStatus(),200);
-		
-	}
-	
-}
+    assertEquals(200, response.getStatus());
+  }
+
+}*/
