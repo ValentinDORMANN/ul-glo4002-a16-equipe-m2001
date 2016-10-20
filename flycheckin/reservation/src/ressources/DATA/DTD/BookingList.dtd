@@ -1,6 +1,0 @@
-<!ELEMENT bookingList (booking*)>
-<!ELEMENT booking (bookingDate+, bookingConfirm+, paymentLocation+)>
-<!ATTLIST booking number CDATA #REQUIRED>
-<!ELEMENT bookingDate (#PCDATA)>
-<!ELEMENT bookingConfirm (#PCDATA)>
-<!ELEMENT paymentLocation (#PCDATA)>
