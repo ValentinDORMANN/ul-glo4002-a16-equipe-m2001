@@ -22,8 +22,8 @@ public class ReservationServer implements Runnable {
     try {
       server.start();
       server.join();
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception ex) {
+      ex.printStackTrace();
     } finally {
       server.destroy();
     }
