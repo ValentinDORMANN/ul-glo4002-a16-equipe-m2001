@@ -11,7 +11,8 @@ public class ReservationInMemory {
   private static Map<Integer, Reservation> reservationList = new HashMap<Integer, Reservation>();
 
   public void saveNewReservation(Reservation newReservation) {
-
+    int reservationNumber = newReservation.getReservationNumber();
+    reservationList.put(reservationNumber, newReservation);
   }
 
   public Reservation getReservationByNumber(int reservationNumber) throws NotFoundReservationException {
