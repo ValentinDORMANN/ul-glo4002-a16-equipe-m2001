@@ -2,12 +2,12 @@ package ca.ulaval.glo4002.flycheckin.reservation.api;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import javax.ws.rs.core.Response.*;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.*;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.*;
 
 @Path("/events/reservation-created")
-@Produces(MediaType.APPLICATION_JSON)
 public class ReservationResource {
 
   private ReservationService reservationService;
@@ -21,7 +21,14 @@ public class ReservationResource {
   }
 
   @POST
+  @Consumes("application/json")
   public Response createReserversation(ReservationDto reservationDto) {
-    return Response.status(201).build();
+    try {
+      Reservation reservation = this.reservationService.createReservation(reservationDto);
+      String location = "";
+      return Response.status(Status.CREATED).entity(location).build();
+    } catch (Exception ex) {
+      return Response.status(Status.BAD_REQUEST).build();
+    }
   }
 }
