@@ -26,26 +26,6 @@
             <target>${java.version}</target>
           </configuration>
         </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>${checkstyle.version}</version>        
-          <executions>
-            <execution>
-              <id>validate</id>
-              <phase>validate</phase>
-              <configuration>
-                <encoding>UTF-8</encoding>
-                <consoleOutput>true</consoleOutput>
-                <failsOnError>true</failsOnError>
-                <linkXRef>false</linkXRef>
-              </configuration>
-              <goals>
-                <goal>check</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
       </plugins>    
     </pluginManagement>
 	</build>
@@ -61,17 +41,16 @@
 				<artifactId>jersey-media-json-jackson</artifactId>
 				<version>2.23.2</version>
 			</dependency>
-			
-			 <dependency>
-    			<groupId>org.mockito</groupId>
-    			<artifactId>mockito-all</artifactId>
-    			<version>1.10.19</version>
-    		</dependency>
-			 <dependency>
-			   <groupId>com.puppycrawl.tools</groupId>
-			   <artifactId>checkstyle</artifactId>
-			   <version>6.5</version>
-			 </dependency>
+			<dependency>
+    		<groupId>org.mockito</groupId>
+    		<artifactId>mockito-all</artifactId>
+    		<version>1.10.19</version>
+    	</dependency>
+			<dependency>
+			  <groupId>com.puppycrawl.tools</groupId>
+			  <artifactId>checkstyle</artifactId>
+			  <version>6.5</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
   <modules>
