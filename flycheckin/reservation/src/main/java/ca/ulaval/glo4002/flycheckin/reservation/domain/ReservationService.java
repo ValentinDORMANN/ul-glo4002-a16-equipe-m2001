@@ -7,5 +7,4 @@ public class ReservationService {
   public Reservation createReservation(ReservationDto reservationDto) {
     return new Reservation(reservationDto);
   }
-
 }
