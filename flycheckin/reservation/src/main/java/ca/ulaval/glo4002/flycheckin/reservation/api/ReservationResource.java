@@ -22,13 +22,17 @@ public class ReservationResource {
 
   @POST
   @Consumes("application/json")
-  public Response createReserversation(ReservationDto reservationDto) {
+  public Response createReserversation(@Context UriInfo uriInfo, ReservationDto reservationDto) {
     try {
       Reservation reservation = this.reservationService.createReservation(reservationDto);
-      String location = "";
+      String location = createURLforGetReservation(uriInfo, reservation);
       return Response.status(Status.CREATED).entity(location).build();
     } catch (Exception ex) {
       return Response.status(Status.BAD_REQUEST).build();
     }
+  }
+
+  private String createURLforGetReservation(UriInfo uriInfo, Reservation reservation) {
+    return uriInfo.getBaseUri().toString() + "/reservations/" + reservation.getReservationNumber();
   }
 }
