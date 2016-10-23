@@ -7,4 +7,5 @@ public class PassengerDto {
   public int age;
   public String passport_number;
   public String seat_class;
+  public boolean child;
 }
