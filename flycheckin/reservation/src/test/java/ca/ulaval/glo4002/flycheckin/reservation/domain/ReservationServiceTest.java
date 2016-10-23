@@ -9,8 +9,9 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.ReservationDto;
 
 public class ReservationServiceTest {
+
   private ReservationDto reservationDto = new ReservationDto();
-  private Reservation reservationmock = mock(Reservation.class);
+  private Reservation mockreservation = mock(Reservation.class);
   private ReservationService service;
 
   @Before
@@ -20,7 +21,10 @@ public class ReservationServiceTest {
 
   @Test
   public void givenDTOReservationWhenCreatingReservationThenVerySave() {
-    willReturn(reservationmock).given(service).createReservation(reservationDto);
-    // verify(reservationmock,times(1)).save();
+    willReturn(mockreservation).given(service).createReservation(reservationDto);
+
+    mockreservation = service.createReservation(reservationDto);
+
+    // verify(mockreservation,times(1)).save();
   }
 }

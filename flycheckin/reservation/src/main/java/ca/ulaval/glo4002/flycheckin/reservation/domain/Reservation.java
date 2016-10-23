@@ -3,6 +3,9 @@ package ca.ulaval.glo4002.flycheckin.reservation.domain;
 import java.util.Date;
 import java.util.List;
 
+import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.ReservationDto;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+
 public class Reservation {
   private int reservationNumber;
   private Date reservationDate;
@@ -11,46 +14,30 @@ public class Reservation {
   private Date flightDate;
   private String paymentLocation;
   private List<Passenger> passengers;
+  private ReservationInMemory reservationInMemory = new ReservationInMemory();
 
   public Reservation() {
   }
 
-  public Reservation(int reservationNumber, Date reservationDate, String reservationConfirmation, String flightNumber,
-      Date flightDate, String paymentLocation, List<Passenger> passengers) {
-    this.reservationNumber = reservationNumber;
-    this.reservationDate = reservationDate;
-    this.reservationConfirmation = reservationConfirmation;
-    this.flightNumber = flightNumber;
-    this.flightDate = flightDate;
-    this.paymentLocation = paymentLocation;
-    this.passengers = passengers;
+  public Reservation(ReservationDto reservationDto) {
+    this.reservationNumber = reservationDto.reservation_number;
+    this.reservationDate = reservationDto.reservation_date;
+    this.reservationConfirmation = reservationDto.reservation_confirmation;
+    this.flightNumber = reservationDto.flight_number;
+    this.flightDate = reservationDto.flight_date;
+    this.paymentLocation = reservationDto.payment_location;
+    for (int i = 0; i < reservationDto.passengers.size(); i++) {
+      Passenger passenger = new Passenger(reservationDto.passengers.get(i));
+      this.passengers.add(passenger);
+    }
+    save();
   }
 
   public int getReservationNumber() {
     return reservationNumber;
   }
 
-  public void setReservationNumber(int reservationNumber) {
-    this.reservationNumber = reservationNumber;
-  }
-
-  public void setReservationDate(Date reservationDate) {
-    this.reservationDate = reservationDate;
-  }
-
-  public void setReservationConfirmation(String reservationConfirmation) {
-    this.reservationConfirmation = reservationConfirmation;
-  }
-
-  public void setFlightNumber(String flightNumber) {
-    this.flightNumber = flightNumber;
-  }
-
-  public void setFlightDate(Date flightDate) {
-    this.flightDate = flightDate;
-  }
-
-  public void setPaymentLocation(String paymentLocation) {
-    this.paymentLocation = paymentLocation;
+  public void save() {
+    reservationInMemory.saveNewReservation(this);
   }
 }
