@@ -43,12 +43,8 @@ public class Reservation {
     return reservationInMemory.getReservationByNumber(reservationNumber);
   }
 
-  public Date getReservationDate() {
-    return reservationDate;
-  }
-
-  public String getReservationConfirmation() {
-    return reservationConfirmation;
+  public int getReservationNumber() {
+    return reservationNumber;
   }
 
   public String getFlightNumber() {
@@ -59,19 +55,8 @@ public class Reservation {
     return flightDate;
   }
 
-  public String getPaymentLocation() {
-    return paymentLocation;
-  }
-
   public List<Passenger> getPassengers() {
     return passengers;
   }
 
-  public ReservationInMemory getReservationInMemory() {
-    return reservationInMemory;
-  }
-
-  public int getReservationNumber() {
-    return reservationNumber;
-  }
 }

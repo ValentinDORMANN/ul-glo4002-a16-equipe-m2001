@@ -3,7 +3,9 @@ package ca.ulaval.glo4002.flycheckin.reservation.api.DTO;
 import java.util.*;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.*;
 
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ReservationDto {
 
   public int reservation_number;

@@ -8,10 +8,11 @@ import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.*;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.*;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.*;
 
-@Path("/events/reservation-created")
+@Path("")
 public class ReservationResource {
 
   @POST
+  @Path("/events/reservation-created")
   @Consumes("application/json")
   public Response createReserversation(@Context UriInfo uriInfo, ReservationDto reservationDto) {
     try {
@@ -24,6 +25,14 @@ public class ReservationResource {
   }
 
   private String createURLforGetReservation(UriInfo uriInfo, Reservation reservation) {
-    return uriInfo.getBaseUri().toString() + "/reservations/" + reservation.getReservationNumber();
+    return uriInfo.getBaseUri().toString() + "reservations/" + reservation.getReservationNumber();
+  }
+
+  @GET
+  @Path("/reservations/{reservation_number}")
+  @Produces("application/json")
+  public Response getReserversation(@PathParam("reservation_number") int reservation_number) {
+    Reservation reservation = new Reservation();
+    return Response.status(200).entity(reservation.readReservationByNumber(reservation_number)).build();
   }
 }
