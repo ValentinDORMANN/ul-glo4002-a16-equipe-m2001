@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.*;
+
 import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.*;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.*;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.*;
@@ -51,6 +53,7 @@ public class Reservation {
     return flightNumber;
   }
 
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
   public Date getFlightDate() {
     return flightDate;
   }
