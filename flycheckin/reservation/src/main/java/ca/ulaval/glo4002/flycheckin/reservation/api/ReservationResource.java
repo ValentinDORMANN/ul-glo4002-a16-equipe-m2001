@@ -1,12 +1,19 @@
 package ca.ulaval.glo4002.flycheckin.reservation.api;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import javax.ws.rs.core.Response.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.*;
-import ca.ulaval.glo4002.flycheckin.reservation.domain.*;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.*;
+import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
+import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationException;
 
 @Path("")
 public class ReservationResource {

@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.*;
+import ca.ulaval.glo4002.flycheckin.reservation.api.dto.PassengerDto;
 
 public class Passenger {
 
-  private int CHILD_AGE = 15;
+  private static final int CHILD_AGE = 15;
 
   private String passengerHash;
   private String firstName;

@@ -1,6 +1,6 @@
-package ca.ulaval.glo4002.flycheckin.reservation.api.DTO;
+package ca.ulaval.glo4002.flycheckin.reservation.api.dto;
 
-import com.fasterxml.jackson.databind.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class PassengerDto {

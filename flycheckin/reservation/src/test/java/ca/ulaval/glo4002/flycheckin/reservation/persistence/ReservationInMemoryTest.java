@@ -28,7 +28,7 @@ public class ReservationInMemoryTest {
   }
 
   @Test(expected = NotFoundReservationException.class)
-  public void WhenGetReservationWithWrongReservationNumberThenReturnExecption() {
+  public void whenGetReservationWithWrongReservationNumberThenReturnExecption() {
     reservationInMemory.getReservationByNumber(WRONG_RESERVATION_NUMBER);
   }
 

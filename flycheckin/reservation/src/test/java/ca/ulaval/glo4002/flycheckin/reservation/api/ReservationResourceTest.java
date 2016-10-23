@@ -2,12 +2,15 @@ package ca.ulaval.glo4002.flycheckin.reservation.api;
 
 import static org.mockito.Mockito.*;
 
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
-import org.junit.*;
-import org.mockito.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.*;
+import ca.ulaval.glo4002.flycheckin.reservation.api.dto.PassengerDto;
+import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 
 public class ReservationResourceTest {
 

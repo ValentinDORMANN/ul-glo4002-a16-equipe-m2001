@@ -1,9 +1,9 @@
-package ca.ulaval.glo4002.flycheckin.reservation.api.DTO;
+package ca.ulaval.glo4002.flycheckin.reservation.api.dto;
 
-import java.util.*;
+import java.util.Date;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ReservationDto {
