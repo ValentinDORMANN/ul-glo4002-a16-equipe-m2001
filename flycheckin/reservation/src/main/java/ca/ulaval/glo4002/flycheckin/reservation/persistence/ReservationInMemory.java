@@ -11,7 +11,7 @@ public class ReservationInMemory {
 
   private static Map<Integer, Reservation> reservationList = new HashMap<Integer, Reservation>();
 
-  public void saveNewReservation(Reservation newReservation) {
+  public void saveNewReservation(Reservation newReservation) throws IllegalArgumentReservationException {
     int reservationNumber = newReservation.getReservationNumber();
     if (reservationList.containsKey(reservationNumber))
       throw new IllegalArgumentReservationException("Reservation " + reservationNumber + " already exists.");

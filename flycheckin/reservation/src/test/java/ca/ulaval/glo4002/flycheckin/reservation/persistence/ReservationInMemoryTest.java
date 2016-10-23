@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
 public class ReservationInMemoryTest {
@@ -32,11 +33,16 @@ public class ReservationInMemoryTest {
   }
 
   @Test
-  public void givenNotEmptyReservationListWhenGetStoredReversationThenReturnReservation() throws ParseException {
+  public void givenNotEmptyReservationListWhenGetStoredReversationThenReturnReservation() {
     reservationInMemory.saveNewReservation(mockReservation);
 
     Reservation reservation = reservationInMemory.getReservationByNumber(RESERVATION_NUMBER);
 
     assertEquals(mockReservation, reservation);
+  }
+
+  @Test(expected = IllegalArgumentReservationException.class)
+  public void givenNotEmptyReservationListWhenSaveReversationAlreadyStoredThenReturnException() {
+    reservationInMemory.saveNewReservation(mockReservation);
   }
 }
