@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.ReservationDto;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.*;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.*;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.*;
 
 public class Reservation {
   private int reservationNumber;
@@ -16,15 +16,19 @@ public class Reservation {
   private List<Passenger> passengers;
   private ReservationInMemory reservationInMemory = new ReservationInMemory();
 
-  public Reservation(ReservationDto reservationDto) {
+  public Reservation() {
+  }
+
+  public Reservation(ReservationDto reservationDto) throws IllegalArgumentReservationException {
+    this.passengers = new ArrayList<Passenger>();
     this.reservationNumber = reservationDto.reservation_number;
     this.reservationDate = reservationDto.reservation_date;
     this.reservationConfirmation = reservationDto.reservation_confirmation;
     this.flightNumber = reservationDto.flight_number;
     this.flightDate = reservationDto.flight_date;
     this.paymentLocation = reservationDto.payment_location;
-    for (int i = 0; i < reservationDto.passengers.size(); i++) {
-      Passenger passenger = new Passenger(reservationDto.passengers.get(i));
+    for (int i = 0; i < reservationDto.passengers.length; i++) {
+      Passenger passenger = new Passenger(reservationDto.passengers[i]);
       this.passengers.add(passenger);
     }
     save();
@@ -34,7 +38,7 @@ public class Reservation {
     return reservationNumber;
   }
 
-  private void save() {
+  public void save() throws IllegalArgumentReservationException {
     reservationInMemory.saveNewReservation(this);
   }
 }

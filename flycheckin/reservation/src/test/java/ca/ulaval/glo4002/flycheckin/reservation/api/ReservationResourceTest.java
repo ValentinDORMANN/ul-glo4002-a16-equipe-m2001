@@ -1,34 +1,45 @@
 package ca.ulaval.glo4002.flycheckin.reservation.api;
 
-import javax.ws.rs.core.Response;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
-import org.junit.Before;
-import org.mockito.Mock;
+import javax.ws.rs.core.*;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.ReservationDto;
-import ca.ulaval.glo4002.flycheckin.reservation.domain.ReservationService;
+import org.junit.*;
+import org.mockito.*;
+
+import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.*;
+import ca.ulaval.glo4002.flycheckin.reservation.domain.*;
 
 public class ReservationResourceTest {
 
+  private static final int RESERVATION_NUMBER = 123456;
+  private static final int RESERVATION_NUMBER2 = 1234567;
   private ReservationResource reservationResource;
   private Response createdResponse;
   private Response badRequestResponse;
   @Mock
-  private ReservationService reservationService;
-  @Mock
   private ReservationDto reservationDto;
+  @Mock
+  private UriInfo urinfo;
 
   @Before
   public void setUp() {
-    this.reservationResource = new ReservationResource(this.reservationService);
+    this.reservationResource = new ReservationResource();
+
+    this.reservationDto = mock(ReservationDto.class);
     this.createdResponse = Response.status(201).build();
     this.badRequestResponse = Response.status(400).build();
+
+    this.reservationDto.reservation_number = RESERVATION_NUMBER;
+    PassengerDto[] passengers = {};
+    this.reservationDto.passengers = passengers;
   }
 
-  /*  @Test
-  public void givenReservationDto_whenCreateReserversation_thenBackCreatedResponse() {
-    Response response = this.reservationResource.createReserversation(this.reservationDto);
-    assertEquals(this.createdResponse.getStatus(), response.getStatus());
-  }*/
+  @Test
+  public void givenReservationDto_whenCreateReservation_thenBackReservation() {
+    Reservation reservation = new Reservation(reservationDto);
+    assertEquals(RESERVATION_NUMBER, reservation.getReservationNumber());
+  }
 
 }

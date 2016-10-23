@@ -1,29 +1,33 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 
-import org.junit.Before;
+import org.junit.*;
+import org.mockito.*;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.ReservationDto;
+import ca.ulaval.glo4002.flycheckin.reservation.api.DTO.*;
 
 public class ReservationServiceTest {
 
-  private ReservationDto reservationDto = new ReservationDto();
-  private Reservation mockreservation = mock(Reservation.class);
+  @Mock
+  private ReservationDto reservationDto;
+  private Reservation reservation;
   private ReservationService service;
 
   @Before
   public void initialize() {
+    reservationDto = new ReservationDto();
+    PassengerDto[] passengers = {};
+    reservationDto.passengers = passengers;
     service = new ReservationService();
   }
 
-  /*  @Test
+  @Test
   public void givenDTOReservationWhenCreatingReservationThenVerySave() {
-    willReturn(mockreservation).given(service).createReservation(reservationDto);
-  
-    mockreservation = service.createReservation(reservationDto);
-  
-    // verify(mockreservation,times(1)).save();
-  }*/
+
+    this.reservation = service.createReservation(reservationDto);
+
+    assertFalse(this.reservation == null);
+  }
 
 }

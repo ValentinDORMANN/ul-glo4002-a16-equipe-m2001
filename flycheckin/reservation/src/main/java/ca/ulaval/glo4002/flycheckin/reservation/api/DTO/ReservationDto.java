@@ -14,5 +14,5 @@ public class ReservationDto {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
   public Date flight_date;
   public String payment_location;
-  public List<PassengerDto> passengers;
+  public PassengerDto[] passengers;
 }
