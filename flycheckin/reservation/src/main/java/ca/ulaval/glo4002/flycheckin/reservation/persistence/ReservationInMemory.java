@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
 public class ReservationInMemory {
@@ -12,12 +13,15 @@ public class ReservationInMemory {
 
   public void saveNewReservation(Reservation newReservation) {
     int reservationNumber = newReservation.getReservationNumber();
-    reservationList.put(reservationNumber, newReservation);
+    if (reservationList.containsKey(reservationNumber))
+      throw new IllegalArgumentReservationException("Reservation " + reservationNumber + " already exists.");
+    else
+      reservationList.put(reservationNumber, newReservation);
   }
 
   public Reservation getReservationByNumber(int reservationNumber) throws NotFoundReservationException {
     if (reservationList.isEmpty() || !reservationList.containsKey(reservationNumber))
-      throw new NotFoundReservationException("Reservation " + reservationNumber + " not found");
+      throw new NotFoundReservationException("Reservation " + reservationNumber + " not found.");
     else
       return reservationList.get(reservationNumber);
   }

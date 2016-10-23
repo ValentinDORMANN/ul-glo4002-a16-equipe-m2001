@@ -16,9 +16,6 @@ public class Reservation {
   private List<Passenger> passengers;
   private ReservationInMemory reservationInMemory = new ReservationInMemory();
 
-  public Reservation() {
-  }
-
   public Reservation(ReservationDto reservationDto) {
     this.reservationNumber = reservationDto.reservation_number;
     this.reservationDate = reservationDto.reservation_date;
@@ -37,7 +34,7 @@ public class Reservation {
     return reservationNumber;
   }
 
-  public void save() {
+  private void save() {
     reservationInMemory.saveNewReservation(this);
   }
 }

@@ -21,7 +21,7 @@ public class Passenger {
     this.passengerHash = createPassengerHash();
   }
 
-  public UUID createPassengerHash() {
+  private UUID createPassengerHash() {
     return UUID.randomUUID();
   }
 }
