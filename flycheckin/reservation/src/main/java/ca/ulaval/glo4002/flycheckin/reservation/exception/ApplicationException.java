@@ -1,13 +1,13 @@
 package ca.ulaval.glo4002.flycheckin.reservation.exception;
 
-public class ReservationException extends RuntimeException {
+public class ApplicationException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;
 
-  public ReservationException() {
+  public ApplicationException() {
   }
 
-  public ReservationException(String message) {
+  public ApplicationException(String message) {
     super(message);
   }
 
