@@ -9,16 +9,26 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.CheckinDto;
+import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
 @Path("/checkins")
-public class CheckinRessource {
+public class CheckinResource {
+
+  private CheckinService checkinService;
+
+  public CheckinResource() {
+  }
+
+  public CheckinResource(CheckinService checkinService) {
+    this.checkinService = checkinService;
+  }
 
   @POST
   @Consumes("application/json")
   public Response createReserversation(@Context UriInfo uriInfo, CheckinDto checkinDto) {
     try {
-      int checkinId = 1;
+      int checkinId = this.checkinService.saveCheckin(checkinDto);
       String location = createUrlforGetCheckin(uriInfo, checkinId);
       return Response.status(Status.CREATED).entity(location).build();
     } catch (NotFoundReservationException ex) {

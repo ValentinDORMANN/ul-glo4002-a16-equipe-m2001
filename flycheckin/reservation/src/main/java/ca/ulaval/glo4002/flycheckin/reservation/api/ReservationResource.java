@@ -13,7 +13,7 @@ import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.ApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 
 @Path("")
 public class ReservationResource {
@@ -26,7 +26,7 @@ public class ReservationResource {
       Reservation reservation = new Reservation(reservationDto);
       String location = createUrlforGetReservation(uriInfo, reservation);
       return Response.status(Status.CREATED).entity(location).build();
-    } catch (ApplicationException ex) {
+    } catch (FlyCheckinApplicationException ex) {
       return Response.status(Status.BAD_REQUEST).build();
     }
   }
