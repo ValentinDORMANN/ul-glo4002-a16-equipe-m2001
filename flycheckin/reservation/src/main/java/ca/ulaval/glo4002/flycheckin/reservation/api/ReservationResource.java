@@ -38,8 +38,9 @@ public class ReservationResource {
   @GET
   @Path("/reservations/{reservation_number}")
   @Produces("application/json")
-  public Response getReserversation(@PathParam("reservation_number") int reservation_number) {
+  public Response getReserversation(@PathParam("reservation_number") int reservationNumber) {
     Reservation reservation = new Reservation();
-    return Response.status(200).entity(reservation.readReservationByNumber(reservation_number)).build();
+    reservation = reservation.readReservationByNumber(reservationNumber);
+    return Response.status(200).entity(reservation).build();
   }
 }
