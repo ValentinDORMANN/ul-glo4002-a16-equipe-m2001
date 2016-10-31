@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class Reservation {
   }
 
   public Reservation(ReservationDto reservationDto) throws IllegalArgumentReservationException {
-    // this.passengers = new ArrayList<Passenger>();
+    this.passengers = new ArrayList<Passenger>();
     this.reservationNumber = reservationDto.reservation_number;
     this.reservationDate = reservationDto.reservation_date;
     this.reservationConfirmation = reservationDto.reservation_confirmation;

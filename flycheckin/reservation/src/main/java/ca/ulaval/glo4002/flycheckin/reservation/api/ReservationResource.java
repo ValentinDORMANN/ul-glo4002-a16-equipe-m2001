@@ -24,14 +24,14 @@ public class ReservationResource {
   public Response createReserversation(@Context UriInfo uriInfo, ReservationDto reservationDto) {
     try {
       Reservation reservation = new Reservation(reservationDto);
-      String location = createURLforGetReservation(uriInfo, reservation);
+      String location = createUrlforGetReservation(uriInfo, reservation);
       return Response.status(Status.CREATED).entity(location).build();
     } catch (ReservationException ex) {
       return Response.status(Status.BAD_REQUEST).build();
     }
   }
 
-  private String createURLforGetReservation(UriInfo uriInfo, Reservation reservation) {
+  private String createUrlforGetReservation(UriInfo uriInfo, Reservation reservation) {
     return uriInfo.getBaseUri().toString() + "reservations/" + reservation.getReservationNumber();
   }
 

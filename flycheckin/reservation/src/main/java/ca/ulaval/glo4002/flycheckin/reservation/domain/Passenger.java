@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
+import java.util.UUID;
+
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.PassengerDto;
 
 public class Passenger {
@@ -19,17 +21,11 @@ public class Passenger {
     this.age = passengerDto.age;
     this.passportNumber = passengerDto.passport_number;
     this.seatClass = passengerDto.seat_class;
-    this.passengerHash = createPassengerHash(this.passportNumber, flightInfos);
-  }
-
-  private String createPassengerHash(String passengerInfos, String flightInfos) throws IllegalArgumentException {
-    String combinePassengerFlight = passengerInfos + flightInfos;
-    return combinePassengerFlight;
-    // return UUID.fromString(combinePassengerFlight).toString();
+    this.passengerHash = UUID.randomUUID().toString();
   }
 
   public boolean getChild() {
-    return this.age < this.CHILD_AGE;
+    return this.age < CHILD_AGE;
   }
 
   public String getPassengerHash() {
