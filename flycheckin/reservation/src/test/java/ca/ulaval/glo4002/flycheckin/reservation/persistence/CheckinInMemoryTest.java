@@ -5,10 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.reservation.exception.ApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 
 public class CheckinInMemoryTest {
 
+  private static final int CHECKIN_LIST_LIMIT = 100;
   private static final String PASSENGER_HASH = "acb15 de26f 4mf99z";
   private static final String PASSENGER_HASH2 = "jfd45 d4g5f 48dfz";
   private int checkinNumber;
@@ -23,10 +24,10 @@ public class CheckinInMemoryTest {
   public void givenEmptyMemoryWhenDoCheckinThenReturnCheckinNumber() {
     checkinNumber = checkinMemory.doPassengerCheckin(PASSENGER_HASH);
 
-    assertTrue(checkinNumber > 100);
+    assertTrue(checkinNumber > CHECKIN_LIST_LIMIT);
   }
 
-  @Test(expected = ApplicationException.class)
+  @Test(expected = FlyCheckinApplicationException.class)
   public void givenPassengerAlreadyCheckinWhenDoCheckinThenReturnException() {
     checkinMemory.doPassengerCheckin(PASSENGER_HASH2);
 
