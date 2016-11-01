@@ -37,7 +37,8 @@ public class CheckinResourceTest {
     given(uriInfo.getBaseUri().toString()).willReturn(LOCATION);
   }
 
-  /*TODO with hibernate lab 5/6 */
+  /*TODO with hibernate lab 5/6 
+   * Correct CHeckstyle if acollades*/
 
   /*
   @Test
