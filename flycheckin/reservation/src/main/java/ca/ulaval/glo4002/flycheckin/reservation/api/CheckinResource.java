@@ -31,7 +31,7 @@ public class CheckinResource {
     try {
       int checkinId = this.checkinService.saveCheckin(checkinDto);
       String location = createUrlforGetCheckin(uriInfo, checkinId);
-      return Response.status(Status.CREATED).entity("").build();
+      return Response.status(Status.CREATED).entity(location).build();
     } catch (NotFoundReservationException ex) {
       return Response.status(Status.NOT_FOUND).build();
     } catch (FlyCheckinApplicationException ex) {
