@@ -15,4 +15,5 @@ public class CheckinService {
   public int saveCheckin(CheckinDto checkindto) throws NotFoundReservationException {
     return checkinInMemory.doPassengerCheckin(checkindto.passenger_hash);
   }
+
 }
