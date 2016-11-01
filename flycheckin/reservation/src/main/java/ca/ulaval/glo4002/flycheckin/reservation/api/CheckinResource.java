@@ -10,6 +10,7 @@ import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.CheckinDto;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
 @Path("/checkins")
@@ -26,14 +27,14 @@ public class CheckinResource {
 
   @POST
   @Consumes("application/json")
-  public Response createReserversation(@Context UriInfo uriInfo, CheckinDto checkinDto) {
+  public Response createCheckin(@Context UriInfo uriInfo, CheckinDto checkinDto) {
     try {
       int checkinId = this.checkinService.saveCheckin(checkinDto);
       String location = createUrlforGetCheckin(uriInfo, checkinId);
-      return Response.status(Status.CREATED).entity(location).build();
+      return Response.status(Status.CREATED).entity("").build();
     } catch (NotFoundReservationException ex) {
       return Response.status(Status.NOT_FOUND).build();
-    } catch (Exception ex) {
+    } catch (FlyCheckinApplicationException ex) {
       return Response.status(Status.BAD_REQUEST).build();
     }
   }
