@@ -40,8 +40,8 @@ public class Reservation {
     this.paymentLocation = reservationDto.payment_location;
     String flightInfos = "flightinfo"; // this.flightNumber +
                                        // this.flightDate.toString();
-    for (int i = 0; i < reservationDto.passengers.length; i++) {
-      Passenger passenger = new Passenger(reservationDto.passengers[i], flightInfos);
+    for (int i = 0; i < reservationDto.passengers.size(); i++) {
+      Passenger passenger = new Passenger(reservationDto.passengers.get(i), flightInfos);
       this.passengers.add(passenger);
     }
     createReservation();

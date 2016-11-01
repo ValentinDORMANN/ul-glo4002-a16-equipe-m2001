@@ -34,7 +34,7 @@ public class ReservationResourceTest {
 
     this.reservationDto.reservation_number = RESERVATION_NUMBER;
     PassengerDto[] passengers = {};
-    this.reservationDto.passengers = passengers;
+    // this.reservationDto.passengers = passengers;
   }
 
   @Test

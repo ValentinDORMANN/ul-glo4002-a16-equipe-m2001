@@ -41,6 +41,7 @@ public class ReservationResource {
   public Response getReserversation(@PathParam("reservation_number") int reservationNumber) {
     Reservation reservation = new Reservation();
     reservation = reservation.readReservationByNumber(reservationNumber);
-    return Response.status(200).entity(reservation).build();
+    ReservationDto reservationDto = new ReservationDto(reservation);
+    return Response.status(200).entity(reservationDto).build();
   }
 }

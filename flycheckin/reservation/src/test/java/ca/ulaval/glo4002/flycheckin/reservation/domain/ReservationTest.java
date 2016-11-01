@@ -21,7 +21,7 @@ public class ReservationTest {
     mockReservationDto = mock(ReservationDto.class);
     mockReservationDto.reservation_number = RESERVATION_NUMBER;
     PassengerDto[] passengers = {};
-    mockReservationDto.passengers = passengers;
+    // mockReservationDto.passengers = passengers;
 
   }
 
