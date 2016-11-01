@@ -1,11 +1,7 @@
 package ca.ulaval.glo4002.flycheckin.reservation.api;
 
-<<<<<<< HEAD
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-=======
-import static org.mockito.Mockito.*;
->>>>>>> 1b913c8a0914301a9a5ba959f87646fe0cbb2916
 
 import javax.ws.rs.core.UriInfo;
 
