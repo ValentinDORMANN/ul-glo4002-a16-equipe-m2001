@@ -34,22 +34,20 @@ public class ReservationInMemory {
   private Passenger getPassengerByPassengerHashInReservation(int reservationNumber, String passengerHash){
     List<Passenger> passengers = reservationList.get(reservationNumber).getPassengers();
     Passenger passengerFound = null;
-    for(int i = 0; i < passengers.size(); i++){
-      if(passengers.get(i).getPassengerHash() == passengerHash){
+    for (int i = 0; i < passengers.size(); i++){
+      if (passengers.get(i).getPassengerHash() == passengerHash)
         passengerFound = passengers.get(i);
-      }
     }
-    if(passengerFound == null){
+    if (passengerFound == null)
       throw new NotFoundPassengerException("Passenger with " + passengerHash + " not found");
-    }
     return passengerFound;
   }
   
-  public Passenger getPassengerByPassengerHash(String passengerHash){
+  public Passenger getPassengerByPassengerHash(String passengerHash) throws NotFoundPassengerException{
     Passenger passengerFound = null;
     Set<Integer> reservationNumbers = reservationList.keySet();
     Iterator<Integer> iterator = reservationNumbers.iterator();
-    while(iterator.hasNext()){
+    while (iterator.hasNext()) {
       int reservationNumber = iterator.next();
       passengerFound = getPassengerByPassengerHashInReservation(reservationNumber, passengerHash);
     }
