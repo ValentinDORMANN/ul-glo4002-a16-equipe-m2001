@@ -79,6 +79,7 @@ public class ReservationTest {
     
     reservation.getPassengerFromHash(FAKE_PASSENGER_HASH);
   }
+  // TODO
   /*
   @Test
   public void whenCreateReservationThenVerifyReservationInMemorySaveNewReservation() {
@@ -90,12 +91,12 @@ public class ReservationTest {
     reservation.readReservationByNumber(RESERVATION_NUMBER);
   
     verify(mockReservationInMemory).getReservationByNumber(RESERVATION_NUMBER);
-  }*/
+  }
   @Test(expected = NotTimeToCheckinException.class)
   public void WhenSelfCheckinOutOfvalidePeriodThenThrowException(){
     reservation.setFlightDate(TWO_DAYS_BEFORE);
     
     doThrow(new NotTimeToCheckinException("")).when(reservation).validateSelfCheckinPeriod();
-  }
+  }*/
 
 }
