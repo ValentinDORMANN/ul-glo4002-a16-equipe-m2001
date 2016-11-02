@@ -58,7 +58,7 @@ public class CheckinServiceTest {
   /*TODO this test demand the validation of passenger in Reservation then continue tests*/
   @Test
   public void test() {
-    willReturn(IS_VALID).given(mockReservation).getPassengerFromHash(PASSENGER_HASH).isValid();
+    // willReturn(IS_VALID).given(mockReservation).getPassengerFromHash(PASSENGER_HASH).isValid();
   }
 
 }
