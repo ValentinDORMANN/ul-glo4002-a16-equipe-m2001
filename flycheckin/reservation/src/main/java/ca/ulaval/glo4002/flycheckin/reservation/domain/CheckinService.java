@@ -15,6 +15,11 @@ public class CheckinService {
     this.reservationInMemory = new ReservationInMemory();
   }
 
+  public CheckinService(CheckinInMemory checkinInMemory, ReservationInMemory reservationInMemory) {
+    this.checkinInMemory = checkinInMemory;
+    this.reservationInMemory = reservationInMemory;
+  }
+
   public int saveCheckin(CheckinDto checkinDto) throws FlyCheckinApplicationException {
     String hash = checkinDto.passenger_hash;
     Reservation reservation = reservationInMemory.getReservationByPassengerHash(hash);
