@@ -15,10 +15,13 @@ public class CheckinService {
     this.reservationInMemory = new ReservationInMemory();
   }
 
-  public int saveCheckin(CheckinDto checkindto) throws FlyCheckinApplicationException {
-    if (reservationInMemory.getPassengerByPassengerHash(checkindto.passenger_hash) == null)
-      throw new FlyCheckinApplicationException("Passenger Not Found");
-    return checkinInMemory.doPassengerCheckin(checkindto.passenger_hash);
+  public int saveCheckin(CheckinDto checkinDto) throws FlyCheckinApplicationException {
+    String hash = checkinDto.passenger_hash;
+    Reservation reservation = reservationInMemory.getReservationByPassengerHash(hash);
+    if (reservation.getPassengerFromHash(hash).isValid())
+      return checkinInMemory.doPassengerCheckin(hash);
+    throw new FlyCheckinApplicationException("Passenger Information incorrect");
+
   }
 
 }

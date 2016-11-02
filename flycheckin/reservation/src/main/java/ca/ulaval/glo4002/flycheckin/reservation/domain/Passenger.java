@@ -7,7 +7,6 @@ import ca.ulaval.glo4002.flycheckin.reservation.api.dto.PassengerDto;
 public class Passenger {
 
   private static final int CHILD_AGE = 15;
-
   private String passengerHash;
   private String firstName;
   private String lastName;
@@ -15,7 +14,7 @@ public class Passenger {
   private String passportNumber;
   private String seatClass;
 
-  public Passenger(PassengerDto passengerDto, String flightInfos) throws IllegalArgumentException {
+  public Passenger(PassengerDto passengerDto) throws IllegalArgumentException {
     this.firstName = passengerDto.first_name;
     this.lastName = passengerDto.last_name;
     this.age = passengerDto.age;
@@ -24,8 +23,16 @@ public class Passenger {
     this.passengerHash = UUID.randomUUID().toString();
   }
 
-  public boolean getChild() {
+  public boolean isValid() {
+    return !(firstName.trim().equals("") || lastName.trim().equals("") || passportNumber.trim().equals(""));
+  }
+
+  public boolean isChild() {
     return this.age < CHILD_AGE;
+  }
+
+  public int getAge() {
+    return age;
   }
 
   public String getPassengerHash() {

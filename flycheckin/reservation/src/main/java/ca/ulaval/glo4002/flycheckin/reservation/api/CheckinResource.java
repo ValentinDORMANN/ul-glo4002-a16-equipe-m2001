@@ -11,7 +11,7 @@ import javax.ws.rs.core.UriInfo;
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.CheckinDto;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 
 @Path("/checkins")
 public class CheckinResource {
@@ -19,6 +19,7 @@ public class CheckinResource {
   private CheckinService checkinService;
 
   public CheckinResource() {
+    this.checkinService = new CheckinService();
   }
 
   public CheckinResource(CheckinService checkinService) {
@@ -32,7 +33,7 @@ public class CheckinResource {
       int checkinId = this.checkinService.saveCheckin(checkinDto);
       String location = createUrlforGetCheckin(uriInfo, checkinId);
       return Response.status(Status.CREATED).entity(location).build();
-    } catch (NotFoundReservationException ex) {
+    } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
     } catch (FlyCheckinApplicationException ex) {
       return Response.status(Status.BAD_REQUEST).build();
