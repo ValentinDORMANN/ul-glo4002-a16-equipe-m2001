@@ -55,7 +55,7 @@ public class CheckinServiceTest {
   @Test(expected = NotTimeToCheckinException.class)
   public void givenCheckinDtoWhenAgentCheckinThenVerify() {
     mockCheckinDto.by = SELF;
-    willThrow(NotTimeToCheckinException.class).given(mockReservation).validateSelfCheckinPeriod();
+    willThrow(NotTimeToCheckinException.class).given(mockReservation).validateCheckinPeriod(mockCheckinDto.by);
     checkinService.saveCheckin(mockCheckinDto);
   }
 

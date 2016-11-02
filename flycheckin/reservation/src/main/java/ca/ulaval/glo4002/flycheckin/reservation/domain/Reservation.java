@@ -81,7 +81,13 @@ public class Reservation {
     throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);
   }
 
-  public void validateSelfCheckinPeriod() {
+  public void validateCheckinPeriod(String by) throws NotTimeToCheckinException {
+    if (by.equals("SELF")) {
+      validateSelfCheckinPeriod();
+    }
+  }
+
+  private void validateSelfCheckinPeriod() {
     long todayInMillisecond = new Date().getTime();
     long flightDateInMillisecond = this.getFlightDate().getTime();
     if (!((flightDateInMillisecond - FOURTY_EIGHT_HOUR <= todayInMillisecond)
@@ -89,7 +95,7 @@ public class Reservation {
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
     }
   }
-
+  
   public int getReservationNumber() {
     return reservationNumber;
   }

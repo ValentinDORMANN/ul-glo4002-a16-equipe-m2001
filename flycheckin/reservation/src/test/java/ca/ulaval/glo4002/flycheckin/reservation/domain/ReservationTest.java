@@ -98,5 +98,4 @@ public class ReservationTest {
     
     doThrow(new NotTimeToCheckinException("")).when(reservation).validateSelfCheckinPeriod();
   }*/
-
 }
