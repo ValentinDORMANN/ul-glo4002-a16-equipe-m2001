@@ -28,8 +28,15 @@ public class Reservation {
   public Reservation() {
   }
 
-  public Reservation(ReservationInMemory reservationInMemory, ReservationDto reservationDto) {
-    this(reservationDto);
+  public Reservation(ReservationInMemory reservationInMemory, ReservationDto reservationDto,
+      List<Passenger> passengers) {
+    this.reservationNumber = reservationDto.reservation_number;
+    this.reservationDate = reservationDto.reservation_date;
+    this.reservationConfirmation = reservationDto.reservation_confirmation;
+    this.flightNumber = reservationDto.flight_number;
+    this.flightDate = reservationDto.flight_date;
+    this.paymentLocation = reservationDto.payment_location;
+    this.passengers = passengers;
     this.reservationInMemory = reservationInMemory;
   }
 
@@ -71,12 +78,12 @@ public class Reservation {
     }
     throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);
   }
-  
-  public void validatePeriodToCheckin(){
+
+  public void validatePeriodToCheckin() {
     long todayInMillisecond = new Date().getTime();
     long flightDateInMillisecond = this.getFlightDate().getTime();
     if (!((flightDateInMillisecond - 48 * 60 * 60 * 1000 <= todayInMillisecond)
-       && (todayInMillisecond <= flightDateInMillisecond - 6 * 60 * 60 * 1000))) {
+        && (todayInMillisecond <= flightDateInMillisecond - 6 * 60 * 60 * 1000))) {
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
     }
   }
