@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
 public class ReservationTest {
@@ -45,6 +46,18 @@ public class ReservationTest {
   public void givenPassengerHash_whenGetPassengerHashListInReservation_thenVerifyIfHashExist() {
     willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
     assertTrue(reservation.getPassengerHashListInReservation().contains(PASSENGER_HASH));
+  }
+
+  @Test
+  public void givenPassengerHash_whenGetPassengerFromHash_thenReturnPassenger() {
+    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
+    assertEquals(mockPassenger, reservation.getPassengerFromHash(PASSENGER_HASH));
+  }
+
+  @Test(expected = NotFoundPassengerException.class)
+  public void givenFakePassengerHash_whenGetPassengerFromHash_thenThrowException() {
+    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
+    reservation.getPassengerFromHash(FAKE_PASSENGER_HASH);
   }
   /*
   @Test
