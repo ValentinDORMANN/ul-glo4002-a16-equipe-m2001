@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
@@ -29,21 +30,16 @@ public class ReservationTest {
     reservation = new Reservation(mockReservationInMemory, mockReservationDto);
   }
 
-  /*
   @Test
   public void whenCreateReservationThenVerifyReservationInMemorySaveNewReservation() {
-    reservation = new Reservation(mockReservationInMemory, mockReservationDto);
-  
     verify(mockReservationInMemory).saveNewReservation(reservation);
-  }*/
+  }
 
-  /*  @Test
+  @Test
   public void whenReadReservationByNumberThenVerifyReservationInMemoryGetReservation() {
-    reservation = new Reservation(mockReservationInMemory, mockReservationDto);
-  
     reservation.readReservationByNumber(RESERVATION_NUMBER);
   
     verify(mockReservationInMemory).getReservationByNumber(RESERVATION_NUMBER);
-  }*/
+  }
 
 }

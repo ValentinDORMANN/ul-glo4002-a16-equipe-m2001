@@ -16,6 +16,8 @@ public class Reservation {
 
   private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
   private static final String MSG_INVALID_CHECKIN_DATE = "Error: immpossible to checkin at this moment !";
+  private static final int FOURTY_EIGHT_HOUR = 48 * 60 * 60 * 1000;
+  private static final int SIX_HOUR = 6 * 60 * 60 * 1000;
   private int reservationNumber;
   private Date reservationDate;
   private String reservationConfirmation;
@@ -75,8 +77,8 @@ public class Reservation {
   public void validatePeriodToCheckin(){
     long todayInMillisecond = new Date().getTime();
     long flightDateInMillisecond = this.getFlightDate().getTime();
-    if (!((flightDateInMillisecond - 48 * 60 * 60 * 1000 <= todayInMillisecond)
-       && (todayInMillisecond <= flightDateInMillisecond - 6 * 60 * 60 * 1000))) {
+    if (!((flightDateInMillisecond - FOURTY_EIGHT_HOUR <= todayInMillisecond)
+       && (todayInMillisecond <= flightDateInMillisecond - SIX_HOUR))) {
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
     }
   }
