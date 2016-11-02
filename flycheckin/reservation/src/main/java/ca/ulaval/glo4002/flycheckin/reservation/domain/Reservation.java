@@ -81,7 +81,7 @@ public class Reservation {
     throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);
   }
 
-  public void validatePeriodToCheckin() {
+  public void validateSelfCheckinPeriod() {
     long todayInMillisecond = new Date().getTime();
     long flightDateInMillisecond = this.getFlightDate().getTime();
     if (!((flightDateInMillisecond - FOURTY_EIGHT_HOUR <= todayInMillisecond)
@@ -101,6 +101,10 @@ public class Reservation {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
   public Date getFlightDate() {
     return flightDate;
+  }
+  
+  public void setFlightDate(Date flightDate){
+    this.flightDate = flightDate;
   }
 
   public List<Passenger> getPassengers() {
