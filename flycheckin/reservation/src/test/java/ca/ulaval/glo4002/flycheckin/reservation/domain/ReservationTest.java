@@ -49,15 +49,11 @@ public class ReservationTest {
   /*
   @Test
   public void whenCreateReservationThenVerifyReservationInMemorySaveNewReservation() {
-    reservation = new Reservation(mockReservationInMemory, mockReservationDto);
-  
     verify(mockReservationInMemory).saveNewReservation(reservation);
-  }*/
-
-  /*  @Test
-  public void whenReadReservationByNumberThenVerifyReservationInMemoryGetReservation() {
-    reservation = new Reservation(mockReservationInMemory, mockReservationDto);
+  }
   
+  @Test
+  public void whenReadReservationByNumberThenVerifyReservationInMemoryGetReservation() {
     reservation.readReservationByNumber(RESERVATION_NUMBER);
   
     verify(mockReservationInMemory).getReservationByNumber(RESERVATION_NUMBER);
