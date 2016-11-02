@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
 public class Reservation {
 
   private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
+  private static final String MSG_INVALID_CHECKIN_DATE = "Error: immpossible to checkin at this moment !";
   private int reservationNumber;
   private Date reservationDate;
   private String reservationConfirmation;
@@ -68,6 +70,15 @@ public class Reservation {
         return passenger;
     }
     throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);
+  }
+  
+  public void validatePeriodToCheckin(){
+    long todayInMillisecond = new Date().getTime();
+    long flightDateInMillisecond = this.getFlightDate().getTime();
+    if (!((flightDateInMillisecond - 48 * 60 * 60 * 1000 <= todayInMillisecond)
+       && (todayInMillisecond <= flightDateInMillisecond - 6 * 60 * 60 * 1000))) {
+      throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
+    }
   }
 
   public int getReservationNumber() {

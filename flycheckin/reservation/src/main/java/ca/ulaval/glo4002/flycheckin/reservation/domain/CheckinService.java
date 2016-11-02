@@ -18,10 +18,11 @@ public class CheckinService {
   public int saveCheckin(CheckinDto checkinDto) throws FlyCheckinApplicationException {
     String hash = checkinDto.passenger_hash;
     Reservation reservation = reservationInMemory.getReservationByPassengerHash(hash);
+    if (checkinDto.by.equals("SELLF"))
+      reservation.validatePeriodToCheckin();
     if (reservation.getPassengerFromHash(hash).isValid())
       return checkinInMemory.doPassengerCheckin(hash);
     throw new FlyCheckinApplicationException("Passenger Information incorrect");
-
   }
 
 }
