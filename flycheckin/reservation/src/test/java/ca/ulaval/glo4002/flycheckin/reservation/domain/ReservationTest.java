@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
 public class ReservationTest {
@@ -77,12 +78,6 @@ public class ReservationTest {
 
     reservation.getPassengerFromHash(FAKE_PASSENGER_HASH);
   }
-  // TODO
-  /*
-  @Test
-  public void whenCreateReservationThenVerifyReservationInMemorySaveNewReservation() {
-    verify(mockReservationInMemory).saveNewReservation(reservation);
-  }
   
   @Test
   public void whenReadReservationByNumberThenVerifyReservationInMemoryGetReservation() {
@@ -91,9 +86,16 @@ public class ReservationTest {
     verify(mockReservationInMemory).getReservationByNumber(RESERVATION_NUMBER);
   }
   @Test(expected = NotTimeToCheckinException.class)
-  public void WhenSelfCheckinOutOfvalidePeriodThenThrowException(){
+  public void whenSelfCheckinBeforevalidePeriodThenThrowException() {
     reservation.setFlightDate(TWO_DAYS_BEFORE);
     
-    doThrow(new NotTimeToCheckinException("")).when(reservation).validateSelfCheckinPeriod();
-  }*/
+    reservation.validateCheckinPeriod("SELF");
+  }
+  
+  @Test(expected = NotTimeToCheckinException.class)
+  public void whenSelfCheckinAftervalidePeriodThenThrowException() {
+    reservation.setFlightDate(SIX_HOURS_BEFORE);
+    
+    reservation.validateCheckinPeriod("SELF");
+  }
 }
