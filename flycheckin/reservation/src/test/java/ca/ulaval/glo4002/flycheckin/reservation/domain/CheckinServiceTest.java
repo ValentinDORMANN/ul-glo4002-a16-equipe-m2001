@@ -47,27 +47,27 @@ public class CheckinServiceTest {
   }
 
   @Test(expected = NotFoundPassengerException.class)
-  public void givenCheckinDtoWhenAgentCheckinThenThrowException() {
+  public void givenFakePassengerWhenAgentCheckinThenThrowException() {
     mockCheckinDto.passenger_hash = FAKE_PASSENGER_HASH;
     checkinService.saveCheckin(mockCheckinDto);
   }
 
   @Test(expected = NotTimeToCheckinException.class)
-  public void givenCheckinDtoWhenAgentCheckinThenVerify() {
+  public void givenPassnegerWhenSelfCheckinNotInTimeThenThrowException() {
     mockCheckinDto.by = SELF;
     willThrow(NotTimeToCheckinException.class).given(mockReservation).validateCheckinPeriod(mockCheckinDto.by);
     checkinService.saveCheckin(mockCheckinDto);
   }
 
   @Test(expected = FlyCheckinApplicationException.class)
-  public void givenCheckinDtoAndWrongPassengerThenThrowException() {
+  public void givenWrongPassengerInformationWhenCheckinThenThrowException() {
     willReturn(mockPassenger).given(mockReservation).getPassengerFromHash(PASSENGER_HASH);
     willReturn(IS_NOT_VALID).given(mockPassenger).isValid();
     checkinService.saveCheckin(mockCheckinDto);
   }
 
   @Test
-  public void givenCheckinDtoThenBackCheckinNumber() {
+  public void givenPassengerThenBackCheckinNumber() {
     willReturn(mockPassenger).given(mockReservation).getPassengerFromHash(PASSENGER_HASH);
     willReturn(IS_VALID).given(mockPassenger).isValid();
     int checkinNumber = checkinService.saveCheckin(mockCheckinDto);

@@ -95,7 +95,7 @@ public class Reservation {
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
     }
   }
-  
+
   public int getReservationNumber() {
     return reservationNumber;
   }
@@ -108,8 +108,8 @@ public class Reservation {
   public Date getFlightDate() {
     return flightDate;
   }
-  
-  public void setFlightDate(Date flightDate){
+
+  public void setFlightDate(Date flightDate) {
     this.flightDate = flightDate;
   }
 

@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
 public class ReservationTest {
@@ -33,14 +32,13 @@ public class ReservationTest {
   private List<Passenger> passengers;
   private Reservation reservation;
 
-  private static Date initiateDateByHour(int changeHour, boolean sens){
+  private static Date initiateDateByHour(int changeHour, boolean sens) {
     Calendar calendar = CALENDAR;
     calendar.add(Calendar.HOUR, changeHour);
     calendar.add(Calendar.MILLISECOND, (sens) ? 1 : -1);
     return calendar.getTime();
   }
 
-  
   @Before
   public void initiateTest() {
     mockReservationInMemory = mock(ReservationInMemory.class);
@@ -55,28 +53,28 @@ public class ReservationTest {
   @Test
   public void givenFakePassengerWhenVerifyIfPassengerInReservationThenReturnFalse() {
     willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
-    
+
     assertFalse(reservation.getPassengerHashListInReservation().contains(FAKE_PASSENGER_HASH));
   }
 
   @Test
   public void givenValidPassengerWhenVerifyIfPassengerInReservationThenReturnTrue() {
     willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
-    
+
     assertTrue(reservation.getPassengerHashListInReservation().contains(PASSENGER_HASH));
   }
 
   @Test
   public void givenValidPassengerHashWhenGetPassengerByHashThenReturnPassenger() {
     willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
-    
+
     assertEquals(mockPassenger, reservation.getPassengerFromHash(PASSENGER_HASH));
   }
 
   @Test(expected = NotFoundPassengerException.class)
   public void givenFakePassengerHashWhenGetPassengerByHashThenThrowException() {
     willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
-    
+
     reservation.getPassengerFromHash(FAKE_PASSENGER_HASH);
   }
   // TODO
