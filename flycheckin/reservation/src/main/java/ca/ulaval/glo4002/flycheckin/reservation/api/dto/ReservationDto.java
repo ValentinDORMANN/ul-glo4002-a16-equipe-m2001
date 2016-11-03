@@ -11,13 +11,16 @@ import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ReservationDto {
+  
+  private static final String DATE_PATTERN = "yyyy-MM-dd";
+  private static final String DATE_GMT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
   public int reservation_number;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN)
   public Date reservation_date;
   public String reservation_confirmation;
   public String flight_number;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_GMT_PATTERN)
   public Date flight_date;
   public String payment_location;
   public List<PassengerDto> passengers;

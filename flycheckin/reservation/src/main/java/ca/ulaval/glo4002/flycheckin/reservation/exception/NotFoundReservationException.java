@@ -4,6 +4,9 @@ public class NotFoundReservationException extends FlyCheckinApplicationException
 
   private static final long serialVersionUID = 1L;
 
+  public NotFoundReservationException() {
+  }
+  
   public NotFoundReservationException(String message) {
     super(message);
   }

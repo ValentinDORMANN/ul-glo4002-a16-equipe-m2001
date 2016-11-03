@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
 public class CheckinService {
 
+  private static final String MSG_ERROR = "Passenger Information incorrect";
   private CheckinInMemory checkinInMemory;
   private ReservationInMemory reservationInMemory;
 
@@ -26,7 +27,7 @@ public class CheckinService {
     reservation.validateCheckinPeriod(checkinDto.by);
     if (reservation.getPassengerFromHash(hash).isValid())
       return checkinInMemory.doPassengerCheckin(hash);
-    throw new FlyCheckinApplicationException("Passenger Information incorrect");
+    throw new FlyCheckinApplicationException(MSG_ERROR);
   }
 
 }

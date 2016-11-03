@@ -27,6 +27,7 @@ public class PassengerDto {
     this.passport_number = passenger.getPassportNumber();
     this.seat_class = passenger.getSeatClass();
     this.child = passenger.isChild();
+    // TODO
     // this.child = passenger.getAge() < CHILD_AGE;
     this.passenger_hash = passenger.getPassengerHash();
   }

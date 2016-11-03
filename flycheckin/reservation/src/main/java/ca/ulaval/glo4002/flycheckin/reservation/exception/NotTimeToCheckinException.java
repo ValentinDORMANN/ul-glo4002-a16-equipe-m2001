@@ -4,6 +4,9 @@ public class NotTimeToCheckinException extends FlyCheckinApplicationException {
 
   private static final long serialVersionUID = 1L;
   
+  public NotTimeToCheckinException() {
+  }
+  
   public NotTimeToCheckinException(String message) {
     super(message);
   }

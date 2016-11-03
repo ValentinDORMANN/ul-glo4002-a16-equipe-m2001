@@ -12,9 +12,8 @@ public class CheckinInMemory {
   private static Map<Integer, String> checkinMap = new HashMap<Integer, String>();
 
   public int doPassengerCheckin(String passengerHash) {
-    if (checkinMap.containsValue(passengerHash)) {
+    if (checkinMap.containsValue(passengerHash))
       throw new FlyCheckinApplicationException(MESSAGE_ERROR_CHECKIN);
-    }
     checkinMap.put(checkinId++, passengerHash);
     return checkinId;
   }

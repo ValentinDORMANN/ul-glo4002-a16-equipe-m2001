@@ -4,6 +4,9 @@ public class NotFoundPassengerException extends FlyCheckinApplicationException {
 
   private static final long serialVersionUID = 1L;
 
+  public NotFoundPassengerException() {
+  }
+  
   public NotFoundPassengerException(String message) {
     super(message);
   }

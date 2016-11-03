@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
@@ -18,9 +19,12 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationE
 @Path("")
 public class ReservationResource {
 
+  private static final String GET_RESERVATION_PATH = "/reservations/{reservation_number}";
+  private static final String POST_RESERVATION_PATH = "/events/reservation-created";
+
   @POST
-  @Path("/events/reservation-created")
-  @Consumes("application/json")
+  @Path(POST_RESERVATION_PATH)
+  @Consumes(MediaType.APPLICATION_JSON)
   public Response createReserversation(@Context UriInfo uriInfo, ReservationDto reservationDto) {
     try {
       Reservation reservation = new Reservation(reservationDto);
@@ -36,12 +40,12 @@ public class ReservationResource {
   }
 
   @GET
-  @Path("/reservations/{reservation_number}")
-  @Produces("application/json")
+  @Path(GET_RESERVATION_PATH)
+  @Produces(MediaType.APPLICATION_JSON)
   public Response getReserversation(@PathParam("reservation_number") int reservationNumber) {
     Reservation reservation = new Reservation();
     reservation = reservation.readReservationByNumber(reservationNumber);
     ReservationDto reservationDto = new ReservationDto(reservation);
-    return Response.status(200).entity(reservationDto).build();
+    return Response.status(Status.OK).entity(reservationDto).build();
   }
 }
