@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.flycheckin.reservation.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Passenger;
@@ -12,6 +13,7 @@ public class PassengerDto {
   private static final int CHILD_AGE = 15;
   public String first_name;
   public String last_name;
+  @JsonInclude(JsonInclude.Include.NON_DEFAULT)
   public int age;
   public String passport_number;
   public String seat_class;

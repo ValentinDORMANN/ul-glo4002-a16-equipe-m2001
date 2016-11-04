@@ -15,12 +15,14 @@ import javax.ws.rs.core.UriInfo;
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
 @Path("")
 public class ReservationResource {
 
   private static final String GET_RESERVATION_PATH = "/reservations/{reservation_number}";
+  private static final String GET_RESERVATION_BY_HASH_PATH = "/reservations/hash/{passenger_hash}";
   private static final String POST_RESERVATION_PATH = "/events/reservation-created";
 
   @POST
@@ -51,6 +53,20 @@ public class ReservationResource {
       return Response.status(Status.NOT_FOUND).build();
     }
     ReservationDto reservationDto = new ReservationDto(reservation);
+    return Response.status(Status.OK).entity(reservationDto).build();
+  }
+
+  @GET
+  @Path(GET_RESERVATION_BY_HASH_PATH)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getReservationByHash(@PathParam("passenger_hash") String passenger_hash) {
+    Reservation reservation = new Reservation();
+    try {
+      reservation = reservation.readReservationByHash(passenger_hash);
+    } catch (NotFoundPassengerException ex) {
+      return Response.status(Status.NOT_FOUND).build();
+    }
+    ReservationDto reservationDto = new ReservationDto(reservation, passenger_hash);
     return Response.status(Status.OK).entity(reservationDto).build();
   }
 }

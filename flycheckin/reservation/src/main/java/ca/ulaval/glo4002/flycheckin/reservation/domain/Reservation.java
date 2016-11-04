@@ -66,6 +66,10 @@ public class Reservation {
     return reservationInMemory.getReservationByNumber(reservationNumber);
   }
 
+  public Reservation readReservationByHash(String passenger_hash) throws NotFoundPassengerException {
+    return reservationInMemory.getReservationByPassengerHash(passenger_hash);
+  }
+
   public List<String> getPassengerHashListInReservation() {
     List<String> hashs = new ArrayList<String>();
     for (Passenger passenger : passengers) {
