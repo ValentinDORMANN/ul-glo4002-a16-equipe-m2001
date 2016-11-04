@@ -49,13 +49,15 @@ public class CheckinServiceTest {
   @Test(expected = NotFoundPassengerException.class)
   public void givenFakePassengerWhenAgentCheckinThenThrowException() {
     mockCheckinDto.passenger_hash = FAKE_PASSENGER_HASH;
+    
     checkinService.saveCheckin(mockCheckinDto);
   }
 
   @Test(expected = NotTimeToCheckinException.class)
-  public void givenPassnegerWhenSelfCheckinNotInTimeThenThrowException() {
+  public void givenPassengerWhenSelfCheckinNotInTimeThenThrowException() {
     mockCheckinDto.by = SELF;
     willThrow(NotTimeToCheckinException.class).given(mockReservation).validateCheckinPeriod(mockCheckinDto.by);
+    
     checkinService.saveCheckin(mockCheckinDto);
   }
 
@@ -63,14 +65,17 @@ public class CheckinServiceTest {
   public void givenWrongPassengerInformationWhenCheckinThenThrowException() {
     willReturn(mockPassenger).given(mockReservation).getPassengerFromHash(PASSENGER_HASH);
     willReturn(IS_NOT_VALID).given(mockPassenger).isValid();
+    
     checkinService.saveCheckin(mockCheckinDto);
   }
 
   @Test
-  public void givenPassengerThenBackCheckinNumber() {
+  public void givenValidPassengerWhenDoCheckinThenReturnCheckinNumber() {
     willReturn(mockPassenger).given(mockReservation).getPassengerFromHash(PASSENGER_HASH);
     willReturn(IS_VALID).given(mockPassenger).isValid();
+    
     int checkinNumber = checkinService.saveCheckin(mockCheckinDto);
+    
     assertEquals(CHECKIN_NUMBER, checkinNumber);
   }
 }
