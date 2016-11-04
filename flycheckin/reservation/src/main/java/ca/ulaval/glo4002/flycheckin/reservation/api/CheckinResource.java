@@ -32,7 +32,7 @@ public class CheckinResource {
   public Response createCheckin(@Context UriInfo uriInfo, CheckinDto checkinDto) {
     try {
       int checkinId = this.checkinService.saveCheckin(checkinDto);
-      String location = createUrlforGetCheckin(uriInfo, checkinId);
+      String location = createUrlToGetCheckin(uriInfo, checkinId);
       return Response.status(Status.CREATED).entity(location).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
@@ -41,7 +41,7 @@ public class CheckinResource {
     }
   }
 
-  private String createUrlforGetCheckin(UriInfo uriInfo, int checkinId) {
+  private String createUrlToGetCheckin(UriInfo uriInfo, int checkinId) {
     return uriInfo.getBaseUri().toString() + "checkins/" + Integer.toString(checkinId);
   }
 
