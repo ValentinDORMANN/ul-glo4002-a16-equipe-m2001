@@ -10,8 +10,8 @@ import ca.ulaval.glo4002.flycheckin.reservation.api.dto.PassengerDto;
 
 public class PassengerTest {
 
-  private static final int CHILD_AGE = 14;
-  private static final int ADULT_AGE = 15;
+  private static final int CHILD_AGE = 10;
+  private static final int ADULT_AGE = 30;
   private static final String FIRST_NAME = "FirstName";
   private static final String LAST_NAME = "LastName";
   private static final String PASSPORT_NUMBER = "NUMBER";
@@ -38,22 +38,22 @@ public class PassengerTest {
   }
 
   @Test
-  public void givenChildPassengerDto_thenBackTrue() {
+  public void givenChildPassengerDtoWhenCheckIfChildThenReturnTrue() {
     assertTrue(passenger.isChild());
   }
 
   @Test
-  public void givenAdultdPassengerDto_thenBackFalse() {
+  public void givenAdultPassengerDtoWhenCheckIfChildThenReturnFalse() {
     assertFalse(fakePassenger.isChild());
   }
 
   @Test
-  public void givenGoodPassenger_whenIsValid_thenBackTrue() {
+  public void givenPassengerWhenCheckIfIsValidThenReturnTrue() {
     assertTrue(passenger.isValid());
   }
 
   @Test
-  public void givenIncompleteFirstNamePassenger_whenIsValid_thenBackFalse() {
+  public void givenIncompleteFirstNamePassengerWhenCheckIfIsValidThenReturnFalse() {
     mockPassengerDto.first_name = EMPTY_STRING;
     passenger = new Passenger(mockPassengerDto);
     assertFalse(passenger.isValid());
