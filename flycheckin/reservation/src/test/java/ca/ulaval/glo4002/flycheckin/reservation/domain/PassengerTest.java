@@ -53,28 +53,31 @@ public class PassengerTest {
   }
 
   @Test
-  public void givenIncompleteFirstNamePassengerWhenCheckIfIsValidThenReturnFalse() {
+  public void givenIncompleteFirstNameWhenCheckIfValidThenReturnFalse() {
     mockPassengerDto.first_name = EMPTY_STRING;
     passenger = new Passenger(mockPassengerDto);
+    
     assertFalse(passenger.isValid());
   }
 
   @Test
-  public void givenIncompleteLastNamePassenger_whenIsValid_thenBackFalse() {
+  public void givenIncompleteLastNameWhenCheckIfValidThenReturnFalse() {
     mockPassengerDto.last_name = EMPTY_STRING;
     passenger = new Passenger(mockPassengerDto);
+    
     assertFalse(passenger.isValid());
   }
 
   @Test
-  public void givenIncompletePassportNumberPassenger_whenIsValid_thenBackFalse() {
+  public void givenIncompletePassportNumberWhenCheckIfValidThenReturnFalse() {
     mockPassengerDto.passport_number = EMPTY_STRING;
     passenger = new Passenger(mockPassengerDto);
+    
     assertFalse(passenger.isValid());
   }
 
   @Test
-  public void givenWrongPassenger_whenIsValid_thenBackFalse() {
+  public void givenWrongPassengerWhenCheckIfValidThenReturnFalse() {
     assertFalse(fakePassenger.isValid());
   }
 }
