@@ -67,6 +67,6 @@ public class ReservationResource {
       return Response.status(Status.NOT_FOUND).build();
     }
     ReservationDto reservationDto = new ReservationDto(reservation, passenger_hash);
-    return Response.status(Status.OK).entity(reservationDto).build();
+    return Response.ok(reservationDto).build();
   }
 }
