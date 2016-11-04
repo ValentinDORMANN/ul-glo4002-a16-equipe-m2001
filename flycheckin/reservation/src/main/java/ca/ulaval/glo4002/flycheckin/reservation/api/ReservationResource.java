@@ -15,6 +15,7 @@ import javax.ws.rs.core.UriInfo;
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
 @Path("")
 public class ReservationResource {
@@ -44,7 +45,11 @@ public class ReservationResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getReserversation(@PathParam("reservation_number") int reservationNumber) {
     Reservation reservation = new Reservation();
-    reservation = reservation.readReservationByNumber(reservationNumber);
+    try {
+      reservation = reservation.readReservationByNumber(reservationNumber);
+    } catch (NotFoundReservationException ex) {
+      return Response.status(Status.NOT_FOUND).build();
+    }
     ReservationDto reservationDto = new ReservationDto(reservation);
     return Response.status(Status.OK).entity(reservationDto).build();
   }

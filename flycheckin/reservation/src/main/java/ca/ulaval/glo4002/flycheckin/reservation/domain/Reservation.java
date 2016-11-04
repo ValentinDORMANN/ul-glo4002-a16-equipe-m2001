@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
@@ -61,7 +62,7 @@ public class Reservation {
     reservationInMemory.saveNewReservation(this);
   }
 
-  public Reservation readReservationByNumber(int reservationNumber) {
+  public Reservation readReservationByNumber(int reservationNumber) throws NotFoundReservationException {
     return reservationInMemory.getReservationByNumber(reservationNumber);
   }
 
