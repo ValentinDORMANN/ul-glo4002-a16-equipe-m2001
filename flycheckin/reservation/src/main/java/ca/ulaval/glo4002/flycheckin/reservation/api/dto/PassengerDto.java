@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.domain.Passenger;
 public class PassengerDto {
 
   @JsonIgnore
-  private static final int CHILD_AGE = 15;
+  private static final int LIMIT_CHILD_AGE = 15;
   public String first_name;
   public String last_name;
   @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -30,7 +30,7 @@ public class PassengerDto {
     this.seat_class = passenger.getSeatClass();
     this.child = passenger.isChild();
     // TODO
-    // this.child = passenger.getAge() < CHILD_AGE;
+    // this.child = passenger.getAge() < LIMIT_CHILD_AGE;
     this.passenger_hash = passenger.getPassengerHash();
   }
 }
