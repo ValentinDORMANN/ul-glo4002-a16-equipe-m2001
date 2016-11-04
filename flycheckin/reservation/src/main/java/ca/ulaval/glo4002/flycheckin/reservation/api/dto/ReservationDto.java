@@ -43,6 +43,6 @@ public class ReservationDto {
     this.flight_number = reservation.getFlightNumber();
     this.flight_date = reservation.getFlightDate();
     this.passengers = new ArrayList<PassengerDto>();
-    this.passengers.add(new PassengerDto(reservation.getPassengerFromHash(hash)));
+    this.passengers.add(new PassengerDto(reservation.getPassengerByHash(hash)));
   }
 }

@@ -17,8 +17,9 @@ public class Reservation {
 
   private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
   private static final String MSG_INVALID_CHECKIN_DATE = "Error: immpossible to checkin at this moment !";
-  private static final int FOURTY_EIGHT_HOUR = 48 * 60 * 60 * 1000;
-  private static final int SIX_HOUR = 6 * 60 * 60 * 1000;
+  private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
+  private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
+  private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
   private int reservationNumber;
   private Date reservationDate;
   private String reservationConfirmation;
@@ -66,19 +67,19 @@ public class Reservation {
     return reservationInMemory.getReservationByNumber(reservationNumber);
   }
 
-  public Reservation readReservationByHash(String passenger_hash) throws NotFoundPassengerException {
+  public Reservation searchReservationByPassengerHash(String passenger_hash) throws NotFoundPassengerException {
     return reservationInMemory.getReservationByPassengerHash(passenger_hash);
   }
 
   public List<String> getPassengerHashListInReservation() {
-    List<String> hashs = new ArrayList<String>();
+    List<String> passengerHashs = new ArrayList<String>();
     for (Passenger passenger : passengers) {
-      hashs.add(passenger.getPassengerHash());
+    	passengerHashs.add(passenger.getPassengerHash());
     }
-    return hashs;
+    return passengerHashs;
   }
 
-  public Passenger getPassengerFromHash(String hash) {
+  public Passenger getPassengerByHash(String hash) {
     for (Passenger passenger : passengers) {
       if (passenger.getPassengerHash().equals(hash))
         return passenger;
@@ -95,8 +96,8 @@ public class Reservation {
   private void validateSelfCheckinPeriod() {
     long todayInMillisecond = new Date().getTime();
     long flightDateInMillisecond = this.getFlightDate().getTime();
-    if (!((flightDateInMillisecond - FOURTY_EIGHT_HOUR <= todayInMillisecond)
-        && (todayInMillisecond <= flightDateInMillisecond - SIX_HOUR))) {
+    if (!((flightDateInMillisecond - SELF_CHECKIN_START_TIME <= todayInMillisecond)
+        && (todayInMillisecond <= flightDateInMillisecond - SELF_CHECKIN_END_TIME))) {
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
     }
   }

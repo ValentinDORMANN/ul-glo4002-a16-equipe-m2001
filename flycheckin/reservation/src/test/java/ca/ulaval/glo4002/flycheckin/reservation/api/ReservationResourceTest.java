@@ -22,7 +22,7 @@ public class ReservationResourceTest {
   @Mock
   private ReservationDto reservationDto;
   @Mock
-  private UriInfo urinfo;
+  private UriInfo uriInfo;
 
   @Before
   public void setUp() {

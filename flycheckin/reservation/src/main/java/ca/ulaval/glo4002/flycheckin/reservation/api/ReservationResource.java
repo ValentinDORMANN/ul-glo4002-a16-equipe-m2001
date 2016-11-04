@@ -62,7 +62,7 @@ public class ReservationResource {
   public Response getReservationByHash(@PathParam("passenger_hash") String passenger_hash) {
     Reservation reservation = new Reservation();
     try {
-      reservation = reservation.readReservationByHash(passenger_hash);
+      reservation = reservation.searchReservationByPassengerHash(passenger_hash);
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
     }
