@@ -11,19 +11,19 @@ import javax.ws.rs.core.Response.Status;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.HttpServices;
+import ca.ulaval.glo4002.flycheckin.boarding.services.ServiceHttp;
 
 @Path("")
-public class SeatAssignationResource {
+public class ResourceSeatAssignation {
 
   private static final String SEAT_ASSIGNATIONS = "/seat-assignations";
-  private HttpServices httpServices;
+  private ServiceHttp httpServices;
 
-  public SeatAssignationResource() {
-    this.httpServices = new HttpServices();
+  public ResourceSeatAssignation() {
+    this.httpServices = new ServiceHttp();
   }
 
-  public SeatAssignationResource(HttpServices httpServices) {
+  public ResourceSeatAssignation(ServiceHttp httpServices) {
     this.httpServices = httpServices;
   }
 

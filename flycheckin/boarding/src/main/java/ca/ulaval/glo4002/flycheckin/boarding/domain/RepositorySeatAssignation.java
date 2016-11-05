@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
-public interface SeatAssignationRepository {
+public interface RepositorySeatAssignation {
   int assignSeatToPassenger();
 
   String getPassengerSeat();

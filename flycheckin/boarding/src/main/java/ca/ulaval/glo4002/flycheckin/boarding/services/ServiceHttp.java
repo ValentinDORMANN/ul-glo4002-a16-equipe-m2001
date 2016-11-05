@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
-public class HttpServices {
+public class ServiceHttp {
 
   private static final String LOCALHOST = "http://localhost:";
   private static final String RESERVATION_HASH = "/reservations/hash/";
@@ -17,7 +17,7 @@ public class HttpServices {
   private static final String MSG_NOT_FOUND = "Passenger not found";
   private static int reservationServer;
 
-  public HttpServices() {
+  public ServiceHttp() {
     reservationServer = Integer.valueOf(System.getProperty("reservation.port"));
   }
 
