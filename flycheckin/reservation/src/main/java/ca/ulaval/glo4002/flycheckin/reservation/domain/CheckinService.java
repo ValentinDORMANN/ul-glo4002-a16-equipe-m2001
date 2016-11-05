@@ -23,8 +23,9 @@ public class CheckinService {
 
   public int saveCheckin(CheckinDto checkinDto) throws FlyCheckinApplicationException {
     String hash = checkinDto.passenger_hash;
+    String by = checkinDto.by;
     Reservation reservation = reservationInMemory.getReservationByPassengerHash(hash);
-    reservation.validateCheckinPeriod(checkinDto.by);
+    reservation.validateCheckinPeriod(by);
     if (reservation.getPassengerByHash(hash).isValid())
       return checkinInMemory.doPassengerCheckin(hash);
     throw new FlyCheckinApplicationException(MSG_ERROR);
