@@ -12,32 +12,26 @@ public abstract class Luggage {
   protected int weightInPound;
   private String luggageHash;
 
-  private int convertWeightToPoundUnit(int weightInKg) {
-    return (int) Math.floor(weightInKg * WEIGHT_CONVERSION_RATE);
+  private int convertWeightToPoundUnit(int weight, String weightUnit) {
+    if(weightUnit.equals("lbs"))
+    	return weight;
+    else
+      return (int) Math.floor(weight * WEIGHT_CONVERSION_RATE);
   }
 
-  private int convertDimensionToInchUnit(int dimensionInCm) {
-    return (int) Math.floor(dimensionInCm * DIMENSION_CONVERSION_RATE);
+  private int convertDimensionToInchUnit(int dimension, String dimmensionUnit) {
+    if(dimmensionUnit.equals("po"))
+    	return dimension;
+    else
+  	return (int) Math.floor(dimension * DIMENSION_CONVERSION_RATE);
   }
   
   public Luggage(LuggageDto luggageDto) throws IllegalArgumentException {
-    if(isDimensionInInch(luggageDto))
-    	this.dimensionInInch = luggageDto.dimension;
-    else
-    	this.dimensionInInch = convertDimensionToInchUnit(luggageDto.dimension);
-    if(isWeightInPound(luggageDto))
-    	this.weightInPound = luggageDto.weight;
-    else
-    	this.weightInPound = convertWeightToPoundUnit(luggageDto.weight);   
+    this.dimensionInInch = convertDimensionToInchUnit(luggageDto.dimension, luggageDto.dimension_unit);
+    this.weightInPound = convertWeightToPoundUnit(luggageDto.weight, luggageDto.weight_unit);
     this.luggageHash = UUID.randomUUID().toString();
   }
   
-  private boolean isDimensionInInch(LuggageDto luggageDto) {
-  	return luggageDto.dimension_unit.equals("po");
-}
-  private boolean isWeightInPound(LuggageDto luggageDto) {
-  	return luggageDto.weight_unit.equals("lbs");
-}
   abstract public boolean isWeightAllowed();
   abstract public boolean isDimensionAllowed();
   

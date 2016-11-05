@@ -1,5 +1,8 @@
 package ca.ulaval.glo4002.flycheckin.boarding.rest.dto;
 
+import java.util.List;
+
+
 public class PassengerDto {
 
   public String first_name;
@@ -8,5 +11,4 @@ public class PassengerDto {
   public String seat_class;
   public boolean child;
   public String passenger_hash;
-  public LuggageDto[] luggages;
 }

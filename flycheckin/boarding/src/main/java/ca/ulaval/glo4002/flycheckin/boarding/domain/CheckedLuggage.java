@@ -6,8 +6,13 @@ public class CheckedLuggage extends Luggage {
 
   private static final int WEIGHT_LIMIT = 50;
   private static final int DIMENSION_LIMIT = 62;
-	public CheckedLuggage(LuggageDto luggageDto) throws IllegalArgumentException {
+  private static final String TYPE_CHECKED = "checked";
+  private String type;
+ 
+  
+	public CheckedLuggage(LuggageDto luggageDto){
 		super(luggageDto);
+		this.type = TYPE_CHECKED;
 	}
 	
 	@Override
