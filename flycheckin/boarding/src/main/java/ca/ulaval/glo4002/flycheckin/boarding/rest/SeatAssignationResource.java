@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response.Status;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDTO;
+import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.HttpServices;
 
 @Path("")
@@ -31,7 +31,7 @@ public class SeatAssignationResource {
   @Path(SEAT_ASSIGNATIONS)
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response assignSeatToPassenger(SeatAssignationDTO seatAssignationDto) throws Exception {
+  public Response assignSeatToPassenger(SeatAssignationDto seatAssignationDto) throws Exception {
     try {
       ReservationDto reservationDto;
       reservationDto = httpServices.getReservationDtoFromReservation(seatAssignationDto.passenger_hash);

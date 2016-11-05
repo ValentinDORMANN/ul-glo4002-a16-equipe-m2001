@@ -15,14 +15,14 @@ public class HttpServices {
   private static final String RESERVATION_HASH = "/reservations/hash/";
   private static final int HTTP_STATUS_NOT_FOUND = 404;
   private static final String MSG_NOT_FOUND = "Passenger not found";
-  private static int RESERVATION_SERVER;
+  private static int reservationServer;
 
   public HttpServices() {
-    RESERVATION_SERVER = Integer.valueOf(System.getProperty("reservation.port"));
+    reservationServer = Integer.valueOf(System.getProperty("reservation.port"));
   }
 
   public ReservationDto getReservationDtoFromReservation(String passenger_hash) throws Exception {
-    String url = LOCALHOST + RESERVATION_SERVER + RESERVATION_HASH + passenger_hash;
+    String url = LOCALHOST + reservationServer + RESERVATION_HASH + passenger_hash;
     Client client = ClientBuilder.newClient();
     WebTarget target = client.target(url);
     Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
