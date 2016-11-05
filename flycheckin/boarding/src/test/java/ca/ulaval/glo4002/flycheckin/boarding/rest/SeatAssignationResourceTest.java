@@ -14,7 +14,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.HttpServices;
 
-public class SeatAssignationTest {
+public class SeatAssignationResourceTest {
 
   private static final String PASSENGER_HASH = "HASH";
   private static final String WRONG_PASSENGER_HASH = "FAKE";
