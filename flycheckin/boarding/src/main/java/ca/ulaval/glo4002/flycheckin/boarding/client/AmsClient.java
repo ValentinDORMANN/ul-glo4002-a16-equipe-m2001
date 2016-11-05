@@ -1,8 +1,8 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne;
+package ca.ulaval.glo4002.flycheckin.boarding.client;
 
 import java.util.Random;
 
-public class ServiceAms {
+public class AmsClient {
 
   private static final String BOEING = "boeing-777-300";
   private static final String FLIGHT_BOEING = "QK-432";
