@@ -1,5 +1,5 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services;
 
-public class SeatAssignationService {
+public class ServiceSeatAssignationTest {
 
 }

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.flycheckin.boarding.persistence;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.PassengersRepository;
 
-public class HibernatePassengers implements SeatAssignationRepository {
+public class HibernatePassengers implements PassengersRepository {
 
   @Override
   public int assignSeatToPassenger(String passengerHash) {

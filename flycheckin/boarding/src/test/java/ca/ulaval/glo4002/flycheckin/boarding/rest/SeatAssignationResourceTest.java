@@ -12,7 +12,7 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.HttpServices;
+import ca.ulaval.glo4002.flycheckin.boarding.services.ServiceHttp;
 
 public class SeatAssignationResourceTest {
 
@@ -20,18 +20,18 @@ public class SeatAssignationResourceTest {
   private static final String WRONG_PASSENGER_HASH = "FAKE";
   private static final int STATUS_OK = 200;
   private static final int STATUS_NOT_FOUND = 404;
-  private HttpServices httpServices;
+  private ServiceHttp httpServices;
   private ReservationDto reservationDto;
   private SeatAssignationDto seatAssignationDto;
-  private SeatAssignationResource seatAssignationResource;
+  private ResourceSeatAssignation seatAssignationResource;
   private Response response;
 
   @Before
   public void initiateTest() throws Exception {
-    httpServices = mock(HttpServices.class);
+    httpServices = mock(ServiceHttp.class);
     reservationDto = mock(ReservationDto.class);
     seatAssignationDto = mock(SeatAssignationDto.class);
-    seatAssignationResource = new SeatAssignationResource(httpServices);
+    seatAssignationResource = new ResourceSeatAssignation(httpServices);
     willReturn(reservationDto).given(httpServices).getReservationDtoFromReservation(PASSENGER_HASH);
     seatAssignationDto.passenger_hash = PASSENGER_HASH;
   }

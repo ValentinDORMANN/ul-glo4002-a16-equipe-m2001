@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.PassengersRepository;
 import javassist.compiler.ast.Pair;
 
-public class InMemoryPassengers implements SeatAssignationRepository {
+public class InMemoryPassengers implements PassengersRepository {
 
   private static final String NO_SEAT_AVAILABLE = "No more seat available for this seat class";
   private static Map<Integer, Pair> seatAssignationMap = new HashMap<Integer, Pair>();
