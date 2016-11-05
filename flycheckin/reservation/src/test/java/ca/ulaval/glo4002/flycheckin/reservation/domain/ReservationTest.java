@@ -70,24 +70,25 @@ public class ReservationTest {
   public void givenFakePassengerHashWhenGetPassengerByHashThenThrowException() {
     reservation.getPassengerByHash(FAKE_PASSENGER_HASH);
   }
-  
+
   @Test
   public void whenReadReservationByNumberThenVerifyReservationInMemoryGetReservation() {
     reservation.readReservationByNumber(RESERVATION_NUMBER);
-  
+
     verify(mockReservationInMemory).getReservationByNumber(RESERVATION_NUMBER);
   }
+
   @Test(expected = NotTimeToCheckinException.class)
   public void whenSelfCheckinBeforeStartTimeThenThrowException() {
     reservation.setFlightDate(SELF_CHECKIN_START_TIME);
-    
+
     reservation.validateCheckinPeriod("SELF");
   }
-  
+
   @Test(expected = NotTimeToCheckinException.class)
   public void whenSelfCheckinEndTimeThenThrowException() {
     reservation.setFlightDate(SELF_CHECKIN_END_TIME);
-    
+
     reservation.validateCheckinPeriod("SELF");
   }
 }

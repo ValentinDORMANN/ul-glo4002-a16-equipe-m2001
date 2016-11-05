@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.flycheckin.reservation.api;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -24,7 +24,7 @@ public class CheckinResourceTest {
   private CheckinDto checkinDto;
 
   @Before
-  public void setUp() {
+  public void initiateTest() {
     uriInfo = mock(UriInfo.class);
     checkinDto = mock(CheckinDto.class);
     checkinService = mock(CheckinService.class);

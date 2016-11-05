@@ -25,7 +25,7 @@ public class ReservationResourceTest {
   private UriInfo uriInfo;
 
   @Before
-  public void setUp() {
+  public void initiateTest() {
     this.reservationResource = new ReservationResource();
 
     this.reservationDto = mock(ReservationDto.class);

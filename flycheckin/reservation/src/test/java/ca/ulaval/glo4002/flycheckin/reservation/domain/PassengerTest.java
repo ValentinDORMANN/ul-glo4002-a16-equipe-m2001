@@ -22,7 +22,7 @@ public class PassengerTest {
   private PassengerDto mockWrongPassengerDto;
 
   @Before
-  public void setUp() {
+  public void initiateTest() {
     mockPassengerDto = mock(PassengerDto.class);
     mockWrongPassengerDto = mock(PassengerDto.class);
     mockPassengerDto.age = CHILD_AGE;
@@ -56,7 +56,7 @@ public class PassengerTest {
   public void givenIncompleteFirstNameWhenCheckIfValidThenReturnFalse() {
     mockPassengerDto.first_name = EMPTY_STRING;
     passenger = new Passenger(mockPassengerDto);
-    
+
     assertFalse(passenger.isValid());
   }
 
@@ -64,7 +64,7 @@ public class PassengerTest {
   public void givenIncompleteLastNameWhenCheckIfValidThenReturnFalse() {
     mockPassengerDto.last_name = EMPTY_STRING;
     passenger = new Passenger(mockPassengerDto);
-    
+
     assertFalse(passenger.isValid());
   }
 
@@ -72,7 +72,7 @@ public class PassengerTest {
   public void givenIncompletePassportNumberWhenCheckIfValidThenReturnFalse() {
     mockPassengerDto.passport_number = EMPTY_STRING;
     passenger = new Passenger(mockPassengerDto);
-    
+
     assertFalse(passenger.isValid());
   }
 

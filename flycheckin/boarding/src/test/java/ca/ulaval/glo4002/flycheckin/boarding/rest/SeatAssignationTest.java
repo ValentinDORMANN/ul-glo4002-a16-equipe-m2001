@@ -27,7 +27,7 @@ public class SeatAssignationTest {
   private Response response;
 
   @Before
-  public void setUp() throws Exception {
+  public void initiateTest() throws Exception {
     httpServices = mock(HttpServices.class);
     reservationDto = mock(ReservationDto.class);
     seatAssignationDto = mock(SeatAssignationDto.class);
