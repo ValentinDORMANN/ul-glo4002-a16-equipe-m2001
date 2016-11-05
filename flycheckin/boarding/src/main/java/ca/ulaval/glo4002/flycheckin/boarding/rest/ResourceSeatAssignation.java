@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PlaneModelDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.ServiceHttp;
@@ -35,7 +36,8 @@ public class ResourceSeatAssignation {
     try {
       ReservationDto reservationDto;
       reservationDto = httpServices.getReservationDtoFromReservation(seatAssignationDto.passenger_hash);
-      return Response.status(Status.OK).entity(reservationDto).build();
+      PlaneModelDto plan = httpServices.getPlaneModelDtoAccordingFlightNumber(reservationDto.flight_number);
+      return Response.status(Status.OK).entity(plan).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
     }
