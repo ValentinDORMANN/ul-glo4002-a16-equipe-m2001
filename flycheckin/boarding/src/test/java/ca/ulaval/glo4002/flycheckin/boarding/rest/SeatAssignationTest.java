@@ -12,7 +12,7 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.ServiceHttp;
+import ca.ulaval.glo4002.flycheckin.boarding.services.externe.ServiceHttp;
 
 public class SeatAssignationTest {
 

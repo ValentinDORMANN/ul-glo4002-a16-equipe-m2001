@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services;
+package ca.ulaval.glo4002.flycheckin.boarding.services.externe;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.client.Client;
@@ -7,10 +7,10 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import ca.ulaval.glo4002.flycheckin.boarding.ams.ServiceAms;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PlaneModelDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
+import ca.ulaval.glo4002.flycheckin.boarding.services.interne.ServiceAms;
 
 public class ServiceHttp {
 

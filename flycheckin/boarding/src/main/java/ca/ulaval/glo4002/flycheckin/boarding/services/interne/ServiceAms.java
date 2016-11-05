@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.ams;
+package ca.ulaval.glo4002.flycheckin.boarding.services.interne;
 
 import java.util.Random;
 
