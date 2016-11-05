@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDTO;
 import ca.ulaval.glo4002.flycheckin.boarding.services.HttpServices;
@@ -16,14 +17,14 @@ import ca.ulaval.glo4002.flycheckin.boarding.services.HttpServices;
 public class SeatAssignationResource {
 
   private static final String SEAT_ASSIGNATIONS = "/seat-assignations";
-  private HttpServices httpService;
+  private HttpServices httpServices;
 
   public SeatAssignationResource() {
-    this.httpService = new HttpServices();
+    this.httpServices = new HttpServices();
   }
 
-  public SeatAssignationResource(HttpServices httpService) {
-    this.httpService = httpService;
+  public SeatAssignationResource(HttpServices httpServices) {
+    this.httpServices = httpServices;
   }
 
   @POST
@@ -33,9 +34,9 @@ public class SeatAssignationResource {
   public Response assignSeatToPassenger(SeatAssignationDTO seatAssignationDto) throws Exception {
     try {
       ReservationDto reservationDto;
-      reservationDto = httpService.getReservationDtoFromReservation(seatAssignationDto.passenger_hash);
+      reservationDto = httpServices.getReservationDtoFromReservation(seatAssignationDto.passenger_hash);
       return Response.status(Status.OK).entity(reservationDto).build();
-    } catch (Exception ex) {
+    } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
     }
   }
