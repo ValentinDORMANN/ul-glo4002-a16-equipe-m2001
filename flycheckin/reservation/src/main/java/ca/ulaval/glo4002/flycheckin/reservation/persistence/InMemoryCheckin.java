@@ -5,7 +5,7 @@ import java.util.Map;
 
 import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 
-public class CheckinInMemory {
+public class InMemoryCheckin {
 
   private static final String MESSAGE_ERROR_CHECKIN = "Error: This passenger checkin is already done. ";
   private static final int CHECKIN_ID_BEGIN = 100;

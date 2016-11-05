@@ -7,17 +7,17 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 
-public class CheckinInMemoryTest {
+public class InMemoryCheckinTest {
 
   private static final int CHECKIN_LIST_LIMIT = 100;
   private static final String PASSENGER_HASH = "acb15 de26f 4mf99z";
   private static final String PASSENGER_HASH2 = "jfd45 d4g5f 48dfz";
   private int checkinNumber;
-  private CheckinInMemory checkinMemory;
+  private InMemoryCheckin checkinMemory;
 
   @Before
   public void initiateTest() {
-    checkinMemory = new CheckinInMemory();
+    checkinMemory = new InMemoryCheckin();
   }
 
   @Test

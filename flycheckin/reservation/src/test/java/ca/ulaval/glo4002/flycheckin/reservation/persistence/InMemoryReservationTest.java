@@ -14,10 +14,10 @@ import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
-public class ReservationInMemoryTest {
+public class InMemoryReservationTest {
   private static final int RESERVATION_NUMBER = 55555;
   private static final int WRONG_RESERVATION_NUMBER = 44444;
-  private ReservationInMemory reservationInMemory = new ReservationInMemory();
+  private InMemoryReservation reservationInMemory = new InMemoryReservation();
   @Mock
   private Reservation mockReservation;
 

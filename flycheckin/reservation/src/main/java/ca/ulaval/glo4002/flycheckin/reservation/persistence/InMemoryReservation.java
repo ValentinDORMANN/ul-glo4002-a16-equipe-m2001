@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReserva
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
-public class ReservationInMemory {
+public class InMemoryReservation {
 
   private static Map<Integer, Reservation> reservationMap = new HashMap<Integer, Reservation>();
   private static final String MESSAGE_ERROR_RESERVATION = "Error : reservation not found !";

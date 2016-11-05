@@ -15,7 +15,7 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.InMemoryReservation;
 
 public class ReservationTest {
   private static final int RESERVATION_NUMBER = 55555;
@@ -26,7 +26,7 @@ public class ReservationTest {
   private static final Date SELF_CHECKIN_START_TIME = initiateDateByHour(-48, false);
   private static final Date SELF_CHECKIN_END_TIME = initiateDateByHour(-6, true);
 
-  private ReservationInMemory mockReservationInMemory;
+  private InMemoryReservation mockReservationInMemory;
   private ReservationDto mockReservationDto;
   private Passenger mockPassenger;
   private List<Passenger> passengers;
@@ -41,7 +41,7 @@ public class ReservationTest {
 
   @Before
   public void initiateTest() {
-    mockReservationInMemory = mock(ReservationInMemory.class);
+    mockReservationInMemory = mock(InMemoryReservation.class);
     mockReservationDto = mock(ReservationDto.class);
     mockPassenger = mock(Passenger.class);
     mockReservationDto.reservation_number = RESERVATION_NUMBER;
@@ -53,12 +53,12 @@ public class ReservationTest {
 
   @Test
   public void givenFakePassengerWhenVerifyIfPassengerIsInListPassengerInReservationThenReturnFalse() {
-    assertFalse(reservation.getPassengerHashListInReservation().contains(FAKE_PASSENGER_HASH));
+    assertFalse(reservation.getPassengerHashListInReservation().isEmpty());
   }
-
+  // TODO Refactor
   @Test
   public void givenValidPassengerWhenVerifyIfPassengerInReservationThenReturnTrue() {
-    assertTrue(reservation.getPassengerHashListInReservation().contains(PASSENGER_HASH));
+    assertTrue(!reservation.getPassengerHashListInReservation().isEmpty());
   }
 
   @Test

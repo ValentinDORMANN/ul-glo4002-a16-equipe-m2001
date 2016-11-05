@@ -4,6 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
@@ -11,8 +21,9 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReserva
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.InMemoryReservation;
 
+@Entity
 public class Reservation {
 
   private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
@@ -20,19 +31,31 @@ public class Reservation {
   private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
   private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
+  
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int reservationNumber;
+  @Column(name = "reservationDate")
+  @Temporal(TemporalType.DATE)
   private Date reservationDate;
+  @Column(name = "reservationConfirmation")
   private String reservationConfirmation;
+  @Column(name = "flightNumber")
   private String flightNumber;
+  @Column(name = "flightDate")
+  @Temporal(TemporalType.TIMESTAMP)
   private Date flightDate;
+  @Column(name = "paymentLocation")
   private String paymentLocation;
+  @Column(name = "passengers")
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Passenger> passengers;
-  private ReservationInMemory reservationInMemory = new ReservationInMemory();
+  private InMemoryReservation reservationInMemory = new InMemoryReservation();
 
   public Reservation() {
   }
 
-  public Reservation(ReservationInMemory reservationInMemory, ReservationDto reservationDto,
+  public Reservation(InMemoryReservation reservationInMemory, ReservationDto reservationDto,
       List<Passenger> passengers) {
     this.reservationNumber = reservationDto.reservation_number;
     this.reservationDate = reservationDto.reservation_date;

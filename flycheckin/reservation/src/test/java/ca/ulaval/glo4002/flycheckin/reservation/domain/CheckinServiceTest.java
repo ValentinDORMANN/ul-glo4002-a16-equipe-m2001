@@ -11,8 +11,8 @@ import ca.ulaval.glo4002.flycheckin.reservation.api.dto.CheckinDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.InMemoryCheckin;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.InMemoryReservation;
 
 public class CheckinServiceTest {
 
@@ -23,16 +23,16 @@ public class CheckinServiceTest {
   private static final int CHECKIN_NUMBER = 1;
   private static final boolean IS_VALID = true;
   private static final boolean IS_NOT_VALID = false;
-  private CheckinInMemory mockCheckinInMemory;
-  private ReservationInMemory mockReservationInMemory;
+  private InMemoryCheckin mockCheckinInMemory;
+  private InMemoryReservation mockReservationInMemory;
   private CheckinDto mockCheckinDto;
   private Reservation mockReservation;
   private CheckinService checkinService;
 
   @Before
   public void initiateTest() {
-    mockCheckinInMemory = mock(CheckinInMemory.class);
-    mockReservationInMemory = mock(ReservationInMemory.class);
+    mockCheckinInMemory = mock(InMemoryCheckin.class);
+    mockReservationInMemory = mock(InMemoryReservation.class);
     mockCheckinDto = mock(CheckinDto.class);
     mockReservation = mock(Reservation.class);
     checkinService = new CheckinService(mockCheckinInMemory, mockReservationInMemory);
