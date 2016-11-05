@@ -11,28 +11,4 @@ public class ReservationDto {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_GMT_PATTERN)
   public Date flight_date;
   public PassengerDto[] passengers;
-
-  public String getFlight_number() {
-    return flight_number;
-  }
-
-  public Date getFlight_date() {
-    return flight_date;
-  }
-
-  public PassengerDto[] getPassengers() {
-    return passengers;
-  }
-
-  public void setFlight_number(String flight_number) {
-    this.flight_number = flight_number;
-  }
-
-  public void setFlight_date(Date flight_date) {
-    this.flight_date = flight_date;
-  }
-
-  public void setPassengers(PassengerDto[] passengers) {
-    this.passengers = passengers;
-  }
 }
