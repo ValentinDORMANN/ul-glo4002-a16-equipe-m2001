@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.client.HttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
 
-public class SeatAssignationTest {
+public class SeatAssignationResourceTest {
 
   private static final String PASSENGER_HASH = "HASH";
   private static final String WRONG_PASSENGER_HASH = "FAKE";
