@@ -74,9 +74,14 @@ public class Reservation {
   public List<String> getPassengerHashListInReservation() {
     List<String> passengerHashs = new ArrayList<String>();
     for (Passenger passenger : passengers) {
-    	passengerHashs.add(passenger.getPassengerHash());
+      passengerHashs.add(passenger.getPassengerHash());
     }
     return passengerHashs;
+  }
+
+  public boolean isPassengerInfosValid(String hash) throws NotFoundPassengerException {
+    Passenger passenger = getPassengerByHash(hash);
+    return passenger.isValid();
   }
 
   public Passenger getPassengerByHash(String hash) {

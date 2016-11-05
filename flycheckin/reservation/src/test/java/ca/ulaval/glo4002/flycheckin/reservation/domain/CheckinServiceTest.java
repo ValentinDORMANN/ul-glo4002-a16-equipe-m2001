@@ -27,7 +27,6 @@ public class CheckinServiceTest {
   private ReservationInMemory mockReservationInMemory;
   private CheckinDto mockCheckinDto;
   private Reservation mockReservation;
-  private Passenger mockPassenger;
   private CheckinService checkinService;
 
   @Before
@@ -36,7 +35,6 @@ public class CheckinServiceTest {
     mockReservationInMemory = mock(ReservationInMemory.class);
     mockCheckinDto = mock(CheckinDto.class);
     mockReservation = mock(Reservation.class);
-    mockPassenger = mock(Passenger.class);
     checkinService = new CheckinService(mockCheckinInMemory, mockReservationInMemory);
     willReturn(mockReservation).given(mockReservationInMemory).getReservationByPassengerHash(PASSENGER_HASH);
     willThrow(NotFoundPassengerException.class).given(mockReservationInMemory)
@@ -63,16 +61,14 @@ public class CheckinServiceTest {
 
   @Test(expected = FlyCheckinApplicationException.class)
   public void givenWrongPassengerInformationWhenCheckinThenThrowException() {
-    willReturn(mockPassenger).given(mockReservation).getPassengerByHash(PASSENGER_HASH);
-    willReturn(IS_NOT_VALID).given(mockPassenger).isValid();
+    willReturn(IS_NOT_VALID).given(mockReservation).isPassengerInfosValid(PASSENGER_HASH);
 
     checkinService.saveCheckin(mockCheckinDto);
   }
 
   @Test
   public void givenValidPassengerWhenDoCheckinThenReturnCheckinNumber() {
-    willReturn(mockPassenger).given(mockReservation).getPassengerByHash(PASSENGER_HASH);
-    willReturn(IS_VALID).given(mockPassenger).isValid();
+    willReturn(IS_VALID).given(mockReservation).isPassengerInfosValid(PASSENGER_HASH);
 
     int checkinNumber = checkinService.saveCheckin(mockCheckinDto);
 

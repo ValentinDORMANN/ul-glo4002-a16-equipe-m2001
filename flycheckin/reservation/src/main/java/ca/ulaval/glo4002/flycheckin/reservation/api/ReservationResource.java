@@ -1,5 +1,8 @@
 package ca.ulaval.glo4002.flycheckin.reservation.api;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -32,7 +35,10 @@ public class ReservationResource {
     try {
       Reservation reservation = new Reservation(reservationDto);
       String location = createUrlforGetReservation(uriInfo, reservation);
-      return Response.status(Status.CREATED).entity(location).build();
+      URI url = new URI(location);
+      return Response.status(Status.CREATED).location(url).build();
+    } catch (URISyntaxException e) {
+      return Response.status(Status.CREATED).build();
     } catch (FlyCheckinApplicationException ex) {
       return Response.status(Status.BAD_REQUEST).build();
     }

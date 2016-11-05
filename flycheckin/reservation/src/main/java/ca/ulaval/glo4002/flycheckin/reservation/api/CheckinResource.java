@@ -1,5 +1,8 @@
 package ca.ulaval.glo4002.flycheckin.reservation.api;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -33,7 +36,10 @@ public class CheckinResource {
     try {
       int checkinId = this.checkinService.saveCheckin(checkinDto);
       String location = createUrlToGetCheckin(uriInfo, checkinId);
-      return Response.status(Status.CREATED).entity(location).build();
+      URI url = new URI(location);
+      return Response.status(Status.CREATED).location(url).build();
+    } catch (URISyntaxException e) {
+      return Response.status(Status.CREATED).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
     } catch (FlyCheckinApplicationException ex) {
