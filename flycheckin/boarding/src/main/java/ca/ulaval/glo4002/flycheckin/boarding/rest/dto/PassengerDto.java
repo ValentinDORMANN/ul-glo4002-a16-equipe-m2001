@@ -8,4 +8,5 @@ public class PassengerDto {
   public String seat_class;
   public boolean child;
   public String passenger_hash;
+  public LuggageDto[] luggages;
 }
