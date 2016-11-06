@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.flycheckin.boarding.rest.dto;
 
-import java.util.List;
-
 
 public class PassengerDto {
 
