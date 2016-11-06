@@ -9,18 +9,18 @@ public class CheckedLuggage extends Luggage {
   private static final String TYPE_CHECKED = "checked";
  
   
-	public CheckedLuggage(LuggageDto luggageDto){
-		super(luggageDto);
-	  luggageDto.type = TYPE_CHECKED;
-	}
-	
-	@Override
-	public boolean isWeightAllowed() {
-		return weightInPound < WEIGHT_LIMIT;
-	}
-	
-	@Override
-	public boolean isDimensionAllowed() {
-		return dimensionInInch <  DIMENSION_LIMIT;
-	}
+  public CheckedLuggage(LuggageDto luggageDto) {
+    super(luggageDto);
+    luggageDto.type = TYPE_CHECKED;
+  }
+
+  @Override
+  public boolean isWeightAllowed() {
+    return weightInPound < WEIGHT_LIMIT;
+  }
+
+  @Override
+  public boolean isDimensionAllowed() {
+    return dimensionInInch <  DIMENSION_LIMIT;
+  }
 }
