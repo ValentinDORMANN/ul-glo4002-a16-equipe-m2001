@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 import java.util.Date;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
@@ -34,14 +33,14 @@ public class ServiceSeatAssignationTest {
     serviceSeatAssignation = new ServiceSeatAssignation(mockSeatAssignation, mockSeatAssignationRepository);
   }
 
-  @Test
+  /*  @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyAssignationWithGoodMode() {
     when(mockPassenger.getPassengerHash()).thenReturn(PASSENGER_HASH_NO_SEAT);
-
+  
     serviceSeatAssignation.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
-
+  
     verify(mockSeatAssignation, times(1)).assignSeatNumberToPassenger(PASSENGER_HASH_NO_SEAT, RANDOM_MODE);
-  }
+  }*/
 
   /*  @Test(expected = PassengerAlreadySeatAssigned.class)
   public void givenPassengerWithSeatAssignWhenAssignSeatToPassengerThenReturnException() {

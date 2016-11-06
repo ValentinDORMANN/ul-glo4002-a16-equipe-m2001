@@ -9,7 +9,9 @@ import ca.ulaval.glo4002.flycheckin.boarding.client.AmsMapClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRandomStrategy;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationStrategy;
 import ca.ulaval.glo4002.flycheckin.boarding.services.externe.ServicePlaneModel;
 
 public class ServiceSeatAssignation {
@@ -19,6 +21,7 @@ public class ServiceSeatAssignation {
   private static Map<String, List<Seat>> availableSeatMap = new HashMap<String, List<Seat>>();
   private SeatAssignation seatAssignation;
   private SeatAssignationRepository seatAssignationRepository;
+  private SeatAssignationStrategy seatAssignationStrategy;
 
   public ServiceSeatAssignation(SeatAssignation seatAssignation, SeatAssignationRepository seatAssignationRepository) {
     this.seatAssignation = seatAssignation;
@@ -26,24 +29,39 @@ public class ServiceSeatAssignation {
   }
 
   public SeatAssignation assignSeatToPassenger(Passenger passenger, String mode) {
+    setSeatAssignationStrategy(mode);
     List<Seat> availableSeats = getAvalaibleSeatsForFlight(passenger.getFlightNumber(), passenger.getFlightDate());
-    // attribuer un numéro d'assignation si un siège est retourné
-    seatAssignation.assignSeatNumberToPassenger(passenger.getPassengerHash(), mode);
-    // persister l'assignation du siège en mémoire
-    // retirer le siège des sièges disponibles pur ce vol
-    return null;
+    String seatNumber = seatAssignationStrategy.assignSeatNumber(availableSeats);
+    seatAssignation.assignSeatNumberToPassenger(seatNumber, passenger.getPassengerHash());
+    seatAssignationRepository.persistSeatAssignation(assignationNumber, seatAssignation);
+    makeSeatNumberUnavailable(passenger.getFlightNumber(), passenger.getFlightDate(), seatNumber);
+    assignationNumber++;
+    return seatAssignation;
   }
 
   private List<Seat> getAvalaibleSeatsForFlight(String flightNumber, Date flightDate) {
-    ServicePlaneModel servicePlaneModel = new ServicePlaneModel();
-    AmsMapClient amsMapConnector = new AmsMapClient();
     String flightInfos = flightNumber + flightDate.toString();
-    if (availableSeatMap.containsKey(flightInfos))
-      return availableSeatMap.get(flightInfos);
-    else {
+    if (!(availableSeatMap.containsKey(flightInfos))) {
+      ServicePlaneModel servicePlaneModel = new ServicePlaneModel();
+      AmsMapClient amsMapConnector = new AmsMapClient();
       String planeModel = amsMapConnector.getPlaneModelByFlightNumber(flightNumber);
-      return servicePlaneModel.getSeatsAccordingPlaneModel(planeModel);
+      availableSeatMap.put(flightInfos, servicePlaneModel.getSeatsAccordingPlaneModel(planeModel));
     }
+    return availableSeatMap.get(flightInfos);
   }
 
+  private void setSeatAssignationStrategy(String mode) {
+    this.seatAssignationStrategy = new SeatAssignationRandomStrategy();
+  }
+
+  private void makeSeatNumberUnavailable(String flightNumber, Date flightDate, String seatNumber) {
+    String flightInfos = flightNumber + flightDate.toString();
+    List<Seat> availableSeats = availableSeatMap.get(flightInfos);
+    for (Seat seat : availableSeats) {
+      if (seat.getSeatNumber().equals(seatNumber)) {
+        availableSeats.remove(seat);
+        break;
+      }
+    }
+  }
 }

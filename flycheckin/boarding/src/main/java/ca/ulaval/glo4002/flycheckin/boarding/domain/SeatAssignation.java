@@ -16,7 +16,8 @@ public class SeatAssignation {
     return seatNumber;
   }
 
-  public String assignSeatNumberToPassenger(String passengerHash, String mode) {
-    return null;
+  public void assignSeatNumberToPassenger(String seatNumber, String passengerHash) {
+    this.passengerHash = passengerHash;
+    this.seatNumber = seatNumber;
   }
 }
