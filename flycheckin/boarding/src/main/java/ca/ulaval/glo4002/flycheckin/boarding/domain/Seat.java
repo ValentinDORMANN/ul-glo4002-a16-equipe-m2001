@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
 import javax.persistence.Entity;
 
+import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
+
 @Entity
 public class Seat {
 
@@ -13,6 +15,15 @@ public class Seat {
   double price;
 
   public Seat() {
+  }
+
+  public Seat(SeatDto seatDto, String seatClass) {
+    this.seatClass = seatClass;
+    this.seatNumber = getSeatNumber(seatDto.row, seatDto.seat.toUpperCase());
+    this.legroom = Integer.parseInt(seatDto.legroom);
+    this.isNearWindow = seatDto.window;
+    this.isClearView = seatDto.clear_view;
+    this.price = seatDto.price;
   }
 
   public Seat(String seatClass, int row, String column, int legroom, boolean isNearWindow, boolean isClearView,

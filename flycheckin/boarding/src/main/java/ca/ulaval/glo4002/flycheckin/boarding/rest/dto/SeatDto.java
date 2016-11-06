@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.rest.dto;
 
 public class SeatDto {
 
-  public String row;
+  public int row;
   public String seat;
   public String legroom;
   public boolean window;
