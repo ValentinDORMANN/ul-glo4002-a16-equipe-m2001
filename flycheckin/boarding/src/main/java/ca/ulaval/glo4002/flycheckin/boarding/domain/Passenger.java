@@ -35,7 +35,7 @@ public class Passenger {
   }
 
   public void addLuggage(Luggage luggage) throws ExcededCheckedLuggageException {
-    if(isNumberLuggageValid())
+    if (isNumberLuggageValid())
       luggages.add(luggage); 
     else 
       throw new ExcededCheckedLuggageException(MESSAGE_ERROR_EXCEDED_CHECKED);
@@ -43,7 +43,7 @@ public class Passenger {
 
   private int countLuggageAlreadyChecked() {
     for (int i = 0; i < luggages.size(); i++) {
-      if (luggages.get(i).type.equals(TYPE_CHECKED))
+      if (luggages.get(i).isType(TYPE_CHECKED))
         checkedLuggageNumber++;
     }
     return checkedLuggageNumber;

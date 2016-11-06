@@ -11,7 +11,7 @@ public abstract class Luggage {
   protected int dimensionInInch;
   protected int weightInPound;
   private String luggageHash;
-  protected String type;
+  private String type;
   
   public Luggage(LuggageDto luggageDto) throws IllegalArgumentException {
     this.dimensionInInch = convertDimensionToInchUnit(luggageDto.dimension, luggageDto.dimension_unit);
@@ -34,6 +34,9 @@ public abstract class Luggage {
       return (int) Math.floor(weight * WEIGHT_CONVERSION_RATE);
   }
 
+  public boolean isType(String type) {
+    return type.equals(type);
+  }
   // TODO
   public abstract boolean isWeightAllowed();
   public abstract boolean isDimensionAllowed();
