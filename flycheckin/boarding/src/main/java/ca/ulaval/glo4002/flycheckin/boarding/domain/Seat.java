@@ -20,7 +20,7 @@ public class Seat {
   public Seat(SeatDto seatDto, String seatClass) {
     this.seatClass = seatClass;
     this.seatNumber = getSeatNumber(seatDto.row, seatDto.seat.toUpperCase());
-    this.legroom = Integer.parseInt(seatDto.legroom);
+    this.legroom = seatDto.legroom;
     this.isNearWindow = seatDto.window;
     this.isClearView = seatDto.clear_view;
     this.price = seatDto.price;

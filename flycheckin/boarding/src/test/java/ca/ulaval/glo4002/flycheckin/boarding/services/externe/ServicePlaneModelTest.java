@@ -17,8 +17,15 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
 
 public class ServicePlaneModelTest {
 
+  private static String seat = "A";
+  private static final int ROW = 1;
+  private static final int LEGROOM = 56;
+  private static final String SEAT = "A";
+  private static final boolean WINDOW = true;
+  private static final boolean CLEAR_VIEW = true;
+  private static final double PRICE = 100;
   private static final String CLASS_NAME = "economic";
-  private static final int[] ROWS = { 1 };
+  private static final int[] ROWS = { ROW };
   private static final String PLANE_MODEL = "a320";
   private PlaneModelHttpClient mockPlaneModelHttpClient;
   private PlaneModelDto mockPlaneModelDto;
@@ -37,6 +44,12 @@ public class ServicePlaneModelTest {
 
   @Test
   public void givenPlaneModelWhenSeatsNotExistThenVerifyListNotEmpty() {
+    mockSeatDto.row = ROW;
+    mockSeatDto.seat = SEAT;
+    mockSeatDto.legroom = LEGROOM;
+    mockSeatDto.window = WINDOW;
+    mockSeatDto.clear_view = CLEAR_VIEW;
+    mockSeatDto.price = PRICE;
     mockClassPassengerDto.rows = ROWS;
     mockClassPassengerDto.name = CLASS_NAME;
     SeatDto[] seatsDto = { mockSeatDto };
