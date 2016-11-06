@@ -11,7 +11,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageExce
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 
 public class PassengerTest {
-	
+
   private static final String FIRSTNAME = "Firstname";
   private static final String LASTNAME = "LastName";
   private static final String PASSPORT_NUMBER = "NUMBER";
