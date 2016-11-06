@@ -19,10 +19,6 @@ public class CheckedLuggageTest {
   private static final String DIMENSION_UNIT = "po";
   private LuggageDto mockCheckedLuggageDto;
   private CheckedLuggage checkedLuggage;
-  private LuggageDto mockWrongCheckedLuggageDto;
-  private CheckedLuggage wrongCheckedLuggage;
-  private LuggageDto mockCheckedLuggageDtoOtherDimensions;
-  private CheckedLuggage checkedLuggageOtherDimensions;
 
   @Before
   public void initiateTest() {
@@ -31,50 +27,54 @@ public class CheckedLuggageTest {
     mockCheckedLuggageDto.weight = WEIGHT;
     mockCheckedLuggageDto.dimension_unit = DIMENSION_UNIT;
     mockCheckedLuggageDto.weight_unit = WEIGHT_UNIT;
-    checkedLuggage = new CheckedLuggage(mockCheckedLuggageDto);
-    mockWrongCheckedLuggageDto = mock(LuggageDto.class);
-    mockWrongCheckedLuggageDto.dimension = WRONG_DIMENSION;
-    mockWrongCheckedLuggageDto.weight = WRONG_WEIGHT;
-    mockWrongCheckedLuggageDto.dimension_unit = DIMENSION_UNIT;
-    mockWrongCheckedLuggageDto.weight_unit = WEIGHT_UNIT;
-    wrongCheckedLuggage = new CheckedLuggage(mockWrongCheckedLuggageDto);
-    mockCheckedLuggageDtoOtherDimensions = mock(LuggageDto.class);
-    mockCheckedLuggageDtoOtherDimensions.dimension =DIMENSION;
-    mockCheckedLuggageDtoOtherDimensions.weight = WEIGHT;
-    mockCheckedLuggageDtoOtherDimensions.dimension_unit = DIMENSION_UNIT_IN_CM;
-    mockCheckedLuggageDtoOtherDimensions.weight_unit = WEIGHT_UNIT_IN_KG;
-    checkedLuggageOtherDimensions = new CheckedLuggage(mockCheckedLuggageDtoOtherDimensions);
-    
   }
   
   @Test
-  public void givenLuggageWeightWhenCheckIfWeightIsAllowedThenReturnTrue() {
+  public void givenLuggageWeightWhenCheckIfWeightIsAllowedThenReturnTrue() {  
+    checkedLuggage = new CheckedLuggage(mockCheckedLuggageDto);
+    
     assertTrue(checkedLuggage.isWeightAllowed());
   }
   
   @Test
   public void givenWrongLuggageWeightWhenCheckIfWeightIsAllowedThenReturnFalse() {
-    assertFalse(wrongCheckedLuggage.isWeightAllowed());
+    mockCheckedLuggageDto.weight = WRONG_WEIGHT;
+    checkedLuggage = new CheckedLuggage(mockCheckedLuggageDto);
+    
+    assertFalse(checkedLuggage.isWeightAllowed());
   }
   
   @Test
   public void givenWrongLuggageDimentionWhenCheckIfDimensionIsAllowedThenReturnFalse() {
-    assertFalse(wrongCheckedLuggage.isDimensionAllowed());
+    mockCheckedLuggageDto.dimension = WRONG_DIMENSION;
+    checkedLuggage = new CheckedLuggage(mockCheckedLuggageDto);
+    
+    assertFalse(checkedLuggage.isDimensionAllowed());
   }
   
   @Test
   public void givenLuggageDimensionWhenCheckIfDimensionIsAllowedThenReturnTrue() {
+    checkedLuggage = new CheckedLuggage(mockCheckedLuggageDto);
+    
     assertTrue(checkedLuggage.isDimensionAllowed());
   }
   
+  
   @Test
   public void givenLuggageWeightInKgWhenCheckIfWeightIsAllowedThenReturnTrue() {
-    assertTrue(checkedLuggageOtherDimensions.isWeightAllowed());
+    mockCheckedLuggageDto.weight_unit = WEIGHT_UNIT_IN_KG;
+    checkedLuggage = new CheckedLuggage(mockCheckedLuggageDto);
+    
+    assertTrue(checkedLuggage.isWeightAllowed());
   }
+  
   
   @Test
   public void givenLuggageDimensionInCmWhenCheckIfDimensionIsAllowedThenReturnTrue() {
-    assertTrue(checkedLuggageOtherDimensions.isDimensionAllowed());
+    mockCheckedLuggageDto.dimension_unit = DIMENSION_UNIT_IN_CM;
+    checkedLuggage = new CheckedLuggage(mockCheckedLuggageDto);
+    
+    assertTrue(checkedLuggage.isDimensionAllowed());
   }
   
 }
