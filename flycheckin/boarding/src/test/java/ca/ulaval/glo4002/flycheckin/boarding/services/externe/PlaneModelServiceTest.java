@@ -15,7 +15,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ClassPassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PlaneModelDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
 
-public class ServicePlaneModelTest {
+public class PlaneModelServiceTest {
 
   private static String seat = "A";
   private static final int ROW = 1;
@@ -31,7 +31,7 @@ public class ServicePlaneModelTest {
   private PlaneModelDto mockPlaneModelDto;
   private SeatDto mockSeatDto;
   private ClassPassengerDto mockClassPassengerDto;
-  private ServicePlaneModel servicePlaneModel;
+  private PlaneModelService planeModelService;
 
   @Before
   public void initiateTest() {
@@ -39,7 +39,7 @@ public class ServicePlaneModelTest {
     mockPlaneModelDto = mock(PlaneModelDto.class);
     mockSeatDto = mock(SeatDto.class);
     mockClassPassengerDto = mock(ClassPassengerDto.class);
-    servicePlaneModel = new ServicePlaneModel(mockPlaneModelHttpClient);
+    planeModelService = new PlaneModelService(mockPlaneModelHttpClient);
   }
 
   @Test
@@ -58,7 +58,7 @@ public class ServicePlaneModelTest {
     mockPlaneModelDto.classes = classesDto;
     willReturn(mockPlaneModelDto).given(mockPlaneModelHttpClient).getPlaneModelDtoAccordingPlaneModel(PLANE_MODEL);
 
-    List<Seat> seats = servicePlaneModel.getSeatsAccordingPlaneModel(PLANE_MODEL);
+    List<Seat> seats = planeModelService.getSeatsAccordingPlaneModel(PLANE_MODEL);
     assertFalse(seats.isEmpty());
   }
 

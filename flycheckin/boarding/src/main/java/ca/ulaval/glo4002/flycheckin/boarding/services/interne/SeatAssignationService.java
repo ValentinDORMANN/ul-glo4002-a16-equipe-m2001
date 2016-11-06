@@ -12,9 +12,9 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRandomStrategy;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationStrategy;
-import ca.ulaval.glo4002.flycheckin.boarding.services.externe.ServicePlaneModel;
+import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PlaneModelService;
 
-public class ServiceSeatAssignation {
+public class SeatAssignationService {
 
   private static final String NO_SEAT_AVAILABLE = "No more seat available for this seat class";
   private static int assignationNumber = 1;
@@ -23,7 +23,7 @@ public class ServiceSeatAssignation {
   private SeatAssignationRepository seatAssignationRepository;
   private SeatAssignationStrategy seatAssignationStrategy;
 
-  public ServiceSeatAssignation(SeatAssignation seatAssignation, SeatAssignationRepository seatAssignationRepository) {
+  public SeatAssignationService(SeatAssignation seatAssignation, SeatAssignationRepository seatAssignationRepository) {
     this.seatAssignation = seatAssignation;
     this.seatAssignationRepository = seatAssignationRepository;
   }
@@ -42,10 +42,10 @@ public class ServiceSeatAssignation {
   private List<Seat> getAvalaibleSeatsForFlight(String flightNumber, Date flightDate) {
     String flightInfos = flightNumber + flightDate.toString();
     if (!(availableSeatMap.containsKey(flightInfos))) {
-      ServicePlaneModel servicePlaneModel = new ServicePlaneModel();
+      PlaneModelService planeModelService = new PlaneModelService();
       AmsMapClient amsMapConnector = new AmsMapClient();
       String planeModel = amsMapConnector.getPlaneModelByFlightNumber(flightNumber);
-      availableSeatMap.put(flightInfos, servicePlaneModel.getSeatsAccordingPlaneModel(planeModel));
+      availableSeatMap.put(flightInfos, planeModelService.getSeatsAccordingPlaneModel(planeModel));
     }
     return availableSeatMap.get(flightInfos);
   }

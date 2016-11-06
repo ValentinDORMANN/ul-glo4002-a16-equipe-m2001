@@ -1,16 +1,18 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.interne;
 
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
 
-public class ServiceSeatAssignationTest {
+public class SeatAssignationServiceTest {
 
   private static final String RANDOM_MODE = "RANDOM";
   private static final String PASSENGER_HASH_NO_SEAT = "HASH001";
@@ -21,7 +23,7 @@ public class ServiceSeatAssignationTest {
   private Passenger mockPassenger;
   private SeatAssignation mockSeatAssignation;
   private SeatAssignationRepository mockSeatAssignationRepository;
-  private ServiceSeatAssignation serviceSeatAssignation;
+  private SeatAssignationService seatAssignationService;
 
   @Before
   public void initiateTest() {
@@ -30,17 +32,17 @@ public class ServiceSeatAssignationTest {
     mockSeatAssignationRepository = mock(SeatAssignationRepository.class);
     when(mockPassenger.getFlightNumber()).thenReturn("FLIGHT_NUMBER");
     when(mockPassenger.getFlightDate()).thenReturn(FLIGHT_DATE);
-    serviceSeatAssignation = new ServiceSeatAssignation(mockSeatAssignation, mockSeatAssignationRepository);
+    seatAssignationService = new SeatAssignationService(mockSeatAssignation, mockSeatAssignationRepository);
   }
 
-  /*  @Test
-  public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyAssignationWithGoodMode() {
+  @Test
+  public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyPersistAssignation() {
     when(mockPassenger.getPassengerHash()).thenReturn(PASSENGER_HASH_NO_SEAT);
-  
-    serviceSeatAssignation.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
-  
-    verify(mockSeatAssignation, times(1)).assignSeatNumberToPassenger(PASSENGER_HASH_NO_SEAT, RANDOM_MODE);
-  }*/
+
+    seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
+
+    verify(mockSeatAssignationRepository, times(1)).persistSeatAssignation(any(int.class), mockSeatAssignation);
+  }
 
   /*  @Test(expected = PassengerAlreadySeatAssigned.class)
   public void givenPassengerWithSeatAssignWhenAssignSeatToPassengerThenReturnException() {

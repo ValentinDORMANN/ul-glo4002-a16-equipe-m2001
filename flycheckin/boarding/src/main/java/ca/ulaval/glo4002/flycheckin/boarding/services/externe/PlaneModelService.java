@@ -9,15 +9,15 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ClassPassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PlaneModelDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
 
-public class ServicePlaneModel {
+public class PlaneModelService {
 
   private PlaneModelHttpClient planeModelHttpClient;
 
-  public ServicePlaneModel() {
+  public PlaneModelService() {
     planeModelHttpClient = new PlaneModelHttpClient();
   }
 
-  public ServicePlaneModel(PlaneModelHttpClient serviceHttp) {
+  public PlaneModelService(PlaneModelHttpClient serviceHttp) {
     this.planeModelHttpClient = serviceHttp;
   }
 

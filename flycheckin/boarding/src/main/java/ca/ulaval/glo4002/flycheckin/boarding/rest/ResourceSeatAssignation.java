@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response.Status;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.externe.ServicePlaneModel;
+import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PlaneModelService;
 
 @Path("")
 public class ResourceSeatAssignation {
@@ -29,8 +29,8 @@ public class ResourceSeatAssignation {
   @Produces(MediaType.APPLICATION_JSON)
   public Response assignSeatToPassenger(SeatAssignationDto seatAssignationDto) throws Exception {
     try {
-      ServicePlaneModel servicePlaneModel = new ServicePlaneModel();
-      List<Seat> list = servicePlaneModel.getSeatsAccordingPlaneModel("a320");
+      PlaneModelService planeModelService = new PlaneModelService();
+      List<Seat> list = planeModelService.getSeatsAccordingPlaneModel("a320");
       return Response.status(Status.OK).entity(list).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
