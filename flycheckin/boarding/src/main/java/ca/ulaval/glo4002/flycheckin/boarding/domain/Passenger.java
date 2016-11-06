@@ -22,4 +22,13 @@ public class Passenger {
   public String getPassengerHash() {
     return passengerHash;
   }
+
+  public String getFlightNumber() {
+    return flightNumber;
+  }
+
+  public Date getFlightDate() {
+    return flightDate;
+  }
+
 }

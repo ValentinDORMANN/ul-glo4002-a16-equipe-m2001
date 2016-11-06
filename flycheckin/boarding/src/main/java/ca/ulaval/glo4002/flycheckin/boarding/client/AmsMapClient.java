@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class AmsClient {
+public class AmsMapClient {
 
   private static final String BOEING = "boeing-777-300";
   private static final String FLIGHT_BOEING = "QK-432";
@@ -15,7 +15,7 @@ public class AmsClient {
   private static final String[] MODELS = { AIRBUS, DASH, BOEING };
   private static Map<String, String> associationFlightPlane = new HashMap<String, String>();
 
-  public AmsClient() {
+  public AmsMapClient() {
     if (associationFlightPlane.isEmpty()) {
       associationFlightPlane.put(FLIGHT_BOEING, BOEING);
       associationFlightPlane.put(FLIGHT_DASH, DASH);
