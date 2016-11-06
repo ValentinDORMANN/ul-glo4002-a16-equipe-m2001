@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.externe;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.FlyCheckinApplicationException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class PassengerService {
@@ -17,7 +17,7 @@ public class PassengerService {
     this.reservationHttpClient = reservationHttpClient;
   }
 
-  public Passenger getPassengerByHashInReservation(String passengerHash) throws FlyCheckinApplicationException {
+  public Passenger getPassengerByHashInReservation(String passengerHash) throws BoardingModuleException {
     ReservationDto reservationDto = reservationHttpClient.getReservationDtoFromReservation(passengerHash);
     return new Passenger(reservationDto);
   }

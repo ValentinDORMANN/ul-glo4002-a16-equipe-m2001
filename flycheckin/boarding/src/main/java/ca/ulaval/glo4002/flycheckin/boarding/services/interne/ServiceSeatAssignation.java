@@ -14,7 +14,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.services.externe.ServicePlaneModel;
 
 public class ServiceSeatAssignation {
 
-  private static final String MESSAGE_SEAT_UNASSIGNED = "Error: This passenger seat is already assigned";
+  private static final String NO_SEAT_AVAILABLE = "No more seat available for this seat class";
+  private static int assignationNumber = 1;
   private static Map<String, List<Seat>> availableSeatMap = new HashMap<String, List<Seat>>();
   private SeatAssignation seatAssignation;
   private SeatAssignationRepository seatAssignationRepository;

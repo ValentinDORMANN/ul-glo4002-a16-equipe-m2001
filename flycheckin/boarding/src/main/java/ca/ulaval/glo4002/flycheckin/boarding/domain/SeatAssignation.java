@@ -8,6 +8,14 @@ public class SeatAssignation {
   public SeatAssignation() {
   }
 
+  public String getPassengerHash() {
+    return passengerHash;
+  }
+
+  public String getSeatNumber() {
+    return seatNumber;
+  }
+
   public String assignSeatNumberToPassenger(String passengerHash, String mode) {
     return null;
   }
