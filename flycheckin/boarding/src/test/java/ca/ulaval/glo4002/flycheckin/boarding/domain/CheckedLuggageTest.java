@@ -59,7 +59,6 @@ public class CheckedLuggageTest {
     assertTrue(checkedLuggage.isDimensionAllowed());
   }
   
-  
   @Test
   public void givenLuggageWeightInKgWhenCheckIfWeightIsAllowedThenReturnTrue() {
     mockCheckedLuggageDto.weight_unit = WEIGHT_UNIT_IN_KG;
@@ -67,7 +66,6 @@ public class CheckedLuggageTest {
     
     assertTrue(checkedLuggage.isWeightAllowed());
   }
-  
   
   @Test
   public void givenLuggageDimensionInCmWhenCheckIfDimensionIsAllowedThenReturnTrue() {
