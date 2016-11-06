@@ -38,7 +38,7 @@ public class CheckinResource {
       String location = createUrlToGetCheckin(uriInfo, checkinId);
       URI url = new URI(location);
       return Response.status(Status.CREATED).location(url).build();
-    } catch (URISyntaxException e) {
+    } catch (URISyntaxException ex) {
       return Response.status(Status.CREATED).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
