@@ -11,39 +11,34 @@ public abstract class Luggage {
   private int dimensionInInch;
   private int weightInPound;
   private String luggageHash;
-  private String type;
 
   public Luggage(LuggageDto luggageDto) throws IllegalArgumentException {
-    this.luggageHash = UUID.randomUUID().toString();
     this.dimensionInInch = convertDimensionToInchUnit(luggageDto.linear_dimension, luggageDto.linear_dimension_unit);
     this.weightInPound = convertWeightToPoundUnit(luggageDto.weight, luggageDto.weight_unit);
-    this.type = luggageDto.type;
     this.luggageHash = UUID.randomUUID().toString();
   }
 
   private int convertDimensionToInchUnit(int dimension, String dimmensionUnit) {
     if (dimmensionUnit.equals("po"))
       return dimension;
-    else
-      return (int) Math.floor(dimension * DIMENSION_CONVERSION_RATE);
+    return (int) Math.floor(dimension * DIMENSION_CONVERSION_RATE);
   }
 
   private int convertWeightToPoundUnit(int weight, String weightUnit) {
     if (weightUnit.equals("lbs"))
       return weight;
-    else
-      return (int) Math.floor(weight * WEIGHT_CONVERSION_RATE);
+    return (int) Math.floor(weight * WEIGHT_CONVERSION_RATE);
   }
 
   public boolean isType(String type) {
     return type.equals(type);
   }
 
-  public int getDimensionInInch() {
+  protected int getDimensionInInch() {
     return dimensionInInch;
   }
 
-  public int getWeightInPound() {
+  protected int getWeightInPound() {
     return weightInPound;
   }
 }
