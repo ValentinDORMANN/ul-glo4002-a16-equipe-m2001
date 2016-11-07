@@ -15,9 +15,9 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.InMemoryReservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
 
-public class ReservationTest {
+class ReservationTest {
   private static final int RESERVATION_NUMBER = 55555;
   private static final String PASSENGER_HASH = "HASH";
   private static final String FAKE_PASSENGER_HASH = "FAKE_HASH";
@@ -26,7 +26,7 @@ public class ReservationTest {
   private static final Date SELF_CHECKIN_START_TIME = initiateDateByHour(-48, false);
   private static final Date SELF_CHECKIN_END_TIME = initiateDateByHour(-6, true);
 
-  private InMemoryReservation mockReservationInMemory;
+  private HibernateReservation mockHibernateReservation;
   private ReservationDto mockReservationDto;
   private Passenger mockPassenger;
   private List<Passenger> passengers;
@@ -41,13 +41,13 @@ public class ReservationTest {
 
   @Before
   public void initiateTest() {
-    mockReservationInMemory = mock(InMemoryReservation.class);
+    mockHibernateReservation = mock(HibernateReservation.class);
     mockReservationDto = mock(ReservationDto.class);
     mockPassenger = mock(Passenger.class);
     mockReservationDto.reservation_number = RESERVATION_NUMBER;
     passengers = new ArrayList<Passenger>();
     passengers.add(mockPassenger);
-    reservation = new Reservation(mockReservationInMemory, mockReservationDto, passengers);
+    reservation = new Reservation(mockHibernateReservation, mockReservationDto, passengers);
     willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
   }
 
@@ -72,10 +72,10 @@ public class ReservationTest {
   }
 
   @Test
-  public void whenReadReservationByNumberThenVerifyReservationInMemoryGetReservation() {
-    reservation.readReservationByNumber(RESERVATION_NUMBER);
+  public void whenSearchReservationByNumberThenVerifyReservationInMemoryGetReservation() {
+    reservation.searchReservationByNumber(RESERVATION_NUMBER);
 
-    verify(mockReservationInMemory).getReservationByNumber(RESERVATION_NUMBER);
+    verify(mockHibernateReservation).findReservationByNumber(RESERVATION_NUMBER);
   }
 
   @Test(expected = NotTimeToCheckinException.class)

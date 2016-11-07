@@ -37,7 +37,7 @@ public class ReservationResource {
       String location = createUrlforGetReservation(uriInfo, reservation);
       URI url = new URI(location);
       return Response.status(Status.CREATED).location(url).build();
-    } catch (URISyntaxException e) {
+    } catch (URISyntaxException ex) {
       return Response.status(Status.CREATED).build();
     } catch (FlyCheckinApplicationException ex) {
       return Response.status(Status.BAD_REQUEST).build();
@@ -54,7 +54,7 @@ public class ReservationResource {
   public Response getReserversation(@PathParam("reservation_number") int reservationNumber) {
     Reservation reservation = new Reservation();
     try {
-      reservation = reservation.readReservationByNumber(reservationNumber);
+      reservation = reservation.searchReservationByNumber(reservationNumber);
     } catch (NotFoundReservationException ex) {
       return Response.status(Status.NOT_FOUND).build();
     }
