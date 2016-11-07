@@ -7,18 +7,21 @@ public class CheckedLuggage extends Luggage {
   private static final int WEIGHT_LIMIT = 50;
   private static final int DIMENSION_LIMIT = 62;
   private static final String TYPE_CHECKED = "checked";
- 
 
   public CheckedLuggage(LuggageDto luggageDto) {
     super(luggageDto);
     luggageDto.type = TYPE_CHECKED;
   }
 
-  public boolean isWeightAllowed() {
+  public boolean isAllowed() {
+    return isWeightAllowed() && isDimensionAllowed();
+  }
+
+  private boolean isWeightAllowed() {
     return getWeightInPound() < WEIGHT_LIMIT;
   }
 
-  public boolean isDimensionAllowed() {
-    return getDimensionInInch() <  DIMENSION_LIMIT;
+  private boolean isDimensionAllowed() {
+    return getDimensionInInch() < DIMENSION_LIMIT;
   }
 }
