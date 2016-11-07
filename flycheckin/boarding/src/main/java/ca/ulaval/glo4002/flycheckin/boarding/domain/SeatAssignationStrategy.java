@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface SeatAssignationStrategy {
 
-  public String assignSeatNumber(List<Seat> availableSeats);
+  public String chooseSeatNumber(List<Seat> availableSeats);
 }

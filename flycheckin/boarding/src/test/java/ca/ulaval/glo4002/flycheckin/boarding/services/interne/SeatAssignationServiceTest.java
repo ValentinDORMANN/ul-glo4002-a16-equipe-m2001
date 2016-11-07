@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.interne;
 
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
@@ -11,17 +12,19 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationStrategy;
 
 public class SeatAssignationServiceTest {
 
   private static final String RANDOM_MODE = "RANDOM";
-  private static final String PASSENGER_HASH_NO_SEAT = "HASH001";
-  private static final String PASSENGER_HASH_WITH_SEAT = "HASH002";
+  private static final String PASSENGER_HASH = "HASH001";
+
   private static final String SEAT_NUMBER = "12-C";
   private static final String FLIGHT_NUMBER = "A3832";
   private static final Date FLIGHT_DATE = new Date();
   private Passenger mockPassenger;
   private SeatAssignation mockSeatAssignation;
+  private SeatAssignationStrategy mockSeatAssignationStrategy;
   private SeatAssignationRepository mockSeatAssignationRepository;
   private SeatAssignationService seatAssignationService;
 
@@ -29,26 +32,44 @@ public class SeatAssignationServiceTest {
   public void initiateTest() {
     mockPassenger = mock(Passenger.class);
     mockSeatAssignation = mock(SeatAssignation.class);
+    mockSeatAssignationStrategy = mock(SeatAssignationStrategy.class);
     mockSeatAssignationRepository = mock(SeatAssignationRepository.class);
-    when(mockPassenger.getFlightNumber()).thenReturn("FLIGHT_NUMBER");
+    when(mockPassenger.getFlightNumber()).thenReturn(FLIGHT_NUMBER);
     when(mockPassenger.getFlightDate()).thenReturn(FLIGHT_DATE);
-    seatAssignationService = new SeatAssignationService(mockSeatAssignation, mockSeatAssignationRepository);
+    when(mockPassenger.getPassengerHash()).thenReturn(PASSENGER_HASH);
+    when(mockSeatAssignationStrategy.chooseSeatNumber(any())).thenReturn(SEAT_NUMBER);
+    seatAssignationService = new SeatAssignationService(mockSeatAssignation, mockSeatAssignationRepository,
+        mockSeatAssignationStrategy);
+  }
+
+  @Test
+  public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyChooseSeatNumber() {
+    seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
+
+    verify(mockSeatAssignationStrategy, times(1)).chooseSeatNumber(any());
+  }
+
+  @Test
+  public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyAssignationCreated() {
+    seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
+
+    verify(mockSeatAssignation, times(1)).createAssignation(any(String.class), any(String.class), any(Integer.class));
   }
 
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyPersistAssignation() {
-    when(mockPassenger.getPassengerHash()).thenReturn(PASSENGER_HASH_NO_SEAT);
-
     seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
 
-    verify(mockSeatAssignationRepository, times(1)).persistSeatAssignation(any(int.class), mockSeatAssignation);
+    verify(mockSeatAssignationRepository, times(1)).persistSeatAssignation(mockSeatAssignation);
   }
 
-  /*  @Test(expected = PassengerAlreadySeatAssigned.class)
-  public void givenPassengerWithSeatAssignWhenAssignSeatToPassengerThenReturnException() {
-    when(mockPassenger.getPassengerHash()).thenReturn(PASSENGER_HASH_WITH_SEAT);
-    serviceSeatAssignation.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
-  
-    serviceSeatAssignation.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
-  }*/
+  @Test
+  public void givenPassengerWhenAssignSeatToPassengerThenReturnSeatAssignationWithPassengerHash() {
+    seatAssignationService = new SeatAssignationService(new SeatAssignation(), mockSeatAssignationRepository,
+        mockSeatAssignationStrategy);
+
+    SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
+
+    assertEquals(PASSENGER_HASH, seatAssignation.getPassengerHash());
+  }
 }

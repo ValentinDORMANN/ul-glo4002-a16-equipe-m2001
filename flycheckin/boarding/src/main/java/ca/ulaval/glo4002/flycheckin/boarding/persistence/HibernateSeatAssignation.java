@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
 public class HibernateSeatAssignation implements SeatAssignationRepository {
 
   @Override
-  public void persistSeatAssignation(int assignationNumber, SeatAssignation seatAssignation) {
+  public void persistSeatAssignation(SeatAssignation seatAssignation) {
     // TODO
   }
 

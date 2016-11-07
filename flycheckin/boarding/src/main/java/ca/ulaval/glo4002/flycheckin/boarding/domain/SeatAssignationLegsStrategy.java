@@ -5,7 +5,7 @@ import java.util.List;
 public class SeatAssignationLegsStrategy implements SeatAssignationStrategy {
 
   @Override
-  public String assignSeatNumber(List<Seat> availableSeats) {
+  public String chooseSeatNumber(List<Seat> availableSeats) {
     // TODO Auto-generated method stub
     return "12-L";
   }

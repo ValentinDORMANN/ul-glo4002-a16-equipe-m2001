@@ -16,8 +16,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PlaneModelService;
 
 public class SeatAssignationService {
 
-  private static final String NO_SEAT_AVAILABLE = "No more seat available for this seat class";
-  private static int assignationNumber = 1;
+  private static int assignationNumberProvider = 1;
   private static Map<String, List<Seat>> availableSeatMap = new HashMap<String, List<Seat>>();
   private SeatAssignation seatAssignation;
   private SeatAssignationRepository seatAssignationRepository;
@@ -28,14 +27,21 @@ public class SeatAssignationService {
     this.seatAssignationRepository = seatAssignationRepository;
   }
 
+  public SeatAssignationService(SeatAssignation seatAssignation, SeatAssignationRepository seatAssignationRepository,
+      SeatAssignationStrategy seatAssignationStrategy) {
+    this.seatAssignation = seatAssignation;
+    this.seatAssignationRepository = seatAssignationRepository;
+    this.seatAssignationStrategy = seatAssignationStrategy;
+  }
+
   public SeatAssignation assignSeatToPassenger(Passenger passenger, String mode) {
     setSeatAssignationStrategy(mode);
     List<Seat> availableSeats = getAvalaibleSeatsForFlight(passenger.getFlightNumber(), passenger.getFlightDate());
-    String seatNumber = seatAssignationStrategy.assignSeatNumber(availableSeats);
-    seatAssignation.assignSeatNumberToPassenger(seatNumber, passenger.getPassengerHash());
-    seatAssignationRepository.persistSeatAssignation(assignationNumber, seatAssignation);
+    String seatNumber = seatAssignationStrategy.chooseSeatNumber(availableSeats);
+    seatAssignation.createAssignation(seatNumber, passenger.getPassengerHash(), assignationNumberProvider);
+    seatAssignationRepository.persistSeatAssignation(seatAssignation);
     makeSeatNumberUnavailable(passenger.getFlightNumber(), passenger.getFlightDate(), seatNumber);
-    assignationNumber++;
+    assignationNumberProvider++;
     return seatAssignation;
   }
 
@@ -51,7 +57,8 @@ public class SeatAssignationService {
   }
 
   private void setSeatAssignationStrategy(String mode) {
-    this.seatAssignationStrategy = new SeatAssignationRandomStrategy();
+    if (this.seatAssignationStrategy == null)
+      this.seatAssignationStrategy = new SeatAssignationRandomStrategy();
   }
 
   private void makeSeatNumberUnavailable(String flightNumber, Date flightDate, String seatNumber) {
@@ -63,5 +70,6 @@ public class SeatAssignationService {
         break;
       }
     }
+    availableSeatMap.replace(flightInfos, availableSeats);
   }
 }

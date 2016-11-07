@@ -16,11 +16,11 @@ public class InMemorySeatAssignation implements SeatAssignationRepository {
   private static Map<Integer, SeatAssignation> seatAssignationMap = new HashMap<Integer, SeatAssignation>();
 
   @Override
-  public void persistSeatAssignation(int assignationNumber, SeatAssignation seatAssignation) {
-    if (seatAssignationMap.containsKey(assignationNumber))
+  public void persistSeatAssignation(SeatAssignation seatAssignation) {
+    if (seatAssignationMap.containsKey(seatAssignation.getAssignationNumber()))
       throw new AssignationNumberUsedException(ERROR_ASSIGNATION_NUMBER_USED);
     else if (getPassengerHashSeatNumber(seatAssignation.getPassengerHash()).isEmpty())
-      seatAssignationMap.put(assignationNumber, seatAssignation);
+      seatAssignationMap.put(seatAssignation.getAssignationNumber(), seatAssignation);
     else
       throw new SeatAlreadyAssignedException(ERROR_SEAT_UNASSIGNED);
   }

@@ -25,12 +25,13 @@ public class InMemorySeatAssignationTest {
     mockSeatAssignation = mock(SeatAssignation.class);
     when(mockSeatAssignation.getPassengerHash()).thenReturn(PASSENGER_HASH);
     when(mockSeatAssignation.getSeatNumber()).thenReturn(SEAT_NUMBER);
+    when(mockSeatAssignation.getAssignationNumber()).thenReturn(ASSIGNATION_NUMBER);
     inMemorySeatAssignation = new InMemorySeatAssignation();
   }
 
   @Test
   public void givenPassengerWithSeatAssignedWhenGetPassengerSeatNumberThenReturnSeatNumber() {
-    inMemorySeatAssignation.persistSeatAssignation(ASSIGNATION_NUMBER, mockSeatAssignation);
+    inMemorySeatAssignation.persistSeatAssignation(mockSeatAssignation);
 
     String seatNumber = inMemorySeatAssignation.getPassengerHashSeatNumber(PASSENGER_HASH);
 
@@ -39,16 +40,17 @@ public class InMemorySeatAssignationTest {
 
   @Test(expected = AssignationNumberUsedException.class)
   public void givenAssignationNumberUsedWhenPersistSeatAssignationThenThrowException() {
-    inMemorySeatAssignation.persistSeatAssignation(ASSIGNATION_NUMBER, mockSeatAssignation);
+    inMemorySeatAssignation.persistSeatAssignation(mockSeatAssignation);
 
-    inMemorySeatAssignation.persistSeatAssignation(ASSIGNATION_NUMBER, mockSeatAssignation);
+    inMemorySeatAssignation.persistSeatAssignation(mockSeatAssignation);
   }
 
   @Test(expected = SeatAlreadyAssignedException.class)
-  public void givenPassengerWithSeatAssignedWhenPersistSeatAssignationThenThrowException() {
-    inMemorySeatAssignation.persistSeatAssignation(ASSIGNATION_NUMBER, mockSeatAssignation);
+  public void givenPassengerWithSeatAssignedWhenPersistWithAnotherAssignationNumberThenThrowException() {
+    inMemorySeatAssignation.persistSeatAssignation(mockSeatAssignation);
 
-    inMemorySeatAssignation.persistSeatAssignation(ASSIGNATION_NUMBER2, mockSeatAssignation);
+    when(mockSeatAssignation.getAssignationNumber()).thenReturn(ASSIGNATION_NUMBER2);
+    inMemorySeatAssignation.persistSeatAssignation(mockSeatAssignation);
   }
 
   @After
