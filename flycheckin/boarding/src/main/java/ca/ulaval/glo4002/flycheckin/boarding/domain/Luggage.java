@@ -43,4 +43,8 @@ public abstract class Luggage {
   protected int getWeightInPound() {
     return weightInPound;
   }
+
+  public String getLuggageHash() {
+    return luggageHash;
+  }
 }
