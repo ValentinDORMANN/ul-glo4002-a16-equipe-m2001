@@ -26,10 +26,11 @@ public class LuggageCheckinService {
     this.passengerService = passengerService;
   }
 
-  public void assignLuggage(String passengerHash, LuggageDto luggageDto) throws BoardingModuleException {
+  public String assignLuggage(String passengerHash, LuggageDto luggageDto) throws BoardingModuleException {
     Passenger passenger = getPassenger(passengerHash);
     Luggage luggage = createCheckedLuggage(luggageDto);
     passenger.addLuggage(luggage);
+    return luggage.getLuggageHash();
   }
 
   private Passenger getPassenger(String passengerHash) throws NotFoundPassengerException {

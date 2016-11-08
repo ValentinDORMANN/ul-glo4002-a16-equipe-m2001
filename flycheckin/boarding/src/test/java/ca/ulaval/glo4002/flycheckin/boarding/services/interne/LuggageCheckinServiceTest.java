@@ -6,7 +6,9 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.ulaval.glo4002.flycheckin.boarding.domain.CheckedLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
@@ -22,7 +24,9 @@ public class LuggageCheckinServiceTest {
   private static final int WEIGHT = 10;
   private static final String WEIGHT_UNIT = "kg";
   private static final String TYPE = "checked";
+  private static final int HIGH_LINEAR_DIMENSION = 1000;
   private LuggageDto mockLuggageDto;
+  private CheckedLuggage mockCheckedLuggage;
   private Passenger mockPassenger;
   private InMemoryPassenger mockInMemoryPassenger;
   private PassengerService mockPassengerService;
@@ -36,6 +40,7 @@ public class LuggageCheckinServiceTest {
     mockLuggageDto.weight = WEIGHT;
     mockLuggageDto.weight_unit = WEIGHT_UNIT;
     mockLuggageDto.type = TYPE;
+    mockCheckedLuggage = mock(CheckedLuggage.class);
     mockPassenger = mock(Passenger.class);
     mockInMemoryPassenger = mock(InMemoryPassenger.class);
     mockPassengerService = mock(PassengerService.class);
@@ -46,6 +51,7 @@ public class LuggageCheckinServiceTest {
   @Test
   public void givenPassengerHashWhenPassengerNotInMemoryThenVerifyIfServiceGetHim() {
     willThrow(NotFoundPassengerException.class).given(mockInMemoryPassenger).getPassengerByHash(PASSENGER_HASH);
+    willReturn(mockPassenger).given(mockPassengerService).getPassengerByHashInReservation(PASSENGER_HASH);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
 
@@ -61,9 +67,10 @@ public class LuggageCheckinServiceTest {
     luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
   }
 
-  @Test
+  @Test(expected = ExcededCheckedLuggageException.class)
   public void givenBigLuggageWhenCreateLuggageThenThrowException() {
+    mockLuggageDto.linear_dimension = HIGH_LINEAR_DIMENSION;
 
+    luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
   }
-
 }
