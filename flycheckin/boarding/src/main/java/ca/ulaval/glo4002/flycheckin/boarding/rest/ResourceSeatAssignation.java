@@ -49,7 +49,7 @@ public class ResourceSeatAssignation {
           seatAssignationDto.mode);
       seatAssignationDto = transformSeatAssignationDto(seatAssignationDto, seatAssignation.getSeatNumber());
       URI url = createUrlforLocation(uriInfo, seatAssignation);
-      return Response.status(Status.OK).location(url).entity(seatAssignationDto).build();
+      return Response.status(Status.CREATED).location(url).entity(seatAssignationDto).build();
     } catch (NoSeatAvailableException ex) {
       return Response.status(Status.BAD_REQUEST).build();
     } catch (NotFoundPassengerException ex) {
