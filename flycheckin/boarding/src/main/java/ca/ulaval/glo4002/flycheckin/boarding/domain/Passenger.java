@@ -6,7 +6,6 @@ import java.util.List;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 
-
 public class Passenger {
 
   private static final String TYPE_CHECKED = "checked";
@@ -20,7 +19,7 @@ public class Passenger {
   private String passengerHash;
   private List<Luggage> luggages;
   private int checkedLuggageNumber = 0;
-  
+
   public Passenger() {
   }
 
@@ -36,8 +35,8 @@ public class Passenger {
 
   public void addLuggage(Luggage luggage) throws ExcededCheckedLuggageException {
     if (isNumberLuggageValid())
-      luggages.add(luggage); 
-    else 
+      luggages.add(luggage);
+    else
       throw new ExcededCheckedLuggageException(MESSAGE_ERROR_EXCEDED_CHECKED);
   }
 

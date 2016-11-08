@@ -1,26 +1,41 @@
 package ca.ulaval.glo4002.flycheckin.boarding.persistence;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
-import javassist.compiler.ast.Pair;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.AssignationNumberUsedException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.SeatAlreadyAssignedException;
 
 public class InMemorySeatAssignation implements SeatAssignationRepository {
 
-  private static final String NO_SEAT_AVAILABLE = "No more seat available for this seat class";
-  private static Map<Integer, Pair> seatAssignationMap = new HashMap<Integer, Pair>();
-  private static Map<String, List<String>> availableSeatMap = new HashMap<String, List<String>>();
+  private static final String STRING_EMPTY = "";
+  private static final String ERROR_SEAT_UNASSIGNED = "Error: This passenger seat is already assigned.";
+  private static final String ERROR_ASSIGNATION_NUMBER_USED = "Error: This assignation number is already used.";
+  private static Map<Integer, SeatAssignation> seatAssignationMap = new HashMap<Integer, SeatAssignation>();
 
   @Override
-  public int assignSeatToPassenger(Passenger passenger) {
-    return 0;
+  public void persistSeatAssignation(SeatAssignation seatAssignation) {
+    if (seatAssignationMap.containsKey(seatAssignation.getAssignationNumber()))
+      throw new AssignationNumberUsedException(ERROR_ASSIGNATION_NUMBER_USED);
+    else if (getPassengerHashSeatNumber(seatAssignation.getPassengerHash()).isEmpty())
+      seatAssignationMap.put(seatAssignation.getAssignationNumber(), seatAssignation);
+    else
+      throw new SeatAlreadyAssignedException(ERROR_SEAT_UNASSIGNED);
   }
 
   @Override
-  public String getPassengerSeat(String passengerHash) {
-    return null;
+  public String getPassengerHashSeatNumber(String passengerHash) {
+    String seatNumber = STRING_EMPTY;
+    for (SeatAssignation seatAssignation : seatAssignationMap.values()) {
+      if (seatAssignation.getPassengerHash().equals(passengerHash))
+        seatNumber = seatAssignation.getSeatNumber();
+    }
+    return seatNumber;
+  }
+
+  public void clearSeatAssignationMap() {
+    seatAssignationMap.clear();
   }
 }

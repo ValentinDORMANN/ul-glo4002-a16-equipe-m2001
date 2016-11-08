@@ -11,9 +11,13 @@ public class ReservationHttpClient extends HttpClient {
 
   private static final String LOCALHOST = "http://localhost:";
   private static final String RESERVATION_HASH = "/reservations/hash/";
-  private static int reservationServer = Integer.valueOf(System.getProperty("reservation.port"));
+  private static int reservationServer = 0;
   private static final int HTTP_STATUS_NOT_FOUND = 404;
   private static final String MSG_NOT_FOUND = "Passenger not found";
+
+  public ReservationHttpClient() {
+    reservationServer = Integer.valueOf(System.getProperty("reservation.port"));
+  }
 
   @Consumes(MediaType.APPLICATION_JSON)
   public ReservationDto getReservationDtoFromReservation(String passengerHash) {

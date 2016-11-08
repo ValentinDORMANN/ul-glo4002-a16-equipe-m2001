@@ -56,10 +56,10 @@ public class Reservation {
       Passenger passenger = new Passenger(reservationDto.passengers.get(i));
       this.passengers.add(passenger);
     }
-    createReservation();
+    storeReservation();
   }
 
-  private void createReservation() throws IllegalArgumentReservationException {
+  private void storeReservation() throws IllegalArgumentReservationException {
     reservationInMemory.saveNewReservation(this);
   }
 
