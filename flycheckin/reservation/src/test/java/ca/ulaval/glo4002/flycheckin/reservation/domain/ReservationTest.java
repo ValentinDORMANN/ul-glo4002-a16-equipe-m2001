@@ -17,7 +17,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerExcep
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
 
-class ReservationTest {
+public class ReservationTest {
   private static final int RESERVATION_NUMBER = 55555;
   private static final String PASSENGER_HASH = "HASH";
   private static final String FAKE_PASSENGER_HASH = "FAKE_HASH";
@@ -55,6 +55,7 @@ class ReservationTest {
   public void givenFakePassengerWhenVerifyIfPassengerIsInListPassengerInReservationThenReturnFalse() {
     assertFalse(reservation.getPassengerHashListInReservation().isEmpty());
   }
+
   // TODO Refactor
   @Test
   public void givenValidPassengerWhenVerifyIfPassengerInReservationThenReturnTrue() {
