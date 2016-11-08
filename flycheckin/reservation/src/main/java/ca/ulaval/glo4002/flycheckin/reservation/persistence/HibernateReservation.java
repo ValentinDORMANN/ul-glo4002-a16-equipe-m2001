@@ -26,6 +26,7 @@ public class HibernateReservation {
       EntityTransaction transaction = entityManager.getTransaction();
       transaction.begin();
       entityManager.persist(newReservation);
+      entityManager.getTransaction().commit();
       transaction.commit();
     } catch (EntityExistsException ex) {
       throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
