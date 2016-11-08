@@ -37,7 +37,7 @@ public class SeatAssignationService {
   public SeatAssignation assignSeatToPassenger(Passenger passenger, String mode) {
     setSeatAssignationStrategy(mode);
     List<Seat> availableSeats = getAvalaibleSeatsForFlight(passenger.getFlightNumber(), passenger.getFlightDate());
-    String seatNumber = seatAssignationStrategy.chooseSeatNumber(availableSeats);
+    String seatNumber = seatAssignationStrategy.chooseSeatNumber(availableSeats, passenger.getSeatClass());
     seatAssignation.createAssignation(seatNumber, passenger.getPassengerHash(), assignationNumberProvider);
     seatAssignationRepository.persistSeatAssignation(seatAssignation);
     makeSeatNumberUnavailable(passenger.getFlightNumber(), passenger.getFlightDate(), seatNumber);

@@ -7,12 +7,12 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
 @Entity
 public class Seat {
 
-  String seatClass; // economy, premium-economy, big-front, business
-  String seatNumber;
-  int legroom;
-  boolean isNearWindow;
-  boolean isClearView;
-  double price;
+  private String seatClass; // economy, premium-economy, big-front, business
+  private String seatNumber;
+  private int legroom;
+  private boolean isNearWindow;
+  private boolean isClearView;
+  private double price;
 
   public Seat() {
   }
@@ -40,7 +40,11 @@ public class Seat {
     return seatClass;
   }
 
-  private void setSeatNumber(int row, String column) {
+  public void setSeatClass(String seatClass) {
+    this.seatClass = seatClass;
+  }
+
+  public void setSeatNumber(int row, String column) {
     this.seatNumber = Integer.toString(row) + "-" + column.toUpperCase();
   }
 
