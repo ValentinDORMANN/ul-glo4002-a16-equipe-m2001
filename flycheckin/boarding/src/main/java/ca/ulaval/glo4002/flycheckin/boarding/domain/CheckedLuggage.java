@@ -4,8 +4,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public class CheckedLuggage extends Luggage {
 
-  private static final int WEIGHT_LIMIT = 50;
-  private static final int DIMENSION_LIMIT = 62;
+  private static final int WEIGHT_LIMIT = 23;
+  private static final int DIMENSION_LIMIT = 158;
 
   public CheckedLuggage(LuggageDto luggageDto) {
     super(luggageDto);
@@ -16,10 +16,10 @@ public class CheckedLuggage extends Luggage {
   }
 
   private boolean isWeightAllowed() {
-    return getWeightInPound() < WEIGHT_LIMIT;
+    return getWeightInKg() < WEIGHT_LIMIT;
   }
 
   private boolean isDimensionAllowed() {
-    return getDimensionInInch() < DIMENSION_LIMIT;
+    return getDimensionInCm() < DIMENSION_LIMIT;
   }
 }
