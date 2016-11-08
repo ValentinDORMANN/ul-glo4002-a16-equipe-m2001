@@ -9,9 +9,10 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class Passenger {
 
+  private static final int ALONE_INDEX = 0;
   private static final String TYPE_CHECKED = "checked";
-  private static final int LIMIT_CHECKED_LUGGAGES = 3;
-  private static final String MESSAGE_ERROR_EXCEDED_CHECKED = "Luggage exceded the limit number allowed";
+  private static final int CHECKED_LUGGAGES_LIMIT = 3;
+  private static final String LUGGAGES_LIMIT_EXCEDED_ERROR = "Error : Luggage limit number reached";
   private String flightNumber;
   private Date flightDate;
   private String passengerHash;
@@ -24,19 +25,19 @@ public class Passenger {
   public Passenger(ReservationDto reservationDto) {
     flightNumber = reservationDto.flight_number;
     flightDate = reservationDto.flight_date;
-    passengerHash = reservationDto.passengers[0].passenger_hash;
-    seatClass = reservationDto.passengers[0].seat_class;
+    passengerHash = reservationDto.passengers[ALONE_INDEX].passenger_hash;
+    seatClass = reservationDto.passengers[ALONE_INDEX].seat_class;
     this.luggages = new ArrayList<Luggage>();
   }
 
   public void addLuggage(Luggage luggage) throws ExcededCheckedLuggageException {
     if (!isNumberLuggageValid())
-      throw new ExcededCheckedLuggageException(MESSAGE_ERROR_EXCEDED_CHECKED);
+      throw new ExcededCheckedLuggageException(LUGGAGES_LIMIT_EXCEDED_ERROR);
     luggages.add(luggage);
   }
 
   private boolean isNumberLuggageValid() {
-    return countLuggageAlreadyChecked() < LIMIT_CHECKED_LUGGAGES;
+    return countLuggageAlreadyChecked() < CHECKED_LUGGAGES_LIMIT;
   }
 
   private int countLuggageAlreadyChecked() {
