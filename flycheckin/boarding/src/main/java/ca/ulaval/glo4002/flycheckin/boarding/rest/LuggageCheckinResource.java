@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -14,9 +15,13 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
+import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
+import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageInfoDto;
+import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ResultLuggageCheckinDto;
+import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PassengerService;
 import ca.ulaval.glo4002.flycheckin.boarding.services.interne.LuggageCheckinService;
 
 @Path("")
@@ -25,9 +30,24 @@ public class LuggageCheckinResource {
   private static final boolean ALLOWED = true;
   private static final boolean NOT_ALLOWED = false;
   private LuggageCheckinService luggageCheckinService;
+  private PassengerService passengerService;
 
   public LuggageCheckinResource() {
     luggageCheckinService = new LuggageCheckinService();
+    passengerService = new PassengerService();
+  }
+
+  @GET
+  @Path("/passengers/{passenger_hash}/baggages")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getLuggage(@Context UriInfo uriInfo, @PathParam("passenger_hash") String passengerHash) {
+    try {
+      Passenger passenger = passengerService.getPassenger(passengerHash);
+      LuggageInfoDto luggageInfoDto = new LuggageInfoDto(passenger);
+      return Response.status(Status.OK).entity(luggageInfoDto).build();
+    } catch (NotFoundPassengerException ex) {
+      return Response.status(Status.NOT_FOUND).build();
+    }
   }
 
   @POST
@@ -52,16 +72,16 @@ public class LuggageCheckinResource {
     return new URI(url);
   }
 
-  private LuggageDto createAllowedLuggageDto() {
-    LuggageDto luggageDto = new LuggageDto();
-    luggageDto.allowed = ALLOWED;
-    return luggageDto;
+  private ResultLuggageCheckinDto createAllowedLuggageDto() {
+    ResultLuggageCheckinDto resultLuggageCheckinDto = new ResultLuggageCheckinDto();
+    resultLuggageCheckinDto.allowed = ALLOWED;
+    return resultLuggageCheckinDto;
   }
 
-  private LuggageDto createNotAllowedLuggageDto(String message) {
-    LuggageDto luggageDto = new LuggageDto();
-    luggageDto.allowed = NOT_ALLOWED;
-    luggageDto.refusation_reason = message;
-    return luggageDto;
+  private ResultLuggageCheckinDto createNotAllowedLuggageDto(String message) {
+    ResultLuggageCheckinDto resultLuggageCheckinDto = new ResultLuggageCheckinDto();
+    resultLuggageCheckinDto.allowed = NOT_ALLOWED;
+    resultLuggageCheckinDto.refusation_reason = message;
+    return resultLuggageCheckinDto;
   }
 }

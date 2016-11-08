@@ -14,12 +14,14 @@ public abstract class Luggage {
   private int weightInKg;
   private String luggageHash;
   private String type;
+  private double price;
 
   public Luggage(LuggageDto luggageDto) throws IllegalArgumentException {
     this.dimensionInCm = convertDimensionToCmUnit(luggageDto.linear_dimension, luggageDto.linear_dimension_unit);
     this.weightInKg = convertWeightToKgUnit(luggageDto.weight, luggageDto.weight_unit);
     this.luggageHash = UUID.randomUUID().toString();
     this.type = luggageDto.type;
+    price = 0;
   }
 
   private int convertDimensionToCmUnit(int dimension, String dimmensionUnit) {
@@ -38,15 +40,23 @@ public abstract class Luggage {
     return this.type.equals(type);
   }
 
-  protected int getDimensionInCm() {
+  public int getDimensionInCm() {
     return dimensionInCm;
   }
 
-  protected int getWeightInKg() {
+  public int getWeightInKg() {
     return weightInKg;
   }
 
   public String getLuggageHash() {
     return luggageHash;
+  }
+
+  public double getPrice() {
+    return price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
   }
 }

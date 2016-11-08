@@ -10,6 +10,7 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
@@ -17,6 +18,7 @@ public class PassengerServiceTest {
 
   private static final String HASH = "HASH";
   private ReservationHttpClient mockReservationHttpClient;
+  private InMemoryPassenger mockInMemoryPassenger;
   private ReservationDto mockReservationDto;
   private PassengerDto mockPassengerDto;
   private PassengerService passengerService;
@@ -24,9 +26,10 @@ public class PassengerServiceTest {
   @Before
   public void initiateTest() {
     mockReservationHttpClient = mock(ReservationHttpClient.class);
+    mockInMemoryPassenger = mock(InMemoryPassenger.class);
+    passengerService = new PassengerService(mockReservationHttpClient, mockInMemoryPassenger);
     mockReservationDto = mock(ReservationDto.class);
     mockPassengerDto = mock(PassengerDto.class);
-    passengerService = new PassengerService(mockReservationHttpClient);
   }
 
   @Test
