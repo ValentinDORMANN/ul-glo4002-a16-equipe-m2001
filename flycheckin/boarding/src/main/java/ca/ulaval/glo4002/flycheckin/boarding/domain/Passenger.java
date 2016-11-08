@@ -9,6 +9,7 @@ public class Passenger {
   private String flightNumber;
   private Date flightDate;
   private String passengerHash;
+  private String seat_class;
 
   public Passenger() {
   }
@@ -17,6 +18,7 @@ public class Passenger {
     flightNumber = reservationDto.flight_number;
     flightDate = reservationDto.flight_date;
     passengerHash = reservationDto.passengers[0].passenger_hash;
+    seat_class = reservationDto.passengers[0].seat_class;
   }
 
   public String getPassengerHash() {
