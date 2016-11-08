@@ -12,34 +12,34 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationExc
 
 public class HibernateReservation {
 
-  private static final String MESSAGE_ERROR_RESERVATION = "Error : reservation not found !";
-  private static final String MESSAGE_ERROR_RESERVATION2 = "Error : no reservation for this passenger!";
+  private static final String UNFOUND_RESERVATION_ERROR = "Error : reservation not found !";
+  private static final String INVALID_PASSENGER_ERROR = "Error : no reservation for this passenger!";
+  private static final String DOUBLE_RESERVATION_ERROR = "Error : This reservation exists already.";
   private EntityManager entityManager;
-  
-  public HibernateReservation(){
+
+  public HibernateReservation() {
     this.entityManager = new EntityManagerProvider().getEntityManager();
   }
-  
+
   public void insertNewReservation(Reservation newReservation) throws IllegalArgumentReservationException {
-    int reservationNumber = newReservation.getReservationNumber();
     try {
       EntityTransaction transaction = entityManager.getTransaction();
       transaction.begin();
       entityManager.persist(newReservation);
       transaction.commit();
     } catch (EntityExistsException ex) {
-      throw new IllegalArgumentReservationException("Reservation " + reservationNumber + " already exists.");
+      throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
     }
   }
-  
+
   public Reservation findReservationByNumber(int reservationNumber) {
-	Reservation reservationFound;
-	try {
-	  reservationFound = entityManager.find(Reservation.class, reservationNumber);
-	} catch (NullPointerException ex) {
-	  throw new NotFoundReservationException(MESSAGE_ERROR_RESERVATION);
-	}
-	return reservationFound;
+    Reservation reservationFound;
+    try {
+      reservationFound = entityManager.find(Reservation.class, reservationNumber);
+    } catch (NullPointerException ex) {
+      throw new NotFoundReservationException(UNFOUND_RESERVATION_ERROR);
+    }
+    return reservationFound;
   }
 
   public Reservation findReservationByPassengerHash(String hash) throws NotFoundPassengerException {
@@ -48,7 +48,7 @@ public class HibernateReservation {
     query.setParameter("passengerHash", hash);
     Reservation reservationFound = query.getSingleResult();
     if (reservationFound == null)
-      throw new NotFoundPassengerException(MESSAGE_ERROR_RESERVATION2);
+      throw new NotFoundReservationException(INVALID_PASSENGER_ERROR);
     return reservationFound;
   }
 }

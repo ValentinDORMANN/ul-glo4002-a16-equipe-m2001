@@ -1,9 +1,11 @@
 package ca.ulaval.glo4002.flycheckin.reservation.persistence;
 
+import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 
@@ -24,15 +26,15 @@ public class HibernateReservationTest {
   public void withWrongReservationNumberWhenGetReservationThenReturnException() {
   hibernateReservation.findReservationByNumber(WRONG_RESERVATION_NUMBER);
   }
-  
+  */
   @Test
   public void givenNotEmptyReservationWhenGetStoredReversationThenReturnReservation() {
-  hibernateReservation.insertNewReservation(mockReservation);
-  
+    hibernateReservation.insertNewReservation(mockReservation);
+
     Reservation reservation = hibernateReservation.findReservationByNumber(RESERVATION_NUMBER);
-  
+
     assertEquals(mockReservation, reservation);
-  }*/
+  }
   /*
   @Test(expected = IllegalArgumentReservationException.class)
   public void givenNotEmptyReservationListWhenSaveReversationAlreadyStoredThenReturnException() {

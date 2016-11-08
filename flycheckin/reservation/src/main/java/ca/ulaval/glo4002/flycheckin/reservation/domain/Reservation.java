@@ -22,7 +22,6 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerExcep
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.InMemoryReservation;
 
 @Entity
 public class Reservation {
@@ -32,7 +31,7 @@ public class Reservation {
   private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
   private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int reservationNumber;
@@ -51,7 +50,7 @@ public class Reservation {
   @Column(name = "passengers")
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Passenger> passengers;
-  private HibernateReservation hibernateReservation = new HibernateReservation(); 
+  private HibernateReservation hibernateReservation = new HibernateReservation();
 
   public Reservation() {
   }
@@ -80,10 +79,10 @@ public class Reservation {
       Passenger passenger = new Passenger(reservationDto.passengers.get(i));
       this.passengers.add(passenger);
     }
-    createReservation();
+    storeReservation();
   }
 
-  private void createReservation() throws IllegalArgumentReservationException {
+  private void storeReservation() throws IllegalArgumentReservationException {
     hibernateReservation.insertNewReservation(this);
   }
 
