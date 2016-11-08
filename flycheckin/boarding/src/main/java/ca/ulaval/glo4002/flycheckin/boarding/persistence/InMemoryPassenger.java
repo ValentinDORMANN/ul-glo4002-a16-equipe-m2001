@@ -23,4 +23,8 @@ public class InMemoryPassenger {
     else
       return passengerMap.get(passengerHash);
   }
+
+  public void clearPassengerMap() {
+    passengerMap.clear();
+  }
 }
