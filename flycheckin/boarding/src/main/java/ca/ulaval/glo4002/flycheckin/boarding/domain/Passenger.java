@@ -9,7 +9,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class Passenger {
 
-  private static final int ALONE_INDEX = 0;
+  private static final int SINGLE_INDEX = 0;
   private static final double BASE_PRICE = 0;
   private static final double SURPLUS_PRICE_LUGGAGE = 50;
   private static final String TYPE_CHECKED = "checked";
@@ -27,15 +27,15 @@ public class Passenger {
   public Passenger(ReservationDto reservationDto) {
     flightNumber = reservationDto.flight_number;
     flightDate = reservationDto.flight_date;
-    passengerHash = reservationDto.passengers[ALONE_INDEX].passenger_hash;
-    seatClass = reservationDto.passengers[ALONE_INDEX].seat_class;
+    passengerHash = reservationDto.passengers[SINGLE_INDEX].passenger_hash;
+    seatClass = reservationDto.passengers[SINGLE_INDEX].seat_class;
     luggages = new ArrayList<Luggage>();
   }
 
   public void addLuggage(Luggage luggage) throws ExcededCheckedLuggageException {
     if (!isNumberLuggageValid())
       throw new ExcededCheckedLuggageException(LUGGAGES_LIMIT_EXCEDED_ERROR);
-    if (!isFisrtCheckedLuggage())
+    if (!isFirstCheckedLuggage())
       luggage.setPrice(SURPLUS_PRICE_LUGGAGE);
     luggages.add(luggage);
   }
@@ -44,7 +44,7 @@ public class Passenger {
     return countLuggageAlreadyChecked() < CHECKED_LUGGAGES_LIMIT;
   }
 
-  private boolean isFisrtCheckedLuggage() {
+  private boolean isFirstCheckedLuggage() {
     return countLuggageAlreadyChecked() == 0;
   }
 
