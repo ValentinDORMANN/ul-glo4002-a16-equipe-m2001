@@ -13,7 +13,7 @@ public class ReservationHttpClient extends HttpClient {
   private static final String RESERVATION_HASH = "/reservations/hash/";
   private static int reservationServer = 0;
   private static final int HTTP_STATUS_NOT_FOUND = 404;
-  private static final String MSG_NOT_FOUND = "Passenger not found";
+  private static final String MESSAGE_NOT_FOUND = "Passenger not found";
 
   public ReservationHttpClient() {
     reservationServer = Integer.valueOf(System.getProperty("reservation.port"));
@@ -24,7 +24,7 @@ public class ReservationHttpClient extends HttpClient {
     String url = LOCALHOST + reservationServer + RESERVATION_HASH + passengerHash;
     Response response = callUrlWithGetMethod(url);
     if (response.getStatus() == HTTP_STATUS_NOT_FOUND)
-      throw new NotFoundPassengerException(MSG_NOT_FOUND);
+      throw new NotFoundPassengerException(MESSAGE_NOT_FOUND);
     ReservationDto reservationDto = response.readEntity(ReservationDto.class);
     response.close();
     return reservationDto;
