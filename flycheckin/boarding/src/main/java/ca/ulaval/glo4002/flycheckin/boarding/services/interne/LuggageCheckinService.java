@@ -12,7 +12,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PassengerService;
 
 public class LuggageCheckinService {
 
-  private static final String LUGGAGE_NOT_ALLOWED = "dimension or weight is not allowed";
   private InMemoryPassenger inMemoryPassenger;
   private PassengerService passengerService;
 
@@ -48,10 +47,9 @@ public class LuggageCheckinService {
     return passenger;
   }
 
-  private Luggage createCheckedLuggage(LuggageDto luggageDto) {
+  private Luggage createCheckedLuggage(LuggageDto luggageDto) throws ExcededCheckedLuggageException {
     CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto);
-    if (checkedLuggage.isAllowed())
-      return checkedLuggage;
-    throw new ExcededCheckedLuggageException(LUGGAGE_NOT_ALLOWED);
+    checkedLuggage.checkLuggageAllowable();
+    return checkedLuggage;
   }
 }

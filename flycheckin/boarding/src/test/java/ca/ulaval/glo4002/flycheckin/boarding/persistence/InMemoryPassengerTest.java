@@ -33,14 +33,17 @@ public class InMemoryPassengerTest {
   @Test
   public void givenHashWhenInsertPassengerThenCompareHashGotten() {
     inMemoryPassenger.savePassenger(mockPassenger);
+
     Passenger passenger = inMemoryPassenger.getPassengerByHash(HASH);
+
     assertEquals(mockPassenger, passenger);
   }
 
   @Test(expected = NotFoundPassengerException.class)
   public void givenWrongHashWhenGetPassengerAlreadyInMapThenThrowException() {
     inMemoryPassenger.savePassenger(mockPassenger);
-    Passenger passenger = inMemoryPassenger.getPassengerByHash(WRONG_HASH);
+
+    inMemoryPassenger.getPassengerByHash(WRONG_HASH);
   }
 
   @After

@@ -48,6 +48,6 @@ public class PassengerServiceTest {
   public void givenWrongPassengerHashWhenSeatAssignationThenThrowException() {
     willThrow(NotFoundPassengerException.class).given(mockReservationHttpClient).getReservationDtoFromReservation(HASH);
 
-    Passenger passenger = passengerService.getPassengerByHashInReservation(HASH);
+    passengerService.getPassengerByHashInReservation(HASH);
   }
 }
