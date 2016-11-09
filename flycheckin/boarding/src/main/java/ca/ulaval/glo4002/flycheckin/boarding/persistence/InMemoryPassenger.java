@@ -20,8 +20,7 @@ public class InMemoryPassenger {
   public Passenger getPassengerByHash(String passengerHash) throws NotFoundPassengerException {
     if (passengerMap.isEmpty() || !passengerMap.containsKey(passengerHash))
       throw new NotFoundPassengerException(MESSAGE_ERROR_RESERVATION);
-    else
-      return passengerMap.get(passengerHash);
+    return passengerMap.get(passengerHash);
   }
 
   public void clearPassengerMap() {

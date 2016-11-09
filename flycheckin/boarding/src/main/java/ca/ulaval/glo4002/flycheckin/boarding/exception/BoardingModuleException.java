@@ -10,5 +10,4 @@ public class BoardingModuleException extends RuntimeException {
   public BoardingModuleException(String message) {
     super(message);
   }
-
 }

@@ -8,9 +8,6 @@ import javax.ws.rs.core.Response;
 
 public abstract class HttpClient {
 
-  public HttpClient() {
-  }
-
   protected Response callUrlWithGetMethod(String url) {
     Client client = ClientBuilder.newClient();
     WebTarget target = client.target(url);
