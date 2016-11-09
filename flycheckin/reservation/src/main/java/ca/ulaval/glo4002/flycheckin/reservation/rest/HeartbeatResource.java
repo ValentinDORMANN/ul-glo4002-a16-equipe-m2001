@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.reservation.api;
+package ca.ulaval.glo4002.flycheckin.reservation.rest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

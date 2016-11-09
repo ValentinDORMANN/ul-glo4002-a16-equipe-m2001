@@ -10,5 +10,4 @@ public class FlyCheckinApplicationException extends RuntimeException {
   public FlyCheckinApplicationException(String message) {
     super(message);
   }
-
 }

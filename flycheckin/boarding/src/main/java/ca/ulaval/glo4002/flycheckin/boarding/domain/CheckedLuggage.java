@@ -16,10 +16,10 @@ public class CheckedLuggage extends Luggage {
   }
 
   private boolean isWeightAllowed() {
-    return getWeightInKg() < WEIGHT_LIMIT;
+    return getWeightInKg() <= WEIGHT_LIMIT;
   }
 
   private boolean isDimensionAllowed() {
-    return getDimensionInCm() < DIMENSION_LIMIT;
+    return getDimensionInCm() <= DIMENSION_LIMIT;
   }
 }

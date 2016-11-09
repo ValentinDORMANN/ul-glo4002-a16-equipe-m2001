@@ -8,7 +8,6 @@ import java.text.ParseException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
@@ -18,7 +17,6 @@ public class ReservationInMemoryTest {
   private static final int RESERVATION_NUMBER = 55555;
   private static final int WRONG_RESERVATION_NUMBER = 44444;
   private ReservationInMemory reservationInMemory = new ReservationInMemory();
-  @Mock
   private Reservation mockReservation;
 
   @Before

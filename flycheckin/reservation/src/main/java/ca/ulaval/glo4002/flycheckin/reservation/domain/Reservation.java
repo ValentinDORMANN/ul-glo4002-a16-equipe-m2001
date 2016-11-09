@@ -17,9 +17,11 @@ public class Reservation {
 
   private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
   private static final String MSG_INVALID_CHECKIN_DATE = "Error: immpossible to checkin at this moment !";
+  private static final String SELF = "SELF";
   private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
   private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
+  private static ReservationInMemory reservationInMemory = new ReservationInMemory();
   private int reservationNumber;
   private Date reservationDate;
   private String reservationConfirmation;
@@ -27,7 +29,6 @@ public class Reservation {
   private Date flightDate;
   private String paymentLocation;
   private List<Passenger> passengers;
-  private ReservationInMemory reservationInMemory = new ReservationInMemory();
 
   public Reservation() {
   }
@@ -93,18 +94,16 @@ public class Reservation {
   }
 
   public void validateCheckinPeriod(String by) throws NotTimeToCheckinException {
-    if (by.equals("SELF")) {
+    if (by.equals(SELF))
       validateSelfCheckinPeriod();
-    }
   }
 
   private void validateSelfCheckinPeriod() {
     long todayInMillisecond = new Date().getTime();
     long flightDateInMillisecond = this.getFlightDate().getTime();
     if (!((flightDateInMillisecond - SELF_CHECKIN_START_TIME <= todayInMillisecond)
-        && (todayInMillisecond <= flightDateInMillisecond - SELF_CHECKIN_END_TIME))) {
+        && (todayInMillisecond <= flightDateInMillisecond - SELF_CHECKIN_END_TIME)))
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
-    }
   }
 
   public int getReservationNumber() {
@@ -127,5 +126,4 @@ public class Reservation {
   public List<Passenger> getPassengers() {
     return passengers;
   }
-
 }

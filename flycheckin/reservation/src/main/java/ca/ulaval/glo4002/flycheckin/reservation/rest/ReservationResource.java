@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.reservation.api;
+package ca.ulaval.glo4002.flycheckin.reservation.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -34,8 +34,7 @@ public class ReservationResource {
   public Response createReserversation(@Context UriInfo uriInfo, ReservationDto reservationDto) {
     try {
       Reservation reservation = new Reservation(reservationDto);
-      String location = createUrlforGetReservation(uriInfo, reservation);
-      URI url = new URI(location);
+      URI url = createUrlforGetReservation(uriInfo, reservation);
       return Response.status(Status.CREATED).location(url).build();
     } catch (URISyntaxException ex) {
       return Response.status(Status.CREATED).build();
@@ -44,8 +43,9 @@ public class ReservationResource {
     }
   }
 
-  private String createUrlforGetReservation(UriInfo uriInfo, Reservation reservation) {
-    return uriInfo.getBaseUri().toString() + "reservations/" + reservation.getReservationNumber();
+  private URI createUrlforGetReservation(UriInfo uriInfo, Reservation reservation) throws URISyntaxException {
+    String location = uriInfo.getBaseUri().toString() + "reservations/" + reservation.getReservationNumber();
+    return new URI(location);
   }
 
   @GET
