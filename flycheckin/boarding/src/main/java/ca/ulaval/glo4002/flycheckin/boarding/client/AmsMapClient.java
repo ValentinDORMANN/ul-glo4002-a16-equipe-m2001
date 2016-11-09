@@ -12,7 +12,7 @@ public class AmsMapClient {
   private static final String FLIGHT_NUMBER_DASH = "QK-918";
   private static final String MODEL_AIRBUS_PLANE = "a320";
   private static final String FLIGHT_NUMBER_AIRBUS = "NK-750";
-  private static final String[] MODELS = { FLIGHT_NUMBER_AIRBUS, FLIGHT_NUMBER_DASH , MODEL_BOEING_PLANE };
+  private static final String[] MODELS = { MODEL_AIRBUS_PLANE, MODEL_DASH_PLANE, MODEL_BOEING_PLANE };
   private static Map<String, String> associationFlightPlane = new HashMap<String, String>();
 
   public AmsMapClient() {
