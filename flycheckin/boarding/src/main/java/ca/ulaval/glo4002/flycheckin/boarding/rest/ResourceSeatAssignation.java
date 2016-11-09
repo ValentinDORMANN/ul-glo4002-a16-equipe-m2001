@@ -26,7 +26,9 @@ import ca.ulaval.glo4002.flycheckin.boarding.services.interne.SeatAssignationSer
 @Path("")
 public class ResourceSeatAssignation {
 
-  private static final String SEAT_ASSIGNATIONS = "/seat-assignations";
+  private static final String PATH_SEAT_ASSIGNATIONS = "/seat-assignations";
+  private static final String SEAT_ASSIGNATIONS = "seat-assignations/";
+  private static final String EMPTY_STRING = "";
   private SeatAssignationService seatAssignationService;
   private PassengerService passengerService;
 
@@ -38,7 +40,7 @@ public class ResourceSeatAssignation {
   }
 
   @POST
-  @Path(SEAT_ASSIGNATIONS)
+  @Path(PATH_SEAT_ASSIGNATIONS)
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response assignSeatToPassenger(@Context UriInfo uriInfo, SeatAssignationDto seatAssignationDto)
@@ -58,15 +60,14 @@ public class ResourceSeatAssignation {
   }
 
   private SeatAssignationDto transformSeatAssignationDto(SeatAssignationDto seatAssignationDto, String seat) {
-    seatAssignationDto.mode = "";
-    seatAssignationDto.passenger_hash = "";
+    seatAssignationDto.mode = EMPTY_STRING;
+    seatAssignationDto.passenger_hash = EMPTY_STRING;
     seatAssignationDto.seat = seat;
     return seatAssignationDto;
   }
 
   private URI createUrlforLocation(UriInfo uriInfo, SeatAssignation seatAssignation) throws URISyntaxException {
-    String url = uriInfo.getBaseUri().toString() + "seat-assignations/" + seatAssignation.getAssignationNumber();
+    String url = uriInfo.getBaseUri().toString() + SEAT_ASSIGNATIONS + seatAssignation.getAssignationNumber();
     return new URI(url);
   }
-
 }

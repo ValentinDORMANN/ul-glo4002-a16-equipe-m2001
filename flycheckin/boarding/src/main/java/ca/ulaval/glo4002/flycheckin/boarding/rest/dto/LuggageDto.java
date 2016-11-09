@@ -7,8 +7,9 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.Luggage;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
 public class LuggageDto {
-  private static final String LINEAR_DIMENSION_UNIT = "cm";
 
+  private static final int GRAMME_CONVERSION = 1000;
+  private static final int MM_CONVERSION = 10;
   @JsonInclude(JsonInclude.Include.NON_DEFAULT)
   public int linear_dimension;
   public String linear_dimension_unit;
@@ -23,8 +24,8 @@ public class LuggageDto {
   }
 
   public LuggageDto(Luggage luggage) {
-    linear_dimension = luggage.getDimensionInCm();
-    weight = luggage.getWeightInKg();
+    linear_dimension = luggage.getDimensionInCm() * MM_CONVERSION;
+    weight = luggage.getWeightInKg() * GRAMME_CONVERSION;
     price = luggage.getPrice();
   }
 }

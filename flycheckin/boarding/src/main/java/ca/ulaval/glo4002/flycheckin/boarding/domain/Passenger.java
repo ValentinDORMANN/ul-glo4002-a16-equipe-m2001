@@ -35,18 +35,17 @@ public class Passenger {
   public void addLuggage(Luggage luggage) throws ExcededCheckedLuggageException {
     if (!isNumberLuggageValid())
       throw new ExcededCheckedLuggageException(LUGGAGES_LIMIT_EXCEDED_ERROR);
-    if (!isFisrtCheckedLuggage()) {
+    if (!isFisrtCheckedLuggage())
       luggage.setPrice(SURPLUS_PRICE_LUGGAGE);
-    }
     luggages.add(luggage);
-  }
-
-  private boolean isFisrtCheckedLuggage() {
-    return countLuggageAlreadyChecked() == 0;
   }
 
   private boolean isNumberLuggageValid() {
     return countLuggageAlreadyChecked() < CHECKED_LUGGAGES_LIMIT;
+  }
+
+  private boolean isFisrtCheckedLuggage() {
+    return countLuggageAlreadyChecked() == 0;
   }
 
   private int countLuggageAlreadyChecked() {
@@ -84,5 +83,4 @@ public class Passenger {
       totalPrice += luggage.getPrice();
     return totalPrice;
   }
-
 }

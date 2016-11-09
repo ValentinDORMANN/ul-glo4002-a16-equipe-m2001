@@ -11,5 +11,4 @@ public class SeatAssignationCheapestStrategy implements SeatAssignationStrategy 
     // TODO Auto-generated method stub
     return "12-C";
   }
-
 }

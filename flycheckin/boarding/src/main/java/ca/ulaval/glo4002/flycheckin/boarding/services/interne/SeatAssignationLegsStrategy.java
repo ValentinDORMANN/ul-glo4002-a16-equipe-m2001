@@ -11,5 +11,4 @@ public class SeatAssignationLegsStrategy implements SeatAssignationStrategy {
     // TODO Auto-generated method stub
     return "12-L";
   }
-
 }

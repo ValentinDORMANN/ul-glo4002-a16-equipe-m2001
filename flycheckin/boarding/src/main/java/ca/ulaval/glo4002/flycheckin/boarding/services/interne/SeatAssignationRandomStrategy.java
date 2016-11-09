@@ -27,5 +27,4 @@ public class SeatAssignationRandomStrategy implements SeatAssignationStrategy {
     }
     return availableSeatClass;
   }
-
 }

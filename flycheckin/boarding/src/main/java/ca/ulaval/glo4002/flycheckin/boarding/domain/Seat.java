@@ -1,13 +1,10 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
-import javax.persistence.Entity;
-
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
 
-@Entity
 public class Seat {
 
-  private String seatClass; // economy, premium-economy, big-front, business
+  private String seatClass;
   private String seatNumber;
   private int legroom;
   private boolean isNearWindow;
@@ -67,5 +64,4 @@ public class Seat {
   public double getPrice() {
     return price;
   }
-
 }
