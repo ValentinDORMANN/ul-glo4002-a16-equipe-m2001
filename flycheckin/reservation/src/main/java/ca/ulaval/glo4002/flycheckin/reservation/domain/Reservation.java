@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
@@ -16,8 +17,11 @@ public class Reservation {
 
   private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
   private static final String MSG_INVALID_CHECKIN_DATE = "Error: immpossible to checkin at this moment !";
-  private static final int FOURTY_EIGHT_HOUR = 48 * 60 * 60 * 1000;
-  private static final int SIX_HOUR = 6 * 60 * 60 * 1000;
+  private static final String SELF = "SELF";
+  private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
+  private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
+  private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
+  private static ReservationInMemory reservationInMemory = new ReservationInMemory();
   private int reservationNumber;
   private Date reservationDate;
   private String reservationConfirmation;
@@ -25,7 +29,6 @@ public class Reservation {
   private Date flightDate;
   private String paymentLocation;
   private List<Passenger> passengers;
-  private ReservationInMemory reservationInMemory = new ReservationInMemory();
 
   public Reservation() {
   }
@@ -54,26 +57,35 @@ public class Reservation {
       Passenger passenger = new Passenger(reservationDto.passengers.get(i));
       this.passengers.add(passenger);
     }
-    createReservation();
+    storeReservation();
   }
 
-  private void createReservation() throws IllegalArgumentReservationException {
+  private void storeReservation() throws IllegalArgumentReservationException {
     reservationInMemory.saveNewReservation(this);
   }
 
-  public Reservation readReservationByNumber(int reservationNumber) {
+  public Reservation readReservationByNumber(int reservationNumber) throws NotFoundReservationException {
     return reservationInMemory.getReservationByNumber(reservationNumber);
   }
 
-  public List<String> getPassengerHashListInReservation() {
-    List<String> hashs = new ArrayList<String>();
-    for (Passenger passenger : passengers) {
-      hashs.add(passenger.getPassengerHash());
-    }
-    return hashs;
+  public Reservation searchReservationByPassengerHash(String passenger_hash) throws NotFoundPassengerException {
+    return reservationInMemory.getReservationByPassengerHash(passenger_hash);
   }
 
-  public Passenger getPassengerFromHash(String hash) {
+  public List<String> getPassengerHashListInReservation() {
+    List<String> passengerHashs = new ArrayList<String>();
+    for (Passenger passenger : passengers) {
+      passengerHashs.add(passenger.getPassengerHash());
+    }
+    return passengerHashs;
+  }
+
+  public boolean isPassengerInfosValid(String hash) throws NotFoundPassengerException {
+    Passenger passenger = getPassengerByHash(hash);
+    return passenger.isValid();
+  }
+
+  public Passenger getPassengerByHash(String hash) {
     for (Passenger passenger : passengers) {
       if (passenger.getPassengerHash().equals(hash))
         return passenger;
@@ -82,18 +94,16 @@ public class Reservation {
   }
 
   public void validateCheckinPeriod(String by) throws NotTimeToCheckinException {
-    if (by.equals("SELF")) {
+    if (by.equals(SELF))
       validateSelfCheckinPeriod();
-    }
   }
 
   private void validateSelfCheckinPeriod() {
     long todayInMillisecond = new Date().getTime();
     long flightDateInMillisecond = this.getFlightDate().getTime();
-    if (!((flightDateInMillisecond - FOURTY_EIGHT_HOUR <= todayInMillisecond)
-        && (todayInMillisecond <= flightDateInMillisecond - SIX_HOUR))) {
+    if (!((flightDateInMillisecond - SELF_CHECKIN_START_TIME <= todayInMillisecond)
+        && (todayInMillisecond <= flightDateInMillisecond - SELF_CHECKIN_END_TIME)))
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
-    }
   }
 
   public int getReservationNumber() {
@@ -116,5 +126,4 @@ public class Reservation {
   public List<Passenger> getPassengers() {
     return passengers;
   }
-
 }

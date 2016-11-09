@@ -18,15 +18,13 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinExcept
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
 public class ReservationTest {
+
   private static final int RESERVATION_NUMBER = 55555;
   private static final String PASSENGER_HASH = "HASH";
   private static final String FAKE_PASSENGER_HASH = "FAKE_HASH";
-
   private static final Calendar CALENDAR = Calendar.getInstance();
-  private static final Date TODAY = CALENDAR.getTime();
-  private static final Date TWO_DAYS_BEFORE = initiateDateByHour(-48, false);
-  private static final Date SIX_HOURS_BEFORE = initiateDateByHour(-6, true);
-
+  private static final Date SELF_CHECKIN_START_TIME = initiateDateByHour(-48, false);
+  private static final Date SELF_CHECKIN_END_TIME = initiateDateByHour(-6, true);
   private ReservationInMemory mockReservationInMemory;
   private ReservationDto mockReservationDto;
   private Passenger mockPassenger;
@@ -49,53 +47,47 @@ public class ReservationTest {
     passengers = new ArrayList<Passenger>();
     passengers.add(mockPassenger);
     reservation = new Reservation(mockReservationInMemory, mockReservationDto, passengers);
+    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
   }
 
   @Test
-  public void givenFakePassengerWhenVerifyIfPassengerInReservationThenReturnFalse() {
-    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
-
+  public void givenFakePassengerWhenVerifyIfPassengerIsInListPassengerInReservationThenReturnFalse() {
     assertFalse(reservation.getPassengerHashListInReservation().contains(FAKE_PASSENGER_HASH));
   }
 
   @Test
   public void givenValidPassengerWhenVerifyIfPassengerInReservationThenReturnTrue() {
-    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
-
     assertTrue(reservation.getPassengerHashListInReservation().contains(PASSENGER_HASH));
   }
 
   @Test
   public void givenValidPassengerHashWhenGetPassengerByHashThenReturnPassenger() {
-    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
-
-    assertEquals(mockPassenger, reservation.getPassengerFromHash(PASSENGER_HASH));
+    assertEquals(mockPassenger, reservation.getPassengerByHash(PASSENGER_HASH));
   }
 
   @Test(expected = NotFoundPassengerException.class)
   public void givenFakePassengerHashWhenGetPassengerByHashThenThrowException() {
-    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
-
-    reservation.getPassengerFromHash(FAKE_PASSENGER_HASH);
+    reservation.getPassengerByHash(FAKE_PASSENGER_HASH);
   }
-  
+
   @Test
   public void whenReadReservationByNumberThenVerifyReservationInMemoryGetReservation() {
     reservation.readReservationByNumber(RESERVATION_NUMBER);
-  
+
     verify(mockReservationInMemory).getReservationByNumber(RESERVATION_NUMBER);
   }
+
   @Test(expected = NotTimeToCheckinException.class)
-  public void whenSelfCheckinBeforevalidePeriodThenThrowException() {
-    reservation.setFlightDate(TWO_DAYS_BEFORE);
-    
+  public void whenSelfCheckinBeforeStartTimeThenThrowException() {
+    reservation.setFlightDate(SELF_CHECKIN_START_TIME);
+
     reservation.validateCheckinPeriod("SELF");
   }
-  
+
   @Test(expected = NotTimeToCheckinException.class)
-  public void whenSelfCheckinAftervalidePeriodThenThrowException() {
-    reservation.setFlightDate(SIX_HOURS_BEFORE);
-    
+  public void whenSelfCheckinEndTimeThenThrowException() {
+    reservation.setFlightDate(SELF_CHECKIN_END_TIME);
+
     reservation.validateCheckinPeriod("SELF");
   }
 }

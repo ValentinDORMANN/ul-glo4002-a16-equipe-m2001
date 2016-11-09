@@ -11,11 +11,6 @@ public class CheckinService {
   private CheckinInMemory checkinInMemory;
   private ReservationInMemory reservationInMemory;
 
-  public CheckinService() {
-    this.checkinInMemory = new CheckinInMemory();
-    this.reservationInMemory = new ReservationInMemory();
-  }
-
   public CheckinService(CheckinInMemory checkinInMemory, ReservationInMemory reservationInMemory) {
     this.checkinInMemory = checkinInMemory;
     this.reservationInMemory = reservationInMemory;
@@ -23,11 +18,11 @@ public class CheckinService {
 
   public int saveCheckin(CheckinDto checkinDto) throws FlyCheckinApplicationException {
     String hash = checkinDto.passenger_hash;
+    String by = checkinDto.by;
     Reservation reservation = reservationInMemory.getReservationByPassengerHash(hash);
-    reservation.validateCheckinPeriod(checkinDto.by);
-    if (reservation.getPassengerFromHash(hash).isValid())
+    reservation.validateCheckinPeriod(by);
+    if (reservation.isPassengerInfosValid(hash))
       return checkinInMemory.doPassengerCheckin(hash);
     throw new FlyCheckinApplicationException(MSG_ERROR);
   }
-
 }

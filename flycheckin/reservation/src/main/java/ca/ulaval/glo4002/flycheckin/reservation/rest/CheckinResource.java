@@ -1,4 +1,7 @@
-package ca.ulaval.glo4002.flycheckin.reservation.api;
+package ca.ulaval.glo4002.flycheckin.reservation.rest;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -13,14 +16,17 @@ import ca.ulaval.glo4002.flycheckin.reservation.api.dto.CheckinDto;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
 @Path("/checkins")
 public class CheckinResource {
 
-  private CheckinService checkinService;
+  private static CheckinInMemory checkinInMemory = new CheckinInMemory();
+  private static ReservationInMemory reservationInMemory = new ReservationInMemory();
+  private static CheckinService checkinService = new CheckinService(checkinInMemory, reservationInMemory);
 
   public CheckinResource() {
-    this.checkinService = new CheckinService();
   }
 
   public CheckinResource(CheckinService checkinService) {
@@ -31,9 +37,11 @@ public class CheckinResource {
   @Consumes(MediaType.APPLICATION_JSON)
   public Response createCheckin(@Context UriInfo uriInfo, CheckinDto checkinDto) {
     try {
-      int checkinId = this.checkinService.saveCheckin(checkinDto);
-      String location = createUrlforGetCheckin(uriInfo, checkinId);
-      return Response.status(Status.CREATED).entity(location).build();
+      int checkinId = checkinService.saveCheckin(checkinDto);
+      URI url = createUrlToGetCheckin(uriInfo, checkinId);
+      return Response.status(Status.CREATED).location(url).build();
+    } catch (URISyntaxException ex) {
+      return Response.status(Status.CREATED).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
     } catch (FlyCheckinApplicationException ex) {
@@ -41,8 +49,8 @@ public class CheckinResource {
     }
   }
 
-  private String createUrlforGetCheckin(UriInfo uriInfo, int checkinId) {
-    return uriInfo.getBaseUri().toString() + "checkins/" + Integer.toString(checkinId);
+  private URI createUrlToGetCheckin(UriInfo uriInfo, int checkinId) throws URISyntaxException {
+    String location = uriInfo.getBaseUri().toString() + "checkins/" + Integer.toString(checkinId);
+    return new URI(location);
   }
-
 }

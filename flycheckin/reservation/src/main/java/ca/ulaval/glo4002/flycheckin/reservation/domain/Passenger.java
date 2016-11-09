@@ -6,7 +6,8 @@ import ca.ulaval.glo4002.flycheckin.reservation.api.dto.PassengerDto;
 
 public class Passenger {
 
-  private static final int CHILD_AGE = 15;
+  private static final String EMPTY = "";
+  private static final int CHILD_AGE = 21;
   private String passengerHash;
   private String firstName;
   private String lastName;
@@ -24,7 +25,7 @@ public class Passenger {
   }
 
   public boolean isValid() {
-    return !(firstName.trim().equals("") || lastName.trim().equals("") || passportNumber.trim().equals(""));
+    return !(firstName.trim().equals(EMPTY) || lastName.trim().equals(EMPTY) || passportNumber.trim().equals(EMPTY));
   }
 
   public boolean isChild() {
