@@ -23,19 +23,21 @@ public class AmsMapClientTest {
   @Test
   public void givenFlightBoeingWhenGetModelThenReturnBoeing777300() {
     String boeingModel = amsMapClient.getPlaneModelByFlightNumber(FLIGHT_BOEING);
+
     assertEquals(BOEING, boeingModel);
   }
 
   @Test
   public void givenFlightAirbusWhenGetModelThenReturnA320() {
     String airbusModel = amsMapClient.getPlaneModelByFlightNumber(FLIGHT_AIRBUS);
+
     assertEquals(AIRBUS, airbusModel);
   }
 
   @Test
   public void givenFlightDashWhenGetModelThenReturnDash8() {
     String dashModel = amsMapClient.getPlaneModelByFlightNumber(FLIGHT_DASH);
+
     assertEquals(DASH, dashModel);
   }
-
 }

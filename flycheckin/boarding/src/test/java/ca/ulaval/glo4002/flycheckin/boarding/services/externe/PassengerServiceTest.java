@@ -33,7 +33,7 @@ public class PassengerServiceTest {
   }
 
   @Test
-  public void givenPassengerHashWhenSeatAssignationThenReturnPassenger() {
+  public void givenStoredReservationWhenGetPassengerOfThisReservationThenReturnPassenger() {
     mockPassengerDto.passenger_hash = HASH;
     PassengerDto[] passengers = { mockPassengerDto };
     mockReservationDto.passengers = passengers;
@@ -45,7 +45,7 @@ public class PassengerServiceTest {
   }
 
   @Test(expected = NotFoundPassengerException.class)
-  public void givenWrongPassengerHashWhenSeatAssignationThenThrowException() {
+  public void givenStoredReservationWhenGetPassengerNotInThisReservationThenThrowException() {
     willThrow(NotFoundPassengerException.class).given(mockReservationHttpClient).getReservationDtoFromReservation(HASH);
 
     passengerService.getPassengerByHashInReservation(HASH);

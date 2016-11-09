@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
+import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
@@ -25,7 +26,7 @@ public class PassengerTest {
   private Passenger passenger;
   private PassengerDto mockPassengerDto;
   private ReservationDto mockReservationDto;
-  private Luggage mockLuggage;
+  private Luggage mockCheckedLuggage;
 
   @Before
   public void initiateTest() {
@@ -38,14 +39,25 @@ public class PassengerTest {
     PassengerDto[] passengers = { mockPassengerDto };
     mockReservationDto.passengers = passengers;
     passenger = new Passenger(mockReservationDto);
-    mockLuggage = mock(Luggage.class);
-    willReturn(IS_CHECKED).given(mockLuggage).isType(TYPE_CHECKED);
+    mockCheckedLuggage = mock(Luggage.class);
+    willReturn(IS_CHECKED).given(mockCheckedLuggage).isType(TYPE_CHECKED);
+  }
+
+  @Test
+  public void whenAddThanThreeCheckedLuggagesThenVerifyPassengersHasThreeLuggages() {
+    for (int index = 0; index < LIMIT_CHECKED_LUGGAGES; index++) {
+      passenger.addLuggage(mockCheckedLuggage);
+    }
+
+    assertEquals(LIMIT_CHECKED_LUGGAGES, passenger.getLuggages().size());
   }
 
   @Test(expected = ExcededCheckedLuggageException.class)
-  public void givenManyLuggageWhenAddItThenPassengerHaveIt() {
-    for (int i = 0; i <= LIMIT_CHECKED_LUGGAGES; i++) {
-      passenger.addLuggage(mockLuggage);
+  public void whenAddMoreThanThreeCheckedLuggagesThenThrowException() {
+    for (int index = 0; index < LIMIT_CHECKED_LUGGAGES; index++) {
+      passenger.addLuggage(mockCheckedLuggage);
     }
+
+    passenger.addLuggage(mockCheckedLuggage);
   }
 }

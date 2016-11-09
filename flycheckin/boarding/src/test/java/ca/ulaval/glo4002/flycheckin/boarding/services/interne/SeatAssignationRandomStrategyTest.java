@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.SeatAssignationRandomStrategy;
 
 public class SeatAssignationRandomStrategyTest {
 
@@ -18,6 +17,7 @@ public class SeatAssignationRandomStrategyTest {
   private static final String SEAT_NUMBER_COLUMN = "K";
   private static final String SEAT_NUMBER = "13-K";
   private static final String SEAT_CLASS = "economic";
+  private static final String ANOTHER_SEAT_CLASS = "wrongSeatClass";
   private Seat seat;
   private List<Seat> availableSeats;
   private SeatAssignationRandomStrategy randomSeatAssignation;
@@ -34,7 +34,7 @@ public class SeatAssignationRandomStrategyTest {
   }
 
   @Test
-  public void givenListWithOneSeatWhenChosseSeatNumberThenReturnSeatNumber() {
+  public void givenListWithOnlyOneSeatWhenChooseSeatNumberWithSameSeatClassThenReturnSeatNumber() {
     seat = new Seat();
     seat.setSeatNumber(SEAT_NUMBER_ROW, SEAT_NUMBER_COLUMN);
     seat.setSeatClass(SEAT_CLASS);
@@ -43,5 +43,15 @@ public class SeatAssignationRandomStrategyTest {
     String seatNumber = randomSeatAssignation.chooseSeatNumber(availableSeats, SEAT_CLASS);
 
     assertEquals(SEAT_NUMBER, seatNumber);
+  }
+
+  @Test(expected = NoSeatAvailableException.class)
+  public void givenListWithOnlyOneSeatWhenChooseSeatNumberWithAnotherSeatClassThenReturnException() {
+    seat = new Seat();
+    seat.setSeatNumber(SEAT_NUMBER_ROW, SEAT_NUMBER_COLUMN);
+    seat.setSeatClass(SEAT_CLASS);
+    availableSeats.add(seat);
+
+    randomSeatAssignation.chooseSeatNumber(availableSeats, ANOTHER_SEAT_CLASS);
   }
 }

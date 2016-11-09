@@ -26,12 +26,12 @@ public class InMemoryPassengerTest {
   }
 
   @Test(expected = NotFoundPassengerException.class)
-  public void givenHashWhenMapIsAvoidThenThrowException() {
+  public void givenEmptyPersistenceWhenFindPassengerByHashThenThrowException() {
     inMemoryPassenger.getPassengerByHash(HASH);
   }
 
   @Test
-  public void givenHashWhenInsertPassengerThenCompareHashGotten() {
+  public void givenPassengerHashInPersistenceWhenGetPassengerByHashThenReturnIt() {
     inMemoryPassenger.savePassenger(mockPassenger);
 
     Passenger passenger = inMemoryPassenger.getPassengerByHash(HASH);

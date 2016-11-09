@@ -42,7 +42,7 @@ public class PlaneModelServiceTest {
   }
 
   @Test
-  public void givenPlaneModelWhenSeatsNotExistThenVerifyListNotEmpty() {
+  public void givenPlaneModelWhenGetPlaneSeatsThenReturnNotEmptySeatList() {
     mockSeatDto.row = ROW;
     mockSeatDto.seat = SEAT;
     mockSeatDto.legroom = LEGROOM;
