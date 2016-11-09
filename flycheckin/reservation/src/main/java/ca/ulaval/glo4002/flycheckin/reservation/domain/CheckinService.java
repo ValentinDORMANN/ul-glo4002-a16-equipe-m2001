@@ -11,11 +11,6 @@ public class CheckinService {
   private CheckinInMemory checkinInMemory;
   private ReservationInMemory reservationInMemory;
 
-  public CheckinService() {
-    this.checkinInMemory = new CheckinInMemory();
-    this.reservationInMemory = new ReservationInMemory();
-  }
-
   public CheckinService(CheckinInMemory checkinInMemory, ReservationInMemory reservationInMemory) {
     this.checkinInMemory = checkinInMemory;
     this.reservationInMemory = reservationInMemory;

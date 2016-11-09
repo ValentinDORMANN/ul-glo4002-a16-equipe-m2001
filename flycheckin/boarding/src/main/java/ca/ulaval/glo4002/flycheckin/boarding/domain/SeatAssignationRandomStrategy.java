@@ -14,7 +14,7 @@ public class SeatAssignationRandomStrategy implements SeatAssignationStrategy {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
     if (availableSeats.isEmpty())
       throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
-    int randomIndex = (int) Math.ceil(Math.random() * (availableSeats.size() - 1));
+    int randomIndex = (int) Math.floor(Math.random() * (availableSeats.size() - 1));
     return availableSeats.get(randomIndex).getSeatNumber();
   }
 

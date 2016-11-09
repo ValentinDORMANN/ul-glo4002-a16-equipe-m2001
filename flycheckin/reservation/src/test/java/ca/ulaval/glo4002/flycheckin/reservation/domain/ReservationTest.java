@@ -18,14 +18,13 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinExcept
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 
 public class ReservationTest {
+
   private static final int RESERVATION_NUMBER = 55555;
   private static final String PASSENGER_HASH = "HASH";
   private static final String FAKE_PASSENGER_HASH = "FAKE_HASH";
-
   private static final Calendar CALENDAR = Calendar.getInstance();
   private static final Date SELF_CHECKIN_START_TIME = initiateDateByHour(-48, false);
   private static final Date SELF_CHECKIN_END_TIME = initiateDateByHour(-6, true);
-
   private ReservationInMemory mockReservationInMemory;
   private ReservationDto mockReservationDto;
   private Passenger mockPassenger;
