@@ -9,9 +9,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.client.AmsMapClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRandomStrategy;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationStrategy;
 import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PlaneModelService;
 
 public class SeatAssignationService {

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.domain;
+package ca.ulaval.glo4002.flycheckin.boarding.services.interne;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
+import ca.ulaval.glo4002.flycheckin.boarding.services.interne.SeatAssignationRandomStrategy;
 
 public class SeatAssignationRandomStrategyTest {
 

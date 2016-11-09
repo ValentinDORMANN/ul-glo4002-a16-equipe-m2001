@@ -12,7 +12,6 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationStrategy;
 
 public class SeatAssignationServiceTest {
 

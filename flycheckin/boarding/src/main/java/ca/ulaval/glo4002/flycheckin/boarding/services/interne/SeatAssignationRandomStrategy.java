@@ -1,8 +1,9 @@
-package ca.ulaval.glo4002.flycheckin.boarding.domain;
+package ca.ulaval.glo4002.flycheckin.boarding.services.interne;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
 
 public class SeatAssignationRandomStrategy implements SeatAssignationStrategy {
