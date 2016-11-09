@@ -18,9 +18,9 @@ public class Passenger {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private String passengerHash;
-  @Column(name = "firstname")
+  @Column(name = "firstName")
   private String firstName;
-  @Column(name = "lastname")
+  @Column(name = "lastName")
   private String lastName;
   @Column(name = "age")
   private int age;
