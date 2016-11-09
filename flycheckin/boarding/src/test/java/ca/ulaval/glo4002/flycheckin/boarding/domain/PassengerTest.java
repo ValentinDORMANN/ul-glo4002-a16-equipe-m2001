@@ -9,7 +9,7 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
@@ -20,6 +20,7 @@ public class PassengerTest {
   private static final String SEAT_CLASS = "business";
   private static final String PASSENGER_HASH = "PassengerHash";
   private static final String TYPE_CHECKED = "checked";
+  private static final String TYPE_CARRY_ON = "carry-on";
   private static final int LIMIT_CHECKED_LUGGAGES = 3;
   private static final boolean IS_CHECKED = true;
 
@@ -27,6 +28,7 @@ public class PassengerTest {
   private PassengerDto mockPassengerDto;
   private ReservationDto mockReservationDto;
   private Luggage mockCheckedLuggage;
+  private Luggage mockCarryOnLuggage;
 
   @Before
   public void initiateTest() {
@@ -39,8 +41,10 @@ public class PassengerTest {
     PassengerDto[] passengers = { mockPassengerDto };
     mockReservationDto.passengers = passengers;
     passenger = new Passenger(mockReservationDto);
-    mockCheckedLuggage = mock(Luggage.class);
+    mockCheckedLuggage = mock(CheckedLuggage.class);
+    mockCarryOnLuggage = mock(CarryOnLuggage.class);
     willReturn(IS_CHECKED).given(mockCheckedLuggage).isType(TYPE_CHECKED);
+    willReturn(IS_CHECKED).given(mockCarryOnLuggage).isType(TYPE_CARRY_ON);
   }
 
   @Test
@@ -52,12 +56,25 @@ public class PassengerTest {
     assertEquals(LIMIT_CHECKED_LUGGAGES, passenger.getLuggages().size());
   }
 
-  @Test(expected = ExcededCheckedLuggageException.class)
+  @Test(expected = ExcededLuggageException.class)
   public void whenAddMoreThanThreeCheckedLuggagesThenThrowException() {
     for (int index = 0; index < LIMIT_CHECKED_LUGGAGES; index++) {
       passenger.addLuggage(mockCheckedLuggage);
     }
 
     passenger.addLuggage(mockCheckedLuggage);
+  }
+  
+  @Test
+  public void whenAddOneCarryOnLuggageThenVerifyPassengerHasOneLuggage() {
+    passenger.addLuggage(mockCarryOnLuggage);
+    
+    assertEquals(1, passenger.getLuggages().size());
+  }
+  
+  @Test(expected = ExcededLuggageException.class)
+  public void whenAddMoreThanOneCarryOnLuggageThenThenThrowException() {
+    passenger.addLuggage(mockCarryOnLuggage);
+    passenger.addLuggage(mockCarryOnLuggage);
   }
 }

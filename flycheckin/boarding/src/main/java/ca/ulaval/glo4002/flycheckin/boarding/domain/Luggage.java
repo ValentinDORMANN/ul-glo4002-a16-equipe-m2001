@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
 import java.util.UUID;
 
+import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public abstract class Luggage {
@@ -21,7 +22,7 @@ public abstract class Luggage {
     this.weightInKg = convertWeightToKgUnit(luggageDto.weight, luggageDto.weight_unit);
     this.luggageHash = UUID.randomUUID().toString();
     this.type = luggageDto.type;
-    price = 0;
+    this.price = 0;
   }
 
   private int convertDimensionToCmUnit(int dimension, String dimmensionUnit) {
@@ -36,8 +37,14 @@ public abstract class Luggage {
     return (int) Math.ceil(weight * WEIGHT_CONVERSION_RATE);
   }
 
+  public void checkLuggageAllowable() throws ExcededLuggageException {}
+  
   public boolean isType(String type) {
     return this.type.equals(type);
+  }
+  
+  public String getType() {
+    return type;
   }
 
   public int getDimensionInCm() {
@@ -59,4 +66,5 @@ public abstract class Luggage {
   public void setPrice(double price) {
     this.price = price;
   }
+
 }

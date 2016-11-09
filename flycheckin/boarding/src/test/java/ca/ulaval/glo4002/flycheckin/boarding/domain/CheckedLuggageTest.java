@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public class CheckedLuggageTest {
@@ -29,7 +29,7 @@ public class CheckedLuggageTest {
     CheckedLuggageDto.type = LUGGAGE_TYPE;
   }
 
-  @Test(expected = ExcededCheckedLuggageException.class)
+  @Test(expected = ExcededLuggageException.class)
   public void givenLuggageWeightInKgOverLimitWhenCheckLuggageAllowableThenThrowException() {
     CheckedLuggageDto.linear_dimension = ALLOWED_DIMENSION_CM;
     CheckedLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_CM;
@@ -40,7 +40,7 @@ public class CheckedLuggageTest {
     checkedLuggage.checkLuggageAllowable();
   }
 
-  @Test(expected = ExcededCheckedLuggageException.class)
+  @Test(expected = ExcededLuggageException.class)
   public void givenLuggageDimensionInCmOverLimitWhenCheckLuggageAllowableThenThrowException() {
     CheckedLuggageDto.linear_dimension = OVER_DIMENSION_CM;
     CheckedLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_CM;
@@ -51,7 +51,7 @@ public class CheckedLuggageTest {
     checkedLuggage.checkLuggageAllowable();
   }
 
-  @Test(expected = ExcededCheckedLuggageException.class)
+  @Test(expected = ExcededLuggageException.class)
   public void givenLuggageWeightInLbsOverLimitWhenCheckLuggageAllowableThenThrowException() {
     CheckedLuggageDto.linear_dimension = ALLOWED_DIMENSION_PO;
     CheckedLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_PO;
@@ -62,7 +62,7 @@ public class CheckedLuggageTest {
     checkedLuggage.checkLuggageAllowable();
   }
 
-  @Test(expected = ExcededCheckedLuggageException.class)
+  @Test(expected = ExcededLuggageException.class)
   public void givenLuggageDimensionInPoOverLimitWhenCheckLuggageAllowableThenThrowException() {
     CheckedLuggageDto.linear_dimension = OVER_DIMENSION_PO;
     CheckedLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_PO;

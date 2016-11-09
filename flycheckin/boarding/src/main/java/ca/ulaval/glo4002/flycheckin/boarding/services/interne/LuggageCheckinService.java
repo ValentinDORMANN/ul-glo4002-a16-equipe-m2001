@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.CheckedLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
@@ -47,7 +47,7 @@ public class LuggageCheckinService {
     return passenger;
   }
 
-  private Luggage createCheckedLuggage(LuggageDto luggageDto) throws ExcededCheckedLuggageException {
+  private Luggage createCheckedLuggage(LuggageDto luggageDto) throws ExcededLuggageException {
     CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto);
     checkedLuggage.checkLuggageAllowable();
     return checkedLuggage;
