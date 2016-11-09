@@ -17,7 +17,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
 
 public class PlaneModelServiceTest {
 
-  private static String seat = "A";
   private static final int ROW = 1;
   private static final int LEGROOM = 56;
   private static final String SEAT = "A";
@@ -59,7 +58,7 @@ public class PlaneModelServiceTest {
     willReturn(mockPlaneModelDto).given(mockPlaneModelHttpClient).getPlaneModelDtoAccordingPlaneModel(PLANE_MODEL);
 
     List<Seat> seats = planeModelService.getSeatsAccordingPlaneModel(PLANE_MODEL);
+
     assertFalse(seats.isEmpty());
   }
-
 }
