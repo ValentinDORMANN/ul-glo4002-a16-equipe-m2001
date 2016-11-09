@@ -10,6 +10,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PlaneModelService;
 
 public class SeatAssignationService {
@@ -32,7 +33,7 @@ public class SeatAssignationService {
     this.seatAssignationStrategy = seatAssignationStrategy;
   }
 
-  public SeatAssignation assignSeatToPassenger(Passenger passenger, String mode) {
+  public SeatAssignation assignSeatToPassenger(Passenger passenger, String mode) throws BoardingModuleException {
     setSeatAssignationStrategy(mode);
     List<Seat> availableSeats = getAvalaibleSeatsForFlight(passenger.getFlightNumber(), passenger.getFlightDate());
     String seatNumber = seatAssignationStrategy.chooseSeatNumber(availableSeats, passenger.getSeatClass());

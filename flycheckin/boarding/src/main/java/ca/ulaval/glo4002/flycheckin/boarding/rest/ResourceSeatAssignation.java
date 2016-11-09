@@ -16,7 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemorySeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
@@ -50,10 +50,10 @@ public class ResourceSeatAssignation {
       seatAssignationDto = transformSeatAssignationDto(seatAssignationDto, seatAssignation.getSeatNumber());
       URI url = createUrlforLocation(uriInfo, seatAssignation);
       return Response.status(Status.CREATED).location(url).entity(seatAssignationDto).build();
-    } catch (NoSeatAvailableException ex) {
-      return Response.status(Status.BAD_REQUEST).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
+    } catch (BoardingModuleException ex) {
+      return Response.status(Status.BAD_REQUEST).build();
     }
   }
 

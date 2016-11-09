@@ -10,6 +10,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 public class Passenger {
 
   private static final int ALONE_INDEX = 0;
+  private static final double BASE_PRICE = 0;
   private static final double SURPLUS_PRICE_LUGGAGE = 50;
   private static final String TYPE_CHECKED = "checked";
   private static final int CHECKED_LUGGAGES_LIMIT = 3;
@@ -19,7 +20,6 @@ public class Passenger {
   private String passengerHash;
   private String seatClass;
   private List<Luggage> luggages;
-  private double price;
 
   public Passenger() {
   }
@@ -30,7 +30,6 @@ public class Passenger {
     passengerHash = reservationDto.passengers[ALONE_INDEX].passenger_hash;
     seatClass = reservationDto.passengers[ALONE_INDEX].seat_class;
     luggages = new ArrayList<Luggage>();
-    price = 0;
   }
 
   public void addLuggage(Luggage luggage) throws ExcededCheckedLuggageException {
@@ -38,7 +37,6 @@ public class Passenger {
       throw new ExcededCheckedLuggageException(LUGGAGES_LIMIT_EXCEDED_ERROR);
     if (!isFisrtCheckedLuggage()) {
       luggage.setPrice(SURPLUS_PRICE_LUGGAGE);
-      price += SURPLUS_PRICE_LUGGAGE;
     }
     luggages.add(luggage);
   }
@@ -81,10 +79,10 @@ public class Passenger {
   }
 
   public double getTotalPrice() {
-    double totalPrice = price;
+    double totalPrice = BASE_PRICE;
     for (Luggage luggage : luggages)
       totalPrice += luggage.getPrice();
-    return price;
+    return totalPrice;
   }
 
 }
