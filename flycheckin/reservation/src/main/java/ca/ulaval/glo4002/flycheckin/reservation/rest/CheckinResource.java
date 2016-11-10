@@ -30,7 +30,7 @@ public class CheckinResource {
   }
 
   public CheckinResource(CheckinService checkinService) {
-    this.checkinService = checkinService;
+    CheckinResource.checkinService = checkinService;
   }
 
   @POST
