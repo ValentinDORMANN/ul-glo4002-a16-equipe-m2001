@@ -12,10 +12,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 public class ReservationTest {
 
@@ -48,16 +48,6 @@ public class ReservationTest {
     passengers.add(mockPassenger);
     reservation = new Reservation(mockReservationInMemory, mockReservationDto, passengers);
     willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
-  }
-
-  @Test
-  public void givenFakePassengerWhenVerifyIfPassengerIsInListPassengerInReservationThenReturnFalse() {
-    assertFalse(reservation.getPassengerHashListInReservation().contains(FAKE_PASSENGER_HASH));
-  }
-
-  @Test
-  public void givenValidPassengerWhenVerifyIfPassengerInReservationThenReturnTrue() {
-    assertTrue(reservation.getPassengerHashListInReservation().contains(PASSENGER_HASH));
   }
 
   @Test

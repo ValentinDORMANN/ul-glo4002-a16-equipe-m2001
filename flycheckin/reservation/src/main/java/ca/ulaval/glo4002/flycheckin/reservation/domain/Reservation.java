@@ -6,12 +6,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 public class Reservation {
 
@@ -23,11 +23,8 @@ public class Reservation {
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
   private static ReservationInMemory reservationInMemory = new ReservationInMemory();
   private int reservationNumber;
-  private Date reservationDate;
-  private String reservationConfirmation;
   private String flightNumber;
   private Date flightDate;
-  private String paymentLocation;
   private List<Passenger> passengers;
 
   public Reservation() {
@@ -36,11 +33,8 @@ public class Reservation {
   public Reservation(ReservationInMemory reservationInMemory, ReservationDto reservationDto,
       List<Passenger> passengers) {
     this.reservationNumber = reservationDto.reservation_number;
-    this.reservationDate = reservationDto.reservation_date;
-    this.reservationConfirmation = reservationDto.reservation_confirmation;
     this.flightNumber = reservationDto.flight_number;
     this.flightDate = reservationDto.flight_date;
-    this.paymentLocation = reservationDto.payment_location;
     this.passengers = passengers;
     this.reservationInMemory = reservationInMemory;
   }
@@ -48,11 +42,8 @@ public class Reservation {
   public Reservation(ReservationDto reservationDto) throws IllegalArgumentReservationException {
     this.passengers = new ArrayList<Passenger>();
     this.reservationNumber = reservationDto.reservation_number;
-    this.reservationDate = reservationDto.reservation_date;
-    this.reservationConfirmation = reservationDto.reservation_confirmation;
     this.flightNumber = reservationDto.flight_number;
     this.flightDate = reservationDto.flight_date;
-    this.paymentLocation = reservationDto.payment_location;
     for (int i = 0; i < reservationDto.passengers.size(); i++) {
       Passenger passenger = new Passenger(reservationDto.passengers.get(i));
       this.passengers.add(passenger);
@@ -72,22 +63,22 @@ public class Reservation {
     return reservationInMemory.getReservationByPassengerHash(passenger_hash);
   }
 
-  public List<String> getPassengerHashListInReservation() {
-    List<String> passengerHashs = new ArrayList<String>();
+  public boolean isThisHashInReservation(String passengerHash) {
     for (Passenger passenger : passengers) {
-      passengerHashs.add(passenger.getPassengerHash());
+      if (passenger.hasThisHash(passengerHash))
+        return true;
     }
-    return passengerHashs;
+    return false;
   }
 
-  public boolean isPassengerInfosValid(String hash) throws NotFoundPassengerException {
-    Passenger passenger = getPassengerByHash(hash);
+  public boolean isPassengerInfosValid(String passengerHash) throws NotFoundPassengerException {
+    Passenger passenger = getPassengerByHash(passengerHash);
     return passenger.isValid();
   }
 
-  public Passenger getPassengerByHash(String hash) {
+  public Passenger getPassengerByHash(String passengerHash) {
     for (Passenger passenger : passengers) {
-      if (passenger.getPassengerHash().equals(hash))
+      if (passenger.getPassengerHash().equals(passengerHash))
         return passenger;
     }
     throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);

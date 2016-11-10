@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.reservation.api.dto;
+package ca.ulaval.glo4002.flycheckin.reservation.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
