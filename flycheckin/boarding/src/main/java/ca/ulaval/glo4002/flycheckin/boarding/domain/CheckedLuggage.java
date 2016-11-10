@@ -10,6 +10,7 @@ public class CheckedLuggage extends Luggage {
   private static final int WEIGHT_LIMIT = 23;
   private static final int DIMENSION_LIMIT = 158;
   private static final String TYPE = "checked";
+  private static final int MAX_LUGGAGE_ALLOWED = 3;
   
   public CheckedLuggage(LuggageDto luggageDto) {
     super(luggageDto);
@@ -32,7 +33,12 @@ public class CheckedLuggage extends Luggage {
   }
   
   @Override
-  public String getType() {
+  public int getMaxLuggageAllowed(){
+    return MAX_LUGGAGE_ALLOWED;
+  }
+  
+  @Override
+  public String getType(){
     return TYPE;
   }
 }

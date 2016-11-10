@@ -10,6 +10,7 @@ public class CarryOnLuggage extends Luggage {
   private static final int WEIGHT_LIMIT = 10;
   private static final int DIMENSION_LIMIT = 118;
   private static final String TYPE = "carry-on";
+  private static final int MAX_LUGGAGE_ALLOWED = 1;
   
   public CarryOnLuggage(LuggageDto luggageDto) {
     super(luggageDto);
@@ -32,7 +33,12 @@ public class CarryOnLuggage extends Luggage {
   }
   
   @Override
-  public String getType() {
+  public int getMaxLuggageAllowed(){
+    return MAX_LUGGAGE_ALLOWED;
+  }
+  
+  @Override
+  public String getType(){
     return TYPE;
   }
 }

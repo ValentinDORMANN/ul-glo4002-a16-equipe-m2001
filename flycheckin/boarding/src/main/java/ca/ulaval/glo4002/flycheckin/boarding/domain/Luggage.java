@@ -43,9 +43,7 @@ public abstract class Luggage {
     return this.type.equals(type);
   }
   
-  public String getType() {
-    return type;
-  }
+  abstract public String getType();
 
   public int getDimensionInCm() {
     return dimensionInCm;
@@ -66,5 +64,7 @@ public abstract class Luggage {
   public void setPrice(double price) {
     this.price = price;
   }
+
+  abstract int getMaxLuggageAllowed();
 
 }

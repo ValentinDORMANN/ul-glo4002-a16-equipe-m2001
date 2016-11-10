@@ -37,23 +37,20 @@ public class Passenger {
   }
 
   public void addLuggage(Luggage luggage) throws ExcededLuggageException {
-    //luggage.checkLuggageAllowable();
-    String luggageType = TYPE_CHECKED;//luggage.getType();  // TODO Not TDtA
-    int maxLuggageAlowed = 0;
+    luggage.checkLuggageAllowable();
+    String luggageType = TYPE_CHECKED;//luggage.getType();  // TODO Not TDA
     switch (luggageType) {
       case TYPE_CHECKED:
-          maxLuggageAlowed = CHECKED_LUGGAGES_LIMIT;
         if (!isFirstCheckedLuggage())
             luggage.setPrice(SURPLUS_PRICE_LUGGAGE);
         break;
       case TYPE_CARRY_ON:
-          maxLuggageAlowed = CARRY_ON_LUGGAGES_LIMIT;
           luggage.setPrice(BASE_CARRY_ON_LUGGAGE);
         break;
       default:
         break;
     }
-    if (!IsNumberLuggageValidByType(luggageType, maxLuggageAlowed))
+    if (!IsNumberLuggageValidByType(luggageType, luggage.getMaxLuggageAllowed()))
       throw new ExcededLuggageException(LUGGAGES_LIMIT_EXCEDED_ERROR);
     luggages.add(luggage);
   }
