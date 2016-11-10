@@ -4,6 +4,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
 
 public class Seat {
 
+  private static final int BEFORE = -1;
+  private static final int AFTER = 1;
   private String seatClass;
   private String seatNumber;
   private int legroom;
