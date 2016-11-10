@@ -41,7 +41,7 @@ public class PlaneModelService {
   private Seat createSeat(SeatDto seatDto, ClassPassengerDto[] classes) throws Exception {
     for (ClassPassengerDto classPassengerDto : classes) {
       if (contains(classPassengerDto.rows, seatDto.row))
-        return new Seat(seatDto, classPassengerDto.name);
+        return constructSeatFromDto(seatDto, classPassengerDto.name);
     }
     throw new Exception();
   }
@@ -52,5 +52,11 @@ public class PlaneModelService {
         return true;
     }
     return false;
+  }
+
+  private Seat constructSeatFromDto(SeatDto seatDto, String seatClass) {
+    String seatNumber = Integer.toString(seatDto.row) + "-" + seatDto.seat.toUpperCase();
+    Seat seat = new Seat(seatClass, seatNumber, seatDto.legroom, seatDto.window, seatDto.clear_view, seatDto.price);
+    return seat;
   }
 }
