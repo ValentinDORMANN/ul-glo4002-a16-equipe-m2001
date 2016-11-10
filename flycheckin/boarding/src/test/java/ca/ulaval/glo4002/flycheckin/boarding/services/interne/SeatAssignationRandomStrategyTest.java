@@ -13,8 +13,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
 
 public class SeatAssignationRandomStrategyTest {
 
-  private static final int SEAT_NUMBER_ROW = 13;
-  private static final String SEAT_NUMBER_COLUMN = "K";
   private static final String SEAT_NUMBER = "13-K";
   private static final String SEAT_CLASS = "economic";
   private static final String ANOTHER_SEAT_CLASS = "wrongSeatClass";
@@ -36,7 +34,7 @@ public class SeatAssignationRandomStrategyTest {
   @Test
   public void givenListWithOnlyOneSeatWhenAssignSeatNumberWithSameSeatClassThenReturnSeatNumber() {
     seat = new Seat();
-    seat.setSeatNumber(SEAT_NUMBER_ROW, SEAT_NUMBER_COLUMN);
+    seat.setSeatNumber(SEAT_NUMBER);
     seat.setSeatClass(SEAT_CLASS);
     availableSeats.add(seat);
 
@@ -48,7 +46,7 @@ public class SeatAssignationRandomStrategyTest {
   @Test(expected = NoSeatAvailableException.class)
   public void givenListWithOnlyOneSeatWhenAssignSeatNumberWithAnotherSeatClassThenReturnException() {
     seat = new Seat();
-    seat.setSeatNumber(SEAT_NUMBER_ROW, SEAT_NUMBER_COLUMN);
+    seat.setSeatNumber(SEAT_NUMBER);
     seat.setSeatClass(SEAT_CLASS);
     availableSeats.add(seat);
 

@@ -88,13 +88,4 @@ public class SeatTest {
 
     assertFalse(hasClass);
   }
-
-  @Test
-  public void whenSetSeatClassWithRowAndColoumnThenVerifySeatHasGoodSeatNumber() {
-    String seatNumber = ROW + "-" + COLUMN.toUpperCase();
-
-    seat.setSeatNumber(ROW, COLUMN);
-
-    assertEquals(seatNumber, seat.getSeatNumber());
-  }
 }

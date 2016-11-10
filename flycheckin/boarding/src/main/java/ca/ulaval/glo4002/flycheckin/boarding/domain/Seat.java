@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
 public class Seat {
 
-  private static final int BEFORE = -1;
-  private static final int AFTER = 1;
   private String seatClass;
   private String seatNumber;
   private int legroom;
@@ -45,7 +43,11 @@ public class Seat {
   }
 
   public String getSeatNumber() {
-    return this.seatNumber;
+    return seatNumber;
+  }
+
+  public void setSeatNumber(String seatNumber) {
+    this.seatNumber = seatNumber;
   }
 
   public int getLegroom() {
