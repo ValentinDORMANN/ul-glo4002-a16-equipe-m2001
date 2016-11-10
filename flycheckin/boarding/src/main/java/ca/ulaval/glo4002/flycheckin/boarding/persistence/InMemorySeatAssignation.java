@@ -29,7 +29,7 @@ public class InMemorySeatAssignation implements SeatAssignationRepository {
   public String getPassengerHashSeatNumber(String passengerHash) {
     String seatNumber = STRING_EMPTY;
     for (SeatAssignation seatAssignation : seatAssignationMap.values()) {
-      if (seatAssignation.getPassengerHash().equals(passengerHash))
+      if (seatAssignation.hasThisHash(passengerHash))
         seatNumber = seatAssignation.getSeatNumber();
     }
     return seatNumber;

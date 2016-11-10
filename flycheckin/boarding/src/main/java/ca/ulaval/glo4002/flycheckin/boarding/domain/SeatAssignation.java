@@ -15,6 +15,10 @@ public class SeatAssignation {
     this.assignationNumber = assignationNumber;
   }
 
+  public boolean hasThisHash(String passengerHash) {
+    return this.passengerHash.equals(passengerHash);
+  }
+
   public int getAssignationNumber() {
     return this.assignationNumber;
   }
