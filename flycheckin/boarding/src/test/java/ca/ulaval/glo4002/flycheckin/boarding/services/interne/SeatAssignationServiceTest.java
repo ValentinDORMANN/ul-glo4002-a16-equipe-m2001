@@ -36,7 +36,7 @@ public class SeatAssignationServiceTest {
     when(mockPassenger.getFlightNumber()).thenReturn(FLIGHT_NUMBER);
     when(mockPassenger.getFlightDate()).thenReturn(FLIGHT_DATE);
     when(mockPassenger.getPassengerHash()).thenReturn(PASSENGER_HASH);
-    when(mockSeatAssignationStrategy.chooseSeatNumber(any(), any())).thenReturn(SEAT_NUMBER);
+    when(mockSeatAssignationStrategy.assignSeatNumber(any(), any())).thenReturn(SEAT_NUMBER);
     seatAssignationService = new SeatAssignationService(mockSeatAssignation, mockSeatAssignationRepository,
         mockSeatAssignationStrategy);
   }
@@ -45,7 +45,7 @@ public class SeatAssignationServiceTest {
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyChooseSeatNumber() {
     seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
 
-    verify(mockSeatAssignationStrategy, times(1)).chooseSeatNumber(any(), any());
+    verify(mockSeatAssignationStrategy, times(1)).assignSeatNumber(any(), any());
   }
 
   @Test

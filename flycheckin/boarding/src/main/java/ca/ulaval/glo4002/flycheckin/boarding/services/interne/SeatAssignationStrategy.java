@@ -6,5 +6,5 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
 
 public interface SeatAssignationStrategy {
 
-  public String chooseSeatNumber(List<Seat> availableSeats, String seatClass);
+  public String assignSeatNumber(List<Seat> availableSeats, String seatClass);
 }

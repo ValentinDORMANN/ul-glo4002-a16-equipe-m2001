@@ -33,6 +33,18 @@ public class Seat {
     this.price = price;
   }
 
+  public boolean isCheaperThan(Seat otherSeat) {
+    return this.price <= otherSeat.price;
+  }
+
+  public boolean isSpaciousThan(Seat otherSeat) {
+    return this.legroom >= otherSeat.legroom;
+  }
+
+  public boolean hasClass(String seatClass) {
+    return this.seatClass.equals(seatClass);
+  }
+
   public String getSeatClass() {
     return seatClass;
   }
@@ -53,6 +65,10 @@ public class Seat {
     return legroom;
   }
 
+  public void setLegroom(int legroom) {
+    this.legroom = legroom;
+  }
+
   public boolean isNearWindow() {
     return isNearWindow;
   }
@@ -63,5 +79,9 @@ public class Seat {
 
   public double getPrice() {
     return price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
   }
 }

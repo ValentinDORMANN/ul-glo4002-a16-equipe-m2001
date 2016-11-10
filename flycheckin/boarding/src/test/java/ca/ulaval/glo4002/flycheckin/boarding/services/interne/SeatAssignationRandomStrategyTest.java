@@ -29,29 +29,29 @@ public class SeatAssignationRandomStrategyTest {
   }
 
   @Test(expected = NoSeatAvailableException.class)
-  public void givenEmptyAvailableSeatListWhenChooseSeatNumberThenReturnException() {
-    randomSeatAssignation.chooseSeatNumber(availableSeats, SEAT_CLASS);
+  public void givenEmptyAvailableSeatListWhenAssignSeatNumberThenReturnException() {
+    randomSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS);
   }
 
   @Test
-  public void givenListWithOnlyOneSeatWhenChooseSeatNumberWithSameSeatClassThenReturnSeatNumber() {
+  public void givenListWithOnlyOneSeatWhenAssignSeatNumberWithSameSeatClassThenReturnSeatNumber() {
     seat = new Seat();
     seat.setSeatNumber(SEAT_NUMBER_ROW, SEAT_NUMBER_COLUMN);
     seat.setSeatClass(SEAT_CLASS);
     availableSeats.add(seat);
 
-    String seatNumber = randomSeatAssignation.chooseSeatNumber(availableSeats, SEAT_CLASS);
+    String seatNumber = randomSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS);
 
     assertEquals(SEAT_NUMBER, seatNumber);
   }
 
   @Test(expected = NoSeatAvailableException.class)
-  public void givenListWithOnlyOneSeatWhenChooseSeatNumberWithAnotherSeatClassThenReturnException() {
+  public void givenListWithOnlyOneSeatWhenAssignSeatNumberWithAnotherSeatClassThenReturnException() {
     seat = new Seat();
     seat.setSeatNumber(SEAT_NUMBER_ROW, SEAT_NUMBER_COLUMN);
     seat.setSeatClass(SEAT_CLASS);
     availableSeats.add(seat);
 
-    randomSeatAssignation.chooseSeatNumber(availableSeats, ANOTHER_SEAT_CLASS);
+    randomSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS);
   }
 }
