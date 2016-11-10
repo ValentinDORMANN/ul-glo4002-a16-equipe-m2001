@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.reservation.api.dto;
+package ca.ulaval.glo4002.flycheckin.reservation.rest.dto;
 
 public class CheckinDto {
 

@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
 import java.util.UUID;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.dto.PassengerDto;
+import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.PassengerDto;
 
 public class Passenger {
 
@@ -26,6 +26,10 @@ public class Passenger {
 
   public boolean isValid() {
     return !(firstName.trim().equals(EMPTY) || lastName.trim().equals(EMPTY) || passportNumber.trim().equals(EMPTY));
+  }
+
+  public boolean hasThisHash(String passengerHash) {
+    return this.passengerHash.equals(passengerHash);
   }
 
   public boolean isChild() {

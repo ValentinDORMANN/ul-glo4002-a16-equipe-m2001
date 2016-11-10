@@ -29,7 +29,7 @@ public class ReservationInMemory {
 
   public Reservation getReservationByPassengerHash(String hash) {
     for (Reservation reservation : reservationMap.values()) {
-      if (reservation.getPassengerHashListInReservation().contains(hash))
+      if (reservation.isThisHashInReservation(hash))
         return reservation;
     }
     throw new NotFoundPassengerException(MESSAGE_ERROR_RESERVATION2);
