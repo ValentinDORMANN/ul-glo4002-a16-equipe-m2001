@@ -20,6 +20,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 public class ReservationTest {
 
   private static final int RESERVATION_NUMBER = 55555;
+  private static final String SELF = "SELF";
   private static final String PASSENGER_HASH = "HASH";
   private static final String FAKE_PASSENGER_HASH = "FAKE_HASH";
   private static final Calendar CALENDAR = Calendar.getInstance();
@@ -71,13 +72,13 @@ public class ReservationTest {
   public void whenSelfCheckinBeforeStartTimeThenThrowException() {
     reservation.setFlightDate(SELF_CHECKIN_START_TIME);
 
-    reservation.validateCheckinPeriod("SELF");
+    reservation.validateCheckinPeriod(SELF);
   }
 
   @Test(expected = NotTimeToCheckinException.class)
   public void whenSelfCheckinEndTimeThenThrowException() {
     reservation.setFlightDate(SELF_CHECKIN_END_TIME);
 
-    reservation.validateCheckinPeriod("SELF");
+    reservation.validateCheckinPeriod(SELF);
   }
 }
