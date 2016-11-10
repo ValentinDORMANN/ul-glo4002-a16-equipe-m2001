@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
-
 public class Seat {
 
   private static final int BEFORE = -1;
@@ -16,19 +14,10 @@ public class Seat {
   public Seat() {
   }
 
-  public Seat(SeatDto seatDto, String seatClass) {
-    this.seatClass = seatClass;
-    setSeatNumber(seatDto.row, seatDto.seat);
-    this.legroom = seatDto.legroom;
-    this.isNearWindow = seatDto.window;
-    this.isClearView = seatDto.clear_view;
-    this.price = seatDto.price;
-  }
-
-  public Seat(String seatClass, int row, String column, int legroom, boolean isNearWindow, boolean isClearView,
+  public Seat(String seatClass, String seatNumber, int legroom, boolean isNearWindow, boolean isClearView,
       double price) {
     this.seatClass = seatClass;
-    setSeatNumber(row, column);
+    this.seatNumber = seatNumber;
     this.legroom = legroom;
     this.isNearWindow = isNearWindow;
     this.isClearView = isClearView;
@@ -53,10 +42,6 @@ public class Seat {
 
   public void setSeatClass(String seatClass) {
     this.seatClass = seatClass;
-  }
-
-  public void setSeatNumber(int row, String column) {
-    this.seatNumber = Integer.toString(row) + "-" + column.toUpperCase();
   }
 
   public String getSeatNumber() {
