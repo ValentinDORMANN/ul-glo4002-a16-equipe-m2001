@@ -36,7 +36,7 @@ public class Reservation {
     this.flightNumber = reservationDto.flight_number;
     this.flightDate = reservationDto.flight_date;
     this.passengers = passengers;
-    this.reservationInMemory = reservationInMemory;
+    Reservation.reservationInMemory = reservationInMemory;
   }
 
   public Reservation(ReservationDto reservationDto) throws IllegalArgumentReservationException {
