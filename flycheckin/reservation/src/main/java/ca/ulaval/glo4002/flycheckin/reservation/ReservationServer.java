@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.flycheckin.reservation;
 
 import java.util.EnumSet;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.DispatcherType;
 
 import org.eclipse.jetty.server.Server;
@@ -11,6 +13,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import ca.ulaval.glo4002.flycheckin.reservation.api.filters.EntityManagerContextFilter;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.EntityManagerFactoryProvider;
 
 public class ReservationServer implements Runnable {
 
@@ -19,7 +22,12 @@ public class ReservationServer implements Runnable {
   }
 
   @Override
-  public void run() {
+	public void run() {
+		entityManagerCreater();
+		startServer();
+	}
+  
+  private void startServer() {
     int httpPort = Integer.valueOf(System.getProperty("reservation.port"));
 
     Server server = new Server(httpPort);
@@ -35,7 +43,11 @@ public class ReservationServer implements Runnable {
       server.destroy();
     }
   }
-
+  
+	private void entityManagerCreater() {
+		EntityManagerFactory entityManagerFactory = EntityManagerFactoryProvider.getFactory();
+	}
+	
   private void configurerJersey(ServletContextHandler servletContextHandler) {
     ServletContainer container = new ServletContainer(
         new ResourceConfig().packages("ca.ulaval.glo4002.flycheckin.reservation"));
