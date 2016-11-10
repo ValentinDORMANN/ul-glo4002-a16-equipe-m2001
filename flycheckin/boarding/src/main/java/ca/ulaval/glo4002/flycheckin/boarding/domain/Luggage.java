@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
 import java.util.UUID;
 
+import ca.ulaval.glo4002.flycheckin.boarding.exception.InvalidUnitException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public abstract class Luggage {
@@ -10,6 +11,8 @@ public abstract class Luggage {
   private static final double WEIGHT_CONVERSION_RATE = (double) 23 / 50;
   private static final String CM = "cm";
   private static final String KG = "kg";
+  private static final String PO = "po";
+  private static final String LBS = "lbs";
   private int dimensionInCm;
   private int weightInKg;
   private String luggageHash;
@@ -24,16 +27,28 @@ public abstract class Luggage {
     price = 0;
   }
 
-  private int convertDimensionToCmUnit(int dimension, String dimmensionUnit) {
+  private int convertDimensionToCmUnit(int dimension, String dimmensionUnit) throws InvalidUnitException {
+    isValidUnitDimension(dimmensionUnit);
     if (dimmensionUnit.equals(CM))
       return dimension;
     return (int) Math.ceil(dimension * DIMENSION_CONVERSION_RATE);
   }
 
-  private int convertWeightToKgUnit(int weight, String weightUnit) {
+  private void isValidUnitDimension(String dimmensionUnit) {
+    if (!(dimmensionUnit.toLowerCase().equals(CM) || dimmensionUnit.toLowerCase().equals(PO)))
+      throw new InvalidUnitException();
+  }
+
+  private int convertWeightToKgUnit(int weight, String weightUnit) throws InvalidUnitException {
+    isValidUnitWeight(weightUnit);
     if (weightUnit.equals(KG))
       return weight;
     return (int) Math.ceil(weight * WEIGHT_CONVERSION_RATE);
+  }
+
+  private void isValidUnitWeight(String dimmensionUnit) {
+    if (!(dimmensionUnit.toLowerCase().equals(KG) || dimmensionUnit.toLowerCase().equals(LBS)))
+      throw new InvalidUnitException();
   }
 
   public boolean isType(String type) {
