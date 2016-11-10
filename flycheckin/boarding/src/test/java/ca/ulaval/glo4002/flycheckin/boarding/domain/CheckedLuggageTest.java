@@ -20,66 +20,43 @@ public class CheckedLuggageTest {
   private static final String WEIGHT_UNIT_IN_LBS = "lbs";
   private static final String DIMENSION_UNIT_IN_PO = "po";
   private static final String LUGGAGE_TYPE = "checked";
-  private LuggageDto CheckedLuggageDto;
   private CheckedLuggage checkedLuggage;
-
-  @Before
-  public void initiateTest() {
-    CheckedLuggageDto = new LuggageDto();
-    CheckedLuggageDto.type = LUGGAGE_TYPE;
-  }
 
   @Test(expected = ExcededCheckedLuggageException.class)
   public void givenLuggageWeightInKgOverLimitWhenCheckLuggageAllowableThenThrowException() {
-    CheckedLuggageDto.linear_dimension = ALLOWED_DIMENSION_CM;
-    CheckedLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_CM;
-    CheckedLuggageDto.weight = OVER_WEIGHT_KG;
-    CheckedLuggageDto.weight_unit = WEIGHT_UNIT_IN_KG;
-    checkedLuggage = new CheckedLuggage(CheckedLuggageDto);
+    checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, OVER_WEIGHT_KG, WEIGHT_UNIT_IN_KG);
 
     checkedLuggage.checkLuggageAllowable();
   }
 
   @Test(expected = ExcededCheckedLuggageException.class)
   public void givenLuggageDimensionInCmOverLimitWhenCheckLuggageAllowableThenThrowException() {
-    CheckedLuggageDto.linear_dimension = OVER_DIMENSION_CM;
-    CheckedLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_CM;
-    CheckedLuggageDto.weight = ALLOWED_WEIGHT_KG;
-    CheckedLuggageDto.weight_unit = WEIGHT_UNIT_IN_KG;
-    checkedLuggage = new CheckedLuggage(CheckedLuggageDto);
+    checkedLuggage = new CheckedLuggage(OVER_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG,
+    WEIGHT_UNIT_IN_KG);
 
     checkedLuggage.checkLuggageAllowable();
   }
 
   @Test(expected = ExcededCheckedLuggageException.class)
   public void givenLuggageWeightInLbsOverLimitWhenCheckLuggageAllowableThenThrowException() {
-    CheckedLuggageDto.linear_dimension = ALLOWED_DIMENSION_PO;
-    CheckedLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_PO;
-    CheckedLuggageDto.weight = OVER_WEIGHT_LBS;
-    CheckedLuggageDto.weight_unit = WEIGHT_UNIT_IN_LBS;
-    checkedLuggage = new CheckedLuggage(CheckedLuggageDto);
+    checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_PO, DIMENSION_UNIT_IN_PO, OVER_WEIGHT_LBS,
+                                        WEIGHT_UNIT_IN_LBS);
 
     checkedLuggage.checkLuggageAllowable();
   }
 
   @Test(expected = ExcededCheckedLuggageException.class)
   public void givenLuggageDimensionInPoOverLimitWhenCheckLuggageAllowableThenThrowException() {
-    CheckedLuggageDto.linear_dimension = OVER_DIMENSION_PO;
-    CheckedLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_PO;
-    CheckedLuggageDto.weight = ALLOWED_WEIGHT_LBS;
-    CheckedLuggageDto.weight_unit = WEIGHT_UNIT_IN_LBS;
-    checkedLuggage = new CheckedLuggage(CheckedLuggageDto);
+    checkedLuggage = new CheckedLuggage(OVER_DIMENSION_PO, DIMENSION_UNIT_IN_PO, ALLOWED_WEIGHT_LBS,
+    		                            WEIGHT_UNIT_IN_LBS);
 
     checkedLuggage.checkLuggageAllowable();
   }
 
   @Test
   public void givenLuggageAllowableWhenCheckLuggageAllowableThenDoNothing() {
-    CheckedLuggageDto.linear_dimension = ALLOWED_DIMENSION_CM;
-    CheckedLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_CM;
-    CheckedLuggageDto.weight = ALLOWED_WEIGHT_KG;
-    CheckedLuggageDto.weight_unit = WEIGHT_UNIT_IN_KG;
-    checkedLuggage = new CheckedLuggage(CheckedLuggageDto);
+    checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG, 
+    		                            WEIGHT_UNIT_IN_KG);
 
     checkedLuggage.checkLuggageAllowable();
   }

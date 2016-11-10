@@ -48,7 +48,8 @@ public class LuggageCheckinService {
   }
 
   private Luggage createCheckedLuggage(LuggageDto luggageDto) throws ExcededCheckedLuggageException {
-    CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto);
+    CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto.linear_dimension, luggageDto.linear_dimension_unit, 
+    		                                           luggageDto.weight, luggageDto.weight_unit);
     checkedLuggage.checkLuggageAllowable();
     return checkedLuggage;
   }
