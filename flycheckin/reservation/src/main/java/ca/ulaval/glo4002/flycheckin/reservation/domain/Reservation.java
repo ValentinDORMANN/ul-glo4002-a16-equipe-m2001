@@ -27,7 +27,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation
 public class Reservation {
 
   private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
-  private static final String MSG_INVALID_CHECKIN_DATE = "Error: immpossible to checkin at this moment !";
+  private static final String MSG_INVALID_CHECKIN_DATE = "Error: impossible to checkin at this moment !";
   private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
   private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
