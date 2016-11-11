@@ -33,7 +33,7 @@ public class PassengerService {
     }
   }
 
-  public Passenger getPassengerByHashInReservation(String passengerHash) throws BoardingModuleException {
+  private Passenger getPassengerByHashInReservation(String passengerHash) throws BoardingModuleException {
     ReservationDto reservationDto = reservationHttpClient.getReservationDtoFromReservation(passengerHash);
     return createPassengerFromDto(reservationDto);
   }

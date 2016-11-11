@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
@@ -42,7 +42,7 @@ public class CheckinResourceTest {
 
   @Test
   public void givenIncompletePassengerWhenCheckinThenReturnStatusBadRequest() {
-    willThrow(FlyCheckinApplicationException.class).given(mockCheckinService).saveCheckin(mockCheckinDto);
+    willThrow(ReservationModuleException.class).given(mockCheckinService).saveCheckin(mockCheckinDto);
 
     Response response = checkinResource.createCheckin(mockUriInfo, mockCheckinDto);
 

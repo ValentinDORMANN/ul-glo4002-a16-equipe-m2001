@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
@@ -64,7 +64,7 @@ public class ReservationResource {
       Reservation reservation = new Reservation(reservationDto);
       URI url = createUrlforGetReservation(uriInfo, reservation);
       return Response.status(Status.CREATED).location(url).build();
-    } catch (FlyCheckinApplicationException | URISyntaxException ex) {
+    } catch (ReservationModuleException | URISyntaxException ex) {
       return Response.status(Status.BAD_REQUEST).build();
     }
   }

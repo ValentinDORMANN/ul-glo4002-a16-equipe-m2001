@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
-import org.junit.Before;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public class CheckedLuggageTest {
   private static final int OVER_WEIGHT_KG = 24;
@@ -20,6 +20,7 @@ public class CheckedLuggageTest {
   private static final String WEIGHT_UNIT_IN_LBS = "lbs";
   private static final String DIMENSION_UNIT_IN_PO = "po";
   private static final String LUGGAGE_TYPE = "checked";
+  private static final String OTHER_LUGGAGE_TYPE = "other";
   private CheckedLuggage checkedLuggage;
 
   @Test(expected = ExcededCheckedLuggageException.class)
@@ -31,8 +32,7 @@ public class CheckedLuggageTest {
 
   @Test(expected = ExcededCheckedLuggageException.class)
   public void givenLuggageDimensionInCmOverLimitWhenCheckLuggageAllowableThenThrowException() {
-    checkedLuggage = new CheckedLuggage(OVER_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG,
-    WEIGHT_UNIT_IN_KG);
+    checkedLuggage = new CheckedLuggage(OVER_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG, WEIGHT_UNIT_IN_KG);
 
     checkedLuggage.checkLuggageAllowable();
   }
@@ -40,7 +40,7 @@ public class CheckedLuggageTest {
   @Test(expected = ExcededCheckedLuggageException.class)
   public void givenLuggageWeightInLbsOverLimitWhenCheckLuggageAllowableThenThrowException() {
     checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_PO, DIMENSION_UNIT_IN_PO, OVER_WEIGHT_LBS,
-                                        WEIGHT_UNIT_IN_LBS);
+        WEIGHT_UNIT_IN_LBS);
 
     checkedLuggage.checkLuggageAllowable();
   }
@@ -48,16 +48,32 @@ public class CheckedLuggageTest {
   @Test(expected = ExcededCheckedLuggageException.class)
   public void givenLuggageDimensionInPoOverLimitWhenCheckLuggageAllowableThenThrowException() {
     checkedLuggage = new CheckedLuggage(OVER_DIMENSION_PO, DIMENSION_UNIT_IN_PO, ALLOWED_WEIGHT_LBS,
-    		                            WEIGHT_UNIT_IN_LBS);
+        WEIGHT_UNIT_IN_LBS);
 
     checkedLuggage.checkLuggageAllowable();
   }
 
   @Test
   public void givenLuggageAllowableWhenCheckLuggageAllowableThenDoNothing() {
-    checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG, 
-    		                            WEIGHT_UNIT_IN_KG);
+    checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG,
+        WEIGHT_UNIT_IN_KG);
 
     checkedLuggage.checkLuggageAllowable();
+  }
+
+  @Test
+  public void givenCheckedLuggageWhenCompareIsTypeWithCheckedLuggageThenReturnTrue() {
+    checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG,
+        WEIGHT_UNIT_IN_KG);
+
+    assertTrue(checkedLuggage.isType(LUGGAGE_TYPE));
+  }
+
+  @Test
+  public void givenCheckedLuggageWhenCompareIsTypeWithOtherLuggageThenReturnFalse() {
+    checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG,
+        WEIGHT_UNIT_IN_KG);
+
+    assertFalse(checkedLuggage.isType(OTHER_LUGGAGE_TYPE));
   }
 }
