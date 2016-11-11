@@ -12,6 +12,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
+import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.api.filters.EntityManagerContextFilter;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.EntityManagerFactoryProvider;
 

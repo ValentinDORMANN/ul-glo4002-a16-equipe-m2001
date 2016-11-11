@@ -6,6 +6,8 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.EntityManager;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,12 +20,16 @@ public class HibernateReservationTest {
   private static final int WRONG_RESERVATION_NUMBER = 44444;
   private HibernateReservation hibernateReservation;
   private Reservation mockReservation;
+  private EntityManager entityManager;
+  private EntityManagerProvider entityManagerProvider;
 
   @Before
   public void initiateTest() {
     mockReservation = mock(Reservation.class);
     willReturn(RESERVATION_NUMBER).given(mockReservation).getReservationNumber();
     hibernateReservation = new HibernateReservation();
+    entityManagerProvider.setEntityManager(entityManager);
+    
   }
 
   /*@Test(expected = NotFoundReservationException.class)

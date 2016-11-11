@@ -5,6 +5,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.HibernateException;
+
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
@@ -22,24 +24,25 @@ public class HibernateReservation {
   }
 
   public void insertNewReservation(Reservation newReservation) throws IllegalArgumentReservationException {
-    try {
-      EntityTransaction transaction = entityManager.getTransaction();
-      transaction.begin();
-      entityManager.persist(newReservation);
-      entityManager.getTransaction().commit();
-      transaction.commit();
-    } catch (EntityExistsException ex) {
-      throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
-    }
-  }
+    int reservationNumber = newReservation.getReservationNumber();
+  	EntityTransaction transaction = entityManager.getTransaction();
+    transaction.begin();  
+    if(entityManager.contains(newReservation)) {
+    	throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);}
+      else {
+      	entityManager.persist(newReservation);
+      transaction.commit();}
+      	  
+  	  }
 
   public Reservation findReservationByNumber(int reservationNumber) {
     Reservation reservationFound;
-    try {
-      reservationFound = entityManager.find(Reservation.class, reservationNumber);
-    } catch (NullPointerException ex) {
+    	 String hql = "select r from Reservation r where r.reservationNumber = :reservationNumber";
+       TypedQuery<Reservation> query = entityManager.createQuery(hql, Reservation.class);
+       query.setParameter("reservationNumber", reservationNumber);
+       reservationFound = query.getSingleResult();
+    if (reservationFound == null)
       throw new NotFoundReservationException(UNFOUND_RESERVATION_ERROR);
-    }
     return reservationFound;
   }
 

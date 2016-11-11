@@ -33,6 +33,7 @@ public class Reservation {
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
 
   @Id
+  @Column(name = "ID", unique = true, nullable = false)
 /*  @GeneratedValue(strategy = GenerationType.AUTO)*/
   private int reservationNumber;
   @Column(name = "reservationDate")
