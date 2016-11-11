@@ -24,7 +24,7 @@ public class InMemorySeatAssignationTest {
   @Before
   public void initiateTest() {
     mockSeatAssignation = mock(SeatAssignation.class);
-    when(mockSeatAssignation.hasThisHash(PASSENGER_HASH)).thenReturn(IS_SAME);
+    when(mockSeatAssignation.isAssociateToThisHash(PASSENGER_HASH)).thenReturn(IS_SAME);
     when(mockSeatAssignation.getPassengerHash()).thenReturn(PASSENGER_HASH);
     when(mockSeatAssignation.getSeatNumber()).thenReturn(SEAT_NUMBER);
     when(mockSeatAssignation.getAssignationNumber()).thenReturn(ASSIGNATION_NUMBER);

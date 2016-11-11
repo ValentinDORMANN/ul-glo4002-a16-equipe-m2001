@@ -5,11 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class Passenger {
 
-  private static final int SINGLE_INDEX = 0;
   private static final double BASE_PRICE = 0;
   private static final double SURPLUS_PRICE_LUGGAGE = 50;
   private static final String TYPE_CHECKED = "checked";
@@ -24,11 +22,11 @@ public class Passenger {
   public Passenger() {
   }
 
-  public Passenger(ReservationDto reservationDto) {
-    flightNumber = reservationDto.flight_number;
-    flightDate = reservationDto.flight_date;
-    passengerHash = reservationDto.passengers[SINGLE_INDEX].passenger_hash;
-    seatClass = reservationDto.passengers[SINGLE_INDEX].seat_class;
+  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass) {
+    this.flightNumber = flightNumber;
+    this.flightDate = flightDate;
+    this.passengerHash = passengerHash;
+    this.seatClass = seatClass;
     luggages = new ArrayList<Luggage>();
   }
 

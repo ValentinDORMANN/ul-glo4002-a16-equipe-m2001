@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.PlaneModelHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ClassPassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PlaneModelDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
@@ -32,18 +33,18 @@ public class PlaneModelService {
     for (SeatDto seatDto : planeModelDto.seats) {
       try {
         seats.add(createSeat(seatDto, planeModelDto.classes));
-      } catch (Exception e) {
+      } catch (BoardingModuleException e) {
       }
     }
     return seats;
   }
 
-  private Seat createSeat(SeatDto seatDto, ClassPassengerDto[] classes) throws Exception {
+  private Seat createSeat(SeatDto seatDto, ClassPassengerDto[] classes) throws BoardingModuleException {
     for (ClassPassengerDto classPassengerDto : classes) {
       if (contains(classPassengerDto.rows, seatDto.row))
         return constructSeatFromDto(seatDto, classPassengerDto.name);
     }
-    throw new Exception();
+    throw new BoardingModuleException();
   }
 
   private boolean contains(final int[] array, final int key) {

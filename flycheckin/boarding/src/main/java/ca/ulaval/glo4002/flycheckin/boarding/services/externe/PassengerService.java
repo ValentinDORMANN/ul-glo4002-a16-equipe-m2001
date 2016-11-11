@@ -9,6 +9,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class PassengerService {
 
+  private static final int SINGLE_INDEX = 0;
   private ReservationHttpClient reservationHttpClient;
   private InMemoryPassenger inMemoryPassenger;
 
@@ -22,12 +23,23 @@ public class PassengerService {
     this.inMemoryPassenger = inMemoryPassenger;
   }
 
-  public Passenger getPassenger(String passengerHash) throws NotFoundPassengerException {
-    return inMemoryPassenger.getPassengerByHash(passengerHash);
+  public Passenger getPassengerByHash(String passengerHash) throws NotFoundPassengerException {
+    try {
+      return inMemoryPassenger.getPassengerByHash(passengerHash);
+    } catch (NotFoundPassengerException ex) {
+      Passenger passenger = getPassengerByHashInReservation(passengerHash);
+      inMemoryPassenger.savePassenger(passenger);
+      return passenger;
+    }
   }
 
   public Passenger getPassengerByHashInReservation(String passengerHash) throws BoardingModuleException {
     ReservationDto reservationDto = reservationHttpClient.getReservationDtoFromReservation(passengerHash);
-    return new Passenger(reservationDto);
+    return createPassengerFromDto(reservationDto);
+  }
+
+  private Passenger createPassengerFromDto(ReservationDto reservationDto) {
+    return new Passenger(reservationDto.flight_number, reservationDto.flight_date,
+        reservationDto.passengers[SINGLE_INDEX].passenger_hash, reservationDto.passengers[SINGLE_INDEX].seat_class);
   }
 }

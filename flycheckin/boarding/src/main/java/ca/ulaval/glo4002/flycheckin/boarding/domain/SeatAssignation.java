@@ -15,7 +15,7 @@ public class SeatAssignation {
     this.assignationNumber = assignationNumber;
   }
 
-  public boolean hasThisHash(String passengerHash) {
+  public boolean isAssociateToThisHash(String passengerHash) {
     return this.passengerHash.equals(passengerHash);
   }
 

@@ -42,7 +42,7 @@ public class LuggageCheckinResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getLuggage(@Context UriInfo uriInfo, @PathParam("passenger_hash") String passengerHash) {
     try {
-      Passenger passenger = passengerService.getPassenger(passengerHash);
+      Passenger passenger = passengerService.getPassengerByHash(passengerHash);
       LuggageInfoDto luggageInfoDto = new LuggageInfoDto(passenger);
       return Response.status(Status.OK).entity(luggageInfoDto).build();
     } catch (NotFoundPassengerException ex) {

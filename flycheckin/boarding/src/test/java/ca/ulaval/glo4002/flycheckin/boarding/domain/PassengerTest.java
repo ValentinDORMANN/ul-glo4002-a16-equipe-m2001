@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class PassengerTest {
 
@@ -25,7 +24,6 @@ public class PassengerTest {
 
   private Passenger passenger;
   private PassengerDto mockPassengerDto;
-  private ReservationDto mockReservationDto;
   private Luggage mockCheckedLuggage;
 
   @Before
@@ -33,12 +31,7 @@ public class PassengerTest {
     mockPassengerDto = mock(PassengerDto.class);
     mockPassengerDto.seat_class = SEAT_CLASS;
     mockPassengerDto.passenger_hash = PASSENGER_HASH;
-    mockReservationDto = mock(ReservationDto.class);
-    mockReservationDto.flight_number = FLIGHT_NUMBER;
-    mockReservationDto.flight_date = FLIGHT_DATE;
-    PassengerDto[] passengers = { mockPassengerDto };
-    mockReservationDto.passengers = passengers;
-    passenger = new Passenger(mockReservationDto);
+    passenger = new Passenger(FLIGHT_NUMBER, FLIGHT_DATE, PASSENGER_HASH, SEAT_CLASS);
     mockCheckedLuggage = mock(Luggage.class);
     willReturn(IS_CHECKED).given(mockCheckedLuggage).isType(TYPE_CHECKED);
   }

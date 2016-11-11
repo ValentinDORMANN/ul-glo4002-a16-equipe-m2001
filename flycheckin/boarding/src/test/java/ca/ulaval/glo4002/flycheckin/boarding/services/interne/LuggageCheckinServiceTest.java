@@ -44,21 +44,9 @@ public class LuggageCheckinServiceTest {
     willReturn(mockPassenger).given(mockInMemoryPassenger).getPassengerByHash(PASSENGER_HASH);
   }
 
-  @Test
-  public void givenPassengerHashNotInMemoryWhenAssignLuggageThenVerifyIfCheckInReservationPersistence() {
-    willThrow(NotFoundPassengerException.class).given(mockInMemoryPassenger).getPassengerByHash(PASSENGER_HASH);
-    willReturn(mockPassenger).given(mockPassengerService).getPassengerByHashInReservation(PASSENGER_HASH);
-
-    luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
-
-    verify(mockPassengerService).getPassengerByHashInReservation(PASSENGER_HASH);
-  }
-
   @Test(expected = NotFoundPassengerException.class)
   public void givenInexistantPassengerHashWhenAssignLuggageThenThrowException() {
-    willThrow(NotFoundPassengerException.class).given(mockInMemoryPassenger).getPassengerByHash(PASSENGER_HASH);
-    willThrow(NotFoundPassengerException.class).given(mockPassengerService)
-        .getPassengerByHashInReservation(PASSENGER_HASH);
+    willThrow(NotFoundPassengerException.class).given(mockPassengerService).getPassengerByHash(PASSENGER_HASH);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
   }
