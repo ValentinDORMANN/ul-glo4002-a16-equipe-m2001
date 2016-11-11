@@ -33,7 +33,7 @@ public class PlaneModelService {
     for (SeatDto seatDto : planeModelDto.seats) {
       try {
         seats.add(createSeat(seatDto, planeModelDto.classes));
-      } catch (BoardingModuleException e) {
+      } catch (BoardingModuleException ex) {
       }
     }
     return seats;

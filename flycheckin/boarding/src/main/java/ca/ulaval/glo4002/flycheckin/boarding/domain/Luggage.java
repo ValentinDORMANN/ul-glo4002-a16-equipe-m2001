@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain;
 import java.util.UUID;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.InvalidUnitException;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public abstract class Luggage {
 
@@ -19,7 +18,8 @@ public abstract class Luggage {
   private String luggageHash;
   private double price;
 
-  public Luggage(int linearDimension, String linearDimensionUnit, int weight, String weightUnit) throws IllegalArgumentException {
+  public Luggage(int linearDimension, String linearDimensionUnit, int weight, String weightUnit)
+      throws IllegalArgumentException {
     this.dimensionInCm = convertDimensionToCmUnit(linearDimension, linearDimensionUnit);
     this.weightInKg = convertWeightToKgUnit(weight, weightUnit);
     this.luggageHash = UUID.randomUUID().toString();

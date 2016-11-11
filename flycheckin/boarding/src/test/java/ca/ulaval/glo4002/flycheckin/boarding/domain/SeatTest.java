@@ -7,8 +7,6 @@ import org.junit.Test;
 
 public class SeatTest {
 
-  private static final int ROW = 13;
-  private static final String COLUMN = "d";
   private static final String SEAT_CLASS = "class";
   private static final String OTHER_SEAT_CLASS = "wrongClass";
   private static final double NORMAL_PRICE = 125.00;

@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public class CheckedLuggage extends Luggage {
 
@@ -29,7 +28,7 @@ public class CheckedLuggage extends Luggage {
     if (getDimensionInCm() > DIMENSION_LIMIT)
       throw new ExcededCheckedLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
   }
-  
+
   @Override
   public boolean isType(String type) {
     return TYPE.equals(type);
