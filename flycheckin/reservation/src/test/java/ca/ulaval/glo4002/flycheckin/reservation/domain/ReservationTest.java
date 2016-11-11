@@ -19,6 +19,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 public class ReservationTest {
 
+  private static final boolean IS_GOOD_PASSENGER = true;
   private static final int RESERVATION_NUMBER = 55555;
   private static final String SELF = "SELF";
   private static final String PASSENGER_HASH = "HASH";
@@ -48,7 +49,7 @@ public class ReservationTest {
     passengers = new ArrayList<Passenger>();
     passengers.add(mockPassenger);
     reservation = new Reservation(mockReservationInMemory, mockReservationDto, passengers);
-    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
+    willReturn(IS_GOOD_PASSENGER).given(mockPassenger).hasThisHash(PASSENGER_HASH);
   }
 
   @Test
