@@ -79,7 +79,7 @@ public class SeatAssignationLegroomStrategyTest {
   }
 
   @Test
-  public void test() {
+  public void givenManySeatsWithTheGreaterLegroomWhenAssignSeatThenReturnTheCheapestSeatBetweenThem() {
     availableSeats.add(smallSeat);
     availableSeats.add(mediumSeat);
     availableSeats.add(xLargeSeat);

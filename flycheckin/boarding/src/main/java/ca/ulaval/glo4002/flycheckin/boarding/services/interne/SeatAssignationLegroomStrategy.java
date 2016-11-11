@@ -20,9 +20,8 @@ public class SeatAssignationLegroomStrategy implements SeatAssignationStrategy {
   private Seat getCheapestLargeLegroomSeat(List<Seat> availableSeats) {
     Seat selectedSeat = availableSeats.get(0);
     for (Seat seat : availableSeats) {
-      if (seat.isLegroomGreaterThan(selectedSeat))
-        selectedSeat = seat;
-      else if (seat.hasSameLegroomWith(selectedSeat) && seat.isCheaperThan(selectedSeat))
+      if (seat.isLegroomGreaterThan(selectedSeat)
+          || (seat.hasSameLegroomWith(selectedSeat) && seat.isCheaperThan(selectedSeat)))
         selectedSeat = seat;
     }
     return selectedSeat;
