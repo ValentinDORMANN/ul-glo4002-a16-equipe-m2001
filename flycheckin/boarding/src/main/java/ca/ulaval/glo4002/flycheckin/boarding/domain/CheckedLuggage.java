@@ -11,6 +11,9 @@ public class CheckedLuggage extends Luggage {
   private static final int DIMENSION_LIMIT = 158;
   private static final String TYPE = "checked";
   private static final int MAX_LUGGAGE_ALLOWED = 3;
+  private static final double SURPLUS_PRICE = 50;
+  private static final int LUGGAGE_WITHOUT_ADDITIONAL_FEE = 1;
+  private static final double BASE_PRICE = 0;
   
   public CheckedLuggage(LuggageDto luggageDto) {
     super(luggageDto);
@@ -33,12 +36,17 @@ public class CheckedLuggage extends Luggage {
   }
   
   @Override
-  public int getMaxLuggageAllowed(){
-    return MAX_LUGGAGE_ALLOWED;
+  public boolean isType(String type) {
+    return TYPE.equals(type);
   }
   
   @Override
-  public String getType(){
-    return TYPE;
+  public int getMaxLuggageAllowed(){
+    return MAX_LUGGAGE_ALLOWED;
+  }
+
+  @Override
+  double getPrice(int luggageNumber) {
+    return (luggageNumber <= LUGGAGE_WITHOUT_ADDITIONAL_FEE) ? BASE_PRICE : SURPLUS_PRICE;
   }
 }

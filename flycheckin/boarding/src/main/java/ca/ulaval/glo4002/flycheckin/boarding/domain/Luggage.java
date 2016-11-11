@@ -42,8 +42,6 @@ public abstract class Luggage {
   public boolean isType(String type) {
     return this.type.equals(type);
   }
-  
-  abstract public String getType();
 
   public int getDimensionInCm() {
     return dimensionInCm;
@@ -57,9 +55,7 @@ public abstract class Luggage {
     return luggageHash;
   }
 
-  public double getPrice() {
-    return price;
-  }
+  abstract double getPrice(int luggageNumber);
 
   public void setPrice(double price) {
     this.price = price;
