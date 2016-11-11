@@ -57,6 +57,13 @@ public class Passenger {
     return checkedLuggageNumber;
   }
 
+  public double getTotalPrice() {
+    double totalPrice = BASE_PRICE;
+    for (Luggage luggage : luggages)
+      totalPrice += luggage.getPrice();
+    return totalPrice;
+  }
+
   public String getPassengerHash() {
     return passengerHash;
   }
@@ -75,12 +82,5 @@ public class Passenger {
 
   public List<Luggage> getLuggages() {
     return luggages;
-  }
-
-  public double getTotalPrice() {
-    double totalPrice = BASE_PRICE;
-    for (Luggage luggage : luggages)
-      totalPrice += luggage.getPrice();
-    return totalPrice;
   }
 }
