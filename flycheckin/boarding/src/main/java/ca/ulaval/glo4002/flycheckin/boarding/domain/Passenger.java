@@ -19,9 +19,6 @@ public class Passenger {
   private String seatClass;
   private List<Luggage> luggages;
 
-  public Passenger() {
-  }
-
   public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass) {
     this.flightNumber = flightNumber;
     this.flightDate = flightDate;
