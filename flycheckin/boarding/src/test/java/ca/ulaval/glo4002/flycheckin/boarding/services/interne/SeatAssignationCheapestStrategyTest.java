@@ -43,7 +43,7 @@ public class SeatAssignationCheapestStrategyTest {
   }
 
   @Test(expected = NoSeatAvailableException.class)
-  public void givenNonEmptySeatListWhenAssignSeatToPassengerWhoHasWrongseatClassThenReturnException() {
+  public void givenNotEmptySeatListWhenAssignSeatToPassengerWhoHasWrongseatClassThenReturnException() {
     availableSeats.add(otherSeat);
     availableSeats.add(seat);
 

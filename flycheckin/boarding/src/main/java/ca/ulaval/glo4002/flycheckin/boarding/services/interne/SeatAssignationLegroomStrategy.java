@@ -6,21 +6,23 @@ import java.util.List;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
 
-public class SeatAssignationCheapestStrategy implements SeatAssignationStrategy {
+public class SeatAssignationLegroomStrategy implements SeatAssignationStrategy {
 
   private static final String NO_SEAT_AVAILABLE = "No more seat available for this seat class";
 
   @Override
-  public String assignSeatNumber(List<Seat> availableSeats, String seatClass) throws NoSeatAvailableException {
+  public String assignSeatNumber(List<Seat> availableSeats, String seatClass) {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
-    Seat selectedSeat = getCheapestSeat(availableSeats);
+    Seat selectedSeat = getCheapestLargeLegroomSeat(availableSeats);
     return selectedSeat.getSeatNumber();
   }
 
-  private Seat getCheapestSeat(List<Seat> availableSeats) {
+  private Seat getCheapestLargeLegroomSeat(List<Seat> availableSeats) {
     Seat selectedSeat = availableSeats.get(0);
     for (Seat seat : availableSeats) {
-      if (seat.isCheaperThan(selectedSeat))
+      if (seat.isLegroomGreaterThan(selectedSeat))
+        selectedSeat = seat;
+      else if (seat.hasSameLegroomWith(selectedSeat) && seat.isCheaperThan(selectedSeat))
         selectedSeat = seat;
     }
     return selectedSeat;

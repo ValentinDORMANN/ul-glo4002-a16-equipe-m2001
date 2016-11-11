@@ -26,8 +26,12 @@ public class Seat {
     return this.price < otherSeat.price;
   }
 
-  public boolean isSpaciousThan(Seat otherSeat) {
+  public boolean isLegroomGreaterThan(Seat otherSeat) {
     return this.legroom > otherSeat.legroom;
+  }
+
+  public boolean hasSameLegroomWith(Seat otherSeat) {
+    return this.legroom == otherSeat.legroom;
   }
 
   public boolean hasClass(String seatClass) {
