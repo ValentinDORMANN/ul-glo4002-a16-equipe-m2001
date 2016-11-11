@@ -13,8 +13,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
 
 public class SeatAssignationRandomStrategyTest {
 
-  private static final int SEAT_NUMBER_ROW = 13;
-  private static final String SEAT_NUMBER_COLUMN = "K";
   private static final String SEAT_NUMBER = "13-K";
   private static final String SEAT_CLASS = "economic";
   private static final String ANOTHER_SEAT_CLASS = "wrongSeatClass";
@@ -29,29 +27,29 @@ public class SeatAssignationRandomStrategyTest {
   }
 
   @Test(expected = NoSeatAvailableException.class)
-  public void givenEmptyAvailableSeatListWhenChooseSeatNumberThenReturnException() {
-    randomSeatAssignation.chooseSeatNumber(availableSeats, SEAT_CLASS);
+  public void givenEmptyAvailableSeatListWhenAssignSeatNumberThenReturnException() {
+    randomSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS);
   }
 
   @Test
-  public void givenListWithOnlyOneSeatWhenChooseSeatNumberWithSameSeatClassThenReturnSeatNumber() {
+  public void givenListWithOnlyOneSeatWhenAssignSeatNumberWithSameSeatClassThenReturnSeatNumber() {
     seat = new Seat();
-    seat.setSeatNumber(SEAT_NUMBER_ROW, SEAT_NUMBER_COLUMN);
+    seat.setSeatNumber(SEAT_NUMBER);
     seat.setSeatClass(SEAT_CLASS);
     availableSeats.add(seat);
 
-    String seatNumber = randomSeatAssignation.chooseSeatNumber(availableSeats, SEAT_CLASS);
+    String seatNumber = randomSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS);
 
     assertEquals(SEAT_NUMBER, seatNumber);
   }
 
   @Test(expected = NoSeatAvailableException.class)
-  public void givenListWithOnlyOneSeatWhenChooseSeatNumberWithAnotherSeatClassThenReturnException() {
+  public void givenListWithOnlyOneSeatWhenAssignSeatNumberWithAnotherSeatClassThenReturnException() {
     seat = new Seat();
-    seat.setSeatNumber(SEAT_NUMBER_ROW, SEAT_NUMBER_COLUMN);
+    seat.setSeatNumber(SEAT_NUMBER);
     seat.setSeatClass(SEAT_CLASS);
     availableSeats.add(seat);
 
-    randomSeatAssignation.chooseSeatNumber(availableSeats, ANOTHER_SEAT_CLASS);
+    randomSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS);
   }
 }

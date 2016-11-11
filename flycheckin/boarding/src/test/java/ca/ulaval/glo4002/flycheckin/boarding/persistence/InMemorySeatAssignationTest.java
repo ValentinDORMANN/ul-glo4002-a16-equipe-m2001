@@ -13,6 +13,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.SeatAlreadyAssignedExcept
 
 public class InMemorySeatAssignationTest {
 
+  private static final boolean IS_SAME = true;
   private static final String PASSENGER_HASH = "HASH001";
   private static final String SEAT_NUMBER = "12-A";
   private static final int ASSIGNATION_NUMBER = 15;
@@ -23,6 +24,7 @@ public class InMemorySeatAssignationTest {
   @Before
   public void initiateTest() {
     mockSeatAssignation = mock(SeatAssignation.class);
+    when(mockSeatAssignation.isAssociateToThisHash(PASSENGER_HASH)).thenReturn(IS_SAME);
     when(mockSeatAssignation.getPassengerHash()).thenReturn(PASSENGER_HASH);
     when(mockSeatAssignation.getSeatNumber()).thenReturn(SEAT_NUMBER);
     when(mockSeatAssignation.getAssignationNumber()).thenReturn(ASSIGNATION_NUMBER);

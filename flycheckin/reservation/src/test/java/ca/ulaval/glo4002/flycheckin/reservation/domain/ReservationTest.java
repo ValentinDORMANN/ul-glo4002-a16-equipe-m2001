@@ -12,14 +12,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 public class ReservationTest {
 
   private static final int RESERVATION_NUMBER = 55555;
+  private static final String SELF = "SELF";
   private static final String PASSENGER_HASH = "HASH";
   private static final String FAKE_PASSENGER_HASH = "FAKE_HASH";
   private static final Calendar CALENDAR = Calendar.getInstance();
@@ -51,16 +52,6 @@ public class ReservationTest {
   }
 
   @Test
-  public void givenFakePassengerWhenVerifyIfPassengerIsInListPassengerInReservationThenReturnFalse() {
-    assertFalse(reservation.getPassengerHashListInReservation().contains(FAKE_PASSENGER_HASH));
-  }
-
-  @Test
-  public void givenValidPassengerWhenVerifyIfPassengerInReservationThenReturnTrue() {
-    assertTrue(reservation.getPassengerHashListInReservation().contains(PASSENGER_HASH));
-  }
-
-  @Test
   public void givenValidPassengerHashWhenGetPassengerByHashThenReturnPassenger() {
     assertEquals(mockPassenger, reservation.getPassengerByHash(PASSENGER_HASH));
   }
@@ -81,13 +72,13 @@ public class ReservationTest {
   public void whenSelfCheckinBeforeStartTimeThenThrowException() {
     reservation.setFlightDate(SELF_CHECKIN_START_TIME);
 
-    reservation.validateCheckinPeriod("SELF");
+    reservation.validateCheckinPeriod(SELF);
   }
 
   @Test(expected = NotTimeToCheckinException.class)
   public void whenSelfCheckinEndTimeThenThrowException() {
     reservation.setFlightDate(SELF_CHECKIN_END_TIME);
 
-    reservation.validateCheckinPeriod("SELF");
+    reservation.validateCheckinPeriod(SELF);
   }
 }

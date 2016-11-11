@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class PassengerTest {
 
@@ -26,7 +25,6 @@ public class PassengerTest {
 
   private Passenger passenger;
   private PassengerDto mockPassengerDto;
-  private ReservationDto mockReservationDto;
   private Luggage mockCheckedLuggage;
   private Luggage mockCarryOnLuggage;
 
@@ -35,14 +33,10 @@ public class PassengerTest {
     mockPassengerDto = mock(PassengerDto.class);
     mockPassengerDto.seat_class = SEAT_CLASS;
     mockPassengerDto.passenger_hash = PASSENGER_HASH;
-    mockReservationDto = mock(ReservationDto.class);
-    mockReservationDto.flight_number = FLIGHT_NUMBER;
-    mockReservationDto.flight_date = FLIGHT_DATE;
-    PassengerDto[] passengers = { mockPassengerDto };
-    mockReservationDto.passengers = passengers;
-    passenger = new Passenger(mockReservationDto);
     mockCheckedLuggage = mock(CheckedLuggage.class);
     mockCarryOnLuggage = mock(CarryOnLuggage.class);
+    passenger = new Passenger(FLIGHT_NUMBER, FLIGHT_DATE, PASSENGER_HASH, SEAT_CLASS);
+    mockCheckedLuggage = mock(Luggage.class);
     willReturn(IS_CHECKED).given(mockCheckedLuggage).isType(TYPE_CHECKED);
     willReturn(IS_CHECKED).given(mockCarryOnLuggage).isType(TYPE_CARRY_ON);
   }

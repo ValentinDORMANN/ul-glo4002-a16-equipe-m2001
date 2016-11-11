@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.dto.PassengerDto;
+import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.PassengerDto;
 
 public class PassengerTest {
 

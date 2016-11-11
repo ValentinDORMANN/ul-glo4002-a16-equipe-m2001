@@ -12,12 +12,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.dto.CheckinDto;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
 @Path("/checkins")
 public class CheckinResource {
@@ -30,7 +30,7 @@ public class CheckinResource {
   }
 
   public CheckinResource(CheckinService checkinService) {
-    this.checkinService = checkinService;
+    CheckinResource.checkinService = checkinService;
   }
 
   @POST
@@ -40,11 +40,9 @@ public class CheckinResource {
       int checkinId = checkinService.saveCheckin(checkinDto);
       URI url = createUrlToGetCheckin(uriInfo, checkinId);
       return Response.status(Status.CREATED).location(url).build();
-    } catch (URISyntaxException ex) {
-      return Response.status(Status.CREATED).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
-    } catch (FlyCheckinApplicationException ex) {
+    } catch (FlyCheckinApplicationException | URISyntaxException ex) {
       return Response.status(Status.BAD_REQUEST).build();
     }
   }

@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
+
 
 public class Passenger {
 
-  private static final int SINGLE_INDEX = 0;
   private static final double BASE_PRICE = 0;
   private static final String TYPE_CHECKED = "checked";
   private static final String TYPE_CARRY_ON = "carry-on";
@@ -24,17 +23,19 @@ public class Passenger {
   public Passenger() {
   }
 
-  public Passenger(ReservationDto reservationDto) {
-    flightNumber = reservationDto.flight_number;
-    flightDate = reservationDto.flight_date;
-    passengerHash = reservationDto.passengers[SINGLE_INDEX].passenger_hash;
-    seatClass = reservationDto.passengers[SINGLE_INDEX].seat_class;
+  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass) {
+    this.flightNumber = flightNumber;
+    this.flightDate = flightDate;
+    this.passengerHash = passengerHash;
+    this.seatClass = seatClass;
     luggages = new ArrayList<Luggage>();
   }
 
   public void addLuggage(Luggage luggage) throws ExcededLuggageException {
-    if (!isNumberLuggageValidByType(luggageType, luggage.getMaxLuggageAllowed()))
-      throw new ExcededLuggageException(LUGGAGES_LIMIT_EXCEDED_ERROR);
+    /*if (!isNumberLuggageValidByType(luggageType, luggage.getMaxLuggageAllowed()))
+      throw new ExcededLuggageException(LUGGAGES_LIMIT_EXCEDED_ERROR);*/
+    if (!isFirstCheckedLuggage())
+      //luggage.setPrice(SURPLUS_PRICE_LUGGAGE);
     luggages.add(luggage);
   }
   

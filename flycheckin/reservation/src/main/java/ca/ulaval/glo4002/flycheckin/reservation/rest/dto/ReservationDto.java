@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.reservation.api.dto;
+package ca.ulaval.glo4002.flycheckin.reservation.rest.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,10 +39,10 @@ public class ReservationDto {
     }
   }
 
-  public ReservationDto(Reservation reservation, String hash) {
+  public ReservationDto(Reservation reservation, String passengerHash) {
     this.flight_number = reservation.getFlightNumber();
     this.flight_date = reservation.getFlightDate();
     this.passengers = new ArrayList<PassengerDto>();
-    this.passengers.add(new PassengerDto(reservation.getPassengerByHash(hash)));
+    this.passengers.add(new PassengerDto(reservation.getPassengerByHash(passengerHash)));
   }
 }

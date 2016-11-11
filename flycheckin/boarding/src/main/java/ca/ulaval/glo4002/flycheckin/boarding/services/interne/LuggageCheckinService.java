@@ -26,7 +26,7 @@ public class LuggageCheckinService {
   }
 
   public String assignLuggage(String passengerHash, LuggageDto luggageDto) throws BoardingModuleException {
-    Passenger passenger = getPassenger(passengerHash);
+    Passenger passenger = passengerService.getPassengerByHash(passengerHash);
     Luggage luggage = createCheckedLuggage(luggageDto);
     passenger.addLuggage(luggage);
     return luggage.getLuggageHash();
@@ -47,8 +47,10 @@ public class LuggageCheckinService {
     return passenger;
   }
 
+
   private Luggage createCheckedLuggage(LuggageDto luggageDto) throws ExcededLuggageException {
-    CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto);
+    CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto.linear_dimension, luggageDto.linear_dimension_unit,
+        luggageDto.weight, luggageDto.weight_unit);
     checkedLuggage.checkLuggageAllowable();
     return checkedLuggage;
   }

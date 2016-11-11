@@ -19,17 +19,16 @@ public class InMemorySeatAssignation implements SeatAssignationRepository {
   public void persistSeatAssignation(SeatAssignation seatAssignation) {
     if (seatAssignationMap.containsKey(seatAssignation.getAssignationNumber()))
       throw new AssignationNumberUsedException(ERROR_ASSIGNATION_NUMBER_USED);
-    else if (getPassengerHashSeatNumber(seatAssignation.getPassengerHash()).isEmpty())
-      seatAssignationMap.put(seatAssignation.getAssignationNumber(), seatAssignation);
-    else
+    else if (!getPassengerHashSeatNumber(seatAssignation.getPassengerHash()).isEmpty())
       throw new SeatAlreadyAssignedException(ERROR_SEAT_UNASSIGNED);
+    seatAssignationMap.put(seatAssignation.getAssignationNumber(), seatAssignation);
   }
 
   @Override
   public String getPassengerHashSeatNumber(String passengerHash) {
     String seatNumber = STRING_EMPTY;
     for (SeatAssignation seatAssignation : seatAssignationMap.values()) {
-      if (seatAssignation.getPassengerHash().equals(passengerHash))
+      if (seatAssignation.isAssociateToThisHash(passengerHash))
         seatNumber = seatAssignation.getSeatNumber();
     }
     return seatNumber;

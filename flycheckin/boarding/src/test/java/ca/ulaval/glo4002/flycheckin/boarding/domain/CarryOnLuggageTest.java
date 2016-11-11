@@ -1,11 +1,9 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.CarryOnLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public class CarryOnLuggageTest {
 
@@ -21,67 +19,43 @@ public class CarryOnLuggageTest {
   private static final String WEIGHT_UNIT_IN_KG = "kg";
   private static final String WEIGHT_UNIT_IN_LBS = "lbs";
   private static final String DIMENSION_UNIT_IN_PO = "po";
-  private static final String LUGGAGE_TYPE = "carry-on";
-  private LuggageDto carryOnLuggageDto;
   private CarryOnLuggage carryOnLuggage;
-
-  @Before
-  public void initiateTest() {
-    carryOnLuggageDto = new LuggageDto();
-    carryOnLuggageDto.type = LUGGAGE_TYPE;
-  }
 
   @Test(expected = ExcededLuggageException.class)
   public void givenLuggageWeightInKgOverLimitWhenCheckLuggageAllowableThenThrowException() {
-    carryOnLuggageDto.linear_dimension = ALLOWED_DIMENSION_CM;
-    carryOnLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_CM;
-    carryOnLuggageDto.weight = OVER_WEIGHT_KG;
-    carryOnLuggageDto.weight_unit = WEIGHT_UNIT_IN_KG;
-    carryOnLuggage = new CarryOnLuggage(carryOnLuggageDto);
+    carryOnLuggage = new CarryOnLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, OVER_WEIGHT_KG, WEIGHT_UNIT_IN_KG);
 
     carryOnLuggage.checkLuggageAllowable();
   }
 
   @Test(expected = ExcededLuggageException.class)
   public void givenLuggageDimensionInCmOverLimitWhenCheckLuggageAllowableThenThrowException() {
-	  carryOnLuggageDto.linear_dimension = OVER_DIMENSION_CM;
-	  carryOnLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_CM;
-	  carryOnLuggageDto.weight = ALLOWED_WEIGHT_KG;
-	  carryOnLuggageDto.weight_unit = WEIGHT_UNIT_IN_KG;
-	  carryOnLuggage = new CarryOnLuggage(carryOnLuggageDto);
+    carryOnLuggage = new CarryOnLuggage(OVER_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG,
+                                        WEIGHT_UNIT_IN_KG);
 
-	  carryOnLuggage.checkLuggageAllowable();
+    carryOnLuggage.checkLuggageAllowable();
   }
 
   @Test(expected = ExcededLuggageException.class)
   public void givenLuggageWeightInLbsOverLimitWhenCheckLuggageAllowableThenThrowException() {
-	  carryOnLuggageDto.linear_dimension = ALLOWED_DIMENSION_PO;
-	  carryOnLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_PO;
-	  carryOnLuggageDto.weight = OVER_WEIGHT_LBS;
-	  carryOnLuggageDto.weight_unit = WEIGHT_UNIT_IN_LBS;
-	  carryOnLuggage = new CarryOnLuggage(carryOnLuggageDto);
+    carryOnLuggage = new CarryOnLuggage(ALLOWED_DIMENSION_PO, DIMENSION_UNIT_IN_PO, OVER_WEIGHT_LBS, 
+                                        WEIGHT_UNIT_IN_LBS);
 
-	  carryOnLuggage.checkLuggageAllowable();
+    carryOnLuggage.checkLuggageAllowable();
   }
 
   @Test(expected = ExcededLuggageException.class)
   public void givenLuggageDimensionInPoOverLimitWhenCheckLuggageAllowableThenThrowException() {
-    carryOnLuggageDto.linear_dimension = OVER_DIMENSION_PO;
-    carryOnLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_PO;
-    carryOnLuggageDto.weight = ALLOWED_WEIGHT_LBS;
-    carryOnLuggageDto.weight_unit = WEIGHT_UNIT_IN_LBS;
-    carryOnLuggage = new CarryOnLuggage(carryOnLuggageDto);
+    carryOnLuggage = new CarryOnLuggage(OVER_DIMENSION_PO, DIMENSION_UNIT_IN_PO, ALLOWED_WEIGHT_LBS,
+                                        WEIGHT_UNIT_IN_LBS);
 
     carryOnLuggage.checkLuggageAllowable();
   }
 
   @Test
   public void givenLuggageAllowableWhenCheckLuggageAllowableThenDoNothing() {
-    carryOnLuggageDto.linear_dimension = ALLOWED_DIMENSION_CM;
-    carryOnLuggageDto.linear_dimension_unit = DIMENSION_UNIT_IN_CM;
-    carryOnLuggageDto.weight = ALLOWED_WEIGHT_KG;
-    carryOnLuggageDto.weight_unit = WEIGHT_UNIT_IN_KG;
-    carryOnLuggage = new CarryOnLuggage(carryOnLuggageDto);
+    carryOnLuggage = new CarryOnLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG,
+                                        WEIGHT_UNIT_IN_KG);
 
     carryOnLuggage.checkLuggageAllowable();
   }
