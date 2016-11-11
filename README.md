@@ -18,17 +18,17 @@
 
 ## 2 Liste des users'story
 
-**no    ¦ nom							 ¦ status**
-- Story1:  Heartbeat : 					 	   terminé
-- Story2:  Réservation: Événement - nouvelle réservation :  	   terminé
-- Story3:  Réservation: Obtenir l'information sur une réservation :  terminé
-- Story4:  Checkin: Enregistrement par un agent : 		   terminé
-- Story5:  Checkin: Enregistrement en ligne : 		   terminé
-- Story6:  Siège: Assignation du siège d'un passager (aléatoire) : 		   terminé
-- Story7:  Bagage enregistré: Classe économique : 		   terminé
-- Story8:  Bagages: Obtenir la liste par passager : 		   terminé
-- Story9:  Siège: Assigner le siège le moins cher : 		   terminé
-- Story10:  Siège: Assigner le siège en fonction du dégagement : 		   terminé
+**no    | nom							 | status**
+- Story1  |  Heartbeat | 					 	   terminé
+- Story2 | Réservation: Événement - nouvelle réservation |  	   terminé
+- Story3 | Réservation: Obtenir l'information sur une réservation |  terminé
+- Story4 | Checkin: Enregistrement par un agent | 		   terminé
+- Story5 | Checkin: Enregistrement en ligne | 		   terminé
+- Story6 | Siège: Assignation du siège d'un passager (aléatoire) | 		   terminé
+- Story7 | Bagage enregistré: Classe économique | 		   terminé
+- Story8 | Bagages: Obtenir la liste par passager | 		   terminé
+- Story9 | Siège: Assigner le siège le moins cher | 		   terminé
+- Story10 | Siège: Assigner le siège en fonction du dégagement | 		   terminé
 
 ## 3 Résumé
 
