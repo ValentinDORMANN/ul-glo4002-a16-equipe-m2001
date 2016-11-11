@@ -78,7 +78,7 @@ public class Reservation {
 
   public Passenger getPassengerByHash(String passengerHash) {
     for (Passenger passenger : passengers) {
-      if (passenger.getPassengerHash().equals(passengerHash))
+      if (passenger.hasThisHash(passengerHash))
         return passenger;
     }
     throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);
