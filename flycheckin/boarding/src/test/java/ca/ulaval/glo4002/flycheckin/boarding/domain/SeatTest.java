@@ -26,7 +26,7 @@ public class SeatTest {
   }
 
   @Test
-  public void givenSeatWhenVerifyIfCheaperThanAnotherMoreExpensiveThenReturnTrue() {
+  public void givenSeatWhenVerifyIfCheaperThanAnotherSeatMoreExpensiveThenReturnTrue() {
     Seat otherSeat = new Seat();
     otherSeat.setPrice(EXPENSIVE_PRICE);
 
@@ -34,7 +34,7 @@ public class SeatTest {
   }
 
   @Test
-  public void givenSeatWhenVerifyIfCheaperThanAnotherWithSamePriceThenReturnFalse() {
+  public void givenSeatWhenVerifyIfCheaperThanAnotherSeatWithSamePriceThenReturnFalse() {
     Seat otherSeat = new Seat();
     otherSeat.setPrice(NORMAL_PRICE);
 
@@ -42,7 +42,7 @@ public class SeatTest {
   }
 
   @Test
-  public void givenSeatWhenVerifyIfCheaperThanAnotherLessExpensiveThenReturnFalse() {
+  public void givenSeatWhenVerifyIfCheaperThanAnotherSeatLessExpensiveThenReturnFalse() {
     Seat otherSeat = new Seat();
     otherSeat.setPrice(CHEAPER_PRICE);
 
@@ -50,27 +50,27 @@ public class SeatTest {
   }
 
   @Test
-  public void givenSeatWhenVerifyIfSpaciousThanAnotherMoreLegroomThenReturnFalse() {
+  public void givenSeatWhenVerifyIfLegroomGreaterThanAnotherSeatWithMoreLegroomThenReturnFalse() {
     Seat otherSeat = new Seat();
     otherSeat.setLegroom(MORE_LEGROOM);
 
-    assertFalse(seat.isSpaciousThan(otherSeat));
+    assertFalse(seat.isLegroomGreaterThan(otherSeat));
   }
 
   @Test
-  public void givenSeatWhenVerifyIfSpaciousThanAnotherWithSameLegroomThenReturnFalse() {
+  public void givenSeatWhenVerifyIfLegroomGreaterThanAnotherSeatWithSameLegroomThenReturnFalse() {
     Seat otherSeat = new Seat();
     otherSeat.setLegroom(LEGROOM);
 
-    assertFalse(seat.isSpaciousThan(otherSeat));
+    assertFalse(seat.isLegroomGreaterThan(otherSeat));
   }
 
   @Test
-  public void givenSeatWhenVerifyIfSpaciousThanAnotherLessLegroomThenReturnTrue() {
+  public void givenSeatWhenVerifyIfLegroomGreaterThanAnotherLessLegroomThenReturnTrue() {
     Seat otherSeat = new Seat();
     otherSeat.setLegroom(LESS_LEGROOM);
 
-    assertTrue(seat.isSpaciousThan(otherSeat));
+    assertTrue(seat.isLegroomGreaterThan(otherSeat));
   }
 
   @Test
@@ -85,5 +85,29 @@ public class SeatTest {
     boolean hasClass = seat.hasClass(OTHER_SEAT_CLASS);
 
     assertFalse(hasClass);
+  }
+
+  @Test
+  public void givenSeatWhenVerifyIfSeatHasSameLegroomWithAnotherSeatWithSameLegroomThenReturnTrue() {
+    Seat otherSeat = new Seat();
+    otherSeat.setLegroom(LEGROOM);
+
+    assertTrue(seat.hasSameLegroomWith(otherSeat));
+  }
+
+  @Test
+  public void givenSeatWhenVerifyIfSeatHasSameLegroomWithAnotherSeatWithLessLegroomThenReturnFalse() {
+    Seat otherSeat = new Seat();
+    otherSeat.setLegroom(LESS_LEGROOM);
+
+    assertFalse(seat.hasSameLegroomWith(otherSeat));
+  }
+
+  @Test
+  public void givenSeatWhenVerifyIfSeatHasSameLegroomWithAnotherSeatWithMoreLegroomThenReturnFalse() {
+    Seat otherSeat = new Seat();
+    otherSeat.setLegroom(MORE_LEGROOM);
+
+    assertFalse(seat.hasSameLegroomWith(otherSeat));
   }
 }
