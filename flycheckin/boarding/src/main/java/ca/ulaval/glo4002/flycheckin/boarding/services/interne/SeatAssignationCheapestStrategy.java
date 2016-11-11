@@ -11,11 +11,21 @@ public class SeatAssignationCheapestStrategy implements SeatAssignationStrategy 
   private static final String NO_SEAT_AVAILABLE = "No more seat available for this seat class";
 
   @Override
-  public String assignSeatNumber(List<Seat> availableSeats, String seatClass) {
+  public String assignSeatNumber(List<Seat> availableSeats, String seatClass) throws NoSeatAvailableException {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
     if (availableSeats.isEmpty())
       throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
-    return "12-C";
+    Seat selectedSeat = getCheapestSeat(availableSeats);
+    return selectedSeat.getSeatNumber();
+  }
+
+  private Seat getCheapestSeat(List<Seat> availableSeats) {
+    Seat selectedSeat = availableSeats.get(0);
+    for (Seat seat : availableSeats) {
+      if (seat.isCheaperThan(selectedSeat))
+        selectedSeat = seat;
+    }
+    return selectedSeat;
   }
 
   private List<Seat> siftAvailableSeatsBySeatClass(List<Seat> availableSeats, String seatClass) {
@@ -24,6 +34,8 @@ public class SeatAssignationCheapestStrategy implements SeatAssignationStrategy 
       if (seat.hasClass(seatClass))
         availableSeatClass.add(seat);
     }
+    if (availableSeatClass.isEmpty())
+      throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
     return availableSeatClass;
   }
 }

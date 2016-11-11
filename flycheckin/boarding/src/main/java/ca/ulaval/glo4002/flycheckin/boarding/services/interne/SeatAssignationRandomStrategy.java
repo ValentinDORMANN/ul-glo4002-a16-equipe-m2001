@@ -11,10 +11,8 @@ public class SeatAssignationRandomStrategy implements SeatAssignationStrategy {
   private static final String NO_SEAT_AVAILABLE = "No more seat available for this seat class";
 
   @Override
-  public String assignSeatNumber(List<Seat> availableSeats, String seatClass) {
+  public String assignSeatNumber(List<Seat> availableSeats, String seatClass) throws NoSeatAvailableException {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
-    if (availableSeats.isEmpty())
-      throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
     int randomIndex = (int) Math.floor(Math.random() * (availableSeats.size() - 1));
     Seat seat = availableSeats.get(randomIndex);
     return seat.getSeatNumber();
@@ -26,6 +24,8 @@ public class SeatAssignationRandomStrategy implements SeatAssignationStrategy {
       if (seat.hasClass(seatClass))
         availableSeatClass.add(seat);
     }
+    if (availableSeatClass.isEmpty())
+      throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
     return availableSeatClass;
   }
 }

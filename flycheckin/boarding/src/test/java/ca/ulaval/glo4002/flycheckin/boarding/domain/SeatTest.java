@@ -36,11 +36,11 @@ public class SeatTest {
   }
 
   @Test
-  public void givenSeatWhenVerifyIfCheaperThanAnotherWithSamePriceThenReturnTrue() {
+  public void givenSeatWhenVerifyIfCheaperThanAnotherWithSamePriceThenReturnFalse() {
     Seat otherSeat = new Seat();
     otherSeat.setPrice(NORMAL_PRICE);
 
-    assertTrue(seat.isCheaperThan(otherSeat));
+    assertFalse(seat.isCheaperThan(otherSeat));
   }
 
   @Test
@@ -60,11 +60,11 @@ public class SeatTest {
   }
 
   @Test
-  public void givenSeatWhenVerifyIfSpaciousThanAnotherWithSameLegroomThenReturnTrue() {
+  public void givenSeatWhenVerifyIfSpaciousThanAnotherWithSameLegroomThenReturnFalse() {
     Seat otherSeat = new Seat();
     otherSeat.setLegroom(LEGROOM);
 
-    assertTrue(seat.isSpaciousThan(otherSeat));
+    assertFalse(seat.isSpaciousThan(otherSeat));
   }
 
   @Test
