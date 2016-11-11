@@ -18,7 +18,7 @@
 
 ## 2 Liste des users'story
 
-**|no    | nom							 | status**
+**|no    | nom							 | status|**
 | ------------------- | ---------------- | ----------------------------- |
 - Story1  |  Heartbeat | 					 	   terminé
 - Story2 | Réservation: Événement - nouvelle réservation |  	   terminé|
