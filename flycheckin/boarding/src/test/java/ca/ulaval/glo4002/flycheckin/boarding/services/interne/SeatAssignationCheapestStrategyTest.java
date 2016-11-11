@@ -19,7 +19,8 @@ public class SeatAssignationCheapestStrategyTest {
   private static final double EXPENSIVE_SEAT_PRICE = 75.00;
   private static final String OTHER_SEAT_NUMBER = "20-D";
   private static final String ANOTHER_SEAT_CLASS = "otherSeatClass";
-  private Seat seat, otherSeat;
+  private Seat seat;
+  private Seat otherSeat;
   private List<Seat> availableSeats;
   private SeatAssignationCheapestStrategy cheapestSeatAssignation;
 

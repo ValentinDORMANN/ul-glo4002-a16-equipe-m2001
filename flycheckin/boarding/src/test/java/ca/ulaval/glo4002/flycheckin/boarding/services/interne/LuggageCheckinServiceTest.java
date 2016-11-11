@@ -6,10 +6,8 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PassengerService;
 
@@ -24,8 +22,6 @@ public class LuggageCheckinServiceTest {
   private static final String TYPE = "checked";
   private static final int OVER_LINEAR_DIMENSION = 1000;
   private LuggageDto mockLuggageDto;
-  private Passenger mockPassenger;
-  private InMemoryPassenger mockInMemoryPassenger;
   private PassengerService mockPassengerService;
   private LuggageCheckinService luggageCheckinService;
 
@@ -37,11 +33,8 @@ public class LuggageCheckinServiceTest {
     mockLuggageDto.weight = ALLOWED_WEIGHT;
     mockLuggageDto.weight_unit = WEIGHT_UNIT;
     mockLuggageDto.type = TYPE;
-    mockPassenger = mock(Passenger.class);
-    mockInMemoryPassenger = mock(InMemoryPassenger.class);
     mockPassengerService = mock(PassengerService.class);
-    luggageCheckinService = new LuggageCheckinService(mockInMemoryPassenger, mockPassengerService);
-    willReturn(mockPassenger).given(mockInMemoryPassenger).getPassengerByHash(PASSENGER_HASH);
+    luggageCheckinService = new LuggageCheckinService(mockPassengerService);
   }
 
   @Test(expected = NotFoundPassengerException.class)

@@ -5,22 +5,18 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
-import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PassengerService;
 
 public class LuggageCheckinService {
 
-  private InMemoryPassenger inMemoryPassenger;
   private PassengerService passengerService;
 
   public LuggageCheckinService() {
-    this.inMemoryPassenger = new InMemoryPassenger();
     this.passengerService = new PassengerService();
   }
 
-  public LuggageCheckinService(InMemoryPassenger inMemoryPassenger, PassengerService passengerService) {
-    this.inMemoryPassenger = inMemoryPassenger;
+  public LuggageCheckinService(PassengerService passengerService) {
     this.passengerService = passengerService;
   }
 
