@@ -42,7 +42,6 @@ CheckStyle for FlyCheckIn Projet
       <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
     </module>
     <module name="NeedBraces">
-      <property name="tokens" value="LITERAL_IF, LITERAL_ELSE, LITERAL_CASE, LITERAL_DEFAULT"/>
       <property name="allowSingleLineStatement" value="true"/>
     </module>
     <module name="LeftCurly">
@@ -87,7 +86,7 @@ CheckStyle for FlyCheckIn Projet
       <message key="name.invalidPattern" value="Type name ''{0}'' must match pattern ''{1}''."/>
     </module>
     <module name="MemberName">
-      <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
+      <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
       <message key="name.invalidPattern" value="Member name ''{0}'' must match pattern ''{1}''."/>
     </module>
     <module name="ParameterName">
@@ -102,6 +101,7 @@ CheckStyle for FlyCheckIn Projet
       <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
       <property name="allowOneCharVarInForLoop" value="true"/>
       <property name="tokens" value="VARIABLE_DEF"/>
+      <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
       <message key="name.invalidPattern" value="Local variable name ''{0}'' must match pattern ''{1}''."/>
     </module>
     <module name="ClassTypeParameterName">
