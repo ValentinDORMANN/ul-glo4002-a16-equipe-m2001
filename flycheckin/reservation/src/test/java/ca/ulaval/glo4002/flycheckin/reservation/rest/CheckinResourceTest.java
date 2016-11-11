@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.flycheckin.reservation.rest;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
