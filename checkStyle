@@ -5,9 +5,9 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: IFT-6002 CheckStyle
+    Checkstyle-Configuration: flycheckin
     Description: 
-CheckStyle for FlyCheckIn Projet
+our checkstyle
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
@@ -101,7 +101,6 @@ CheckStyle for FlyCheckIn Projet
       <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
       <property name="allowOneCharVarInForLoop" value="true"/>
       <property name="tokens" value="VARIABLE_DEF"/>
-      <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
       <message key="name.invalidPattern" value="Local variable name ''{0}'' must match pattern ''{1}''."/>
     </module>
     <module name="ClassTypeParameterName">
