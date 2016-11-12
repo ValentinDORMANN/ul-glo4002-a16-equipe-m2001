@@ -51,8 +51,8 @@ Nous avons introduit les DTO dans le constructeur des objets dans le module de R
 
 4.2 Décisions à communiquer
 
-Dans la story 6, lorsqu'on assigne un siège à un passager, on intègre pas le prix du siège au passager.
-Dans la story 7, les bagages peuvent être enregistré par n'importe quel passager. Les modifications seront ajouté ultérieurement (pour la prochaine remise).
+-Dans la story 6, lorsqu'on assigne un siège à un passager, on intègre pas le prix du siège au passager.
+-Dans la story 7, les bagages peuvent être enregistré par n'importe quel passager. Les modifications seront ajoutées ultérieurement (pour la prochaine remise).
 
 4.3 Demandes spéciales autorisées par le corps enseignant
 
