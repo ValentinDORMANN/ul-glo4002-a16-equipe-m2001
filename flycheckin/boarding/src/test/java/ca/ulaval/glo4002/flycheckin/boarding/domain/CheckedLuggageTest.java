@@ -7,11 +7,13 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
 
 public class CheckedLuggageTest {
+  private static final int WEIGHT_LIMIT_KG = 23;
   private static final int OVER_WEIGHT_KG = 24;
   private static final int OVER_WEIGHT_LBS = 51;
   private static final int ALLOWED_WEIGHT_KG = 22;
   private static final int ALLOWED_WEIGHT_LBS = 49;
   private static final int OVER_DIMENSION_CM = 159;
+  private static final int DIMENSION_LIMIT_CM = 158;
   private static final int OVER_DIMENSION_PO = 63;
   private static final int ALLOWED_DIMENSION_CM = 157;
   private static final int ALLOWED_DIMENSION_PO = 61;
@@ -57,6 +59,13 @@ public class CheckedLuggageTest {
   public void givenLuggageAllowableWhenCheckLuggageAllowableThenDoNothing() {
     checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG,
         WEIGHT_UNIT_IN_KG);
+
+    checkedLuggage.checkLuggageAllowable();
+  }
+
+  @Test
+  public void givenLuggageWithLimitDimensionsWhenCheckLuggageAllowableThenDoNothing() {
+    checkedLuggage = new CheckedLuggage(DIMENSION_LIMIT_CM, DIMENSION_UNIT_IN_CM, WEIGHT_LIMIT_KG, WEIGHT_UNIT_IN_KG);
 
     checkedLuggage.checkLuggageAllowable();
   }
