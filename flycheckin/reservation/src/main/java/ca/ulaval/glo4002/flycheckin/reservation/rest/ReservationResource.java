@@ -16,9 +16,9 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 @Path("")
@@ -45,11 +45,11 @@ public class ReservationResource {
   @GET
   @Path(GET_RESERVATION_BY_HASH_PATH)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getReservationByHash(@PathParam("passenger_hash") String passenger_hash) {
+  public Response getReservationByHash(@PathParam("passenger_hash") String passengerHash) {
     Reservation reservation = new Reservation();
     try {
-      reservation = reservation.searchReservationByPassengerHash(passenger_hash);
-      ReservationDto reservationDto = new ReservationDto(reservation, passenger_hash);
+      reservation = reservation.searchReservationByPassengerHash(passengerHash);
+      ReservationDto reservationDto = new ReservationDto(reservation, passengerHash);
       return Response.ok(reservationDto).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
