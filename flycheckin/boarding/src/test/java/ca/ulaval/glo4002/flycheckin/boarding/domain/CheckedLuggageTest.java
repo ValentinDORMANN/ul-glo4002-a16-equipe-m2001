@@ -13,8 +13,8 @@ public class CheckedLuggageTest {
   private static final int ALLOWED_WEIGHT_LBS = 49;
   private static final int OVER_DIMENSION_CM = 159;
   private static final int OVER_DIMENSION_PO = 63;
-  private static final int ALLOWED_DIMENSION_CM = 150;
-  private static final int ALLOWED_DIMENSION_PO = 60;
+  private static final int ALLOWED_DIMENSION_CM = 157;
+  private static final int ALLOWED_DIMENSION_PO = 61;
   private static final String DIMENSION_UNIT_IN_CM = "cm";
   private static final String WEIGHT_UNIT_IN_KG = "kg";
   private static final String WEIGHT_UNIT_IN_LBS = "lbs";
