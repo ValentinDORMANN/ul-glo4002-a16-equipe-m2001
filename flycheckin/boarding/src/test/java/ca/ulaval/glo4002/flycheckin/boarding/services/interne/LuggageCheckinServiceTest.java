@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
@@ -21,6 +22,7 @@ public class LuggageCheckinServiceTest {
   private static final String WEIGHT_UNIT = "kg";
   private static final String TYPE = "checked";
   private static final int OVER_LINEAR_DIMENSION = 1000;
+  private Passenger mockPassenger;
   private LuggageDto mockLuggageDto;
   private PassengerService mockPassengerService;
   private LuggageCheckinService luggageCheckinService;
@@ -34,7 +36,8 @@ public class LuggageCheckinServiceTest {
     mockLuggageDto.weight_unit = WEIGHT_UNIT;
     mockLuggageDto.type = TYPE;
     mockPassengerService = mock(PassengerService.class);
-    luggageCheckinService = new LuggageCheckinService(mockPassengerService);
+    mockPassenger = mock(Passenger.class);
+    luggageCheckinService = new LuggageCheckinService(mockPassengerService, mockPassenger, mockLuggageDto);
   }
 
   @Test(expected = NotFoundPassengerException.class)
@@ -56,5 +59,20 @@ public class LuggageCheckinServiceTest {
     mockLuggageDto.weight = OVER_WEIGHT;
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
+  }
+
+  @Test
+  public void test() {
+    String passengerHash = "kjdnkj";
+    willReturn(passengerHash).given(mockPassenger).getPassengerHash();
+    willReturn(mockPassenger).given(mockPassengerService).getPassengerByHash(passengerHash);
+    mockLuggageDto.linear_dimension = 10;
+    mockLuggageDto.weight = 10;
+    mockLuggageDto.linear_dimension_unit = "cm";
+    mockLuggageDto.weight_unit = "kg";
+
+    luggageCheckinService.assignLuggage(passengerHash, mockLuggageDto);
+
+    verify(mockPassengerService, times(1)).getPassengerByHash(passengerHash);
   }
 }

@@ -11,13 +11,17 @@ import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PassengerService;
 public class LuggageCheckinService {
 
   private PassengerService passengerService;
+  private Passenger passenger;
+  private LuggageDto luggageDto;
 
   public LuggageCheckinService() {
     this.passengerService = new PassengerService();
   }
 
-  public LuggageCheckinService(PassengerService passengerService) {
+  public LuggageCheckinService(PassengerService passengerService, Passenger passenger, LuggageDto luggageDto) {
     this.passengerService = passengerService;
+    this.passenger = passenger;
+    this.luggageDto = luggageDto;
   }
 
   public String assignLuggage(String passengerHash, LuggageDto luggageDto) throws BoardingModuleException {
