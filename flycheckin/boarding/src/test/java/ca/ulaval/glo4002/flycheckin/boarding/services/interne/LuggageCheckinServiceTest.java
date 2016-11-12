@@ -1,8 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.interne;
 
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
