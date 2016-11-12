@@ -1,9 +1,13 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.interne;
 
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.ulaval.glo4002.flycheckin.boarding.domain.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
@@ -60,17 +64,30 @@ public class LuggageCheckinServiceTest {
   }
 
   @Test
-  public void test() {
-    String passengerHash = "kjdnkj";
-    willReturn(passengerHash).given(mockPassenger).getPassengerHash();
-    willReturn(mockPassenger).given(mockPassengerService).getPassengerByHash(passengerHash);
-    mockLuggageDto.linear_dimension = 10;
-    mockLuggageDto.weight = 10;
-    mockLuggageDto.linear_dimension_unit = "cm";
-    mockLuggageDto.weight_unit = "kg";
+  public void whenAssignLuggageToPassengerVerifyPassengerServiceGetPassengerByHash() {
+    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
+    willReturn(mockPassenger).given(mockPassengerService).getPassengerByHash(PASSENGER_HASH);
+    mockLuggageDto.linear_dimension = ALLOWED_LINEAR_DIMENSION;
+    mockLuggageDto.weight = ALLOWED_WEIGHT;
+    mockLuggageDto.linear_dimension_unit = LINEAR_DIMENSION_UNIT;
+    mockLuggageDto.weight_unit = WEIGHT_UNIT;
 
-    luggageCheckinService.assignLuggage(passengerHash, mockLuggageDto);
+    luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
 
-    verify(mockPassengerService, times(1)).getPassengerByHash(passengerHash);
+    verify(mockPassengerService, times(1)).getPassengerByHash(PASSENGER_HASH);
+  }
+
+  @Test
+  public void whenAssignLuggageToPassengerVerifyPassengerAddLuggage() {
+    willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
+    willReturn(mockPassenger).given(mockPassengerService).getPassengerByHash(PASSENGER_HASH);
+    mockLuggageDto.linear_dimension = ALLOWED_LINEAR_DIMENSION;
+    mockLuggageDto.weight = ALLOWED_WEIGHT;
+    mockLuggageDto.linear_dimension_unit = LINEAR_DIMENSION_UNIT;
+    mockLuggageDto.weight_unit = WEIGHT_UNIT;
+
+    luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
+
+    verify(mockPassenger, times(1)).addLuggage(any(Luggage.class));
   }
 }

@@ -58,14 +58,14 @@ public class SeatAssignationService {
   private void setSeatAssignationStrategy(String mode) {
     if (this.seatAssignationStrategy == null) {
       switch (mode) {
-        case "RANDOM":
-          this.seatAssignationStrategy = new SeatAssignationRandomStrategy();
-          break;
         case "CHEAPEST":
           this.seatAssignationStrategy = new SeatAssignationCheapestStrategy();
           break;
         case "LEGS":
           this.seatAssignationStrategy = new SeatAssignationLegroomStrategy();
+          break;
+        default:
+          this.seatAssignationStrategy = new SeatAssignationRandomStrategy();
           break;
       }
     }
