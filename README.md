@@ -55,3 +55,5 @@ Dans la story 6, lorsqu'on assigne un siège à un passager, on intègre pas le 
 Dans la story 7, les bagages peuvent être enregistré par n'importe quel passager. Les modifications seront ajouté ultérieurement (pour la prochaine remise).
 
 4.3 Demandes spéciales autorisées par le corps enseignant
+
+Suite à la recommandation du jury, nous avons recommencé le projet à zéro. Ainsi, nous sommes repartis sur de bonnes base et avons établis une bonne cohésion d'équipe.
