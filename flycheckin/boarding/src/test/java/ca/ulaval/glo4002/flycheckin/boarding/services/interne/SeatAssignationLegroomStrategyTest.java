@@ -25,7 +25,10 @@ public class SeatAssignationLegroomStrategyTest {
   private static final String XLARGE_SEAT_NUMBER = "7-C";
   private static final String PASSENGER_SEAT_CLASS = "business";
   private static final String ANOTHER_SEAT_CLASS = "big-front";
-  private Seat smallSeat, mediumSeat, largeSeat, xLargeSeat;
+  private Seat smallSeat;
+  private Seat mediumSeat;
+  private Seat largeSeat;
+  private Seat xLargeSeat;
   private List<Seat> availableSeats;
   private SeatAssignationLegroomStrategy legroomSeatAssignation;
 

@@ -5,9 +5,8 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: flycheckin
-    Description: 
-our checkstyle
+    Checkstyle-Configuration: checkstyle6002
+    Description: none
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
@@ -38,11 +37,15 @@ our checkstyle
     <module name="OneTopLevelClass"/>
     <module name="NoLineWrap"/>
     <module name="EmptyBlock">
+      <property name="severity" value="ignore"/>
       <property name="option" value="TEXT"/>
       <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
     <module name="NeedBraces">
+      <property name="severity" value="ignore"/>
       <property name="allowSingleLineStatement" value="true"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
     <module name="LeftCurly">
       <property name="maxLineLength" value="120"/>
@@ -188,6 +191,12 @@ our checkstyle
       <property name="exceptionVariableName" value="expected"/>
     </module>
     <module name="CommentsIndentation"/>
+    <module name="NeedBraces">
+      <property name="severity" value="ignore"/>
+      <property name="tokens" value="LITERAL_ELSE,LITERAL_IF,LITERAL_FOR,LITERAL_WHILE"/>
+      <property name="allowSingleLineStatement" value="true"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
   </module>
   <module name="FileTabCharacter"/>
 </module>
