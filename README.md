@@ -9,27 +9,35 @@
 
 ## 1 Equipe
 
-**nom     | prenom    | pseudo          | mail**
-- AGBOTON   Charly      chagb		charly.agboton.1@ulaval.ca
-- DORMANN   Valentin    ValentinDORMANN   valentin.dormann@gmail.com
-- KHALLOUD  Siham	      sikha3		siham.khalloud.1@ulaval.ca
-- TCHOUTOUO Hypolyte    hypson		thypson2012@hotmail.ca
-- VOILLOT   Virgil      lloyddsure	voillot.virgil@gmail.com
+|nom     | prenom    | pseudo          | mail|
+| ------ | ----------|---------------- |-----|
+ AGBOTON | Charly | chagb	|	charly.agboton.1@ulaval.ca|
+ DORMANN | Valentin | ValentinDORMANN | valentin.dormann@gmail.com|
+ KHALLOUD | Siham	| sikha3 | siham.khalloud.1@ulaval.ca|
+ TCHOUTOUO | Hypolyte | hypson |	thypson2012@hotmail.ca|
+ VOILLOT | Virgil | lloyddsure | voillot.virgil@gmail.com|
 
 ## 2 Liste des users'story
 
-**no    ¦ nom							 ¦ status**
-- Story1:  Heartbeat : 					 	   terminé
-- Story2:  Réservation: Événement - nouvelle réservation :  	   terminé
-- Story3:  Réservation: Obtenir l'information sur une réservation :  en cours (encore en test)
-- Story4:  Checkin: Enregistrement par un agent : 		   en cours (encore en test)
+|numéro  | nom							 | status|
+| ------ | ---------------- | ----------------------------- |
+ Story1 |  Heartbeat | 					 	   terminé|
+ Story2 | Réservation: Événement - nouvelle réservation |  	   terminé|
+ Story3 | Réservation: Obtenir l'information sur une réservation |  terminé|
+ Story4 | Checkin: Enregistrement par un agent | 		   terminé|
+ Story5 | Checkin: Enregistrement en ligne | 		   terminé|
+ Story6 | Siège: Assignation du siège d'un passager (aléatoire) | 		   terminé|
+ Story7 | Bagage enregistré: Classe économique | 		   terminé|
+ Story8 | Bagages: Obtenir la liste par passager | 		   terminé|
+ Story9 | Siège: Assigner le siège le moins cher | 		   terminé|
+ Story10 | Siège: Assigner le siège en fonction du dégagement | 		   terminé|
 
 ## 3 Résumé
 
 3.1 Comment utiliser l'application
 ```
 mvn clean install
-mvn exex:java -Dreservation.port=8888 -Dboarding.port=9999 app -pl
+mvn exec:java -Dreservation.port=8888 -Dboarding.port=9999 app -pl
 ```
 3.2 Comment éxécuter les tests
 ```
@@ -39,13 +47,10 @@ mvn test
 
 4.1 Violation de principes
 
-Nous avons initialement utilisé une base de donnée XML ce qui a impliqué une perte de temps .
+Nous avons introduit les DTO dans le constructeur des objets dans le module de Réservation. Ce module étant en situation de CRUD, il n'y a pas de domaine d'affaire, ainsi on s'est autorisé de le faire.
 
 4.2 Décisions à communiquer
 
+Dans la story 6, lorsqu'on assigne un siège à un passager, on intègre pas le prix du siège au passager.
 
 4.3 Demandes spéciales autorisées par le corps enseignant
-
-Nous avons utilisé le format JSON pour les liaisons HTTP plutôt que les DTO.
-Nous avons utilisé une architecture trois couches : Resource ( la couche APIRest), Domain (la couche qui contient les modèles et le service), Infrastructure (la couche qui contient toutes les données sous forme de HashMap et les fonctions qui leurs sont associées)
-Une couche ne connait qu'une autre couche de façon unidirrectionelle, la Resource peut appeler le Service qui lui appele le Domain.

@@ -46,7 +46,7 @@ public class ResourceSeatAssignation {
   public Response assignSeatToPassenger(@Context UriInfo uriInfo, SeatAssignationDto seatAssignationDto)
       throws URISyntaxException {
     try {
-      Passenger passenger = passengerService.getPassengerByHashInReservation(seatAssignationDto.passenger_hash);
+      Passenger passenger = passengerService.getPassengerByHash(seatAssignationDto.passenger_hash);
       SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(passenger,
           seatAssignationDto.mode);
       seatAssignationDto = transformSeatAssignationDto(seatAssignationDto, seatAssignation.getSeatNumber());

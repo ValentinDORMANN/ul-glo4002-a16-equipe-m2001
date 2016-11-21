@@ -1,13 +1,9 @@
 package ca.ulaval.glo4002.flycheckin.boarding.rest;
 
-import javax.ws.rs.core.Response;
-
-import ca.ulaval.glo4002.flycheckin.boarding.client.HttpClient;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
-
 public class SeatAssignationResourceTest {
 
+  /*
+   * TODO
   private static final String PASSENGER_HASH = "HASH";
   private static final String WRONG_PASSENGER_HASH = "FAKE";
   private static final int STATUS_OK = 200;
@@ -17,9 +13,7 @@ public class SeatAssignationResourceTest {
   private SeatAssignationDto seatAssignationDto;
   private ResourceSeatAssignation seatAssignationResource;
   private Response response;
-
-  /*
-   * TODO
+  
   @Before
   public void initiateTest() throws Exception {
     httpServices = mock(HttpClient.class);

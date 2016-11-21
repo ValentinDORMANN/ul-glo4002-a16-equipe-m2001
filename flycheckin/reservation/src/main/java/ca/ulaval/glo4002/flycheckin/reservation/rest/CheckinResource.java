@@ -13,8 +13,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
@@ -42,7 +42,7 @@ public class CheckinResource {
       return Response.status(Status.CREATED).location(url).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
-    } catch (FlyCheckinApplicationException | URISyntaxException ex) {
+    } catch (ReservationModuleException | URISyntaxException ex) {
       return Response.status(Status.BAD_REQUEST).build();
     }
   }

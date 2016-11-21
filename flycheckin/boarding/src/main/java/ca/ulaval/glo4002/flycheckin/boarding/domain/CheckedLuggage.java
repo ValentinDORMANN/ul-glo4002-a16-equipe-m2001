@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public class CheckedLuggage extends Luggage {
 
@@ -14,11 +13,11 @@ public class CheckedLuggage extends Luggage {
   private static final double SURPLUS_PRICE = 50;
   private static final int LUGGAGE_WITHOUT_ADDITIONAL_FEE = 1;
   private static final double BASE_PRICE = 0;
-  
+
   public CheckedLuggage(int linearDimension, String linearDimensionUnit, int weight, String weightUnit) {
     super(linearDimension, linearDimensionUnit, weight, weightUnit);
   }
-  
+
   @Override
   public void checkLuggageAllowable() throws ExcededLuggageException {
     checkLuggageWeight();
@@ -34,19 +33,19 @@ public class CheckedLuggage extends Luggage {
     if (getDimensionInCm() > DIMENSION_LIMIT)
       throw new ExcededLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
   }
-  
+
   @Override
   double calculatePrice(int luggageNumber) {
     return (luggageNumber <= LUGGAGE_WITHOUT_ADDITIONAL_FEE) ? BASE_PRICE : SURPLUS_PRICE;
   }
-  
+
   @Override
   public boolean isType(String type) {
     return TYPE.equals(type);
   }
-  
+
   @Override
-  public int getMaxLuggageAllowed(){
+  public int getMaxLuggageAllowed() {
     return MAX_LUGGAGE_ALLOWED;
   }
 }

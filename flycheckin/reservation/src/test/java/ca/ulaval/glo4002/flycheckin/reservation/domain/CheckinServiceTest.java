@@ -2,12 +2,10 @@ package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
@@ -59,7 +57,7 @@ public class CheckinServiceTest {
     checkinService.saveCheckin(mockCheckinDto);
   }
 
-  @Test(expected = FlyCheckinApplicationException.class)
+  @Test(expected = ReservationModuleException.class)
   public void givenWrongPassengerInformationWhenCheckinThenThrowException() {
     willReturn(IS_NOT_VALID).given(mockReservation).isPassengerInfosValid(PASSENGER_HASH);
 

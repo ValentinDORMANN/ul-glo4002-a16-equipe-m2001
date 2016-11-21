@@ -17,9 +17,10 @@ public class SeatAssignationCheapestStrategyTest {
   private static final String SEAT_NUMBER = "16-B";
   private static final String SEAT_CLASS = "economic";
   private static final double EXPENSIVE_SEAT_PRICE = 75.00;
-  private static final String OTHER_SEAT_NUMBER = "20-D";
+  private static final String EXPENSIVE_SEAT_NUMBER = "20-D";
   private static final String ANOTHER_SEAT_CLASS = "otherSeatClass";
-  private Seat seat, otherSeat;
+  private Seat seat;
+  private Seat expensiveSeat;
   private List<Seat> availableSeats;
   private SeatAssignationCheapestStrategy cheapestSeatAssignation;
 
@@ -29,10 +30,10 @@ public class SeatAssignationCheapestStrategyTest {
     seat.setSeatNumber(SEAT_NUMBER);
     seat.setSeatClass(SEAT_CLASS);
     seat.setPrice(SEAT_PRICE);
-    otherSeat = new Seat();
-    otherSeat.setSeatNumber(OTHER_SEAT_NUMBER);
-    otherSeat.setSeatClass(SEAT_CLASS);
-    otherSeat.setPrice(EXPENSIVE_SEAT_PRICE);
+    expensiveSeat = new Seat();
+    expensiveSeat.setSeatNumber(EXPENSIVE_SEAT_NUMBER);
+    expensiveSeat.setSeatClass(SEAT_CLASS);
+    expensiveSeat.setPrice(EXPENSIVE_SEAT_PRICE);
     availableSeats = new ArrayList<Seat>();
     cheapestSeatAssignation = new SeatAssignationCheapestStrategy();
   }
@@ -43,8 +44,8 @@ public class SeatAssignationCheapestStrategyTest {
   }
 
   @Test(expected = NoSeatAvailableException.class)
-  public void givenNonEmptySeatListWhenAssignSeatToPassengerWhoHasWrongseatClassThenReturnException() {
-    availableSeats.add(otherSeat);
+  public void givenNotEmptySeatListWhenAssignSeatToPassengerWhoHasNoSeatAvailableThenReturnException() {
+    availableSeats.add(expensiveSeat);
     availableSeats.add(seat);
 
     cheapestSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS);
@@ -52,7 +53,7 @@ public class SeatAssignationCheapestStrategyTest {
 
   @Test
   public void givenTwoSeatWithSameClassWhenAssignSeatToPassengerWhoHasSeatClassThenAssertSeatAssignIsTheCheapest() {
-    availableSeats.add(otherSeat);
+    availableSeats.add(expensiveSeat);
     availableSeats.add(seat);
 
     String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS);
@@ -62,12 +63,12 @@ public class SeatAssignationCheapestStrategyTest {
 
   @Test
   public void givenListWithOneSeatHasPassengerSeatClassWhenAssignSeatToPassengerThenAssertPassengerGetExpectedSeat() {
-    otherSeat.setSeatClass(ANOTHER_SEAT_CLASS);
-    availableSeats.add(otherSeat);
+    seat.setSeatClass(ANOTHER_SEAT_CLASS);
+    availableSeats.add(expensiveSeat);
     availableSeats.add(seat);
 
     String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS);
 
-    assertEquals(SEAT_NUMBER, seatNumber);
+    assertEquals(EXPENSIVE_SEAT_NUMBER, seatNumber);
   }
 }

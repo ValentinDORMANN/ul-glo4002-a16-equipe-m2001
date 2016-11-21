@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 
 public class CheckinInMemoryTest {
 
@@ -27,7 +27,7 @@ public class CheckinInMemoryTest {
     assertTrue(checkinNumber > CHECKIN_LIST_LIMIT);
   }
 
-  @Test(expected = FlyCheckinApplicationException.class)
+  @Test(expected = ReservationModuleException.class)
   public void givenPassengerAlreadyCheckinWhenDoCheckinThenReturnException() {
     checkinMemory.doPassengerCheckin(PASSENGER_HASH2);
 

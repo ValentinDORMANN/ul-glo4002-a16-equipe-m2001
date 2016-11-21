@@ -1,11 +1,13 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.interne;
 
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
@@ -39,34 +41,34 @@ public class SeatAssignationServiceTest {
         mockSeatAssignationStrategy);
   }
 
-  /*  @Test
+  @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyChooseSeatNumber() {
     seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
-  
+
     verify(mockSeatAssignationStrategy, times(1)).assignSeatNumber(any(), any());
   }
-  
+
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyAssignationCreated() {
     seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
-  
+
     verify(mockSeatAssignation, times(1)).createAssignation(any(String.class), any(String.class), any(Integer.class));
   }
-  
+
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyPersistAssignation() {
     seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
-  
+
     verify(mockSeatAssignationRepository, times(1)).persistSeatAssignation(mockSeatAssignation);
   }
-  
+
   @Test
   public void givenPassengerWhenAssignSeatToPassengerThenReturnSeatAssignationWithPassengerHash() {
     seatAssignationService = new SeatAssignationService(new SeatAssignation(), mockSeatAssignationRepository,
         mockSeatAssignationStrategy);
-  
+
     SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
-  
+
     assertEquals(PASSENGER_HASH, seatAssignation.getPassengerHash());
-  }*/
+  }
 }

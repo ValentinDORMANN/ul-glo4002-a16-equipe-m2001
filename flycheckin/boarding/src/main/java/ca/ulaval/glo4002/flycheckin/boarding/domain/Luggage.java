@@ -19,7 +19,8 @@ public abstract class Luggage {
   private String luggageHash;
   private double price;
 
-  public Luggage(int linearDimension, String linearDimensionUnit, int weight, String weightUnit) throws IllegalArgumentException {
+  public Luggage(int linearDimension, String linearDimensionUnit, int weight, String weightUnit)
+      throws IllegalArgumentException {
     this.dimensionInCm = convertDimensionToCmUnit(linearDimension, linearDimensionUnit);
     this.weightInKg = convertWeightToKgUnit(weight, weightUnit);
     this.luggageHash = UUID.randomUUID().toString();

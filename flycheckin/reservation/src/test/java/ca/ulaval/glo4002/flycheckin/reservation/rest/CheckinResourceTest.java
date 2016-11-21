@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.flycheckin.reservation.rest;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -11,8 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
 public class CheckinResourceTest {
@@ -42,7 +40,7 @@ public class CheckinResourceTest {
 
   @Test
   public void givenIncompletePassengerWhenCheckinThenReturnStatusBadRequest() {
-    willThrow(FlyCheckinApplicationException.class).given(mockCheckinService).saveCheckin(mockCheckinDto);
+    willThrow(ReservationModuleException.class).given(mockCheckinService).saveCheckin(mockCheckinDto);
 
     Response response = checkinResource.createCheckin(mockUriInfo, mockCheckinDto);
 
