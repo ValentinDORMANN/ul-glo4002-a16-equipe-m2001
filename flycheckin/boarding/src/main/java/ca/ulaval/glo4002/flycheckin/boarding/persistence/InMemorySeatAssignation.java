@@ -3,8 +3,8 @@ package ca.ulaval.glo4002.flycheckin.boarding.persistence;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignationRepository;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.AssignationNumberUsedException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.SeatAlreadyAssignedException;
 

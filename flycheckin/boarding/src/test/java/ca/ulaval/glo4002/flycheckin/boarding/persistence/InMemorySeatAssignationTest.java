@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.SeatAssignation;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.AssignationNumberUsedException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.SeatAlreadyAssignedException;
 

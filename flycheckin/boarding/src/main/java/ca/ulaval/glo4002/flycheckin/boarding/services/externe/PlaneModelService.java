@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.PlaneModelHttpClient;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ClassPassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PlaneModelDto;

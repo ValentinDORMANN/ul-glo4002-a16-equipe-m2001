@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.persistence;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 
 public class InMemoryPassenger {

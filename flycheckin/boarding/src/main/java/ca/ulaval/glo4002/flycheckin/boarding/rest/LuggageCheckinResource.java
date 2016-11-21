@@ -15,14 +15,14 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageInfoDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ResultLuggageCheckinDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PassengerService;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.LuggageCheckinService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.interne.luggage.LuggageCheckinService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.interne.passenger.PassengerService;
 
 @Path("")
 public class LuggageCheckinResource {

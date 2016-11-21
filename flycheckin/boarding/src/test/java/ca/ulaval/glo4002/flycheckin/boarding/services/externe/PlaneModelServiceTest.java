@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.PlaneModelHttpClient;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Seat;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ClassPassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PlaneModelDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;

@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.rest.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Luggage;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
 public class LuggageDto {

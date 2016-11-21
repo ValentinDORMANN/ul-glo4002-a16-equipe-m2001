@@ -3,8 +3,8 @@ package ca.ulaval.glo4002.flycheckin.boarding.rest.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Luggage;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 
 public class LuggageInfoDto {
 

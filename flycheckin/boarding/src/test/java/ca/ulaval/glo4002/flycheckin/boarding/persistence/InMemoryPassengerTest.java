@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 
 public class InMemoryPassengerTest {
