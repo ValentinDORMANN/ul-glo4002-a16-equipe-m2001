@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.externe;
+package ca.ulaval.glo4002.flycheckin.boarding.services.external;
 
 import java.util.ArrayList;
 import java.util.List;

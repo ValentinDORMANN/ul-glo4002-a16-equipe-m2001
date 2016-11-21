@@ -21,8 +21,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerExceptio
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageInfoDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ResultLuggageCheckinDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.luggage.LuggageCheckinService;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.passenger.PassengerService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.luggage.LuggageCheckinService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 
 @Path("")
 public class LuggageCheckinResource {

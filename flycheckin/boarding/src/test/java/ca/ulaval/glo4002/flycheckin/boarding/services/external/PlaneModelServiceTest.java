@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.externe;
+package ca.ulaval.glo4002.flycheckin.boarding.services.external;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
@@ -12,6 +12,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ClassPassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PlaneModelDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
+import ca.ulaval.glo4002.flycheckin.boarding.services.external.PlaneModelService;
 
 public class PlaneModelServiceTest {
 

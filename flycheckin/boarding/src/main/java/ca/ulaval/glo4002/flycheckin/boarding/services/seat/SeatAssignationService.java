@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne.seat;
+package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
-import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PlaneModelService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.external.PlaneModelService;
 
 public class SeatAssignationService {
 

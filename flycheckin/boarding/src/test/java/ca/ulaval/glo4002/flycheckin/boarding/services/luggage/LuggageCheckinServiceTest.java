@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne.luggage;
+package ca.ulaval.glo4002.flycheckin.boarding.services.luggage;
 
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Matchers.*;
@@ -12,8 +12,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.luggage.LuggageCheckinService;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.passenger.PassengerService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.luggage.LuggageCheckinService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 
 public class LuggageCheckinServiceTest {
 

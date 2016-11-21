@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne.passenger;
+package ca.ulaval.glo4002.flycheckin.boarding.services.passenger;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;

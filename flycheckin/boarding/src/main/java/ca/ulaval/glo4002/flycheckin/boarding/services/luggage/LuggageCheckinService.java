@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne.luggage;
+package ca.ulaval.glo4002.flycheckin.boarding.services.luggage;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.CheckedLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.passenger.PassengerService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 
 public class LuggageCheckinService {
 

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne.seat;
+package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.seat.SeatAssignationLegroomStrategy;
+import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationLegroomStrategy;
 
 public class SeatAssignationLegroomStrategyTest {
   private static final double SMALL_PRICE = 100.00;

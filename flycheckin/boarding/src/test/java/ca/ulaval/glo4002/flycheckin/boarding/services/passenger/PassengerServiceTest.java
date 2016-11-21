@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne.passenger;
+package ca.ulaval.glo4002.flycheckin.boarding.services.passenger;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
@@ -13,7 +13,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerExceptio
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.passenger.PassengerService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 
 public class PassengerServiceTest {
 

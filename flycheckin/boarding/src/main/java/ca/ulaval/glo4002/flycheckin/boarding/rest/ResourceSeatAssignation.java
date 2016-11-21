@@ -20,8 +20,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemorySeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.passenger.PassengerService;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.seat.SeatAssignationService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationService;
 
 @Path("")
 public class ResourceSeatAssignation {

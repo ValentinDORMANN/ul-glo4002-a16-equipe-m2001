@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne.seat;
+package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
 
 import java.util.ArrayList;
 import java.util.List;

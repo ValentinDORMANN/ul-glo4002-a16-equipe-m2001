@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne.luggage;
+package ca.ulaval.glo4002.flycheckin.boarding.services.luggage;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;

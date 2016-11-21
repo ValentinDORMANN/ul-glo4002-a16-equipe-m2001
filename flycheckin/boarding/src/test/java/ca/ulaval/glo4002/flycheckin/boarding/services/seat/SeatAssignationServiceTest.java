@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.interne.seat;
+package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
@@ -12,6 +12,8 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
+import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationStrategy;
 
 public class SeatAssignationServiceTest {
 
