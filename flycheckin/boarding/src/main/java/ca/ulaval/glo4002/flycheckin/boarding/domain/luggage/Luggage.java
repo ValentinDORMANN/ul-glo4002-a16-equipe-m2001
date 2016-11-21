@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
 import java.util.UUID;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.InvalidUnitException;
 
 public abstract class Luggage {
@@ -46,7 +46,7 @@ public abstract class Luggage {
   }
 
 
-  public void checkLuggageAllowable() throws ExcededLuggageException {}
+  public void checkLuggageAllowable() throws NotAllowableLuggageException {}
 
   private void isValidUnitWeight(String dimmensionUnit) {
     if (!(dimmensionUnit.toLowerCase().equals(KG) || dimmensionUnit.toLowerCase().equals(LBS)))

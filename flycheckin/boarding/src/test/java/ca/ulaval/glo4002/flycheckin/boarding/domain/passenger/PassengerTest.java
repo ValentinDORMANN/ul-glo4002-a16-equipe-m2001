@@ -13,7 +13,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.CarryOnLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.CheckedLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 
 public class PassengerTest {
@@ -62,7 +62,7 @@ public class PassengerTest {
     assertEquals(LIMIT_CHECKED_LUGGAGES, passenger.getLuggages().size());
   }
 
-  @Test(expected = ExcededLuggageException.class)
+  @Test(expected = NotAllowableLuggageException.class)
   public void whenAddMoreThanThreeCheckedLuggagesThenThrowException() {
     for (int index = 0; index < LIMIT_CHECKED_LUGGAGES; index++) {
       passenger.addLuggage(mockCheckedLuggage);
@@ -78,7 +78,7 @@ public class PassengerTest {
     assertEquals(1, passenger.getLuggages().size());
   }
 
-  @Test(expected = ExcededLuggageException.class)
+  @Test(expected = NotAllowableLuggageException.class)
   public void whenAddMoreThanOneCarryOnLuggageThenThrowException() {
     passenger.addLuggage(mockCarryOnLuggage);
     passenger.addLuggage(mockCarryOnLuggage);

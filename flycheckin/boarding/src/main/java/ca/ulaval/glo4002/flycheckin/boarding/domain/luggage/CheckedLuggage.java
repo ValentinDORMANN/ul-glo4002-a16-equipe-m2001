@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 
 public class CheckedLuggage extends Luggage {
 
@@ -19,19 +19,19 @@ public class CheckedLuggage extends Luggage {
   }
 
   @Override
-  public void checkLuggageAllowable() throws ExcededLuggageException {
+  public void checkLuggageAllowable() throws NotAllowableLuggageException {
     checkLuggageWeight();
     checkLuggageDimension();
   }
 
   private void checkLuggageWeight() {
     if (getWeightInKg() > WEIGHT_LIMIT)
-      throw new ExcededLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
+      throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
   }
 
   private void checkLuggageDimension() {
     if (getDimensionInCm() > DIMENSION_LIMIT)
-      throw new ExcededLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
+      throw new NotAllowableLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
   }
 
   @Override

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.luggage.LuggageCheckinService;
@@ -50,14 +50,14 @@ public class LuggageCheckinServiceTest {
     luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
   }
 
-  @Test(expected = ExcededLuggageException.class)
+  @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageOverDimensionWhenAssignLuggageThenThrowException() {
     mockLuggageDto.linear_dimension = OVER_LINEAR_DIMENSION;
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
   }
 
-  @Test(expected = ExcededLuggageException.class)
+  @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageOverWeightWhenAssignLuggageThenThrowException() {
     mockLuggageDto.weight = OVER_WEIGHT;
 

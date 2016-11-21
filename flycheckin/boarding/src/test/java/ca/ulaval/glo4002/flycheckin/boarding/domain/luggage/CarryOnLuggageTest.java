@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 
 public class CarryOnLuggageTest {
 
@@ -14,14 +14,14 @@ public class CarryOnLuggageTest {
   private static final String WEIGHT_UNIT_IN_KG = "kg";
   private CarryOnLuggage carryOnLuggage;
 
-  @Test(expected = ExcededLuggageException.class)
+  @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageWeightInKgOverLimitWhenCheckLuggageAllowableThenThrowException() {
     carryOnLuggage = new CarryOnLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, OVER_WEIGHT_KG, WEIGHT_UNIT_IN_KG);
 
     carryOnLuggage.checkLuggageAllowable();
   }
 
-  @Test(expected = ExcededLuggageException.class)
+  @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageDimensionInCmOverLimitWhenCheckLuggageAllowableThenThrowException() {
     carryOnLuggage = new CarryOnLuggage(OVER_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG, WEIGHT_UNIT_IN_KG);
 

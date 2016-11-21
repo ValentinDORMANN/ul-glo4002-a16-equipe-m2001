@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 
 public class CheckedLuggageTest {
   private static final int WEIGHT_LIMIT_KG = 23;
@@ -19,14 +19,14 @@ public class CheckedLuggageTest {
   private static final String OTHER_LUGGAGE_TYPE = "other";
   private CheckedLuggage checkedLuggage;
 
-  @Test(expected = ExcededLuggageException.class)
+  @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageWeightInKgOverLimitWhenCheckLuggageAllowableThenThrowException() {
     checkedLuggage = new CheckedLuggage(ALLOWED_DIMENSION_CM, DIMENSION_UNIT_IN_CM, OVER_WEIGHT_KG, WEIGHT_UNIT_IN_KG);
 
     checkedLuggage.checkLuggageAllowable();
   }
 
-  @Test(expected = ExcededLuggageException.class)
+  @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageDimensionInCmOverLimitWhenCheckLuggageAllowableThenThrowException() {
     checkedLuggage = new CheckedLuggage(OVER_DIMENSION_CM, DIMENSION_UNIT_IN_CM, ALLOWED_WEIGHT_KG, WEIGHT_UNIT_IN_KG);
 
