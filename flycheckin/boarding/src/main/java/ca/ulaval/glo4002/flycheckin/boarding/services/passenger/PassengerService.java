@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.passenger;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
@@ -12,15 +13,19 @@ public class PassengerService {
   private static final int SINGLE_INDEX = 0;
   private ReservationHttpClient reservationHttpClient;
   private InMemoryPassenger inMemoryPassenger;
+  private PassengerFactory passengerFactory;
 
   public PassengerService() {
     reservationHttpClient = new ReservationHttpClient();
     inMemoryPassenger = new InMemoryPassenger();
+    passengerFactory = new PassengerFactory();
   }
 
-  public PassengerService(ReservationHttpClient reservationHttpClient, InMemoryPassenger inMemoryPassenger) {
+  public PassengerService(ReservationHttpClient reservationHttpClient, InMemoryPassenger inMemoryPassenger,
+      PassengerFactory passengerFactory) {
     this.reservationHttpClient = reservationHttpClient;
     this.inMemoryPassenger = inMemoryPassenger;
+    this.passengerFactory = passengerFactory;
   }
 
   public Passenger getPassengerByHash(String passengerHash) throws NotFoundPassengerException {
@@ -39,7 +44,7 @@ public class PassengerService {
   }
 
   private Passenger createPassengerFromDto(ReservationDto reservationDto) {
-    return new Passenger(reservationDto.flight_number, reservationDto.flight_date,
+    return passengerFactory.createPassenger(reservationDto.flight_number, reservationDto.flight_date,
         reservationDto.passengers[SINGLE_INDEX].passenger_hash, reservationDto.passengers[SINGLE_INDEX].seat_class);
   }
 }

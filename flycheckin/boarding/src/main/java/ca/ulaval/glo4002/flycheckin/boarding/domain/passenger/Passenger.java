@@ -13,6 +13,9 @@ public abstract class Passenger {
   private static final int CHECKED_LUGGAGE_LIMIT = 3;
   private static final int VIP_CHECKED_LUGGAGE_LIMIT = 4;
   private static final int CARRY_ON_LUGGAGE_LIMIT = 1;
+  private static final double VIP_DISCOUNT = 0.95;
+  private static final String CHECKED_LUGGAGE_TYPE = "checked";
+  private static final String CARRY_ON_LUGGAGE_TYPE = "carry-on";
   private String flightNumber;
   private Date flightDate;
   private String passengerHash;
@@ -37,15 +40,29 @@ public abstract class Passenger {
 
   protected abstract double calculateLuggagePrice();
 
-  private void verifyLuggageAllowable(Luggage luggage) {
+  private void verifyLuggageAllowable(Luggage luggage) throws NotAllowableLuggageException {
     verifyLuggageLimitNumberReached(luggage);
     verifyLuggageDimensionAllowable(luggage);
     verifyLuggageWeightAllowable(luggage);
   }
 
-  private void verifyLuggageLimitNumberReached(Luggage luggage) {
-    // TODO
-    // if(isVip)
+  private void verifyLuggageLimitNumberReached(Luggage luggage) throws NotAllowableLuggageException {
+    if (luggage.isType(CARRY_ON_LUGGAGE_TYPE))
+      verifyAnotherCarryOnLuggageAllowable();
+    else
+      verifyAnotherCheckedLuggageAllowable();
+  }
+
+  private void verifyAnotherCarryOnLuggageAllowable() {
+    if (countTypeLuggageAssigned(CARRY_ON_LUGGAGE_TYPE) == CARRY_ON_LUGGAGE_LIMIT)
+      throw new NotAllowableLuggageException();
+  }
+
+  private void verifyAnotherCheckedLuggageAllowable() {
+    if (!isVip && countTypeLuggageAssigned(CHECKED_LUGGAGE_TYPE) == CHECKED_LUGGAGE_LIMIT)
+      throw new NotAllowableLuggageException();
+    else if (isVip && countTypeLuggageAssigned(CHECKED_LUGGAGE_TYPE) == VIP_CHECKED_LUGGAGE_LIMIT)
+      throw new NotAllowableLuggageException();
   }
 
   protected abstract void verifyLuggageDimensionAllowable(Luggage luggage);
@@ -65,7 +82,13 @@ public abstract class Passenger {
     double totalPrice = BASE_PRICE;
     for (Luggage luggage : luggages)
       totalPrice += luggage.getPrice();
+    if (isVip)
+      return appliedVipDiscount(totalPrice);
     return totalPrice;
+  }
+
+  private double appliedVipDiscount(double price) {
+    return price * VIP_DISCOUNT;
   }
 
   public String getPassengerHash() {

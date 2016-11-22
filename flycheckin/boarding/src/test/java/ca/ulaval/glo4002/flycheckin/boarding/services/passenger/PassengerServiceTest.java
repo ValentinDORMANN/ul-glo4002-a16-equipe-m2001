@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.passenger;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
+
 import java.util.Date;
 
 import org.junit.Before;
@@ -9,11 +11,11 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 
 public class PassengerServiceTest {
 
@@ -27,6 +29,7 @@ public class PassengerServiceTest {
   private ReservationDto mockReservationDto;
   private PassengerDto mockPassengerDto;
   private PassengerService passengerService;
+  private PassengerFactory mockPassengerFactory;
 
   @Before
   public void initiateTest() {
@@ -35,7 +38,8 @@ public class PassengerServiceTest {
     mockPassenger = mock(Passenger.class);
     mockReservationDto = mock(ReservationDto.class);
     mockPassengerDto = mock(PassengerDto.class);
-    passengerService = new PassengerService(mockReservationHttpClient, mockInMemoryPassenger);
+    mockPassengerFactory = mock(PassengerFactory.class);
+    passengerService = new PassengerService(mockReservationHttpClient, mockInMemoryPassenger, mockPassengerFactory);
     mockPassengerDto.passenger_hash = HASH;
     mockPassengerDto.seat_class = SEAT_CLASS;
     PassengerDto[] passengersDto = { mockPassengerDto };
