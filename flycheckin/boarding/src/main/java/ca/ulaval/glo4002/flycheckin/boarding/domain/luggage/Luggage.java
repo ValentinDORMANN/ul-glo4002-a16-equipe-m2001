@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
 import java.util.UUID;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.InvalidUnitException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 
 public abstract class Luggage {
 
@@ -45,8 +45,8 @@ public abstract class Luggage {
     return (int) Math.ceil(weight * WEIGHT_CONVERSION_RATE);
   }
 
-
-  public void checkLuggageAllowable() throws NotAllowableLuggageException {}
+  public void checkLuggageAllowable() throws NotAllowableLuggageException {
+  }
 
   private void isValidUnitWeight(String dimmensionUnit) {
     if (!(dimmensionUnit.toLowerCase().equals(KG) || dimmensionUnit.toLowerCase().equals(LBS)))
@@ -56,11 +56,21 @@ public abstract class Luggage {
   public boolean isType(String type) {
     return TYPE.equals(type);
   }
-  
+
   abstract double calculatePrice(int luggageNumber);
+
+  public void verifyAllowableDimension(int limit) {
+    if (dimensionInCm > limit)
+      throw new NotAllowableLuggageException();
+  }
 
   public int getDimensionInCm() {
     return dimensionInCm;
+  }
+
+  public void verifyAllowableWeight(int limit) {
+    if (weightInKg > limit)
+      throw new NotAllowableLuggageException();
   }
 
   public int getWeightInKg() {
