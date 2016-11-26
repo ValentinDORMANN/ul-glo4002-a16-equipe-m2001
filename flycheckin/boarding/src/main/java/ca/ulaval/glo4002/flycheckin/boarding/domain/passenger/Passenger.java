@@ -14,8 +14,8 @@ public abstract class Passenger {
   private static final int VIP_CHECKED_LUGGAGE_LIMIT = 4;
   private static final int CARRY_ON_LUGGAGE_LIMIT = 1;
   private static final double VIP_DISCOUNT = 0.95;
-  private static final String CHECKED_LUGGAGE_TYPE = "checked";
-  private static final String CARRY_ON_LUGGAGE_TYPE = "carry-on";
+  protected static final String CHECKED_LUGGAGE_TYPE = "checked";
+  protected static final String CARRY_ON_LUGGAGE_TYPE = "carry-on";
   private String flightNumber;
   private Date flightDate;
   private String passengerHash;
@@ -34,11 +34,12 @@ public abstract class Passenger {
 
   public void addLuggage(Luggage luggage) throws NotAllowableLuggageException {
     verifyLuggageAllowable(luggage);
-    luggage.setPrice(calculateLuggagePrice());
+    double luggagePrice = calculateLuggagePrice(luggage);
+    luggage.setPrice(luggagePrice);
     luggages.add(luggage);
   }
 
-  protected abstract double calculateLuggagePrice();
+  protected abstract double calculateLuggagePrice(Luggage luggage);
 
   private void verifyLuggageAllowable(Luggage luggage) throws NotAllowableLuggageException {
     verifyLuggageLimitNumberReached(luggage);
@@ -69,13 +70,13 @@ public abstract class Passenger {
 
   protected abstract void verifyLuggageWeightAllowable(Luggage luggage);
 
-  private int countTypeLuggageAssigned(String type) {
-    int checkedLuggageNumber = 0;
+  protected int countTypeLuggageAssigned(String type) {
+    int typeLuggageNumber = 0;
     for (int i = 0; i < luggages.size(); i++) {
       if (luggages.get(i).isType(type))
-        checkedLuggageNumber++;
+        typeLuggageNumber++;
     }
-    return checkedLuggageNumber;
+    return typeLuggageNumber;
   }
 
   public double getTotalPrice() {
