@@ -4,4 +4,5 @@ public class CheckinDto {
 
   public String passenger_hash;
   public String by;
+  public boolean vip;
 }

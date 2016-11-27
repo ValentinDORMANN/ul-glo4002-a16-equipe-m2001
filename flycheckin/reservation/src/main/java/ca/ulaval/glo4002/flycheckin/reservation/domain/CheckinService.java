@@ -19,6 +19,7 @@ public class CheckinService {
   public int saveCheckin(CheckinDto checkinDto) throws ReservationModuleException {
     String hash = checkinDto.passenger_hash;
     String by = checkinDto.by;
+    boolean isVip = checkinDto.vip;
     Reservation reservation = reservationInMemory.getReservationByPassengerHash(hash);
     reservation.validateCheckinPeriod(by);
     if (reservation.isPassengerInfosValid(hash))
