@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
@@ -15,24 +16,45 @@ public class SeatAssignationLandScapeStrategy extends SeatAssignationStrategy {
   }
 
   private Seat getSeatWithBestView(List<Seat> availableSeats) {
-    Seat selectedSeat = availableSeats.get(0);
+    availableSeats = filterAvailableSeatsByLandScape(availableSeats);
+    Seat selectedSeat = selectCheapestSeat(availableSeats);
     return selectedSeat;
   }
 
   private List<Seat> filterAvailableSeatsByLandScape(List<Seat> availableSeats) {
-    return null;
+    availableSeats = filterAvailableSeatsWithWindowView(availableSeats);
+    availableSeats = filterAvailableSeatsWithClearView(availableSeats);
+    return availableSeats;
   }
 
   private List<Seat> filterAvailableSeatsWithClearView(List<Seat> availableSeats) {
-    return null;
+    List<Seat> filteredSeatList = new ArrayList<Seat>();
+    for (Seat seat : availableSeats) {
+      if (seat.isClearView())
+        filteredSeatList.add(seat);
+    }
+    if (filteredSeatList.isEmpty())
+      return availableSeats;
+    return filteredSeatList;
   }
 
   private List<Seat> filterAvailableSeatsWithWindowView(List<Seat> availableSeats) {
-    return null;
+    List<Seat> filteredSeatList = new ArrayList<Seat>();
+    for (Seat seat : availableSeats) {
+      if (seat.isNearWindow())
+        filteredSeatList.add(seat);
+    }
+    if (filteredSeatList.isEmpty())
+      return availableSeats;
+    return filteredSeatList;
   }
 
   private Seat selectCheapestSeat(List<Seat> availableSeats) {
     Seat selectedSeat = availableSeats.get(0);
+    for (Seat seat : availableSeats) {
+      if (seat.isCheaperThan(selectedSeat))
+        selectedSeat = seat;
+    }
     return selectedSeat;
   }
 }
