@@ -28,7 +28,7 @@ public class PassengerService {
     this.passengerFactory = passengerFactory;
   }
 
-  public Passenger getPassengerByHash(String passengerHash) throws NotFoundPassengerException {
+  public Passenger getPassengerByHash(String passengerHash) throws BoardingModuleException {
     try {
       return inMemoryPassenger.getPassengerByHash(passengerHash);
     } catch (NotFoundPassengerException ex) {
