@@ -17,6 +17,14 @@ public class BusinessPassenger extends Passenger {
   }
 
   @Override
+  protected double calculateLuggagePrice(Luggage luggage) {
+    if (luggage.isType(CHECKED_LUGGAGE_TYPE)) {
+
+    }
+    return 0;
+  }
+
+  @Override
   protected void verifyLuggageDimensionAllowable(Luggage luggage) {
     luggage.verifyAllowableDimension(CHECKED_LUGGAGE_MAX_CM);
   }

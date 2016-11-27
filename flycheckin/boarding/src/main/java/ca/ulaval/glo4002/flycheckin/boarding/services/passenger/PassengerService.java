@@ -45,6 +45,7 @@ public class PassengerService {
 
   private Passenger createPassengerFromDto(ReservationDto reservationDto) {
     return passengerFactory.createPassenger(reservationDto.flight_number, reservationDto.flight_date,
-        reservationDto.passengers[SINGLE_INDEX].passenger_hash, reservationDto.passengers[SINGLE_INDEX].seat_class);
+        reservationDto.passengers[SINGLE_INDEX].passenger_hash, reservationDto.passengers[SINGLE_INDEX].seat_class,
+        reservationDto.passengers[SINGLE_INDEX].isVip);
   }
 }
