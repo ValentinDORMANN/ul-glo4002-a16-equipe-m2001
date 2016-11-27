@@ -16,7 +16,7 @@ public class PassengerDto {
   public String seat_class;
   public boolean child;
   @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-  public boolean vip;
+  public boolean isVip;
   public String passenger_hash;
 
   public PassengerDto() {
