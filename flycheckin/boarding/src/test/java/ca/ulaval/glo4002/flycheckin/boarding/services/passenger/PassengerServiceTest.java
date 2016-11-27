@@ -24,6 +24,7 @@ public class PassengerServiceTest {
   private static final String FLIGHT_NUMBER = "NUMBER";
   private static final Date FLIGHT_DATE = new Date();
   private static final String SEAT_CLASS = "SEAT_CLASS";
+  private static final boolean IS_VIP = true;
 
   private ReservationHttpClient reservationHttpClientMock;
   private InMemoryPassenger inMemoryPassengerMock;
@@ -45,6 +46,7 @@ public class PassengerServiceTest {
     passengerService = new PassengerService(reservationHttpClientMock, inMemoryPassengerMock, passengerFactoryMock);
     passengerDtoMock.passenger_hash = HASH;
     passengerDtoMock.seat_class = SEAT_CLASS;
+    passengerDtoMock.isVip = IS_VIP;
     PassengerDto[] passengersDto = { passengerDtoMock };
     reservationDtoMock.passengers = passengersDto;
     reservationDtoMock.flight_date = FLIGHT_DATE;
@@ -86,6 +88,9 @@ public class PassengerServiceTest {
   public void givenPassengerHashWithNoLuggageWhenGetPassengerByHashThenGetGoogPassengerFromReservation() {
     willThrow(NotFoundPassengerException.class).given(inMemoryPassengerMock).getPassengerByHash(HASH);
     willReturn(reservationDtoMock).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
+    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS,
+        IS_VIP);
+    willReturn(HASH).given(passengerMock).getPassengerHash();
 
     Passenger passenger = passengerService.getPassengerByHash(HASH);
 
