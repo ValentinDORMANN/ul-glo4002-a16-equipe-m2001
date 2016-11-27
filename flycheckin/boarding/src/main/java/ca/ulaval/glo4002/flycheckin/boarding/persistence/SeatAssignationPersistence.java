@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationReposito
 import ca.ulaval.glo4002.flycheckin.boarding.exception.AssignationNumberUsedException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.SeatAlreadyAssignedException;
 
-public class InMemorySeatAssignation implements SeatAssignationRepository {
+public class SeatAssignationPersistence implements SeatAssignationRepository {
 
   private static final String STRING_EMPTY = "";
   private static final String ERROR_SEAT_UNASSIGNED = "Error: This passenger seat is already assigned.";

@@ -5,35 +5,35 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
+import ca.ulaval.glo4002.flycheckin.boarding.persistence.PassengerLuggagePersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class PassengerService {
 
   private static final int SINGLE_INDEX = 0;
   private ReservationHttpClient reservationHttpClient;
-  private InMemoryPassenger inMemoryPassenger;
+  private PassengerLuggagePersistence passengerLuggagePersistence;
   private PassengerFactory passengerFactory;
 
   public PassengerService() {
     reservationHttpClient = new ReservationHttpClient();
-    inMemoryPassenger = new InMemoryPassenger();
+    passengerLuggagePersistence = new PassengerLuggagePersistence();
     passengerFactory = new PassengerFactory();
   }
 
-  public PassengerService(ReservationHttpClient reservationHttpClient, InMemoryPassenger inMemoryPassenger,
+  public PassengerService(ReservationHttpClient reservationHttpClient, PassengerLuggagePersistence passengerLuggagePersistence,
       PassengerFactory passengerFactory) {
     this.reservationHttpClient = reservationHttpClient;
-    this.inMemoryPassenger = inMemoryPassenger;
+    this.passengerLuggagePersistence = passengerLuggagePersistence;
     this.passengerFactory = passengerFactory;
   }
 
   public Passenger getPassengerByHash(String passengerHash) throws BoardingModuleException {
     try {
-      return inMemoryPassenger.getPassengerByHash(passengerHash);
+      return passengerLuggagePersistence.getPassengerByHash(passengerHash);
     } catch (NotFoundPassengerException ex) {
       Passenger passenger = getPassengerByHashInReservation(passengerHash);
-      inMemoryPassenger.savePassenger(passenger);
+      passengerLuggagePersistence.savePassengerLuggage(passenger);
       return passenger;
     }
   }

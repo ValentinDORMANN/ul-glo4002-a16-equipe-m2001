@@ -14,7 +14,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.boarding.persistence.InMemoryPassenger;
+import ca.ulaval.glo4002.flycheckin.boarding.persistence.PassengerLuggagePersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
@@ -27,7 +27,7 @@ public class PassengerServiceTest {
   private static final boolean IS_VIP = true;
 
   private ReservationHttpClient reservationHttpClientMock;
-  private InMemoryPassenger inMemoryPassengerMock;
+  private PassengerLuggagePersistence inMemoryPassengerMock;
   private Passenger passengerMock;
   private ReservationDto reservationDtoMock;
   private PassengerDto passengerDtoMock;
@@ -38,7 +38,7 @@ public class PassengerServiceTest {
   @Before
   public void initiateTest() {
     reservationHttpClientMock = mock(ReservationHttpClient.class);
-    inMemoryPassengerMock = mock(InMemoryPassenger.class);
+    inMemoryPassengerMock = mock(PassengerLuggagePersistence.class);
     passengerMock = mock(Passenger.class);
     reservationDtoMock = mock(ReservationDto.class);
     passengerDtoMock = mock(PassengerDto.class);
