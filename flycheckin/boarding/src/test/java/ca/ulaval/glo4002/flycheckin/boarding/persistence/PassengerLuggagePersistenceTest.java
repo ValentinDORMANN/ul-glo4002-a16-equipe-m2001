@@ -1,7 +1,8 @@
 package ca.ulaval.glo4002.flycheckin.boarding.persistence;
 
-import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,23 +26,14 @@ public class PassengerLuggagePersistenceTest {
 
   @Test(expected = NotFoundPassengerException.class)
   public void givenEmptyPersistenceWhenFindPassengerByHashThenThrowException() {
-    passengerLuggagePersistence.getPassengerByHash(HASH);
-  }
-
-  @Test
-  public void givenPassengerHashInPersistenceWhenGetPassengerByHashThenReturnIt() {
-    passengerLuggagePersistence.savePassengerLuggage(mockPassenger);
-
-    Passenger passenger = passengerLuggagePersistence.getPassengerByHash(HASH);
-
-    assertEquals(mockPassenger, passenger);
+    passengerLuggagePersistence.getPassengerLuggage(HASH);
   }
 
   @Test(expected = NotFoundPassengerException.class)
   public void givenWrongHashWhenGetPassengerAlreadyInMapThenThrowException() {
     passengerLuggagePersistence.savePassengerLuggage(mockPassenger);
 
-    passengerLuggagePersistence.getPassengerByHash(WRONG_HASH);
+    passengerLuggagePersistence.getPassengerLuggage(WRONG_HASH);
   }
 
   @After

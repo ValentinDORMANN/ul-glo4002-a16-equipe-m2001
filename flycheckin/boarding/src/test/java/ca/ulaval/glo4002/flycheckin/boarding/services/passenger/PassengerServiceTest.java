@@ -54,18 +54,7 @@ public class PassengerServiceTest {
   }
 
   @Test
-  public void givenPassengerHashWhenGetPassengerThenReturnGoodPassenger() {
-    willReturn(passengerMock).given(inMemoryPassengerMock).getPassengerByHash(HASH);
-    willReturn(HASH).given(passengerMock).getPassengerHash();
-
-    Passenger passenger = passengerService.getPassengerByHash(HASH);
-
-    assertEquals(HASH, passenger.getPassengerHash());
-  }
-
-  @Test
   public void givenPassengerHashWithNoLuggageWhenGetPassengerByHashThenVerifyPassengerIsGetInReservation() {
-    willThrow(NotFoundPassengerException.class).given(inMemoryPassengerMock).getPassengerByHash(HASH);
     willReturn(reservationDtoMock).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
 
     passengerService.getPassengerByHash(HASH);
@@ -75,7 +64,6 @@ public class PassengerServiceTest {
 
   @Test
   public void givenValidPassengerHashWhenGetPassengerByHashThenVerifyPassengerIsCreated() {
-    willThrow(NotFoundPassengerException.class).given(inMemoryPassengerMock).getPassengerByHash(HASH);
     willReturn(reservationDtoMock).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
 
     passengerService.getPassengerByHash(HASH);
@@ -86,7 +74,6 @@ public class PassengerServiceTest {
 
   @Test
   public void givenPassengerHashWithNoLuggageWhenGetPassengerByHashThenGetGoogPassengerFromReservation() {
-    willThrow(NotFoundPassengerException.class).given(inMemoryPassengerMock).getPassengerByHash(HASH);
     willReturn(reservationDtoMock).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
     willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS,
         IS_VIP);
@@ -99,7 +86,6 @@ public class PassengerServiceTest {
 
   @Test(expected = NotFoundPassengerException.class)
   public void givenStoredReservationWhenGetPassengerNotInThisReservationThenThrowException() {
-    willThrow(NotFoundPassengerException.class).given(inMemoryPassengerMock).getPassengerByHash(HASH);
     willThrow(NotFoundPassengerException.class).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
 
     passengerService.getPassengerByHash(HASH);

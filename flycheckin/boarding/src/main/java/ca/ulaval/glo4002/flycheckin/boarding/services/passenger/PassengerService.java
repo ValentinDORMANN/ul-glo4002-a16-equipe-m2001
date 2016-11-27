@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.PassengerLuggagePersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
@@ -21,21 +20,17 @@ public class PassengerService {
     passengerFactory = new PassengerFactory();
   }
 
-  public PassengerService(ReservationHttpClient reservationHttpClient, PassengerLuggagePersistence passengerLuggagePersistence,
-      PassengerFactory passengerFactory) {
+  public PassengerService(ReservationHttpClient reservationHttpClient,
+      PassengerLuggagePersistence passengerLuggagePersistence, PassengerFactory passengerFactory) {
     this.reservationHttpClient = reservationHttpClient;
     this.passengerLuggagePersistence = passengerLuggagePersistence;
     this.passengerFactory = passengerFactory;
   }
 
   public Passenger getPassengerByHash(String passengerHash) throws BoardingModuleException {
-    try {
-      return passengerLuggagePersistence.getPassengerByHash(passengerHash);
-    } catch (NotFoundPassengerException ex) {
-      Passenger passenger = getPassengerByHashInReservation(passengerHash);
-      passengerLuggagePersistence.savePassengerLuggage(passenger);
-      return passenger;
-    }
+    Passenger passenger = getPassengerByHashInReservation(passengerHash);
+    passengerLuggagePersistence.savePassengerLuggage(passenger);
+    return passenger;
   }
 
   private Passenger getPassengerByHashInReservation(String passengerHash) throws BoardingModuleException {
