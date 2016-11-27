@@ -10,12 +10,28 @@ public class SeatAssignationLandScapeStrategy extends SeatAssignationStrategy {
   @Override
   public String assignSeatNumber(List<Seat> availableSeats, String seatClass) throws NoSeatAvailableException {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
-    // Seat selectedSeat = getSeatWithBestView(availableSeats);
-    // return selectedSeat.getSeatNumber();
-    return null;
+    Seat selectedSeat = getSeatWithBestView(availableSeats);
+    return selectedSeat.getSeatNumber();
   }
 
   private Seat getSeatWithBestView(List<Seat> availableSeats) {
+    Seat selectedSeat = availableSeats.get(0);
+    return selectedSeat;
+  }
+
+  private List<Seat> filterAvailableSeatsByLandScape(List<Seat> availableSeats) {
+    return null;
+  }
+
+  private List<Seat> filterAvailableSeatsWithClearView(List<Seat> availableSeats) {
+    return null;
+  }
+
+  private List<Seat> filterAvailableSeatsWithWindowView(List<Seat> availableSeats) {
+    return null;
+  }
+
+  private Seat selectCheapestSeat(List<Seat> availableSeats) {
     Seat selectedSeat = availableSeats.get(0);
     return selectedSeat;
   }
