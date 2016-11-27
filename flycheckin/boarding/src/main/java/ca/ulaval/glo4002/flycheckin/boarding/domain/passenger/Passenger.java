@@ -29,7 +29,7 @@ public abstract class Passenger {
     this.passengerHash = passengerHash;
     this.seatClass = seatClass;
     this.isVip = isVip;
-    luggages = new ArrayList<Luggage>();
+    this.luggages = new ArrayList<Luggage>();
   }
 
   public void addLuggage(Luggage luggage) throws NotAllowableLuggageException {
