@@ -39,8 +39,6 @@ public abstract class Passenger {
     luggages.add(luggage);
   }
 
-  protected abstract double calculateLuggagePrice(Luggage luggage);
-
   private void verifyLuggageAllowable(Luggage luggage) throws NotAllowableLuggageException {
     verifyLuggageLimitNumberReached(luggage);
     verifyLuggageDimensionAllowable(luggage);
@@ -69,6 +67,8 @@ public abstract class Passenger {
   protected abstract void verifyLuggageDimensionAllowable(Luggage luggage);
 
   protected abstract void verifyLuggageWeightAllowable(Luggage luggage);
+
+  protected abstract double calculateLuggagePrice(Luggage luggage);
 
   protected int countTypeLuggageAssigned(String type) {
     int typeLuggageNumber = 0;
