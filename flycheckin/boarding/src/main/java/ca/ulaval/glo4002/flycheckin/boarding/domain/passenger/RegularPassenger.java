@@ -8,6 +8,7 @@ public class RegularPassenger extends Passenger{
   
   private static final int FREE_CHECKED_LUGGAGE_LIMIT = 1;
   private static final double EXCEEDED_CHECKED_LUGGAGE_PRICE = 50;
+  private static final double CARRY_ON_LUGGAGE_PRICE = 30;
   private static final int CHECKED_LUGGAGE_WEIGHT_MAX_KG = 23;
   private static final int CHECKED_LUGGAGE_DIMENSION_MAX_CM = 158;
 
@@ -16,9 +17,11 @@ public class RegularPassenger extends Passenger{
   }
 
   @Override
-  protected double calculateLuggagePrice() {
-    // TODO Auto-generated method stub
-    return 0;
+  protected double calculateLuggagePrice(Luggage luggage) {
+    if(luggage.isType(CHECKED_LUGGAGE_TYPE))
+      return EXCEEDED_CHECKED_LUGGAGE_PRICE;
+    else
+      return CARRY_ON_LUGGAGE_PRICE;
   }
 
   @Override
