@@ -18,7 +18,7 @@ public class RegularPassenger extends Passenger{
 
   @Override
   protected double calculateLuggagePrice(Luggage luggage) {
-    if(luggage.isType(CHECKED_LUGGAGE_TYPE))
+    if (luggage.isType(CHECKED_LUGGAGE_TYPE))
       return EXCEEDED_CHECKED_LUGGAGE_PRICE;
     else
       return CARRY_ON_LUGGAGE_PRICE;
