@@ -12,6 +12,7 @@ public class Passenger {
   private String firstName;
   private String lastName;
   private int age;
+  private boolean isVip;
   private String passportNumber;
   private String seatClass;
 
@@ -33,7 +34,11 @@ public class Passenger {
   }
 
   public boolean isChild() {
-    return this.age < CHILD_AGE;
+    return age < CHILD_AGE;
+  }
+
+  public void changeVipStatus(boolean isVip) {
+    this.isVip = isVip;
   }
 
   public int getAge() {
@@ -58,5 +63,9 @@ public class Passenger {
 
   public String getSeatClass() {
     return seatClass;
+  }
+
+  public boolean getIsVip() {
+    return isVip;
   }
 }

@@ -16,25 +16,26 @@ public class PassengerTest {
   private static final String LAST_NAME = "LastName";
   private static final String PASSPORT_NUMBER = "NUMBER";
   private static final String EMPTY_STRING = "";
+  private static final boolean IS_VIP = true;
+  private PassengerDto passengerDtoMock;
+  private PassengerDto wrongPassengerDtoMock;
   private Passenger passenger;
   private Passenger fakePassenger;
-  private PassengerDto mockPassengerDto;
-  private PassengerDto mockWrongPassengerDto;
 
   @Before
   public void initiateTest() {
-    mockPassengerDto = mock(PassengerDto.class);
-    mockWrongPassengerDto = mock(PassengerDto.class);
-    mockPassengerDto.age = CHILD_AGE;
-    mockPassengerDto.first_name = FIRST_NAME;
-    mockPassengerDto.last_name = LAST_NAME;
-    mockPassengerDto.passport_number = PASSPORT_NUMBER;
-    mockWrongPassengerDto.age = ADULT_AGE;
-    mockWrongPassengerDto.first_name = EMPTY_STRING;
-    mockWrongPassengerDto.last_name = EMPTY_STRING;
-    mockWrongPassengerDto.passport_number = EMPTY_STRING;
-    passenger = new Passenger(mockPassengerDto);
-    fakePassenger = new Passenger(mockWrongPassengerDto);
+    passengerDtoMock = mock(PassengerDto.class);
+    wrongPassengerDtoMock = mock(PassengerDto.class);
+    passengerDtoMock.age = CHILD_AGE;
+    passengerDtoMock.first_name = FIRST_NAME;
+    passengerDtoMock.last_name = LAST_NAME;
+    passengerDtoMock.passport_number = PASSPORT_NUMBER;
+    wrongPassengerDtoMock.age = ADULT_AGE;
+    wrongPassengerDtoMock.first_name = EMPTY_STRING;
+    wrongPassengerDtoMock.last_name = EMPTY_STRING;
+    wrongPassengerDtoMock.passport_number = EMPTY_STRING;
+    passenger = new Passenger(passengerDtoMock);
+    fakePassenger = new Passenger(wrongPassengerDtoMock);
   }
 
   @Test
@@ -54,24 +55,24 @@ public class PassengerTest {
 
   @Test
   public void givenIncompleteFirstNameWhenCheckIfValidThenReturnFalse() {
-    mockPassengerDto.first_name = EMPTY_STRING;
-    passenger = new Passenger(mockPassengerDto);
+    passengerDtoMock.first_name = EMPTY_STRING;
+    passenger = new Passenger(passengerDtoMock);
 
     assertFalse(passenger.isValid());
   }
 
   @Test
   public void givenIncompleteLastNameWhenCheckIfValidThenReturnFalse() {
-    mockPassengerDto.last_name = EMPTY_STRING;
-    passenger = new Passenger(mockPassengerDto);
+    passengerDtoMock.last_name = EMPTY_STRING;
+    passenger = new Passenger(passengerDtoMock);
 
     assertFalse(passenger.isValid());
   }
 
   @Test
   public void givenIncompletePassportNumberWhenCheckIfValidThenReturnFalse() {
-    mockPassengerDto.passport_number = EMPTY_STRING;
-    passenger = new Passenger(mockPassengerDto);
+    passengerDtoMock.passport_number = EMPTY_STRING;
+    passenger = new Passenger(passengerDtoMock);
 
     assertFalse(passenger.isValid());
   }
@@ -79,5 +80,17 @@ public class PassengerTest {
   @Test
   public void givenWrongPassengerWhenCheckIfValidThenReturnFalse() {
     assertFalse(fakePassenger.isValid());
+  }
+
+  @Test
+  public void givenNewPassengerWhenGetVipStatusThenReturnFalse() {
+    assertFalse(passenger.getIsVip());
+  }
+
+  @Test
+  public void givenVipPassengerWhenGetVipStatusTHenReturnTrue() {
+    passenger.changeVipStatus(IS_VIP);
+
+    assertTrue(passenger.getIsVip());
   }
 }

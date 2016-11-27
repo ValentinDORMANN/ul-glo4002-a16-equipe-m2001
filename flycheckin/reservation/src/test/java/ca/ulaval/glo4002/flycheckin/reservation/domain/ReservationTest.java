@@ -25,9 +25,9 @@ public class ReservationTest {
   private static final Calendar CALENDAR = Calendar.getInstance();
   private static final Date SELF_CHECKIN_START_TIME = initiateDateByHour(-48, false);
   private static final Date SELF_CHECKIN_END_TIME = initiateDateByHour(-6, true);
-  private ReservationInMemory mockReservationInMemory;
-  private ReservationDto mockReservationDto;
-  private Passenger mockPassenger;
+  private ReservationInMemory reservationInMemoryMock;
+  private ReservationDto reservationDtoMock;
+  private Passenger passengerMock;
   private List<Passenger> passengers;
   private Reservation reservation;
 
@@ -40,19 +40,19 @@ public class ReservationTest {
 
   @Before
   public void initiateTest() {
-    mockReservationInMemory = mock(ReservationInMemory.class);
-    mockReservationDto = mock(ReservationDto.class);
-    mockPassenger = mock(Passenger.class);
-    mockReservationDto.reservation_number = RESERVATION_NUMBER;
+    reservationInMemoryMock = mock(ReservationInMemory.class);
+    reservationDtoMock = mock(ReservationDto.class);
+    passengerMock = mock(Passenger.class);
+    reservationDtoMock.reservation_number = RESERVATION_NUMBER;
     passengers = new ArrayList<Passenger>();
-    passengers.add(mockPassenger);
-    reservation = new Reservation(mockReservationInMemory, mockReservationDto, passengers);
-    willReturn(IS_GOOD_PASSENGER).given(mockPassenger).hasThisHash(PASSENGER_HASH);
+    passengers.add(passengerMock);
+    reservation = new Reservation(reservationInMemoryMock, reservationDtoMock, passengers);
+    willReturn(IS_GOOD_PASSENGER).given(passengerMock).hasThisHash(PASSENGER_HASH);
   }
 
   @Test
   public void givenValidPassengerHashWhenGetPassengerByHashThenReturnPassenger() {
-    assertEquals(mockPassenger, reservation.getPassengerByHash(PASSENGER_HASH));
+    assertEquals(passengerMock, reservation.getPassengerByHash(PASSENGER_HASH));
   }
 
   @Test(expected = NotFoundPassengerException.class)
@@ -64,7 +64,7 @@ public class ReservationTest {
   public void whenReadReservationByNumberThenVerifyReservationInMemoryGetReservation() {
     reservation.readReservationByNumber(RESERVATION_NUMBER);
 
-    verify(mockReservationInMemory).getReservationByNumber(RESERVATION_NUMBER);
+    verify(reservationInMemoryMock).getReservationByNumber(RESERVATION_NUMBER);
   }
 
   @Test(expected = NotTimeToCheckinException.class)

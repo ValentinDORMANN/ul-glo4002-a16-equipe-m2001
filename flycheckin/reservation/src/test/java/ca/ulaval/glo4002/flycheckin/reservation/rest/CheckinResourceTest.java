@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.flycheckin.reservation.rest;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -18,31 +20,31 @@ public class CheckinResourceTest {
   private static final int BAD_REQUEST = 400;
   private static final int NOT_FOUND = 404;
   private CheckinService mockCheckinService;
+  private UriInfo uriInfoMock;
+  private CheckinDto checkinDtoMock;
   private CheckinResource checkinResource;
-  private UriInfo mockUriInfo;
-  private CheckinDto mockCheckinDto;
 
   @Before
   public void initiateTest() {
     mockCheckinService = mock(CheckinService.class);
     checkinResource = new CheckinResource(mockCheckinService);
-    mockCheckinDto = mock(CheckinDto.class);
+    checkinDtoMock = mock(CheckinDto.class);
   }
 
   @Test
   public void givenPassengerHashNotInMemoryWhenCheckinThenReturnStatusNotFound() {
-    willThrow(NotFoundPassengerException.class).given(mockCheckinService).saveCheckin(mockCheckinDto);
+    willThrow(NotFoundPassengerException.class).given(mockCheckinService).saveCheckin(checkinDtoMock);
 
-    Response response = checkinResource.createCheckin(mockUriInfo, mockCheckinDto);
+    Response response = checkinResource.createCheckin(uriInfoMock, checkinDtoMock);
 
     assertEquals(NOT_FOUND, response.getStatus());
   }
 
   @Test
   public void givenIncompletePassengerWhenCheckinThenReturnStatusBadRequest() {
-    willThrow(ReservationModuleException.class).given(mockCheckinService).saveCheckin(mockCheckinDto);
+    willThrow(ReservationModuleException.class).given(mockCheckinService).saveCheckin(checkinDtoMock);
 
-    Response response = checkinResource.createCheckin(mockUriInfo, mockCheckinDto);
+    Response response = checkinResource.createCheckin(uriInfoMock, checkinDtoMock);
 
     assertEquals(BAD_REQUEST, response.getStatus());
   }

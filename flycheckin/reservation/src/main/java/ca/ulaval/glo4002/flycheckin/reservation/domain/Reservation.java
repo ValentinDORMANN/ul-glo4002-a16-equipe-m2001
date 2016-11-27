@@ -97,6 +97,10 @@ public class Reservation {
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
   }
 
+  public void changePassengerVipStatus(String hash, boolean isVip) {
+    getPassengerByHash(hash).changeVipStatus(isVip);
+  }
+
   public int getReservationNumber() {
     return reservationNumber;
   }
