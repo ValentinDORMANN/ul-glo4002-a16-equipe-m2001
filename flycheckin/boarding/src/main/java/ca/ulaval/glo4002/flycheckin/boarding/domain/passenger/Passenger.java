@@ -66,6 +66,15 @@ public abstract class Passenger {
       throw new NotAllowableLuggageException();
   }
 
+  private void verifyAnotherCarryOnLuggageAllowable2(Luggage luggage) {
+    luggage.checkLuggageAllowable(countTypeLuggageAssigned(CARRY_ON_LUGGAGE_TYPE), isVip);
+  }
+
+  private void verifyAnotherCheckedLuggageAllowable2(Luggage luggage) {
+    luggage.checkLuggageAllowable(countTypeLuggageAssigned(CHECKED_LUGGAGE_TYPE), isVip);
+    ;
+  }
+
   protected abstract void verifyLuggageDimensionAllowable(Luggage luggage);
 
   protected abstract void verifyLuggageWeightAllowable(Luggage luggage);
