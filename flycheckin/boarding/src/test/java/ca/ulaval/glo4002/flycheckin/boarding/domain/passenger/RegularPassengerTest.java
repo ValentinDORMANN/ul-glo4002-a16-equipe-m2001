@@ -1,13 +1,10 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.passenger;
 
-import static org.mockito.Mockito.*;
-
 import java.util.Date;
 
 import org.junit.Before;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.CarryOnLuggage;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.CheckedLuggage;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 
 public class RegularPassengerTest {
 
@@ -18,15 +15,60 @@ public class RegularPassengerTest {
   private static final boolean VIP_STATUS = false;
   private static final double DELTA = 0.01;
 
-  private CarryOnLuggage carryOnLuggageMock;
-  private CheckedLuggage checkedLuggageMock;
+  private Luggage luggageMock;
 
   private RegularPassenger regularPassenger;
 
   @Before
   public void initiateTest() {
-    carryOnLuggageMock = mock(CarryOnLuggage.class);
-    checkedLuggageMock = mock(CheckedLuggage.class);
     regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS);
+  }
+
+  public void test1() {
+
+  }
+
+  public void test2() {
+
+  }
+
+  public void test3() {
+
+  }
+
+  public void test4() {
+
+  }
+
+  public void test5() {
+
+  }
+
+  public void test6() {
+
+  }
+
+  public void test7() {
+
+  }
+
+  public void test8() {
+
+  }
+
+  private Luggage simulateStandardCarryOnLuggage(Luggage luggage) {
+    return luggage;
+  }
+
+  private Luggage simulateUnusualCarryOnLuggage(Luggage luggage) {
+    return luggage;
+  }
+
+  private Luggage simulateStandardCheckedLuggage(Luggage luggage) {
+    return luggage;
+  }
+
+  private Luggage simulateUnusualCheckedLuggage(Luggage luggage) {
+    return luggage;
   }
 }

@@ -3,17 +3,12 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.passenger;
 import java.util.Date;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 
 public class BusinessPassenger extends Passenger {
 
   private static final int FREE_CHECKED_LUGGAGE_LIMIT = 2;
-  private static final int CHECKED_LUGGAGE_MAX_KG = 30;
-  private static final int CHECKED_LUGGAGE_MAX_CM = 158;
-  private static final int CARRY_ON_LUGGAGE_MAX_KG = 10;
-  private static final int CARRY_ON_LUGGAGE_MAX_CM = 118;
-  private static final double EXCEEDING_CHECKED_LUGGAGE_PRICE = 50;
-  private static final double CARRY_ON_LUGGAGE_PRICE = 30;
-  private static final double FREE = 0;
+  private static final int CHECKED_LUGGAGE_WEIGHT_MAX_KG = 30;
 
   public BusinessPassenger(String flightNumber, Date flightDate, String passengerHash, String seatClass,
       boolean isVip) {
@@ -21,30 +16,14 @@ public class BusinessPassenger extends Passenger {
   }
 
   @Override
-  protected double calculateLuggagePrice(Luggage luggage) {
-    if (luggage.isType(CHECKED_LUGGAGE_TYPE)) {
-      if (countTypeLuggageAssigned(CHECKED_LUGGAGE_TYPE) < FREE_CHECKED_LUGGAGE_LIMIT)
-        return FREE;
-      else
-        return EXCEEDING_CHECKED_LUGGAGE_PRICE;
-    }
-    return CARRY_ON_LUGGAGE_PRICE;
+  protected void calculateLuggagePrice(Luggage luggage) {
+    if (countFreeLuggage() < FREE_CHECKED_LUGGAGE_LIMIT)
+      luggage.calculatePrice();
   }
 
   @Override
-  protected void verifyLuggageDimensionAllowable(Luggage luggage) {
-    if (luggage.isType(CHECKED_LUGGAGE_TYPE))
-      luggage.verifyAllowableDimension(CHECKED_LUGGAGE_MAX_CM);
-    else
-      luggage.verifyAllowableDimension(CARRY_ON_LUGGAGE_MAX_CM);
+  protected void verifyLuggageHasStandardDimension(Luggage luggage) throws NotAllowableLuggageException {
+    luggage.verifyAllowableDimension();
+    luggage.verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_MAX_KG);
   }
-
-  @Override
-  protected void verifyLuggageWeightAllowable(Luggage luggage) {
-    if (luggage.isType(CHECKED_LUGGAGE_TYPE))
-      luggage.verifyAllowableWeight(CHECKED_LUGGAGE_MAX_KG);
-    else
-      luggage.verifyAllowableWeight(CARRY_ON_LUGGAGE_MAX_KG);
-  }
-
 }

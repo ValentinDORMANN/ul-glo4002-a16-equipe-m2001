@@ -32,9 +32,7 @@ public class LuggageCheckinService {
   }
 
   private Luggage createCheckedLuggage(LuggageDto luggageDto) throws NotAllowableLuggageException {
-    CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto.linear_dimension, luggageDto.linear_dimension_unit,
-        luggageDto.weight, luggageDto.weight_unit);
-    checkedLuggage.checkLuggageAllowable();
+    CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto.linear_dimension, luggageDto.weight);
     return checkedLuggage;
   }
 }

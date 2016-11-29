@@ -39,7 +39,7 @@ public class BusinessPassengerTest {
   @Test(expected = NotAllowableLuggageException.class)
   public void givenCarryOnLuggageTooLongWhenAddLuggageThenThrowException() {
     willReturn(false).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
-    willThrow(NotAllowableLuggageException.class).given(luggageMock).verifyAllowableDimension(CARRY_ON_LUGGAGE_MAX_CM);
+    willThrow(NotAllowableLuggageException.class).given(luggageMock).verifyAllowableDimension();
 
     businessPassenger.addLuggage(luggageMock);
   }
@@ -80,7 +80,7 @@ public class BusinessPassengerTest {
   @Test(expected = NotAllowableLuggageException.class)
   public void givenCheckedLuggageTooLongWhenAddLuggageThenThrowException() {
     willReturn(true).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
-    willThrow(NotAllowableLuggageException.class).given(luggageMock).verifyAllowableDimension(CHECKED_LUGGAGE_MAX_CM);
+    willThrow(NotAllowableLuggageException.class).given(luggageMock).verifyAllowableDimension();
 
     businessPassenger.addLuggage(luggageMock);
   }

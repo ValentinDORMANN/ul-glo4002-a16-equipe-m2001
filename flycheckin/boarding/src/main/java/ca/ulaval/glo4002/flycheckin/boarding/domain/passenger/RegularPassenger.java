@@ -15,14 +15,14 @@ public class RegularPassenger extends Passenger {
   }
 
   @Override
-  protected double calculateLuggagePrice(Luggage luggage) {
-    return 0;
+  protected void calculateLuggagePrice(Luggage luggage) {
+    if (countFreeLuggage() < FREE_CHECKED_LUGGAGE_LIMIT)
+      luggage.calculatePrice();
   }
 
   @Override
-  protected verifyLuggageHasStandardDimension(Luggage luggage) throws NotAllowableLuggageException{
+  protected void verifyLuggageHasStandardDimension(Luggage luggage) throws NotAllowableLuggageException {
     luggage.verifyAllowableDimension();
     luggage.verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_MAX_KG);
   }
-
 }

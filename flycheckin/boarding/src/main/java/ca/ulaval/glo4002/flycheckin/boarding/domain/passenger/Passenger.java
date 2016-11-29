@@ -33,19 +33,15 @@ public abstract class Passenger {
   }
 
   public void addLuggage(Luggage luggage) throws NotAllowableLuggageException {
-    verifyLuggageAllowable(luggage);
-    double luggagePrice = calculateLuggagePrice(luggage);
-    luggage.setPrice(luggagePrice);
+    verifyLuggageAllowableByNumber(luggage);
+    verifyLuggageHasStandardDimension(luggage);
+    calculateLuggagePrice(luggage);
     luggages.add(luggage);
   }
 
-  private void verifyLuggageAllowable(Luggage luggage) throws NotAllowableLuggageException {
-    verifyLuggageLimitNumberReached(luggage);
-    verifyLuggageDimensionAllowable(luggage);
-    verifyLuggageWeightAllowable(luggage);
-  }
+  protected abstract void verifyLuggageHasStandardDimension(Luggage luggage) throws NotAllowableLuggageException;
 
-  private void verifyLuggageLimitNumberReached(Luggage luggage) throws NotAllowableLuggageException {
+  private void verifyLuggageAllowableByNumber(Luggage luggage) throws NotAllowableLuggageException {
     if (luggage.isType(CARRY_ON_LUGGAGE_TYPE))
       verifyAnotherCarryOnLuggageAllowable();
     else
@@ -64,11 +60,7 @@ public abstract class Passenger {
       throw new NotAllowableLuggageException();
   }
 
-  protected abstract void verifyLuggageDimensionAllowable(Luggage luggage);
-
-  protected abstract void verifyLuggageWeightAllowable(Luggage luggage);
-
-  protected abstract double calculateLuggagePrice(Luggage luggage);
+  protected abstract void calculateLuggagePrice(Luggage luggage);
 
   protected int countTypeLuggageAssigned(String type) {
     int typeLuggageNumber = 0;
@@ -77,6 +69,15 @@ public abstract class Passenger {
         typeLuggageNumber++;
     }
     return typeLuggageNumber;
+  }
+
+  protected int countFreeLuggage() {
+    int freeLuggage = 0;
+    for (int i = 0; i < luggages.size(); i++) {
+      if (luggages.get(i).isFree())
+        freeLuggage++;
+    }
+    return freeLuggage;
   }
 
   public double getTotalPrice() {
