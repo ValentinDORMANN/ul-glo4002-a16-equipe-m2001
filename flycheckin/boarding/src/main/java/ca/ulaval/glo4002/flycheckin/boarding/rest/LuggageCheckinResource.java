@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.InvalidUnitException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
@@ -27,8 +28,12 @@ import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService
 
 @Path("")
 public class LuggageCheckinResource {
-
-  private static final boolean ALLOWED = true;
+	
+	private static final String CM = "cm";
+	  private static final String KG = "kg";
+	 private static final double DIMENSION_CONVERSION_RATE =  2.5484;
+	  private static final double WEIGHT_CONVERSION_RATE = 0.46;
+	  private static final boolean ALLOWED = true;
   private static final boolean NOT_ALLOWED = false;
   private LuggageCheckinService luggageCheckinService;
   private PassengerService passengerService;
@@ -58,13 +63,16 @@ public class LuggageCheckinResource {
   public Response checkinLuggage(@Context UriInfo uriInfo, @PathParam("passenger_hash") String passengerHash,
       LuggageDto luggageDto) throws URISyntaxException {
     try {
+    	convertLuggageDto(luggageDto);
       String luggageHash = luggageCheckinService.assignLuggage(passengerHash, luggageDto);
       URI location = createUrlLocation(uriInfo, passengerHash, luggageHash);
       return Response.status(Status.CREATED).location(location).entity(createAllowedLuggageDto()).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
-    } catch (NotAllowableLuggageException | NotCheckedinException ex) {
-      return Response.status(Status.OK).entity(createNotAllowedLuggageDto(ex.getMessage())).build();
+    } catch (InvalidUnitException ex) {
+        return Response.status(Status.BAD_REQUEST).build();
+    }catch (NotAllowableLuggageException | NotCheckedinException ex) {
+        return Response.status(Status.OK).entity(createNotAllowedLuggageDto(ex.getMessage())).build();
     }
   }
 
@@ -85,4 +93,20 @@ public class LuggageCheckinResource {
     resultLuggageCheckinDto.refusation_reason = message;
     return resultLuggageCheckinDto;
   }
+  private void convertLuggageDto(LuggageDto luggageDto)throws InvalidUnitException{
+	  convertDimensionDto(luggageDto);
+	  convertWeightDto(luggageDto);
+  }
+
+private void convertWeightDto(LuggageDto luggageDto)throws InvalidUnitException {
+	if(!luggageDto.weight_unit.equals(KG))
+		luggageDto.weight *= WEIGHT_CONVERSION_RATE;
+	
+}
+
+private void convertDimensionDto(LuggageDto luggageDto) throws InvalidUnitException{
+    if (!luggageDto.linear_dimension_unit.equals(CM))
+    	luggageDto.linear_dimension *= DIMENSION_CONVERSION_RATE;
+	
+}
 }

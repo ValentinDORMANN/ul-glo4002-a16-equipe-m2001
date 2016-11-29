@@ -4,48 +4,35 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageExcept
 
 public class CheckedLuggage extends Luggage {
 
-  private static final String TYPE = "checked";
-  private static final String LUGGAGE_DIMENSION_NOT_ALLOWED = "The size of luggage is over boundary";
-  private static final String LUGGAGE_WEIGHT_NOT_ALLOWED = "The weight of luggage is over boundary";
-  private static final int WEIGHT_LIMIT = 23;
-  private static final int DIMENSION_LIMIT = 158;
-  private static final int MAX_LUGGAGE_ALLOWED = 3;
-  private static final double SURPLUS_PRICE = 50;
-  private static final int LUGGAGE_WITHOUT_ADDITIONAL_FEE = 1;
-  private static final double BASE_PRICE = 0;
+	private static final String TYPE = "checked";
+	private static final int DIMENSION_LIMIT = 158;
+	private static final double SURPLUS_PRICE = 50;
 
-  public CheckedLuggage(int linearDimension, String linearDimensionUnit, int weight, String weightUnit) {
-    super(linearDimension, linearDimensionUnit, weight, weightUnit);
-  }
+	public CheckedLuggage(int linearDimension, int weight) {
+		super(linearDimension, weight);
+	}
 
-  @Override
-  public void checkLuggageAllowable() throws NotAllowableLuggageException {
-    checkLuggageWeight();
-    checkLuggageDimension();
-  }
+	@Override
+	public void calculatePrice() {
+		this.setPrice(SURPLUS_PRICE);
+	}
 
-  private void checkLuggageWeight() {
-    if (getWeightInKg() > WEIGHT_LIMIT)
-      throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
-  }
+	@Override
+	public boolean isType(String type) {
+		return TYPE.equals(type);
+	}
 
-  private void checkLuggageDimension() {
-    if (getDimensionInCm() > DIMENSION_LIMIT)
-      throw new NotAllowableLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
-  }
+	@Override
+	public void verifyAllowableDimension() throws NotAllowableLuggageException {
+		if (getDimensionInCm() > DIMENSION_LIMIT)
+			throw new NotAllowableLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
 
-  @Override
-  double calculatePrice(int luggageNumber) {
-    return (luggageNumber <= LUGGAGE_WITHOUT_ADDITIONAL_FEE) ? BASE_PRICE : SURPLUS_PRICE;
-  }
+	}
 
-  @Override
-  public boolean isType(String type) {
-    return TYPE.equals(type);
-  }
+	@Override
+	public void verifyAllowableWeight(double limit) throws NotAllowableLuggageException {
+		if (getWeightInKg() > limit)
+			throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
 
-  @Override
-  public int getMaxLuggageAllowed() {
-    return MAX_LUGGAGE_ALLOWED;
-  }
+	}
 }

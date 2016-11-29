@@ -2,93 +2,52 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
 import java.util.UUID;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.InvalidUnitException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 
 public abstract class Luggage {
 
-  private static final String TYPE = "";
-  private static final double DIMENSION_CONVERSION_RATE = (double) 158 / 62;
-  private static final double WEIGHT_CONVERSION_RATE = (double) 23 / 50;
-  private static final String CM = "cm";
-  private static final String KG = "kg";
-  private static final String PO = "po";
-  private static final String LBS = "lbs";
-  private int dimensionInCm;
-  private int weightInKg;
-  private String luggageHash;
-  private double price;
+	protected static final String LUGGAGE_DIMENSION_NOT_ALLOWED = "The size of luggage is over boundary";
+	protected static final String LUGGAGE_WEIGHT_NOT_ALLOWED = "The weight of luggage is over boundary";
+	private int dimensionInCm;
+	private int weightInKg;
+	private String luggageHash;
+	private double price;
 
-  public Luggage(int linearDimension, String linearDimensionUnit, int weight, String weightUnit)
-      throws IllegalArgumentException {
-    this.dimensionInCm = convertDimensionToCmUnit(linearDimension, linearDimensionUnit);
-    this.weightInKg = convertWeightToKgUnit(weight, weightUnit);
-    this.luggageHash = UUID.randomUUID().toString();
-  }
+	public Luggage(int linearDimension, int weight) throws IllegalArgumentException {
+		this.luggageHash = UUID.randomUUID().toString();
+		this.price = 0;
+	}
 
-  private int convertDimensionToCmUnit(int dimension, String dimmensionUnit) throws InvalidUnitException {
-    isValidUnitDimension(dimmensionUnit);
-    if (dimmensionUnit.equals(CM))
-      return dimension;
-    return (int) Math.ceil(dimension * DIMENSION_CONVERSION_RATE);
-  }
+	public abstract boolean isType(String type);
 
-  private void isValidUnitDimension(String dimmensionUnit) {
-    if (!(dimmensionUnit.toLowerCase().equals(CM) || dimmensionUnit.toLowerCase().equals(PO)))
-      throw new InvalidUnitException();
-  }
+	public abstract void calculatePrice();
 
-  private int convertWeightToKgUnit(int weight, String weightUnit) throws InvalidUnitException {
-    isValidUnitWeight(weightUnit);
-    if (weightUnit.equals(KG))
-      return weight;
-    return (int) Math.ceil(weight * WEIGHT_CONVERSION_RATE);
-  }
+	public abstract void verifyAllowableDimension()throws NotAllowableLuggageException;
 
-  public void checkLuggageAllowable() throws NotAllowableLuggageException {
-  }
+	public int getDimensionInCm() {
+		return dimensionInCm;
+	}
 
-  private void isValidUnitWeight(String dimmensionUnit) {
-    if (!(dimmensionUnit.toLowerCase().equals(KG) || dimmensionUnit.toLowerCase().equals(LBS)))
-      throw new InvalidUnitException();
-  }
+	public abstract void verifyAllowableWeight(double limit)throws NotAllowableLuggageException;
 
-  public boolean isType(String type) {
-    return TYPE.equals(type);
-  }
+	public int getWeightInKg() {
+		return weightInKg;
+	}
 
-  abstract double calculatePrice(int luggageNumber);
+	public String getLuggageHash() {
+		return luggageHash;
+	}
 
-  public void verifyAllowableDimension(int limit) {
-    if (dimensionInCm > limit)
-      throw new NotAllowableLuggageException();
-  }
+	public void setPrice(double price) {
+		this.price = price;
+	}
 
-  public int getDimensionInCm() {
-    return dimensionInCm;
-  }
-
-  public void verifyAllowableWeight(int limit) {
-    if (weightInKg > limit)
-      throw new NotAllowableLuggageException();
-  }
-
-  public int getWeightInKg() {
-    return weightInKg;
-  }
-
-  public String getLuggageHash() {
-    return luggageHash;
-  }
-
-  public void setPrice(double price) {
-    this.price = price;
-  }
-
-  abstract int getMaxLuggageAllowed();
-
-  public double getPrice() {
-    return price;
-  }
+	public double getPrice() {
+		return price;
+	}
+	
+	public boolean isFree(){
+		return this.price==0?true:false;
+	}
 
 }
