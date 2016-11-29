@@ -20,7 +20,7 @@ public class CarryOnLuggage extends Luggage {
   @Override
   public void verifyLuggageAllowable() throws NotAllowableLuggageException {
     verifyAllowableWeight(0);
-    verifyAllowableDimension(0);
+    verifyAllowableDimension();
   }
 
   private void verifyAllowableWeight(int limit) {
@@ -28,7 +28,7 @@ public class CarryOnLuggage extends Luggage {
       throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
   }
 
-  private void verifyAllowableDimension(int limit) {
+  private void verifyAllowableDimension() {
     if (getDimensionInCm() > DIMENSION_LIMIT)
       throw new NotAllowableLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
   }
@@ -41,10 +41,5 @@ public class CarryOnLuggage extends Luggage {
   @Override
   public boolean isType(String type) {
     return TYPE.equals(type);
-  }
-  
-  @Override
-  public int getMaxLuggageAllowed(){
-    return MAX_LUGGAGE_ALLOWED;
   }
 }
