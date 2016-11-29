@@ -11,7 +11,6 @@ public class CheckedLuggageTest {
   private static final int OVER_WEIGHT_KG = 24;
   private static final int ALLOWED_WEIGHT_KG = 22;
   private static final int OVER_DIMENSION_CM = 159;
-  private static final int DIMENSION_LIMIT_CM = 158;
   private static final int ALLOWED_DIMENSION_CM = 157;
   private static final String LUGGAGE_TYPE = "checked";
   private static final String OTHER_LUGGAGE_TYPE = "other";
