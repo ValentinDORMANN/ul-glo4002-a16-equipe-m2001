@@ -13,22 +13,22 @@ public class CarryOnLuggage extends Luggage {
   private static final int MAX_LUGGAGE_ALLOWED = 1;
   private static final int BASE_PRICE = 30;
   
-  public CarryOnLuggage(int linearDimension, String linearDimensionUnit, int weight, String weightUnit) {
-    super(linearDimension, linearDimensionUnit, weight, weightUnit);
+  public CarryOnLuggage(int linearDimension, int weight) {
+    super(linearDimension, weight);
   }
   
   @Override
-  public void checkLuggageAllowable() throws NotAllowableLuggageException {
-    checkLuggageWeight();
-    checkLuggageDimension();
+  public void verifyLuggageAllowable() throws NotAllowableLuggageException {
+    verifyAllowableWeight(0);
+    verifyAllowableDimension(0);
   }
 
-  private void checkLuggageWeight() {
+  private void verifyAllowableWeight(int limit) {
     if (getWeightInKg() > WEIGHT_LIMIT)
       throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
   }
 
-  private void checkLuggageDimension() {
+  private void verifyAllowableDimension(int limit) {
     if (getDimensionInCm() > DIMENSION_LIMIT)
       throw new NotAllowableLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
   }
