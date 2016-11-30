@@ -13,6 +13,8 @@ public abstract class Luggage {
 
   public Luggage(int linearDimension, int weight) throws IllegalArgumentException {
     this.luggageHash = UUID.randomUUID().toString();
+    this.dimensionInCm = linearDimension;
+    this.weightInKg = weight;
     this.price = 0;
   }
 
