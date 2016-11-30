@@ -14,12 +14,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageE
 
 public class BusinessPassengerTest {
 
-  private static final double CARRY_ON_LUGGAGE_PRICE = 30;
-  private static final double CHECKED_LUGGAGE_PRICE = 50;
   private static final int CHECKED_LUGGAGE_MAX_KG = 30;
-  private static final int CHECKED_LUGGAGE_MAX_CM = 158;
-  private static final int CARRY_ON_LUGGAGE_MAX_KG = 10;
-  private static final int CARRY_ON_LUGGAGE_MAX_CM = 118;
   private static final String CHECKED_LUGGAGE_TYPE = "checked";
   private static final String CARRY_ON_LUGGAGE_TYPE = "carry-on";
   private static final String FLIGHT_NUMBER = "AAAA";
@@ -34,6 +29,13 @@ public class BusinessPassengerTest {
   public void initiateTest() {
     luggageMock = mock(Luggage.class);
     businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS);
+  }
+
+  @Test(expected = NotAllowableLuggageException.class)
+  public void test1() {
+    simulateUnusualCarryOnLuggage();
+
+    regularPassenger.addLuggage(luggageMock);
   }
 
   @Test(expected = NotAllowableLuggageException.class)
@@ -113,5 +115,21 @@ public class BusinessPassengerTest {
 
     verify(luggageMock, times(2)).setPrice(0);
     verify(luggageMock, times(1)).setPrice(CHECKED_LUGGAGE_PRICE);
+  }
+
+  private void givenStandardCarryOnLuggage(Luggage luggage) {
+  }
+
+  private void givenUnusualCarryOnLuggage() {
+    doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableDimension();
+    doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
+  }
+
+  private void givenStandardCheckedLuggage(Luggage luggage) {
+
+  }
+
+  private void givenUnusualCheckedLuggage(Luggage luggage) {
+
   }
 }

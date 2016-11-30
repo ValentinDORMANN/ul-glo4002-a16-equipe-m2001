@@ -4,48 +4,50 @@ import java.util.UUID;
 
 public abstract class Luggage {
 
-	protected static final String LUGGAGE_DIMENSION_NOT_ALLOWED = "The size of luggage is over boundary";
-	protected static final String LUGGAGE_WEIGHT_NOT_ALLOWED = "The weight of luggage is over boundary";
-	private int dimensionInCm;
-	private int weightInKg;
-	private String luggageHash;
-	private double price;
+  protected static final String LUGGAGE_DIMENSION_NOT_ALLOWED = "The size of luggage is over boundary";
+  protected static final String LUGGAGE_WEIGHT_NOT_ALLOWED = "The weight of luggage is over boundary";
+  private int dimensionInCm;
+  private int weightInKg;
+  private String luggageHash;
+  private double price;
 
-	public Luggage(int linearDimension, int weight) throws IllegalArgumentException {
-		this.luggageHash = UUID.randomUUID().toString();
-		this.price = 0;
-	}
+  public Luggage(int linearDimension, int weight) throws IllegalArgumentException {
+    this.luggageHash = UUID.randomUUID().toString();
+    this.price = 0;
+  }
 
-	public abstract boolean isType(String type);
+  public abstract boolean isType(String type);
 
-	public abstract void calculatePrice();
+  public abstract void calculatePrice();
 
-	public abstract void verifyAllowableDimension()throws NotAllowableLuggageException;
+  public abstract void assignLuggageFree();
 
-	public int getDimensionInCm() {
-		return dimensionInCm;
-	}
+  public abstract void verifyAllowableDimension() throws NotAllowableLuggageException;
 
-	public abstract void verifyAllowableWeight(double limit)throws NotAllowableLuggageException;
+  public int getDimensionInCm() {
+    return dimensionInCm;
+  }
 
-	public int getWeightInKg() {
-		return weightInKg;
-	}
+  public abstract void verifyAllowableWeight(double limit) throws NotAllowableLuggageException;
 
-	public String getLuggageHash() {
-		return luggageHash;
-	}
+  public int getWeightInKg() {
+    return weightInKg;
+  }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+  public String getLuggageHash() {
+    return luggageHash;
+  }
 
-	public double getPrice() {
-		return price;
-	}
-	
-	public boolean isFree(){
-		return this.price==0?true:false;
-	}
+  public void setPrice(double price) {
+    this.price = price;
+  }
+
+  public double getPrice() {
+    return price;
+  }
+
+  public boolean isFree() {
+    return this.price == 0 ? true : false;
+  }
 
 }

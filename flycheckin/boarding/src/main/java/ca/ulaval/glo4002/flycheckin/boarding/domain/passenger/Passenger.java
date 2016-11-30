@@ -16,6 +16,7 @@ public abstract class Passenger {
   private static final double VIP_DISCOUNT = 0.95;
   protected static final String CHECKED_LUGGAGE_TYPE = "checked";
   protected static final String CARRY_ON_LUGGAGE_TYPE = "carry-on";
+
   private String flightNumber;
   private Date flightDate;
   private String passengerHash;
