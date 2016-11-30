@@ -100,13 +100,13 @@ public class LuggageCheckinResource {
 
 private void convertWeightDto(LuggageDto luggageDto)throws InvalidUnitException {
 	if(!luggageDto.weight_unit.equals(KG))
-		luggageDto.weight *= WEIGHT_CONVERSION_RATE;
+		Math.ceil(luggageDto.weight *= WEIGHT_CONVERSION_RATE);
 	
 }
 
 private void convertDimensionDto(LuggageDto luggageDto) throws InvalidUnitException{
     if (!luggageDto.linear_dimension_unit.equals(CM))
-    	luggageDto.linear_dimension *= DIMENSION_CONVERSION_RATE;
+    	Math.ceil(luggageDto.linear_dimension *= DIMENSION_CONVERSION_RATE);
 	
 }
 }

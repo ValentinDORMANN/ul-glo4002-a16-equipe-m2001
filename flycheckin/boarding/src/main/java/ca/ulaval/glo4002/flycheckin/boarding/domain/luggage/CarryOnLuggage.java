@@ -2,14 +2,12 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
 public class CarryOnLuggage extends Luggage {
 
-  private static final String LUGGAGE_DIMENSION_NOT_ALLOWED = "The size of luggage is over boundary";
-  private static final String LUGGAGE_WEIGHT_NOT_ALLOWED = "The weight of luggage is over boundary";
   private static final int WEIGHT_LIMIT = 10;
   private static final int DIMENSION_LIMIT = 118;
   private static final String TYPE = "carry-on";
   private static final int BASE_PRICE = 30;
 
-  public CarryOnLuggage(double linearDimension, double weight) {
+  public CarryOnLuggage(int linearDimension, int weight) {
     super(linearDimension, weight);
   }
 

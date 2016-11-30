@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class CarryOnLuggageTest {
 
-  private static final double WEIGHT_LIMIT_KG = 10;
+  private static final int WEIGHT_LIMIT_KG = 10;
   private static final int DIMENSION_LIMIT_CM = 118;
   private static final double BASE_PRICE = 30;
   private static final double DELTA = 0.01;
