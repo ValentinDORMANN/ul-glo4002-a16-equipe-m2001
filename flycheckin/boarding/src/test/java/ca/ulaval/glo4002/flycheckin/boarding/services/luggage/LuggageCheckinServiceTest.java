@@ -3,10 +3,14 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.luggage;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
+import org.junit.Test;
 
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 
 public class LuggageCheckinServiceTest {
 
@@ -19,46 +23,47 @@ public class LuggageCheckinServiceTest {
   private static final String TYPE = "checked";
   private static final int OVER_LINEAR_DIMENSION = 1000;
   private Passenger mockPassenger;
-  private LuggageDto mockLuggageDto;
+  private LuggageDto luggageDto = new LuggageDto();
   private PassengerService mockPassengerService;
   private LuggageCheckinService luggageCheckinService;
 
   @Before
   public void initiateTest() {
-    mockLuggageDto = mock(LuggageDto.class);
-    mockLuggageDto.linear_dimension = ALLOWED_LINEAR_DIMENSION;
-    mockLuggageDto.linear_dimension_unit = LINEAR_DIMENSION_UNIT;
-    mockLuggageDto.weight = ALLOWED_WEIGHT;
-    mockLuggageDto.weight_unit = WEIGHT_UNIT;
-    mockLuggageDto.type = TYPE;
+	assignedDtoAttribut(luggageDto);
     mockPassengerService = mock(PassengerService.class);
     mockPassenger = mock(Passenger.class);
-    luggageCheckinService = new LuggageCheckinService(mockPassengerService, mockPassenger, mockLuggageDto);
+    luggageCheckinService = new LuggageCheckinService(mockPassengerService, mockPassenger, luggageDto);
+  }
+  private void assignedDtoAttribut(LuggageDto luggageDto){
+	  	luggageDto.linear_dimension = ALLOWED_LINEAR_DIMENSION;
+	    luggageDto.linear_dimension_unit = LINEAR_DIMENSION_UNIT;
+	   // luggageDto.weight = ALLOWED_WEIGHT;
+	    luggageDto.weight_unit = WEIGHT_UNIT;
+	    luggageDto.type = TYPE;	  
   }
 
-  /* TODO
-  // @Test(expected = NotFoundPassengerException.class)
+  @Test(expected = NotFoundPassengerException.class)
   public void givenInexistantPassengerHashWhenAssignLuggageThenThrowException() {
-    willThrow(NotFoundPassengerException.class).given(mockPassengerService).getPassengerByHash(PASSENGER_HASH);
+    doThrow(NotFoundPassengerException.class).when(mockPassengerService).getPassengerByHash(PASSENGER_HASH);
   
-    luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
+    luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
   }
   
-  // @Test(expected = NotAllowableLuggageException.class)
+/* @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageOverDimensionWhenAssignLuggageThenThrowException() {
-    mockLuggageDto.linear_dimension = OVER_LINEAR_DIMENSION;
+    luggageDto.linear_dimension = OVER_LINEAR_DIMENSION;
   
-    luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
-  }
+    luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
+  }*/
   
-  // @Test(expected = NotAllowableLuggageException.class)
+ /*  @Test(expected = BoardingModuleException.class)
   public void givenLuggageOverWeightWhenAssignLuggageThenThrowException() {
-    mockLuggageDto.weight = OVER_WEIGHT;
+    luggageDto.weight = OVER_WEIGHT;
   
-    luggageCheckinService.assignLuggage(PASSENGER_HASH, mockLuggageDto);
-  }
+    luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
+  }*/
   
-  @Test
+ /* @Test
   public void whenAssignLuggageToPassengerVerifyPassengerServiceGetPassengerByHash() {
     willReturn(PASSENGER_HASH).given(mockPassenger).getPassengerHash();
     willReturn(mockPassenger).given(mockPassengerService).getPassengerByHash(PASSENGER_HASH);
