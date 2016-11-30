@@ -12,11 +12,11 @@ public class CarryOnLuggage extends Luggage {
   public CarryOnLuggage(int linearDimension, int weight) {
     super(linearDimension, weight);
   }
-  
+
   @Override
   public void verifyAllowableWeight(double limit) throws NotAllowableLuggageException {
     if (getWeightInKg() > WEIGHT_LIMIT)
-     throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
+      throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
   }
 
   @Override
@@ -37,6 +37,6 @@ public class CarryOnLuggage extends Luggage {
 
   @Override
   public void assignLuggageFree() {
-    setPrice(0);
+    setPrice(BASE_PRICE);
   }
 }
