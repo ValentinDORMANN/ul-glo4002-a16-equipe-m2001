@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
 
 public class BusinessPassengerTest {
 

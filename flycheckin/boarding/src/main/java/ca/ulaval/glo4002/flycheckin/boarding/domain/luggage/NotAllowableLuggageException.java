@@ -1,4 +1,6 @@
-package ca.ulaval.glo4002.flycheckin.boarding.exception;
+package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
+
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 
 public class NotAllowableLuggageException extends BoardingModuleException {
 

@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
 import java.util.UUID;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
-
 public abstract class Luggage {
 
 	protected static final String LUGGAGE_DIMENSION_NOT_ALLOWED = "The size of luggage is over boundary";

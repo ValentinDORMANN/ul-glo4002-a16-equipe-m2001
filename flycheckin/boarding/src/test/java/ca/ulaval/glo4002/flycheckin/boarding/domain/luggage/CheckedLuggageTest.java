@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
-
 public class CheckedLuggageTest {
   private static final int WEIGHT_LIMIT_KG = 23;
   private static final int OVER_WEIGHT_KG = 24;

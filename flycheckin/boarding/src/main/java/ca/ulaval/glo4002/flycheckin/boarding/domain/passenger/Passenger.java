@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
 
 public abstract class Passenger {
 

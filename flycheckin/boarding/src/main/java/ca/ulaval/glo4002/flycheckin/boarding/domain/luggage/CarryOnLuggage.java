@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
-
 public class CarryOnLuggage extends Luggage {
 
 	private static final String LUGGAGE_DIMENSION_NOT_ALLOWED = "The size of luggage is over boundary";
