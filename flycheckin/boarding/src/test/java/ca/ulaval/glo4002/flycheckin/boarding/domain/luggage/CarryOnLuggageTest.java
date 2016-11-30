@@ -64,14 +64,14 @@ public class CarryOnLuggageTest {
   }
 
   @Test
-  public void givenCheckedLuggageWhenCompareIsTypeWithCheckedLuggageThenReturnTrue() {
+  public void givenCarryOnLuggageWhenCompareIsTypeWithCarryONLuggageThenReturnTrue() {
     carryOnLuggage = new CarryOnLuggage(ALLOWED_DIMENSION_CM, ALLOWED_WEIGHT_KG);
 
     assertTrue(carryOnLuggage.isType(LUGGAGE_TYPE));
   }
 
   @Test
-  public void givenCheckedLuggageWhenCompareIsTypeWithOtherLuggageThenReturnFalse() {
+  public void givenOtherLuggageWhenCompareIsTypeWithCarryOnLuggageThenReturnFalse() {
     carryOnLuggage = new CarryOnLuggage(ALLOWED_DIMENSION_CM, ALLOWED_WEIGHT_KG);
 
     assertFalse(carryOnLuggage.isType(OTHER_LUGGAGE_TYPE));
