@@ -1,23 +1,21 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
-import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
-
 public class LuggageFactory {
 
   private static final String CHECKED_LUGGAGE = "checked";
   private static final String CARRY_ON_LUGGAGE = "carry-on";
 
-  public Luggage createLuggage(LuggageDto luggageDto) {
+  public Luggage createLuggage(int linearDimension, int weight, String type) {
     Luggage luggage = null;
-    switch (luggageDto.type) {
+    switch (type) {
       case CHECKED_LUGGAGE:
-        luggage = new CheckedLuggage(luggageDto.linear_dimension, luggageDto.weight);
+        luggage = new CheckedLuggage(linearDimension, weight);
         break;
       case CARRY_ON_LUGGAGE:
-        luggage = new CarryOnLuggage(luggageDto.linear_dimension, luggageDto.weight);
+        luggage = new CarryOnLuggage(linearDimension, weight);
         break;
       default:
-        throw new LuggageTypeUndefinedException();
+        throw new UndefinedTypeLuggageException();
     }
     return luggage;
   }
