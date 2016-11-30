@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.LuggageTypeUndefinedException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public class LuggageFactory {
@@ -8,7 +7,7 @@ public class LuggageFactory {
   private static final String CHECKED_LUGGAGE = "checked";
   private static final String CARRY_ON_LUGGAGE = "carry-on";
 
-  public Luggage createLuggage(LuggageDto luggageDto) throws LuggageTypeUndefinedException {
+  public Luggage createLuggage(LuggageDto luggageDto) {
     Luggage luggage = null;
     switch (luggageDto.type) {
       case CHECKED_LUGGAGE:
