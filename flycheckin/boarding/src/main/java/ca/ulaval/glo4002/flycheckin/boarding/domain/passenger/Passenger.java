@@ -110,10 +110,6 @@ public abstract class Passenger {
     return this.seatClass;
   }
 
-  public boolean getIsVip() {
-    return this.isVip;
-  }
-
   public List<Luggage> getLuggages() {
     return this.luggages;
   }
