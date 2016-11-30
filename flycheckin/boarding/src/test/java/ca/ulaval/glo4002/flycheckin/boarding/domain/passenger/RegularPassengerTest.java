@@ -16,15 +16,18 @@ public class RegularPassengerTest {
 
   private static final double CARRY_ON_LUGGAGE_PRICE = 30.0;
   private static final double CARRY_ON_LUGGAGE_DISCOUNT_PRICE = 28.50;
+  
   private static final String CHECKED_LUGGAGE_TYPE = "checked";
   private static final String CARRY_ON_LUGGAGE_TYPE = "carry-on";
+  
   private static final String FLIGHT_NUMBER = "AAAA";
   private static final Date FLIGHT_DATE = new Date();
   private static final String HASH = "hash";
   private static final String ECONOMY = "economy";
-  private static final boolean VIP_STATUS = false;
-  private static final double DELTA = 0.01;
+  private static final boolean VIP_STATUS = false;;
   private static final double CHECKED_LUGGAGE_WEIGHT_LIMIT = 23;
+  
+  private static final double DELTA = 0.001;
 
   private Luggage luggageMock;
 
@@ -33,6 +36,7 @@ public class RegularPassengerTest {
   @Before
   public void initiateTest() {
     luggageMock = mock(Luggage.class);
+    
     regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS);
   }
 
@@ -141,7 +145,7 @@ public class RegularPassengerTest {
   }
 
   @Test
-  public void given3CheckedLuggageWhenAddLuggageThenVerifyItCalculatesPrice3times() {
+  public void givenThreeCheckedLuggageWhenAddLuggageThenVerifyItCalculatesPrice3times() {
     givenCheckedLuggage(luggageMock);
 
     regularPassenger.addLuggage(luggageMock);
@@ -152,7 +156,7 @@ public class RegularPassengerTest {
   }
 
   @Test
-  public void given3CheckedLuggageWhenAddLuggageThenVerifyItAssignFreeOnce() {
+  public void givenThreeCheckedLuggageWhenAddLuggageThenVerifyItAssignFreeOnce() {
     givenCheckedLuggage(luggageMock);
 
     regularPassenger.addLuggage(luggageMock);
@@ -169,7 +173,7 @@ public class RegularPassengerTest {
     regularPassenger.addLuggage(luggageMock);
     double price = regularPassenger.getTotalPrice();
 
-    assertEquals(CARRY_ON_LUGGAGE_PRICE, price, 0.001);
+    assertEquals(CARRY_ON_LUGGAGE_PRICE, price, DELTA);
   }
 
   @Test
@@ -180,11 +184,12 @@ public class RegularPassengerTest {
     regularPassenger.addLuggage(luggageMock);
     double price = regularPassenger.getTotalPrice();
 
-    assertEquals(CARRY_ON_LUGGAGE_DISCOUNT_PRICE, price, 0.001);
+    assertEquals(CARRY_ON_LUGGAGE_DISCOUNT_PRICE, price, DELTA);
   }
 
   private void givenCarryOnLuggage(Luggage luggageMock) {
     willReturn(true).given(luggageMock).isType(CARRY_ON_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
     willReturn(false).given(luggageMock).isFree();
     willReturn(CARRY_ON_LUGGAGE_PRICE).given(luggageMock).getPrice();
   }
