@@ -42,6 +42,8 @@ public abstract class Passenger {
 
   protected abstract void verifyLuggageHasStandardDimension(Luggage luggage) throws NotAllowableLuggageException;
 
+  protected abstract void calculateLuggagePrice(Luggage luggage);
+
   private void verifyLuggageAllowableByNumber(Luggage luggage) throws NotAllowableLuggageException {
     if (luggage.isType(CARRY_ON_LUGGAGE_TYPE))
       verifyAnotherCarryOnLuggageAllowable();
@@ -60,8 +62,6 @@ public abstract class Passenger {
     else if (isVip && countTypeLuggageAssigned(CHECKED_LUGGAGE_TYPE) == VIP_CHECKED_LUGGAGE_LIMIT)
       throw new NotAllowableLuggageException();
   }
-
-  protected abstract void calculateLuggagePrice(Luggage luggage);
 
   protected int countTypeLuggageAssigned(String type) {
     int typeLuggageNumber = 0;
