@@ -64,20 +64,19 @@ public class RegularPassengerTest {
 
   }
 
-  private Luggage simulateStandardCarryOnLuggage(Luggage luggage) {
-    return luggage;
+  private void givenStandardCarryOnLuggage(Luggage luggage) {
   }
 
-  private void simulateUnusualCarryOnLuggage() {
+  private void givenUnusualCarryOnLuggage() {
     doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableDimension();
     doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
   }
 
-  private Luggage simulateStandardCheckedLuggage(Luggage luggage) {
-    return luggage;
+  private void givenStandardCheckedLuggage(Luggage luggage) {
+
   }
 
-  private Luggage simulateUnusualCheckedLuggage(Luggage luggage) {
-    return luggage;
+  private void givenUnusualCheckedLuggage(Luggage luggage) {
+
   }
 }
