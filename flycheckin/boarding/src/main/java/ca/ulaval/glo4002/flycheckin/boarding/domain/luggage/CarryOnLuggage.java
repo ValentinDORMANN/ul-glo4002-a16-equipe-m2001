@@ -18,6 +18,7 @@ public class CarryOnLuggage extends Luggage {
      throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
   }
 
+  @Override
   public void verifyAllowableDimension() throws NotAllowableLuggageException {
     if (getDimensionInCm() > DIMENSION_LIMIT)
       throw new NotAllowableLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
@@ -31,5 +32,10 @@ public class CarryOnLuggage extends Luggage {
   @Override
   public void calculatePrice() {
     this.setPrice(BASE_PRICE);
+  }
+
+  @Override
+  public void assignLuggageFree() {
+    this.setPrice(0);
   }
 }

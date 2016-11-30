@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.passenger;
 
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Date;
@@ -12,6 +13,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageE
 
 public class RegularPassengerTest {
 
+  private static final String CHECKED_LUGGAGE_TYPE = "checked";
+  private static final String CARRY_ON_LUGGAGE_TYPE = "carry-on";
   private static final String FLIGHT_NUMBER = "AAAA";
   private static final Date FLIGHT_DATE = new Date();
   private static final String HASH = "hash";
@@ -31,53 +34,30 @@ public class RegularPassengerTest {
 
   @Test(expected = NotAllowableLuggageException.class)
   public void test1() {
-    simulateUnusualCarryOnLuggage();
+    givenUnusualCarryOnLuggage(luggageMock);
 
     regularPassenger.addLuggage(luggageMock);
   }
 
-  public void test2() {
-
+  private void givenStandardCarryOnLuggage(Luggage luggageMock) {
+    willReturn(true).given(luggageMock).isType(CARRY_ON_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isFree();
   }
 
-  public void test3() {
-
-  }
-
-  public void test4() {
-
-  }
-
-  public void test5() {
-
-  }
-
-  public void test6() {
-
-  }
-
-  public void test7() {
-
-  }
-
-  public void test8() {
-
-  }
-
-  private Luggage simulateStandardCarryOnLuggage(Luggage luggage) {
-    return luggage;
-  }
-
-  private void simulateUnusualCarryOnLuggage() {
+  private void givenUnusualCarryOnLuggage(Luggage luggageMock) {
+    willReturn(true).given(luggageMock).isType(CARRY_ON_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isFree();
     doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableDimension();
     doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
   }
 
-  private Luggage simulateStandardCheckedLuggage(Luggage luggage) {
-    return luggage;
+  private void givenStandardCheckedLuggage(Luggage luggageMock) {
+    willReturn(false).given(luggageMock).isType(CARRY_ON_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
   }
 
-  private Luggage simulateUnusualCheckedLuggage(Luggage luggage) {
-    return luggage;
+  private void givenUnusualCheckedLuggage(Luggage luggageMock) {
+    willReturn(false).given(luggageMock).isType(CARRY_ON_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
   }
 }

@@ -5,7 +5,7 @@ public class CheckedLuggage extends Luggage {
   private static final String TYPE = "checked";
   private static final int DIMENSION_LIMIT = 158;
   private static final double SURPLUS_PRICE = 50;
-  
+
   public CheckedLuggage(int linearDimension, int weight) {
     super(linearDimension, weight);
   }
@@ -30,5 +30,10 @@ public class CheckedLuggage extends Luggage {
   public void verifyAllowableWeight(double limit) throws NotAllowableLuggageException {
     if (getWeightInKg() > limit)
       throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
+  }
+
+  @Override
+  public void assignLuggageFree() {
+    this.setPrice(0);
   }
 }
