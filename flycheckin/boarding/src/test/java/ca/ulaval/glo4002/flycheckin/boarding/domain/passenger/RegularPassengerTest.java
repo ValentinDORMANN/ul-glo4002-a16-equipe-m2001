@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import java.util.Date;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
@@ -32,7 +31,6 @@ public class RegularPassengerTest {
     regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS);
   }
 
-  @Test(expected = NotAllowableLuggageException.class)
   public void test1() {
     givenUnusualCarryOnLuggage(luggageMock);
 
