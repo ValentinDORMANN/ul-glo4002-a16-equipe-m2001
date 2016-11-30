@@ -6,7 +6,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.LuggageTypeUndefinedException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 
 public class LuggageFactoryTest {
@@ -17,10 +16,9 @@ public class LuggageFactoryTest {
   private static final int LINEAR_DIMENSION = 100;
   private static final int WEIGHT = 10;
   
-  
   private LuggageDto luggageDto;
   
-  private LuggageFactory luggageFactoryMock;
+  private LuggageFactory luggageFactory;
   
   @Before
   public void initiateTest(){ 
@@ -28,32 +26,33 @@ public class LuggageFactoryTest {
     luggageDto.linear_dimension = LINEAR_DIMENSION;
     luggageDto.weight = WEIGHT;
     
-    luggageFactoryMock = mock(LuggageFactory.class);
+    luggageFactory = new LuggageFactory();
   }
   
   @Test
-  public void givenCheckedLuggageDtoWhencreateLuggageThenCreateCheckedLuggage() {
+  public void givenCheckedLuggageDtoWhenCreateLuggageThenCreateCheckedLuggage() {
     luggageDto.type = CHECKED_LUGGAGE;
     
-    Luggage luggage = luggageFactoryMock.createLuggage(luggageDto);
+    Luggage luggage = luggageFactory.createLuggage(luggageDto);
     
+    //assertTrue(luggage.isType(CHECKED_LUGGAGE));
     assertTrue(luggage instanceof CheckedLuggage);
   }
   
   @Test
-  public void givenCarryOnLuggageDtoWhencreateLuggageThenCreateCarryOnLuggage() {
+  public void givenCarryOnLuggageDtoWhenCreateLuggageThenCreateCarryOnLuggage() {
     luggageDto.type = CARRY_ON_LUGGAGE;
     
-    Luggage luggage = luggageFactoryMock.createLuggage(luggageDto);
+    Luggage luggage = luggageFactory.createLuggage(luggageDto);
     
     assertTrue(luggage instanceof CarryOnLuggage);
   }
   
   @Test(expected = LuggageTypeUndefinedException.class)
-  public void givenUndefinedLuggageDtoWhencreateLuggageThenThrowException() {
+  public void givenUndefinedLuggageDtoWhenCreateLuggageThenThrowException() {
     luggageDto.type = UNDEFINED_LUGGAGE;
     
-    luggageFactoryMock.createLuggage(luggageDto);
+    luggageFactory.createLuggage(luggageDto);
   }
 
 }
