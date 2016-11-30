@@ -2,9 +2,9 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.luggage;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.CheckedLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 

@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
-
 public class CheckedLuggage extends Luggage {
 
 	private static final String TYPE = "checked";

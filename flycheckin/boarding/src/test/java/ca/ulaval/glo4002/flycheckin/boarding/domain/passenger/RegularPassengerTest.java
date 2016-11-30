@@ -1,10 +1,14 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.passenger;
 
+import static org.mockito.Mockito.*;
+
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
 
 public class RegularPassengerTest {
 
@@ -14,6 +18,7 @@ public class RegularPassengerTest {
   private static final String ECONOMY = "economy";
   private static final boolean VIP_STATUS = false;
   private static final double DELTA = 0.01;
+  private static final double CHECKED_LUGGAGE_WEIGHT_LIMIT = 23;
 
   private Luggage luggageMock;
 
@@ -24,8 +29,11 @@ public class RegularPassengerTest {
     regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS);
   }
 
+  @Test(expected = NotAllowableLuggageException.class)
   public void test1() {
+    simulateUnusualCarryOnLuggage();
 
+    regularPassenger.addLuggage(luggageMock);
   }
 
   public void test2() {
@@ -60,8 +68,9 @@ public class RegularPassengerTest {
     return luggage;
   }
 
-  private Luggage simulateUnusualCarryOnLuggage(Luggage luggage) {
-    return luggage;
+  private void simulateUnusualCarryOnLuggage() {
+    doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableDimension();
+    doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
   }
 
   private Luggage simulateStandardCheckedLuggage(Luggage luggage) {

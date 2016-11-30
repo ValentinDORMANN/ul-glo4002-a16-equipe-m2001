@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.passenger;
 import java.util.Date;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotAllowableLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
 
 public class RegularPassenger extends Passenger {
 
