@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.persistence;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +11,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerExceptio
 
 public class PassengerLuggagePersistence {
 
-  private static Map<String, List<Luggage>> passengerMap = new HashMap<String, List<Luggage>>();
-  private static final String MESSAGE_ERROR_RESERVATION = "Error : passenger not found !";
+  private static final Map<String, List<Luggage>> passengerMap = new HashMap<String, List<Luggage>>();
 
   public void savePassengerLuggage(Passenger newPassenger) {
     String passengerHash = newPassenger.getPassengerHash();
@@ -22,9 +22,9 @@ public class PassengerLuggagePersistence {
   }
 
   public List<Luggage> getPassengerLuggage(String passengerHash) throws NotFoundPassengerException {
-    if (passengerMap.isEmpty() || !passengerMap.containsKey(passengerHash))
-      throw new NotFoundPassengerException(MESSAGE_ERROR_RESERVATION);
-    return passengerMap.get(passengerHash);
+    if (passengerMap.containsKey(passengerHash))
+      return passengerMap.get(passengerHash);
+    return new ArrayList<Luggage>();
   }
 
   public void clearPassengerMap() {
