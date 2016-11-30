@@ -6,12 +6,12 @@ public abstract class Luggage {
 
   protected static final String LUGGAGE_DIMENSION_NOT_ALLOWED = "The size of luggage is over boundary";
   protected static final String LUGGAGE_WEIGHT_NOT_ALLOWED = "The weight of luggage is over boundary";
-  private int dimensionInCm;
-  private int weightInKg;
+  private double dimensionInCm;
+  private double weightInKg;
   private String luggageHash;
   private double price;
 
-  public Luggage(int linearDimension, int weight) throws IllegalArgumentException {
+  public Luggage(double linearDimension, double weight) throws IllegalArgumentException {
     this.luggageHash = UUID.randomUUID().toString();
     this.dimensionInCm = linearDimension;
     this.weightInKg = weight;
@@ -26,13 +26,13 @@ public abstract class Luggage {
 
   public abstract void verifyAllowableDimension() throws NotAllowableLuggageException;
 
-  public int getDimensionInCm() {
+  public double getDimensionInCm() {
     return dimensionInCm;
   }
 
   public abstract void verifyAllowableWeight(double limit) throws NotAllowableLuggageException;
 
-  public int getWeightInKg() {
+  public double getWeightInKg() {
     return weightInKg;
   }
 

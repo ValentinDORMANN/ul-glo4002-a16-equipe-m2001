@@ -1,11 +1,11 @@
 package ca.ulaval.glo4002.flycheckin.boarding.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
+@JsonInclude(Include.NON_NULL)
 public class LuggageDto {
 
   private static final int GRAMME_CONVERSION = 1000;
@@ -24,8 +24,8 @@ public class LuggageDto {
   }
 
   public LuggageDto(Luggage luggage) {
-    linear_dimension = luggage.getDimensionInCm() * MM_CONVERSION;
-    weight = luggage.getWeightInKg() * GRAMME_CONVERSION;
+    linear_dimension = (int)luggage.getDimensionInCm() * MM_CONVERSION;
+    weight = (int)luggage.getWeightInKg() * GRAMME_CONVERSION;
     price = luggage.getPrice();
   }
 }

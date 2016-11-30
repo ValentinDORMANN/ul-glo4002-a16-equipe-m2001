@@ -9,7 +9,7 @@ public class CarryOnLuggage extends Luggage {
   private static final String TYPE = "carry-on";
   private static final int BASE_PRICE = 30;
 
-  public CarryOnLuggage(int linearDimension, int weight) {
+  public CarryOnLuggage(double linearDimension, double weight) {
     super(linearDimension, weight);
   }
 
