@@ -16,8 +16,9 @@ public class RegularPassenger extends Passenger {
 
   @Override
   protected void calculateLuggagePrice(Luggage luggage) {
+    luggage.calculatePrice();
     if (countFreeLuggage() < FREE_CHECKED_LUGGAGE_LIMIT)
-      luggage.calculatePrice();
+      luggage.assignLuggageFree();
   }
 
   @Override
