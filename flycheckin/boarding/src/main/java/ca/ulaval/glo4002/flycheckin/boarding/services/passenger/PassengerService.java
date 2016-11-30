@@ -1,6 +1,9 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.passenger;
 
+import java.util.List;
+
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
@@ -29,7 +32,11 @@ public class PassengerService {
 
   public Passenger getPassengerByHash(String passengerHash) throws BoardingModuleException {
     Passenger passenger = getPassengerByHashInReservation(passengerHash);
-    passengerLuggagePersistence.savePassengerLuggage(passenger);
+    List<Luggage> luggageList = passengerLuggagePersistence.getPassengerLuggage(passengerHash);
+
+    for (Luggage luggage : luggageList)
+      passenger.getLuggages().add(luggage);
+
     return passenger;
   }
 
