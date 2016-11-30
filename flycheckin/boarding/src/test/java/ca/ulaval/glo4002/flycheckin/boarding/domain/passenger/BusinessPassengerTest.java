@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.passenger;
 
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Date;
