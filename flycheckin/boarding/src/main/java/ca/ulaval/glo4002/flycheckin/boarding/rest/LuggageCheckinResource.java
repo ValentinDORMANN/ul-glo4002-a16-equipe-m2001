@@ -17,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.InvalidUnitException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
@@ -69,10 +70,10 @@ public class LuggageCheckinResource {
       return Response.status(Status.CREATED).location(location).entity(createAllowedLuggageDto()).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
-    } catch (InvalidUnitException ex) {
-      return Response.status(Status.BAD_REQUEST).build();
     } catch (NotAllowableLuggageException | NotCheckedinException ex) {
       return Response.status(Status.OK).entity(createNotAllowedLuggageDto(ex.getMessage())).build();
+    } catch (BoardingModuleException ex) {
+      return Response.status(Status.BAD_REQUEST).build();
     }
   }
 
