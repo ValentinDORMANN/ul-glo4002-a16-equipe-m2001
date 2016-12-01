@@ -6,15 +6,19 @@ public abstract class Luggage {
 
   protected static final String LUGGAGE_DIMENSION_NOT_ALLOWED = "The size of luggage is over boundary";
   protected static final String LUGGAGE_WEIGHT_NOT_ALLOWED = "The weight of luggage is over boundary";
+  private static final double FIRST_STAGE_PENALTY_FEE_IN_PERCENTAGE = 10;
+  private static final double SECOND_STAGE_PENALTY_FEE_IN_PERCENTAGE = 21;
   private int dimensionInCm;
   private int weightInKg;
   private String luggageHash;
   private double price;
+  private double penaltyFee;
 
   public Luggage(int linearDimension, int weight) throws IllegalArgumentException {
     this.luggageHash = UUID.randomUUID().toString();
     this.dimensionInCm = linearDimension;
     this.weightInKg = weight;
+    this.penaltyFee = 0;
   }
 
   public abstract boolean isType(String type);
@@ -40,7 +44,7 @@ public abstract class Luggage {
   }
 
   public void setPrice(double price) {
-    this.price = price;
+    this.price = price + price * penaltyFee / 100;
   }
 
   public double getPrice() {
@@ -49,6 +53,13 @@ public abstract class Luggage {
 
   public boolean isFree() {
     return this.price == 0 ? true : false;
+  }
+
+  protected void applyPenalty() {
+    if (penaltyFee == FIRST_STAGE_PENALTY_FEE_IN_PERCENTAGE)
+      penaltyFee = SECOND_STAGE_PENALTY_FEE_IN_PERCENTAGE;
+    else
+      penaltyFee = FIRST_STAGE_PENALTY_FEE_IN_PERCENTAGE;
   }
 
 }

@@ -23,13 +23,13 @@ public class CheckedLuggage extends Luggage {
   @Override
   public void verifyAllowableDimension() throws NotAllowableLuggageException {
     if (getDimensionInCm() > DIMENSION_LIMIT)
-      throw new NotAllowableLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
+      applyPenalty();
   }
 
   @Override
   public void verifyAllowableWeight(double limit) throws NotAllowableLuggageException {
     if (getWeightInKg() > limit)
-      throw new NotAllowableLuggageException(LUGGAGE_WEIGHT_NOT_ALLOWED);
+      applyPenalty();
   }
 
   @Override
