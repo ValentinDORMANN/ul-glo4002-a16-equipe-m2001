@@ -55,14 +55,11 @@ public class ReservationResource {
   public Response getReservationByHash(@PathParam("passenger_hash") String passengerHash) {
     Reservation reservation = new Reservation();
     try {
-      checkinService.isCheckInPassengerDone(passengerHash);
       reservation = reservation.searchReservationByPassengerHash(passengerHash);
       ReservationDto reservationDto = new ReservationDto(reservation, passengerHash);
       return Response.ok(reservationDto).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
-    } catch (NotCheckedinException ex) {
-      return Response.status(Status.BAD_REQUEST).build();
     }
   }
 

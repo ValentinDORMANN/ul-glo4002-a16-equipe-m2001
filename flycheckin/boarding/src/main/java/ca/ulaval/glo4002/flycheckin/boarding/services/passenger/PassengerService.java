@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.passenger;
 
 import java.util.List;
 
+import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
@@ -16,27 +17,35 @@ public class PassengerService {
   private ReservationHttpClient reservationHttpClient;
   private PassengerLuggagePersistence passengerLuggagePersistence;
   private PassengerFactory passengerFactory;
+  private CheckinHttpClient checkinHttpClient;
 
   public PassengerService() {
     reservationHttpClient = new ReservationHttpClient();
     passengerLuggagePersistence = new PassengerLuggagePersistence();
     passengerFactory = new PassengerFactory();
+    checkinHttpClient = new CheckinHttpClient();
   }
 
   public PassengerService(ReservationHttpClient reservationHttpClient,
-      PassengerLuggagePersistence passengerLuggagePersistence, PassengerFactory passengerFactory) {
+      PassengerLuggagePersistence passengerLuggagePersistence, PassengerFactory passengerFactory,
+      CheckinHttpClient checkinHttpClient) {
     this.reservationHttpClient = reservationHttpClient;
     this.passengerLuggagePersistence = passengerLuggagePersistence;
     this.passengerFactory = passengerFactory;
+    this.checkinHttpClient = checkinHttpClient;
+  }
+
+  public Passenger getPassengerCheckedByHash(String passengerHash) throws BoardingModuleException {
+    Passenger passenger = getPassengerByHash(passengerHash);
+    passenger.isCheckinDone(checkinHttpClient);
+    List<Luggage> luggageList = passengerLuggagePersistence.getPassengerLuggage(passengerHash);
+    for (Luggage luggage : luggageList)
+      passenger.getLuggages().add(luggage);
+    return passenger;
   }
 
   public Passenger getPassengerByHash(String passengerHash) throws BoardingModuleException {
     Passenger passenger = getPassengerByHashInReservation(passengerHash);
-    List<Luggage> luggageList = passengerLuggagePersistence.getPassengerLuggage(passengerHash);
-
-    for (Luggage luggage : luggageList)
-      passenger.getLuggages().add(luggage);
-
     return passenger;
   }
 

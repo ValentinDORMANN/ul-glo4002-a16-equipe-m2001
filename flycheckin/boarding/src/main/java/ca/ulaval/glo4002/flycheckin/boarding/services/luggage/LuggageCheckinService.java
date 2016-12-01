@@ -28,7 +28,7 @@ public class LuggageCheckinService {
   }
 
   public String assignLuggage(String passengerHash, LuggageDto luggageDto) throws BoardingModuleException {
-    passenger = passengerService.getPassengerByHash(passengerHash);
+    passenger = passengerService.getPassengerCheckedByHash(passengerHash);
     Luggage luggage = luggageFactory.createLuggage(luggageDto.linear_dimension, luggageDto.weight, luggageDto.type);
     passenger.addLuggage(luggage);
     luggagePersistence.savePassengerLuggage(passenger);

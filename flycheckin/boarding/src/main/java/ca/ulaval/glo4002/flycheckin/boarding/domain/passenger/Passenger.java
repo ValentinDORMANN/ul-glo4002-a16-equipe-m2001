@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 
 public abstract class Passenger {
 
@@ -112,5 +114,9 @@ public abstract class Passenger {
 
   public List<Luggage> getLuggages() {
     return this.luggages;
+  }
+
+  public void isCheckinDone(CheckinHttpClient checkinHttpClient) throws BoardingModuleException {
+    checkinHttpClient.verifyCheckinFromReservation(passengerHash);
   }
 }
