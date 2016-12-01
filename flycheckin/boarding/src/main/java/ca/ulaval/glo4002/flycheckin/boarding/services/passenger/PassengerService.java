@@ -38,14 +38,14 @@ public class PassengerService {
   public Passenger getPassengerCheckedByHash(String passengerHash) throws BoardingModuleException {
     Passenger passenger = getPassengerByHash(passengerHash);
     passenger.isCheckinDone(checkinHttpClient);
-    List<Luggage> luggageList = passengerLuggagePersistence.getPassengerLuggage(passengerHash);
-    for (Luggage luggage : luggageList)
-      passenger.getLuggages().add(luggage);
     return passenger;
   }
 
   public Passenger getPassengerByHash(String passengerHash) throws BoardingModuleException {
     Passenger passenger = getPassengerByHashInReservation(passengerHash);
+    List<Luggage> luggageList = passengerLuggagePersistence.getPassengerLuggage(passengerHash);
+    for (Luggage luggage : luggageList)
+      passenger.getLuggages().add(luggage);
     return passenger;
   }
 

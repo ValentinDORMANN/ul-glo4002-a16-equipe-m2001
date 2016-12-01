@@ -29,5 +29,6 @@ public class PassengerDto {
     this.seat_class = passenger.getSeatClass();
     this.child = passenger.isChild();
     this.passenger_hash = passenger.getPassengerHash();
+    this.isVip = passenger.getIsVip();
   }
 }

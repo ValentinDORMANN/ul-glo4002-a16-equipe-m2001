@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class PassengerFactory {
 
-  private static final String SEAT_ECONOMIC = "economic";
+  private static final String SEAT_ECONOMIC = "economy";
 
   public Passenger createPassenger(String flightNumber, Date flightDate, String passengerHash, String seatClass,
       boolean isVip) {
-    if (seatClass == SEAT_ECONOMIC)
+    if (seatClass.equals(SEAT_ECONOMIC))
       return createRegularPassenger(flightNumber, flightDate, passengerHash, seatClass, isVip);
 
     return createBusinessPassenger(flightNumber, flightDate, passengerHash, seatClass, isVip);
