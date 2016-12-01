@@ -24,7 +24,7 @@ public class RegularPassengerTest {
   private static final Date FLIGHT_DATE = new Date();
   private static final String HASH = "hash";
   private static final String ECONOMY = "economy";
-  private static final boolean VIP_STATUS = false;;
+  private static final boolean VIP_STATUS = false;
   private static final double CHECKED_LUGGAGE_WEIGHT_LIMIT = 23;
 
   private static final double DELTA = 0.001;
@@ -94,6 +94,19 @@ public class RegularPassengerTest {
   @Test(expected = NotAllowableLuggageException.class)
   public void givenPassengerWithAllowableCheckedLuggagesAssignedWhenAddAnotherCheckedLuggageThenThrowException() {
     givenStandardCheckedLuggage(luggageMock);
+    regularPassenger.addLuggage(luggageMock);
+    regularPassenger.addLuggage(luggageMock);
+    regularPassenger.addLuggage(luggageMock);
+
+    regularPassenger.addLuggage(luggageMock);
+  }
+
+  @Test(expected = NotAllowableLuggageException.class)
+  public void givenVipPassengerWithAllowableCheckedLuggagesAssignedWhenAddAnotherCheckedLuggageThenThrowException() {
+    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS);
+    givenStandardCheckedLuggage(luggageMock);
+
+    regularPassenger.addLuggage(luggageMock);
     regularPassenger.addLuggage(luggageMock);
     regularPassenger.addLuggage(luggageMock);
     regularPassenger.addLuggage(luggageMock);
