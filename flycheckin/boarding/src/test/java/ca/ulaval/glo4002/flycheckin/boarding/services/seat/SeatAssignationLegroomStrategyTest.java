@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
-import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationLegroomStrategy;
 
 public class SeatAssignationLegroomStrategyTest {
   private static final double SMALL_PRICE = 100.00;
@@ -24,6 +23,7 @@ public class SeatAssignationLegroomStrategyTest {
   private static final String MEDIUM_SEAT_NUMBER = "10-K";
   private static final String LARGE_SEAT_NUMBER = "7-A";
   private static final String XLARGE_SEAT_NUMBER = "7-C";
+
   private static final String PASSENGER_SEAT_CLASS = "business";
   private static final String ANOTHER_SEAT_CLASS = "big-front";
   private Seat smallSeat, mediumSeat, largeSeat, xLargeSeat;
