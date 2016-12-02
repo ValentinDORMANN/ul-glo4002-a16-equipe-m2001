@@ -64,6 +64,8 @@ public class SeatAssignationService {
         case "LEGS":
           this.seatAssignationStrategy = new SeatAssignationLegroomStrategy();
           break;
+        case "LANDSCAPE":
+          this.seatAssignationStrategy = new SeatAssignationLandScapeStrategy();
         default:
           this.seatAssignationStrategy = new SeatAssignationRandomStrategy();
           break;
