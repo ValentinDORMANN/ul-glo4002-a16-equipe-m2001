@@ -21,14 +21,15 @@ public class LuggageCheckinService {
     this.luggagePersistence = new PassengerLuggagePersistence();
   }
 
-  public LuggageCheckinService(PassengerService passengerService, Passenger passenger, LuggageFactory luggageFactory) {
+  public LuggageCheckinService(PassengerService passengerService, Passenger passenger, LuggageFactory luggageFactory, PassengerLuggagePersistence luggagePersistence) {
     this.passengerService = passengerService;
     this.passenger = passenger;
     this.luggageFactory = luggageFactory;
+    this.luggagePersistence = new PassengerLuggagePersistence();
   }
 
   public String assignLuggage(String passengerHash, LuggageDto luggageDto) throws BoardingModuleException {
-    passenger = passengerService.getPassengerCheckedByHash(passengerHash);
+    passenger = passengerService.getPassengerByHash(passengerHash);
     Luggage luggage = luggageFactory.createLuggage(luggageDto.linear_dimension, luggageDto.weight, luggageDto.type);
     passenger.addLuggage(luggage);
     luggagePersistence.savePassengerLuggage(passenger);
