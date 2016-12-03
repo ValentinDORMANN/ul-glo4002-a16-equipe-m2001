@@ -25,7 +25,7 @@ public class LuggageCheckinService {
     this.passengerService = passengerService;
     this.passenger = passenger;
     this.luggageFactory = luggageFactory;
-    this.luggagePersistence = new PassengerLuggagePersistence();
+    this.luggagePersistence = luggagePersistence;
   }
 
   public String assignLuggage(String passengerHash, LuggageDto luggageDto) throws BoardingModuleException {
