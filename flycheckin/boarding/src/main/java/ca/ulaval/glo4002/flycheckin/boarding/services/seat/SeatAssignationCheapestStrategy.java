@@ -8,8 +8,10 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
 public class SeatAssignationCheapestStrategy extends SeatAssignationStrategy {
 
   @Override
-  public String assignSeatNumber(List<Seat> availableSeats, String seatClass) throws NoSeatAvailableException {
+  public String assignSeatNumber(List<Seat> availableSeats, String seatClass, boolean isJunior) throws NoSeatAvailableException {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
+    siftAvailableSeatAccordingPassengerAge(availableSeats, isJunior);
+
     Seat selectedSeat = getCheapestSeat(availableSeats);
     return selectedSeat.getSeatNumber();
   }

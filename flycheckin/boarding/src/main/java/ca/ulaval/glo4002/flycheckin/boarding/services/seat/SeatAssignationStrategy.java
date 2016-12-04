@@ -10,10 +10,11 @@ public abstract class SeatAssignationStrategy {
 
   private static final String NO_SEAT_AVAILABLE = "No more seat available for this seat class";
 
-  public abstract String assignSeatNumber(List<Seat> availableSeats, String seatClass);
+  public abstract String assignSeatNumber(List<Seat> availableSeats, String seatClass, boolean isJunior);
 
   protected List<Seat> siftAvailableSeatsBySeatClass(List<Seat> availableSeats, String seatClass) {
     List<Seat> availableSeatClass = new ArrayList<Seat>();
+
     for (Seat seat : availableSeats) {
       if (seat.hasClass(seatClass))
         availableSeatClass.add(seat);
@@ -21,5 +22,18 @@ public abstract class SeatAssignationStrategy {
     if (availableSeatClass.isEmpty())
       throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
     return availableSeatClass;
+  }
+
+  protected void siftAvailableSeatAccordingPassengerAge(List<Seat> availableSeats, boolean isJunior) {
+    if (isJunior) {
+      for (int index = 0; index < availableSeats.size(); index++) {
+        if (availableSeats.get(index).isExitRow()) {
+          availableSeats.remove(index);
+          index--;
+        }
+      }
+      if (availableSeats.isEmpty())
+        throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
+    }
   }
 }

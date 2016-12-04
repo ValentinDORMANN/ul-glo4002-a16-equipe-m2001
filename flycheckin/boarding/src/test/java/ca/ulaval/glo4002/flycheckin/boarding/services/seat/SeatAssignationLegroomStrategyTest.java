@@ -23,6 +23,8 @@ public class SeatAssignationLegroomStrategyTest {
   private static final String MEDIUM_SEAT_NUMBER = "10-K";
   private static final String LARGE_SEAT_NUMBER = "7-A";
   private static final String XLARGE_SEAT_NUMBER = "7-C";
+  private static final boolean IS_JUNIOR = true;
+  private static final boolean IS_ADULT = false;
 
   private static final String PASSENGER_SEAT_CLASS = "business";
   private static final String ANOTHER_SEAT_CLASS = "big-front";
@@ -58,14 +60,14 @@ public class SeatAssignationLegroomStrategyTest {
 
   @Test(expected = NoSeatAvailableException.class)
   public void givenEmptyAvailableSeatListWhenAssignSeatToPassengerThenReturnException() {
-    legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
   }
 
   @Test(expected = NoSeatAvailableException.class)
   public void givenAvailableSeatListOfSameClassWhenAssignSeatWithAnotherClassThenReturnException() {
     availableSeats.add(smallSeat);
 
-    legroomSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS);
+    legroomSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS, IS_ADULT);
   }
 
   @Test
@@ -74,7 +76,7 @@ public class SeatAssignationLegroomStrategyTest {
     availableSeats.add(mediumSeat);
     availableSeats.add(xLargeSeat);
 
-    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
 
     assertEquals(XLARGE_SEAT_NUMBER, seatNumber);
   }
@@ -86,7 +88,7 @@ public class SeatAssignationLegroomStrategyTest {
     availableSeats.add(xLargeSeat);
     availableSeats.add(largeSeat);
 
-    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
 
     assertEquals(LARGE_SEAT_NUMBER, seatNumber);
   }

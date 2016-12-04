@@ -22,26 +22,25 @@ public class SeatAssignationLandScapeStrategyTest {
   private static final String WORST_VIEW_SEAT_NUMBER = "3B";
   private static final double CHEAPEST_PRICE = 200;
   private static final double EXPENSIVE_PRICE = 300;
+  private static final boolean IS_JUNIOR = true;
+  private static final boolean IS_ADULT = false;
   private static final int LEGROOM = 10;
 
-  private Seat anotherClassSeat, cheaperBestViewSeat, expensiveBestViewSeat, nearWindowSeat, clearViewSeat,
-      worstViewSeat;
+  private Seat anotherClassSeat, cheaperBestViewSeat, expensiveBestViewSeat, nearWindowSeat, clearViewSeat, worstViewSeat;
   private List<Seat> availableSeats;
   private SeatAssignationLandScapeStrategy bestViewSeatAssignation;
 
   @Before
   public void initiateTest() {
-    cheaperBestViewSeat = new Seat(PASSENGER_SEAT_CLASS, CHEAPER_BEST_VIEW_SEAT_NUMBER, LEGROOM, true, true,
-        CHEAPEST_PRICE);
+    cheaperBestViewSeat = new Seat(PASSENGER_SEAT_CLASS, CHEAPER_BEST_VIEW_SEAT_NUMBER, LEGROOM, true, true, false, CHEAPEST_PRICE);
 
-    expensiveBestViewSeat = new Seat(PASSENGER_SEAT_CLASS, EXPENSIVE_BEST_VIEW_SEAT_NUMBER, LEGROOM, true, true,
-        EXPENSIVE_PRICE);
+    expensiveBestViewSeat = new Seat(PASSENGER_SEAT_CLASS, EXPENSIVE_BEST_VIEW_SEAT_NUMBER, LEGROOM, true, true, false, EXPENSIVE_PRICE);
 
-    nearWindowSeat = new Seat(PASSENGER_SEAT_CLASS, NEAR_WINDOW_SEAT_NUMBER, LEGROOM, true, false, EXPENSIVE_PRICE);
+    nearWindowSeat = new Seat(PASSENGER_SEAT_CLASS, NEAR_WINDOW_SEAT_NUMBER, LEGROOM, true, false, false, EXPENSIVE_PRICE);
 
-    clearViewSeat = new Seat(PASSENGER_SEAT_CLASS, CLEAR_VIEW_SEAT_NUMBER, LEGROOM, false, true, EXPENSIVE_PRICE);
+    clearViewSeat = new Seat(PASSENGER_SEAT_CLASS, CLEAR_VIEW_SEAT_NUMBER, LEGROOM, false, true, false, EXPENSIVE_PRICE);
 
-    worstViewSeat = new Seat(PASSENGER_SEAT_CLASS, WORST_VIEW_SEAT_NUMBER, LEGROOM, false, false, CHEAPEST_PRICE);
+    worstViewSeat = new Seat(PASSENGER_SEAT_CLASS, WORST_VIEW_SEAT_NUMBER, LEGROOM, false, false, false, CHEAPEST_PRICE);
 
     anotherClassSeat = new Seat();
     anotherClassSeat.setSeatClass(ANOTHER_SEAT_CLASS);
@@ -52,21 +51,21 @@ public class SeatAssignationLandScapeStrategyTest {
 
   @Test(expected = NoSeatAvailableException.class)
   public void givenNoSeatAvailableWhenAssignSeatToPassengerThenReturnException() {
-    bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
   }
 
   @Test(expected = NoSeatAvailableException.class)
   public void givenSeatListWithNoOneHasPassengerSeatClassWhenAssignSeatToPassengerThenReturnException() {
     availableSeats.add(anotherClassSeat);
 
-    bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
   }
 
   @Test
   public void givenSeatWithoutClearViewAndWindowViewWhenAssignSeatToPassengerThenReturnSeat() {
     availableSeats.add(worstViewSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
 
     assertEquals(WORST_VIEW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -76,7 +75,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(worstViewSeat);
     availableSeats.add(nearWindowSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
 
     assertEquals(NEAR_WINDOW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -86,7 +85,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(worstViewSeat);
     availableSeats.add(clearViewSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
 
     assertEquals(CLEAR_VIEW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -96,7 +95,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(clearViewSeat);
     availableSeats.add(nearWindowSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
 
     assertEquals(NEAR_WINDOW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -106,7 +105,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(nearWindowSeat);
     availableSeats.add(expensiveBestViewSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
 
     assertEquals(EXPENSIVE_BEST_VIEW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -117,7 +116,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(expensiveBestViewSeat);
     availableSeats.add(cheaperBestViewSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
 
     assertEquals(CHEAPER_BEST_VIEW_SEAT_NUMBER, assignedSeatNumber);
   }

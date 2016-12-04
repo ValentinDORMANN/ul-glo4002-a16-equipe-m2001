@@ -24,6 +24,7 @@ public abstract class Passenger {
   private String passengerHash;
   private String seatClass;
   private boolean isVip;
+  private boolean isJunior;
   private List<Luggage> luggages;
 
   public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip) {
@@ -114,6 +115,10 @@ public abstract class Passenger {
 
   public List<Luggage> getLuggages() {
     return this.luggages;
+  }
+
+  public boolean isJunior() {
+    return this.isJunior;
   }
 
   public void isCheckinDone(CheckinHttpClient checkinHttpClient) throws BoardingModuleException {

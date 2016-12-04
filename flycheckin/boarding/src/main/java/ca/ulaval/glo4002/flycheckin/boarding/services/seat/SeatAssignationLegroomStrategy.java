@@ -7,8 +7,10 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 public class SeatAssignationLegroomStrategy extends SeatAssignationStrategy {
 
   @Override
-  public String assignSeatNumber(List<Seat> availableSeats, String seatClass) {
+  public String assignSeatNumber(List<Seat> availableSeats, String seatClass, boolean isJunior) {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
+    siftAvailableSeatAccordingPassengerAge(availableSeats, isJunior);
+
     Seat selectedSeat = getCheapestLargeLegroomSeat(availableSeats);
     return selectedSeat.getSeatNumber();
   }
@@ -16,8 +18,7 @@ public class SeatAssignationLegroomStrategy extends SeatAssignationStrategy {
   private Seat getCheapestLargeLegroomSeat(List<Seat> availableSeats) {
     Seat selectedSeat = availableSeats.get(0);
     for (Seat seat : availableSeats) {
-      if (seat.isLegroomGreaterThan(selectedSeat)
-          || (seat.hasSameLegroomWith(selectedSeat) && seat.isCheaperThan(selectedSeat)))
+      if (seat.isLegroomGreaterThan(selectedSeat) || (seat.hasSameLegroomWith(selectedSeat) && seat.isCheaperThan(selectedSeat)))
         selectedSeat = seat;
     }
     return selectedSeat;
