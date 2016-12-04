@@ -26,7 +26,7 @@ public class CheckinServiceTest {
   private static final boolean IS_NOT_VALID = false;
   private CheckinInMemory checkinInMemoryMock;
   private ReservationInMemory reservationInMemoryMock;
-  private CheckinDto checkinDtoMock;
+  private CheckinDto checkinDto;
   private Reservation reservationMock;
   private CheckinService checkinService;
 
@@ -34,44 +34,47 @@ public class CheckinServiceTest {
   public void initiateTest() {
     checkinInMemoryMock = mock(CheckinInMemory.class);
     reservationInMemoryMock = mock(ReservationInMemory.class);
-    checkinDtoMock = mock(CheckinDto.class);
     reservationMock = mock(Reservation.class);
+
+    checkinDto = new CheckinDto();
     checkinService = new CheckinService(checkinInMemoryMock, reservationInMemoryMock);
+
     willReturn(reservationMock).given(reservationInMemoryMock).getReservationByPassengerHash(PASSENGER_HASH);
     willThrow(NotFoundPassengerException.class).given(reservationInMemoryMock)
         .getReservationByPassengerHash(FAKE_PASSENGER_HASH);
-    checkinDtoMock.passenger_hash = PASSENGER_HASH;
-    checkinDtoMock.by = AGENT;
     willReturn(CHECKIN_NUMBER).given(checkinInMemoryMock).doPassengerCheckin(PASSENGER_HASH);
+
+    checkinDto.passenger_hash = PASSENGER_HASH;
+    checkinDto.by = AGENT;
   }
 
   @Test(expected = NotFoundPassengerException.class)
   public void givenFakePassengerWhenAgentCheckinThenThrowException() {
-    checkinDtoMock.passenger_hash = FAKE_PASSENGER_HASH;
+    checkinDto.passenger_hash = FAKE_PASSENGER_HASH;
 
-    checkinService.saveCheckin(checkinDtoMock);
+    checkinService.saveCheckin(checkinDto);
   }
 
   @Test(expected = NotTimeToCheckinException.class)
   public void givenPassengerWhenSelfCheckinNotInTimeThenThrowException() {
-    checkinDtoMock.by = SELF;
-    willThrow(NotTimeToCheckinException.class).given(reservationMock).validateCheckinPeriod(checkinDtoMock.by);
+    checkinDto.by = SELF;
+    willThrow(NotTimeToCheckinException.class).given(reservationMock).validateCheckinPeriod(checkinDto.by);
 
-    checkinService.saveCheckin(checkinDtoMock);
+    checkinService.saveCheckin(checkinDto);
   }
 
   @Test(expected = ReservationModuleException.class)
   public void givenWrongPassengerInformationWhenCheckinThenThrowException() {
     willReturn(IS_NOT_VALID).given(reservationMock).isPassengerInfosValid(PASSENGER_HASH);
 
-    checkinService.saveCheckin(checkinDtoMock);
+    checkinService.saveCheckin(checkinDto);
   }
 
   @Test
   public void givenValidPassengerWhenDoCheckinThenReturnCheckinNumber() {
     willReturn(IS_VALID).given(reservationMock).isPassengerInfosValid(PASSENGER_HASH);
 
-    int checkinNumber = checkinService.saveCheckin(checkinDtoMock);
+    int checkinNumber = checkinService.saveCheckin(checkinDto);
 
     assertEquals(CHECKIN_NUMBER, checkinNumber);
   }

@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,37 +19,34 @@ import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 public class ReservationTest {
 
-  private static final boolean IS_GOOD_PASSENGER = true;
   private static final int RESERVATION_NUMBER = 55555;
   private static final String SELF = "SELF";
   private static final String PASSENGER_HASH = "HASH";
   private static final String FAKE_PASSENGER_HASH = "FAKE_HASH";
   private static final Calendar CALENDAR = Calendar.getInstance();
-  private static final Date SELF_CHECKIN_START_TIME = initiateDateByHour(-48, false);
-  private static final Date SELF_CHECKIN_END_TIME = initiateDateByHour(-6, true);
+  private static final Date SELF_CHECKIN_START_TIME = addHoursToCalendar(-48, false);
+  private static final Date SELF_CHECKIN_END_TIME = addHoursToCalendar(-6, true);
+
   private ReservationInMemory reservationInMemoryMock;
   private ReservationDto reservationDtoMock;
   private Passenger passengerMock;
   private List<Passenger> passengers;
-  private Reservation reservation;
 
-  private static Date initiateDateByHour(int changeHour, boolean sens) {
-    Calendar calendar = CALENDAR;
-    calendar.add(Calendar.HOUR, changeHour);
-    calendar.add(Calendar.MILLISECOND, (sens) ? 1 : -1);
-    return calendar.getTime();
-  }
+  private Reservation reservation;
 
   @Before
   public void initiateTest() {
     reservationInMemoryMock = mock(ReservationInMemory.class);
     reservationDtoMock = mock(ReservationDto.class);
     passengerMock = mock(Passenger.class);
+
     reservationDtoMock.reservation_number = RESERVATION_NUMBER;
     passengers = new ArrayList<Passenger>();
     passengers.add(passengerMock);
+
     reservation = new Reservation(reservationInMemoryMock, reservationDtoMock, passengers);
-    willReturn(IS_GOOD_PASSENGER).given(passengerMock).hasThisHash(PASSENGER_HASH);
+
+    willReturn(true).given(passengerMock).hasThisHash(PASSENGER_HASH);
   }
 
   @Test
@@ -79,5 +78,12 @@ public class ReservationTest {
     reservation.setFlightDate(SELF_CHECKIN_END_TIME);
 
     reservation.validateCheckinPeriod(SELF);
+  }
+
+  private static Date addHoursToCalendar(int changeHour, boolean mustAddMinute) {
+    Calendar calendar = CALENDAR;
+    calendar.add(Calendar.HOUR, changeHour);
+    calendar.add(Calendar.MINUTE, (mustAddMinute) ? 1 : -1);
+    return calendar.getTime();
   }
 }

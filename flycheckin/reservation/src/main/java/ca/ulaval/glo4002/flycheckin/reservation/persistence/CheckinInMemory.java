@@ -13,7 +13,7 @@ public class CheckinInMemory {
   private static int checkinId = CHECKIN_ID_BEGIN;
   private static Map<Integer, String> checkinMap = new HashMap<Integer, String>();
 
-  public int doPassengerCheckin(String passengerHash) {
+  public synchronized int doPassengerCheckin(String passengerHash) {
     if (checkinMap.containsValue(passengerHash))
       throw new ReservationModuleException(MESSAGE_ERROR_CHECKIN);
     checkinMap.put(checkinId++, passengerHash);

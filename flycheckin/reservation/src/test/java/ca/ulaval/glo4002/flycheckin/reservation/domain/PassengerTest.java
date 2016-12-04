@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,27 +14,30 @@ public class PassengerTest {
   private static final String FIRST_NAME = "FirstName";
   private static final String LAST_NAME = "LastName";
   private static final String PASSPORT_NUMBER = "NUMBER";
-  private static final String EMPTY_STRING = "";
+  private static final String UNDEFINED_INFO = "";
   private static final boolean IS_VIP = true;
-  private PassengerDto passengerDtoMock;
-  private PassengerDto wrongPassengerDtoMock;
+
+  private PassengerDto passengerDto;
+  private PassengerDto otherPassengerDto;
   private Passenger passenger;
-  private Passenger fakePassenger;
+  private Passenger otherPassenger;
 
   @Before
   public void initiateTest() {
-    passengerDtoMock = mock(PassengerDto.class);
-    wrongPassengerDtoMock = mock(PassengerDto.class);
-    passengerDtoMock.age = CHILD_AGE;
-    passengerDtoMock.first_name = FIRST_NAME;
-    passengerDtoMock.last_name = LAST_NAME;
-    passengerDtoMock.passport_number = PASSPORT_NUMBER;
-    wrongPassengerDtoMock.age = ADULT_AGE;
-    wrongPassengerDtoMock.first_name = EMPTY_STRING;
-    wrongPassengerDtoMock.last_name = EMPTY_STRING;
-    wrongPassengerDtoMock.passport_number = EMPTY_STRING;
-    passenger = new Passenger(passengerDtoMock);
-    fakePassenger = new Passenger(wrongPassengerDtoMock);
+    passengerDto = new PassengerDto();
+    otherPassengerDto = new PassengerDto();
+
+    passengerDto.age = CHILD_AGE;
+    passengerDto.first_name = FIRST_NAME;
+    passengerDto.last_name = LAST_NAME;
+    passengerDto.passport_number = PASSPORT_NUMBER;
+    otherPassengerDto.age = ADULT_AGE;
+    otherPassengerDto.first_name = UNDEFINED_INFO;
+    otherPassengerDto.last_name = UNDEFINED_INFO;
+    otherPassengerDto.passport_number = UNDEFINED_INFO;
+
+    passenger = new Passenger(passengerDto);
+    otherPassenger = new Passenger(otherPassengerDto);
   }
 
   @Test
@@ -45,7 +47,7 @@ public class PassengerTest {
 
   @Test
   public void givenAdultPassengerDtoWhenCheckIfChildThenReturnFalse() {
-    assertFalse(fakePassenger.isChild());
+    assertFalse(otherPassenger.isChild());
   }
 
   @Test
@@ -55,31 +57,31 @@ public class PassengerTest {
 
   @Test
   public void givenIncompleteFirstNameWhenCheckIfValidThenReturnFalse() {
-    passengerDtoMock.first_name = EMPTY_STRING;
-    passenger = new Passenger(passengerDtoMock);
+    passengerDto.first_name = UNDEFINED_INFO;
+    passenger = new Passenger(passengerDto);
 
     assertFalse(passenger.isValid());
   }
 
   @Test
   public void givenIncompleteLastNameWhenCheckIfValidThenReturnFalse() {
-    passengerDtoMock.last_name = EMPTY_STRING;
-    passenger = new Passenger(passengerDtoMock);
+    passengerDto.last_name = UNDEFINED_INFO;
+    passenger = new Passenger(passengerDto);
 
     assertFalse(passenger.isValid());
   }
 
   @Test
   public void givenIncompletePassportNumberWhenCheckIfValidThenReturnFalse() {
-    passengerDtoMock.passport_number = EMPTY_STRING;
-    passenger = new Passenger(passengerDtoMock);
+    passengerDto.passport_number = UNDEFINED_INFO;
+    passenger = new Passenger(passengerDto);
 
     assertFalse(passenger.isValid());
   }
 
   @Test
   public void givenWrongPassengerWhenCheckIfValidThenReturnFalse() {
-    assertFalse(fakePassenger.isValid());
+    assertFalse(otherPassenger.isValid());
   }
 
   @Test

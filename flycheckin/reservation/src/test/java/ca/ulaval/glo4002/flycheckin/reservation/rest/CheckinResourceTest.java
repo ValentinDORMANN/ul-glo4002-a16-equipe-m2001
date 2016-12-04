@@ -5,6 +5,7 @@ import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import org.junit.Before;
@@ -17,8 +18,6 @@ import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
 public class CheckinResourceTest {
 
-  private static final int BAD_REQUEST = 400;
-  private static final int NOT_FOUND = 404;
   private CheckinService mockCheckinService;
   private UriInfo uriInfoMock;
   private CheckinDto checkinDtoMock;
@@ -37,7 +36,7 @@ public class CheckinResourceTest {
 
     Response response = checkinResource.createCheckin(uriInfoMock, checkinDtoMock);
 
-    assertEquals(NOT_FOUND, response.getStatus());
+    assertEquals(Status.NOT_FOUND, response.getStatusInfo());
   }
 
   @Test
@@ -46,6 +45,6 @@ public class CheckinResourceTest {
 
     Response response = checkinResource.createCheckin(uriInfoMock, checkinDtoMock);
 
-    assertEquals(BAD_REQUEST, response.getStatus());
+    assertEquals(Status.BAD_REQUEST, response.getStatusInfo());
   }
 }
