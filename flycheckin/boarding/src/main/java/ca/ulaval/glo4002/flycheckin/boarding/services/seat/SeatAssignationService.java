@@ -36,10 +36,12 @@ public class SeatAssignationService {
   public SeatAssignation assignSeatToPassenger(Passenger passenger, String mode) throws BoardingModuleException {
     setSeatAssignationStrategy(mode);
     List<Seat> availableSeats = getAvalaibleSeatsForFlight(passenger.getFlightNumber(), passenger.getFlightDate());
-    String seatNumber = seatAssignationStrategy.assignSeatNumber(availableSeats, passenger.getSeatClass());
+
+    String seatNumber = seatAssignationStrategy.assignSeatNumber(availableSeats, passenger.getSeatClass(), passenger.isJunior());
     seatAssignation.createAssignation(seatNumber, passenger.getPassengerHash(), assignationNumberProvider);
     seatAssignationRepository.persistSeatAssignation(seatAssignation);
     makeSeatNumberUnavailable(passenger.getFlightNumber(), passenger.getFlightDate(), seatNumber);
+
     assignationNumberProvider++;
     return seatAssignation;
   }

@@ -5,11 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
-
 public class SeatTest {
 
   private static final String SEAT_CLASS = "class";
+  private static final String SEAT_NUMBER = "12-A";
   private static final String OTHER_SEAT_CLASS = "wrongClass";
   private static final double NORMAL_PRICE = 125.00;
   private static final double CHEAPER_PRICE = 75.00;
@@ -21,10 +20,7 @@ public class SeatTest {
 
   @Before
   public void initiateTest() {
-    seat = new Seat();
-    seat.setSeatClass(SEAT_CLASS);
-    seat.setPrice(NORMAL_PRICE);
-    seat.setLegroom(LEGROOM);
+    seat = new Seat(SEAT_CLASS, SEAT_NUMBER, LEGROOM, true, true, false, NORMAL_PRICE);
   }
 
   @Test
@@ -111,5 +107,26 @@ public class SeatTest {
     otherSeat.setLegroom(MORE_LEGROOM);
 
     assertFalse(seat.hasSameLegroomWith(otherSeat));
+  }
+
+  @Test
+  public void givenSeatWithClearViewWhenCheckIsClearViewThenReturnTrue() {
+    boolean isClearView = seat.isClearView();
+
+    assertTrue(isClearView);
+  }
+
+  @Test
+  public void givenSeatNearWindowWhenCheckIsNearWindowThenReturnTrue() {
+    boolean windowView = seat.isNearWindow();
+
+    assertTrue(windowView);
+  }
+
+  @Test
+  public void givenSeatNotInExitRowWhenCheckIsExitRowThenReturnFalse() {
+    boolean isExitRow = seat.isExitRow();
+
+    assertFalse(isExitRow);
   }
 }

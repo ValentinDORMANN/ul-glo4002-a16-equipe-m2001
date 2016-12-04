@@ -7,18 +7,20 @@ public class Seat {
   private int legroom;
   private boolean isNearWindow;
   private boolean isClearView;
+  private boolean isExitRow;
   private double price;
 
   public Seat() {
   }
 
-  public Seat(String seatClass, String seatNumber, int legroom, boolean isNearWindow, boolean isClearView,
+  public Seat(String seatClass, String seatNumber, int legroom, boolean isNearWindow, boolean isClearView, boolean isExitRow,
       double price) {
     this.seatClass = seatClass;
     this.seatNumber = seatNumber;
     this.legroom = legroom;
     this.isNearWindow = isNearWindow;
     this.isClearView = isClearView;
+    this.isExitRow = isExitRow;
     this.price = price;
   }
 
@@ -76,5 +78,9 @@ public class Seat {
 
   public void setPrice(double price) {
     this.price = price;
+  }
+
+  public boolean isExitRow() {
+    return this.isExitRow;
   }
 }

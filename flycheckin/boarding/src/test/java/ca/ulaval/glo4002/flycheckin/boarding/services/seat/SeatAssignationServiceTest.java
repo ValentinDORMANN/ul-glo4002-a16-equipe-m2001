@@ -12,8 +12,6 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
-import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationService;
-import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationStrategy;
 
 public class SeatAssignationServiceTest {
 
@@ -38,16 +36,15 @@ public class SeatAssignationServiceTest {
     when(mockPassenger.getFlightNumber()).thenReturn(FLIGHT_NUMBER);
     when(mockPassenger.getFlightDate()).thenReturn(FLIGHT_DATE);
     when(mockPassenger.getPassengerHash()).thenReturn(PASSENGER_HASH);
-    when(mockSeatAssignationStrategy.assignSeatNumber(any(), any())).thenReturn(SEAT_NUMBER);
-    seatAssignationService = new SeatAssignationService(mockSeatAssignation, mockSeatAssignationRepository,
-        mockSeatAssignationStrategy);
+    when(mockSeatAssignationStrategy.assignSeatNumber(any(), any(), any(boolean.class))).thenReturn(SEAT_NUMBER);
+    seatAssignationService = new SeatAssignationService(mockSeatAssignation, mockSeatAssignationRepository, mockSeatAssignationStrategy);
   }
 
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyChooseSeatNumber() {
     seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
 
-    verify(mockSeatAssignationStrategy, times(1)).assignSeatNumber(any(), any());
+    verify(mockSeatAssignationStrategy, times(1)).assignSeatNumber(any(), any(), any(boolean.class));
   }
 
   @Test
@@ -66,8 +63,7 @@ public class SeatAssignationServiceTest {
 
   @Test
   public void givenPassengerWhenAssignSeatToPassengerThenReturnSeatAssignationWithPassengerHash() {
-    seatAssignationService = new SeatAssignationService(new SeatAssignation(), mockSeatAssignationRepository,
-        mockSeatAssignationStrategy);
+    seatAssignationService = new SeatAssignationService(new SeatAssignation(), mockSeatAssignationRepository, mockSeatAssignationStrategy);
 
     SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
 

@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
-import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationCheapestStrategy;
 
 public class SeatAssignationCheapestStrategyTest {
 
@@ -20,6 +19,9 @@ public class SeatAssignationCheapestStrategyTest {
   private static final double EXPENSIVE_SEAT_PRICE = 75.00;
   private static final String EXPENSIVE_SEAT_NUMBER = "20-D";
   private static final String ANOTHER_SEAT_CLASS = "otherSeatClass";
+  private static final boolean IS_JUNIOR = true;
+  private static final boolean IS_ADULT = false;
+
   private Seat seat;
   private Seat expensiveSeat;
   private List<Seat> availableSeats;
@@ -41,7 +43,7 @@ public class SeatAssignationCheapestStrategyTest {
 
   @Test(expected = NoSeatAvailableException.class)
   public void givenEmptySeatListWhenAssignSeatToPassengerThenReturnException() {
-    cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS);
+    cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, IS_ADULT);
   }
 
   @Test(expected = NoSeatAvailableException.class)
@@ -49,7 +51,7 @@ public class SeatAssignationCheapestStrategyTest {
     availableSeats.add(expensiveSeat);
     availableSeats.add(seat);
 
-    cheapestSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS);
+    cheapestSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS, IS_ADULT);
   }
 
   @Test
@@ -57,7 +59,7 @@ public class SeatAssignationCheapestStrategyTest {
     availableSeats.add(expensiveSeat);
     availableSeats.add(seat);
 
-    String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS);
+    String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, IS_ADULT);
 
     assertEquals(SEAT_NUMBER, seatNumber);
   }
@@ -68,7 +70,7 @@ public class SeatAssignationCheapestStrategyTest {
     availableSeats.add(expensiveSeat);
     availableSeats.add(seat);
 
-    String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS);
+    String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, IS_ADULT);
 
     assertEquals(EXPENSIVE_SEAT_NUMBER, seatNumber);
   }
