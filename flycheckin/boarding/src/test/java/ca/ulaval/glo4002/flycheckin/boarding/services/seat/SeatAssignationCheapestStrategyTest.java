@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,57 +21,88 @@ public class SeatAssignationCheapestStrategyTest {
   private static final String EXPENSIVE_SEAT_NUMBER = "20-D";
   private static final String ANOTHER_SEAT_CLASS = "otherSeatClass";
   private static final boolean IS_JUNIOR = true;
-  private static final boolean IS_ADULT = false;
 
-  private Seat seat;
-  private Seat expensiveSeat;
+  private Seat seatMock;
+  private Seat expensiveSeatMock;
   private List<Seat> availableSeats;
   private SeatAssignationCheapestStrategy cheapestSeatAssignation;
 
   @Before
   public void initiateTest() {
-    seat = new Seat();
-    seat.setSeatNumber(SEAT_NUMBER);
-    seat.setSeatClass(SEAT_CLASS);
-    seat.setPrice(SEAT_PRICE);
-    expensiveSeat = new Seat();
-    expensiveSeat.setSeatNumber(EXPENSIVE_SEAT_NUMBER);
-    expensiveSeat.setSeatClass(SEAT_CLASS);
-    expensiveSeat.setPrice(EXPENSIVE_SEAT_PRICE);
     availableSeats = new ArrayList<Seat>();
     cheapestSeatAssignation = new SeatAssignationCheapestStrategy();
   }
 
+  private void givenCheaperSeatAvailable(String seatClass) {
+    seatMock = mock(Seat.class);
+    when(seatMock.getSeatNumber()).thenReturn(SEAT_NUMBER);
+    when(seatMock.hasClass(seatClass)).thenReturn(true);
+    when(seatMock.getPrice()).thenReturn(SEAT_PRICE);
+    when(seatMock.isCheaperThan(expensiveSeatMock)).thenReturn(true);
+    availableSeats.add(seatMock);
+  }
+
+  private void givenExpensiveSeatAvailable(String seatClass) {
+    expensiveSeatMock = mock(Seat.class);
+    when(expensiveSeatMock.getSeatNumber()).thenReturn(EXPENSIVE_SEAT_NUMBER);
+    when(expensiveSeatMock.hasClass(seatClass)).thenReturn(true);
+    when(expensiveSeatMock.getPrice()).thenReturn(EXPENSIVE_SEAT_PRICE);
+    when(expensiveSeatMock.isCheaperThan(seatMock)).thenReturn(true);
+    availableSeats.add(expensiveSeatMock);
+  }
+
+  private void setSeatAsExitRow(Seat seatMock) {
+    when(seatMock.isExitRow()).thenReturn(true);
+  }
+
   @Test(expected = NoSeatAvailableException.class)
   public void givenEmptySeatListWhenAssignSeatToPassengerThenReturnException() {
-    cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, IS_ADULT);
+    cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, !IS_JUNIOR);
   }
 
   @Test(expected = NoSeatAvailableException.class)
   public void givenNotEmptySeatListWhenAssignSeatToPassengerWhoHasNoSeatAvailableThenReturnException() {
-    availableSeats.add(expensiveSeat);
-    availableSeats.add(seat);
+    givenExpensiveSeatAvailable(SEAT_CLASS);
+    givenCheaperSeatAvailable(SEAT_CLASS);
 
-    cheapestSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS, IS_ADULT);
+    cheapestSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS, !IS_JUNIOR);
   }
 
   @Test
   public void givenTwoSeatWithSameClassWhenAssignSeatToPassengerWhoHasSeatClassThenAssertSeatAssignIsTheCheapest() {
-    availableSeats.add(expensiveSeat);
-    availableSeats.add(seat);
+    givenExpensiveSeatAvailable(SEAT_CLASS);
+    givenCheaperSeatAvailable(SEAT_CLASS);
 
-    String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, IS_ADULT);
+    String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, !IS_JUNIOR);
 
     assertEquals(SEAT_NUMBER, seatNumber);
   }
 
   @Test
   public void givenListWithOneSeatHasPassengerSeatClassWhenAssignSeatToPassengerThenAssertPassengerGetExpectedSeat() {
-    seat.setSeatClass(ANOTHER_SEAT_CLASS);
-    availableSeats.add(expensiveSeat);
-    availableSeats.add(seat);
+    givenExpensiveSeatAvailable(SEAT_CLASS);
+    givenCheaperSeatAvailable(ANOTHER_SEAT_CLASS);
 
-    String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, IS_ADULT);
+    String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, !IS_JUNIOR);
+
+    assertEquals(EXPENSIVE_SEAT_NUMBER, seatNumber);
+  }
+
+  @Test(expected = NoSeatAvailableException.class)
+  public void givenOnlyExitRowSeatAvailableWhenAssignSeatToJuniorPassengerThenReturnException() {
+    givenCheaperSeatAvailable(SEAT_CLASS);
+    setSeatAsExitRow(seatMock);
+
+    cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, IS_JUNIOR);
+  }
+
+  @Test
+  public void givenNotExitRowSeatAvailableWhenAssignSeatToJuniorPassengerThenVerifySeatNumberAssigned() {
+    givenExpensiveSeatAvailable(SEAT_CLASS);
+    givenCheaperSeatAvailable(SEAT_CLASS);
+    setSeatAsExitRow(seatMock);
+
+    String seatNumber = cheapestSeatAssignation.assignSeatNumber(availableSeats, SEAT_CLASS, IS_JUNIOR);
 
     assertEquals(EXPENSIVE_SEAT_NUMBER, seatNumber);
   }
