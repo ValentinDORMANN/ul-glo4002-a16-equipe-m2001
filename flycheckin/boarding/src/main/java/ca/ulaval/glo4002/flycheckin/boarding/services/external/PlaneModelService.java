@@ -32,19 +32,26 @@ public class PlaneModelService {
     List<Seat> seats = new ArrayList<Seat>();
     for (SeatDto seatDto : planeModelDto.seats) {
       try {
-        seats.add(createSeat(seatDto, planeModelDto.classes));
+        seats.add(createSeat(seatDto, planeModelDto.classes, planeModelDto.exit_rows));
       } catch (BoardingModuleException ex) {
       }
     }
     return seats;
   }
 
-  private Seat createSeat(SeatDto seatDto, ClassPassengerDto[] classes) throws BoardingModuleException {
+  private Seat createSeat(SeatDto seatDto, ClassPassengerDto[] classes, int[] exitRows) throws BoardingModuleException {
     for (ClassPassengerDto classPassengerDto : classes) {
       if (contains(classPassengerDto.rows, seatDto.row))
-        return constructSeatFromDto(seatDto, classPassengerDto.name);
+        return constructSeatFromDto(seatDto, classPassengerDto.name, exitRows);
     }
     throw new BoardingModuleException();
+  }
+
+  private Seat constructSeatFromDto(SeatDto seatDto, String seatClass, int[] exitRows) {
+    String seatNumber = Integer.toString(seatDto.row) + "-" + seatDto.seat.toUpperCase();
+    Seat seat = new Seat(seatClass, seatNumber, seatDto.legroom, seatDto.window, seatDto.clear_view,
+        contains(exitRows, seatDto.row), seatDto.price);
+    return seat;
   }
 
   private boolean contains(final int[] array, final int key) {
@@ -53,11 +60,5 @@ public class PlaneModelService {
         return true;
     }
     return false;
-  }
-
-  private Seat constructSeatFromDto(SeatDto seatDto, String seatClass) {
-    String seatNumber = Integer.toString(seatDto.row) + "-" + seatDto.seat.toUpperCase();
-    Seat seat = new Seat(seatClass, seatNumber, seatDto.legroom, seatDto.window, seatDto.clear_view, false, seatDto.price);
-    return seat;
   }
 }
