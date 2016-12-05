@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,84 +14,110 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
 
 public class SeatAssignationLegroomStrategyTest {
-  private static final double SMALL_PRICE = 100.00;
-  private static final double MEDIUM_PRICE = 150.00;
-  private static final double LARGE_PRICE = 200.00;
-  private static final double XLARGE_PRICE = 300.00;
-  private static final int SMALL_LEGROOM = 38;
-  private static final int MEDIUM_LEGROOM = 56;
-  private static final int LARGE_LEGROOM = 90;
   private static final String SMALL_SEAT_NUMBER = "16-B";
-  private static final String MEDIUM_SEAT_NUMBER = "10-K";
   private static final String LARGE_SEAT_NUMBER = "7-A";
-  private static final String XLARGE_SEAT_NUMBER = "7-C";
   private static final boolean IS_JUNIOR = true;
-  private static final boolean IS_ADULT = false;
 
   private static final String PASSENGER_SEAT_CLASS = "business";
-  private static final String ANOTHER_SEAT_CLASS = "big-front";
-  private Seat smallSeat, mediumSeat, largeSeat, xLargeSeat;
+  private static final String ANOTHER_SEAT_CLASS = "economy";
+
+  private Seat smallSeatMock, largeSeatMock;
   private List<Seat> availableSeats;
   private SeatAssignationLegroomStrategy legroomSeatAssignation;
 
   @Before
   public void initiateTest() {
-    smallSeat = new Seat();
-    smallSeat.setPrice(SMALL_PRICE);
-    smallSeat.setLegroom(SMALL_LEGROOM);
-    smallSeat.setSeatNumber(SMALL_SEAT_NUMBER);
-    smallSeat.setSeatClass(PASSENGER_SEAT_CLASS);
-    mediumSeat = new Seat();
-    mediumSeat.setPrice(MEDIUM_PRICE);
-    mediumSeat.setLegroom(MEDIUM_LEGROOM);
-    mediumSeat.setSeatNumber(MEDIUM_SEAT_NUMBER);
-    mediumSeat.setSeatClass(PASSENGER_SEAT_CLASS);
-    largeSeat = new Seat();
-    largeSeat.setPrice(LARGE_PRICE);
-    largeSeat.setLegroom(LARGE_LEGROOM);
-    largeSeat.setSeatNumber(LARGE_SEAT_NUMBER);
-    largeSeat.setSeatClass(PASSENGER_SEAT_CLASS);
-    xLargeSeat = new Seat();
-    xLargeSeat.setPrice(XLARGE_PRICE);
-    xLargeSeat.setLegroom(LARGE_LEGROOM);
-    xLargeSeat.setSeatNumber(XLARGE_SEAT_NUMBER);
-    xLargeSeat.setSeatClass(PASSENGER_SEAT_CLASS);
     availableSeats = new ArrayList<Seat>();
     legroomSeatAssignation = new SeatAssignationLegroomStrategy();
   }
 
   @Test(expected = NoSeatAvailableException.class)
   public void givenEmptyAvailableSeatListWhenAssignSeatToPassengerThenReturnException() {
-    legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
   }
 
   @Test(expected = NoSeatAvailableException.class)
-  public void givenAvailableSeatListOfSameClassWhenAssignSeatWithAnotherClassThenReturnException() {
-    availableSeats.add(smallSeat);
+  public void givenOnlyOneSeatAvailableWhenAssignSeatToPassengerWithAnotherSeatClassThenReturnException() {
+    givenOnlySmallLegroomSeatAvailable(ANOTHER_SEAT_CLASS);
 
-    legroomSeatAssignation.assignSeatNumber(availableSeats, ANOTHER_SEAT_CLASS, IS_ADULT);
+    legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
+  }
+
+  @Test
+  public void givenOnlyOneSeatAvailableWhenAssignSeatToPassengerWithSameSeatClassThenReturnSeatNumber() {
+    givenOnlySmallLegroomSeatAvailable(PASSENGER_SEAT_CLASS);
+
+    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
+
+    assertEquals(SMALL_SEAT_NUMBER, seatNumber);
   }
 
   @Test
   public void givenAvailableSeatsListWithDifferentLegroomSizeWhenAssignSeatThenReturnLargestLegroomSeat() {
-    availableSeats.add(smallSeat);
-    availableSeats.add(mediumSeat);
-    availableSeats.add(xLargeSeat);
+    givenSmallSeatLegroom(PASSENGER_SEAT_CLASS);
+    givenLargeSeatLegroom(PASSENGER_SEAT_CLASS);
 
-    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
 
-    assertEquals(XLARGE_SEAT_NUMBER, seatNumber);
+    assertEquals(LARGE_SEAT_NUMBER, seatNumber);
   }
 
   @Test
-  public void givenManySeatsWithTheGreaterLegroomWhenAssignSeatThenReturnTheCheapestSeatBetweenThem() {
-    availableSeats.add(smallSeat);
-    availableSeats.add(mediumSeat);
-    availableSeats.add(xLargeSeat);
-    availableSeats.add(largeSeat);
+  public void givenSeatWithSameLegroomValueWhenAssignSeatToPassengerThenVerifyTheCheapestSeatIsAssigned() {
+    givenCheapSeatAndExpensiveSeatWithSameLegroomValue();
+    when(smallSeatMock.isCheaperThan(largeSeatMock)).thenReturn(true);
 
-    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
 
-    assertEquals(LARGE_SEAT_NUMBER, seatNumber);
+    assertEquals(SMALL_SEAT_NUMBER, seatNumber);
+  }
+
+  @Test(expected = NoSeatAvailableException.class)
+  public void test1() {
+    givenOnlySmallLegroomSeatAvailable(PASSENGER_SEAT_CLASS);
+    when(smallSeatMock.isExitRow()).thenReturn(true);
+
+    legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_JUNIOR);
+  }
+
+  @Test
+  public void test2() {
+    givenSmallSeatLegroom(PASSENGER_SEAT_CLASS);
+    givenLargeSeatLegroom(PASSENGER_SEAT_CLASS);
+    when(smallSeatMock.isExitRow()).thenReturn(false);
+    when(largeSeatMock.isExitRow()).thenReturn(true);
+
+    String seatNumber = legroomSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_JUNIOR);
+
+    assertEquals(SMALL_SEAT_NUMBER, seatNumber);
+  }
+
+  private void givenCheapSeatAndExpensiveSeatWithSameLegroomValue() {
+    givenLargeSeatLegroom(PASSENGER_SEAT_CLASS);
+    when(largeSeatMock.isLegroomGreaterThan(smallSeatMock)).thenReturn(false);
+    when(largeSeatMock.hasSameLegroomWith(smallSeatMock)).thenReturn(true);
+    givenOnlySmallLegroomSeatAvailable(PASSENGER_SEAT_CLASS);
+    when(smallSeatMock.isLegroomGreaterThan(largeSeatMock)).thenReturn(false);
+    when(smallSeatMock.hasSameLegroomWith(largeSeatMock)).thenReturn(true);
+  }
+
+  private void givenOnlySmallLegroomSeatAvailable(String seatClass) {
+    smallSeatMock = mock(Seat.class);
+    when(smallSeatMock.getSeatNumber()).thenReturn(SMALL_SEAT_NUMBER);
+    when(smallSeatMock.hasClass(seatClass)).thenReturn(true);
+    availableSeats.add(smallSeatMock);
+  }
+
+  private void givenSmallSeatLegroom(String seatClass) {
+    givenOnlySmallLegroomSeatAvailable(seatClass);
+    when(smallSeatMock.isLegroomGreaterThan(largeSeatMock)).thenReturn(false);
+  }
+
+  private void givenLargeSeatLegroom(String seatClass) {
+    largeSeatMock = mock(Seat.class);
+    when(largeSeatMock.getSeatNumber()).thenReturn(LARGE_SEAT_NUMBER);
+    when(largeSeatMock.hasClass(seatClass)).thenReturn(true);
+    when(largeSeatMock.isLegroomGreaterThan(any(Seat.class))).thenReturn(true);
+    availableSeats.add(largeSeatMock);
   }
 }

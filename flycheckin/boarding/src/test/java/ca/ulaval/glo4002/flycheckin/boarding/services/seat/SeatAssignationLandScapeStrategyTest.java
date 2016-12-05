@@ -23,7 +23,6 @@ public class SeatAssignationLandScapeStrategyTest {
   private static final double CHEAPEST_PRICE = 200;
   private static final double EXPENSIVE_PRICE = 300;
   private static final boolean IS_JUNIOR = true;
-  private static final boolean IS_ADULT = false;
   private static final int LEGROOM = 10;
 
   private Seat anotherClassSeat, cheaperBestViewSeat, expensiveBestViewSeat, nearWindowSeat, clearViewSeat, worstViewSeat;
@@ -51,21 +50,21 @@ public class SeatAssignationLandScapeStrategyTest {
 
   @Test(expected = NoSeatAvailableException.class)
   public void givenNoSeatAvailableWhenAssignSeatToPassengerThenReturnException() {
-    bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
   }
 
   @Test(expected = NoSeatAvailableException.class)
   public void givenSeatListWithNoOneHasPassengerSeatClassWhenAssignSeatToPassengerThenReturnException() {
     availableSeats.add(anotherClassSeat);
 
-    bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
   }
 
   @Test
   public void givenSeatWithoutClearViewAndWindowViewWhenAssignSeatToPassengerThenReturnSeat() {
     availableSeats.add(worstViewSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
 
     assertEquals(WORST_VIEW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -75,7 +74,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(worstViewSeat);
     availableSeats.add(nearWindowSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
 
     assertEquals(NEAR_WINDOW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -85,7 +84,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(worstViewSeat);
     availableSeats.add(clearViewSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
 
     assertEquals(CLEAR_VIEW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -95,7 +94,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(clearViewSeat);
     availableSeats.add(nearWindowSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
 
     assertEquals(NEAR_WINDOW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -105,7 +104,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(nearWindowSeat);
     availableSeats.add(expensiveBestViewSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
 
     assertEquals(EXPENSIVE_BEST_VIEW_SEAT_NUMBER, assignedSeatNumber);
   }
@@ -116,7 +115,7 @@ public class SeatAssignationLandScapeStrategyTest {
     availableSeats.add(expensiveBestViewSeat);
     availableSeats.add(cheaperBestViewSeat);
 
-    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, IS_ADULT);
+    String assignedSeatNumber = bestViewSeatAssignation.assignSeatNumber(availableSeats, PASSENGER_SEAT_CLASS, !IS_JUNIOR);
 
     assertEquals(CHEAPER_BEST_VIEW_SEAT_NUMBER, assignedSeatNumber);
   }
