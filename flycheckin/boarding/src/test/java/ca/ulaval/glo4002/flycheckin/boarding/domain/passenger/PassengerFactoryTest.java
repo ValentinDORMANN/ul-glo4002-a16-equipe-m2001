@@ -15,6 +15,7 @@ public class PassengerFactoryTest {
   private static final String ECONOMIC_SEAT_CLASS = "economy";
   private static final String OTHER_SEAT_CLASS = "other";
   private static final boolean IS_VIP = true;
+  private static final boolean IS_CHILD = true;
 
   private PassengerFactory passengerFactory;
 
@@ -26,7 +27,7 @@ public class PassengerFactoryTest {
   @Test
   public void givenPassengerWithEconomicSeatClassWhenCreatePassengerThenReturnRegularPassenger() {
     Passenger passenger = passengerFactory.createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, PASSENGER_HASH,
-        ECONOMIC_SEAT_CLASS, IS_VIP);
+        ECONOMIC_SEAT_CLASS, IS_VIP,!IS_CHILD);
 
     assertTrue(passenger instanceof RegularPassenger);
   }
@@ -34,7 +35,7 @@ public class PassengerFactoryTest {
   @Test
   public void givenPassengerWithOtheThanEconomicSeatClassWhenCreatePassengerThenReturnRegularPassenger() {
     Passenger passenger = passengerFactory.createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, PASSENGER_HASH, OTHER_SEAT_CLASS,
-        IS_VIP);
+        IS_VIP,!IS_CHILD);
 
     assertTrue(passenger instanceof BusinessPassenger);
   }

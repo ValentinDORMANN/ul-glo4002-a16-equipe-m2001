@@ -24,6 +24,7 @@ public class BusinessPassengerTest {
   private static final String HASH = "hash";
   private static final String ECONOMY = "economy";
   private static final boolean VIP_STATUS = true;
+  private static final boolean IS_CHILD = true;
   private static final double LUGGAGE_PRICE = 100;
   private static final double VIP_LUGGAGE_PRICE = 95;
   private static final double DELTA = 0.01;
@@ -34,7 +35,7 @@ public class BusinessPassengerTest {
   @Before
   public void initiateTest() {
     luggageMock = mock(Luggage.class);
-    businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS);
+    businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS,!IS_CHILD);
   }
 
   @Test(expected = NotAllowableLuggageException.class)
@@ -98,7 +99,7 @@ public class BusinessPassengerTest {
 
   @Test
   public void given() {
-    businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS);
+    businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS,!IS_CHILD);
     givenStandardCheckedLuggage();
 
     businessPassenger.addLuggage(luggageMock);
@@ -215,7 +216,7 @@ public class BusinessPassengerTest {
   }
 
   private void givenVipBusinessPassengerWithCheckedLuggageLimitReached() {
-    businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS);
+    businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS,!IS_CHILD);
     givenStandardCheckedLuggage();
     businessPassenger.addLuggage(luggageMock);
     businessPassenger.addLuggage(luggageMock);

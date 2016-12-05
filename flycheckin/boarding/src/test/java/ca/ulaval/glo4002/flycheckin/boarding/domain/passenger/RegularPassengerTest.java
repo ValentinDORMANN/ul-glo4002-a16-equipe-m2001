@@ -25,6 +25,7 @@ public class RegularPassengerTest {
   private static final String HASH = "hash";
   private static final String ECONOMY = "economy";
   private static final boolean VIP_STATUS = false;
+  private static final boolean IS_CHILD = true;
   private static final double CHECKED_LUGGAGE_WEIGHT_LIMIT = 23;
 
   private static final double DELTA = 0.001;
@@ -37,7 +38,7 @@ public class RegularPassengerTest {
   public void initiateTest() {
     luggageMock = mock(Luggage.class);
 
-    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS);
+    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS,!IS_CHILD);
   }
 
   @Test(expected = NotAllowableLuggageException.class)
@@ -103,7 +104,7 @@ public class RegularPassengerTest {
 
   @Test(expected = NotAllowableLuggageException.class)
   public void givenVipPassengerWithAllowableCheckedLuggagesAssignedWhenAddAnotherCheckedLuggageThenThrowException() {
-    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS);
+    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS,!IS_CHILD);
     givenStandardCheckedLuggage(luggageMock);
 
     regularPassenger.addLuggage(luggageMock);
@@ -190,7 +191,7 @@ public class RegularPassengerTest {
 
   @Test
   public void givenCarryOnLuggageToVipPassengerWhenGetTotalPriceThenApplyDiscount() {
-    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, true);
+    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS,!IS_CHILD);
     givenStandardCarryOnLuggage(luggageMock);
 
     regularPassenger.addLuggage(luggageMock);

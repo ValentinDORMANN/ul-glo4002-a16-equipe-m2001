@@ -10,8 +10,8 @@ public class RegularPassenger extends Passenger {
   private static final int FREE_CHECKED_LUGGAGE_LIMIT = 1;
   private static final int CHECKED_LUGGAGE_WEIGHT_MAX_KG = 23;
 
-  public RegularPassenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip) {
-    super(flightNumber, flightDate, passengerHash, seatClass, isVip);
+  public RegularPassenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip,boolean isChild) {
+    super(flightNumber, flightDate, passengerHash, seatClass, isVip,isChild);
   }
 
   @Override

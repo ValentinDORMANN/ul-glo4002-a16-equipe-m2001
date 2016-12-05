@@ -24,15 +24,16 @@ public abstract class Passenger {
   private String passengerHash;
   private String seatClass;
   private boolean isVip;
-  private boolean isJunior;
+  private boolean isChild;
   private List<Luggage> luggages;
 
-  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip) {
+  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip,boolean isChild) {
     this.flightNumber = flightNumber;
     this.flightDate = flightDate;
     this.passengerHash = passengerHash;
     this.seatClass = seatClass;
     this.isVip = isVip;
+    this.isChild = isChild;
     this.luggages = new ArrayList<Luggage>();
   }
 
@@ -118,7 +119,7 @@ public abstract class Passenger {
   }
 
   public boolean isJunior() {
-    return this.isJunior;
+    return this.isChild;
   }
 
   public void isCheckinDone(CheckinHttpClient checkinHttpClient) throws BoardingModuleException {
