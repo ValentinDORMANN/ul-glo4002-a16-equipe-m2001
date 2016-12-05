@@ -58,18 +58,18 @@ public class SeatAssignationService {
   }
 
   private void setSeatAssignationStrategy(String mode) {
-    if (this.seatAssignationStrategy == null) {
+    if (seatAssignationStrategy == null) {
       switch (mode) {
         case "CHEAPEST":
-          this.seatAssignationStrategy = new SeatAssignationCheapestStrategy();
+          seatAssignationStrategy = new SeatAssignationCheapestStrategy();
           break;
         case "LEGS":
-          this.seatAssignationStrategy = new SeatAssignationLegroomStrategy();
+          seatAssignationStrategy = new SeatAssignationLegroomStrategy();
           break;
         case "LANDSCAPE":
-          this.seatAssignationStrategy = new SeatAssignationLandScapeStrategy();
+          seatAssignationStrategy = new SeatAssignationLandScapeStrategy();
         default:
-          this.seatAssignationStrategy = new SeatAssignationRandomStrategy();
+          seatAssignationStrategy = new SeatAssignationRandomStrategy();
           break;
       }
     }

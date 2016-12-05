@@ -15,58 +15,64 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationReposito
 
 public class SeatAssignationServiceTest {
 
-  private static final String RANDOM_MODE = "RANDOM";
+  private static final String RANDOM_MODE = "RANDOM";  
   private static final String PASSENGER_HASH = "HASH001";
-
-  private static final String SEAT_NUMBER = "12-C";
   private static final String FLIGHT_NUMBER = "A3832";
   private static final Date FLIGHT_DATE = new Date();
-  private Passenger mockPassenger;
-  private SeatAssignation mockSeatAssignation;
-  private SeatAssignationStrategy mockSeatAssignationStrategy;
-  private SeatAssignationRepository mockSeatAssignationRepository;
+  
+  private Passenger passengerMock;
+  private SeatAssignation seatAssignationMock;
+  private SeatAssignationStrategy seatAssignationStrategyMock;
+  private SeatAssignationRepository SeatAssignationRepositoryMock;
+  
   private SeatAssignationService seatAssignationService;
 
   @Before
   public void initiateTest() {
-    mockPassenger = mock(Passenger.class);
-    mockSeatAssignation = mock(SeatAssignation.class);
-    mockSeatAssignationStrategy = mock(SeatAssignationStrategy.class);
-    mockSeatAssignationRepository = mock(SeatAssignationRepository.class);
-    when(mockPassenger.getFlightNumber()).thenReturn(FLIGHT_NUMBER);
-    when(mockPassenger.getFlightDate()).thenReturn(FLIGHT_DATE);
-    when(mockPassenger.getPassengerHash()).thenReturn(PASSENGER_HASH);
-    when(mockSeatAssignationStrategy.assignSeatNumber(any(), any(), any(boolean.class))).thenReturn(SEAT_NUMBER);
-    seatAssignationService = new SeatAssignationService(mockSeatAssignation, mockSeatAssignationRepository, mockSeatAssignationStrategy);
+    passengerMock = mock(Passenger.class);
+    seatAssignationMock = mock(SeatAssignation.class);
+    seatAssignationStrategyMock = mock(SeatAssignationStrategy.class);
+    SeatAssignationRepositoryMock = mock(SeatAssignationRepository.class);
+    
+    //when(seatAssignationStrategyMock.assignSeatNumber(any(), any(), any(boolean.class))).thenReturn(SEAT_NUMBER);
+    givenPassenger();
+    
+    seatAssignationService = new SeatAssignationService(seatAssignationMock, SeatAssignationRepositoryMock, seatAssignationStrategyMock);
   }
 
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyChooseSeatNumber() {
-    seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
+    seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);
 
-    verify(mockSeatAssignationStrategy, times(1)).assignSeatNumber(any(), any(), any(boolean.class));
+    verify(seatAssignationStrategyMock, times(1)).assignSeatNumber(any(), any(), any(boolean.class));
   }
 
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyAssignationCreated() {
-    seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
+    seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);
 
-    verify(mockSeatAssignation, times(1)).createAssignation(any(String.class), any(String.class), any(Integer.class));
+    verify(seatAssignationMock, times(1)).createAssignation(any(String.class), any(String.class), any(Integer.class));
   }
 
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyPersistAssignation() {
-    seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
+    seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);
 
-    verify(mockSeatAssignationRepository, times(1)).persistSeatAssignation(mockSeatAssignation);
+    verify(SeatAssignationRepositoryMock, times(1)).persistSeatAssignation(seatAssignationMock);
   }
 
   @Test
   public void givenPassengerWhenAssignSeatToPassengerThenReturnSeatAssignationWithPassengerHash() {
-    seatAssignationService = new SeatAssignationService(new SeatAssignation(), mockSeatAssignationRepository, mockSeatAssignationStrategy);
+    seatAssignationService = new SeatAssignationService(new SeatAssignation(), SeatAssignationRepositoryMock, seatAssignationStrategyMock);
 
-    SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(mockPassenger, RANDOM_MODE);
+    SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);
 
     assertEquals(PASSENGER_HASH, seatAssignation.getPassengerHash());
+  }
+  
+  private void givenPassenger() { 
+    when(passengerMock.getFlightNumber()).thenReturn(FLIGHT_NUMBER);
+    when(passengerMock.getFlightDate()).thenReturn(FLIGHT_DATE);
+    when(passengerMock.getPassengerHash()).thenReturn(PASSENGER_HASH);
   }
 }
