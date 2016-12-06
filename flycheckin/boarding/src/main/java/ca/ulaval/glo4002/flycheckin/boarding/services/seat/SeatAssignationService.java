@@ -10,10 +10,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationCheapestStrategy;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationLandScapeStrategy;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationLegroomStrategy;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationRandomStrategy;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationStrategy;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.services.external.PlaneModelService;
@@ -39,10 +35,10 @@ public class SeatAssignationService {
   }
 
   public SeatAssignation assignSeatToPassenger(Passenger passenger, String mode) throws BoardingModuleException {
-    setSeatAssignationStrategy(mode);
+    // setSeatAssignationStrategy(mode);
     List<Seat> availableSeats = getAvalaibleSeatsForFlight(passenger.getFlightNumber(), passenger.getFlightDate());
 
-    String seatNumber = seatAssignationStrategy.assignSeatNumber(availableSeats, passenger.getSeatClass(), passenger.isJunior());
+    String seatNumber = seatAssignationStrategy.assignSeatNumber(availableSeats, passenger.getSeatClass(), passenger.isChild());
     seatAssignation.createAssignation(seatNumber, passenger.getPassengerHash(), assignationNumberProvider);
     seatAssignationRepository.persistSeatAssignation(seatAssignation);
     makeSeatNumberUnavailable(passenger.getFlightNumber(), passenger.getFlightDate(), seatNumber);
@@ -60,24 +56,6 @@ public class SeatAssignationService {
       availableSeatMap.put(flightInfos, planeModelService.getSeatsAccordingPlaneModel(planeModel));
     }
     return availableSeatMap.get(flightInfos);
-  }
-
-  private void setSeatAssignationStrategy(String mode) {
-    if (seatAssignationStrategy == null) {
-      switch (mode) {
-        case "CHEAPEST":
-          seatAssignationStrategy = new SeatAssignationCheapestStrategy();
-          break;
-        case "LEGS":
-          seatAssignationStrategy = new SeatAssignationLegroomStrategy();
-          break;
-        case "LANDSCAPE":
-          seatAssignationStrategy = new SeatAssignationLandScapeStrategy();
-        default:
-          seatAssignationStrategy = new SeatAssignationRandomStrategy();
-          break;
-      }
-    }
   }
 
   private void makeSeatNumberUnavailable(String flightNumber, Date flightDate, String seatNumber) {

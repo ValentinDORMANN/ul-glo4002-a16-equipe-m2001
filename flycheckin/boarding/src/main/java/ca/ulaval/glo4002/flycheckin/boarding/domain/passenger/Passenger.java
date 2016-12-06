@@ -28,8 +28,7 @@ public abstract class Passenger {
   private boolean isChild;
   private List<Luggage> luggages;
 
-  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip,
-      boolean isChild) {
+  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip, boolean isChild) {
     this.flightNumber = flightNumber;
     this.flightDate = flightDate;
     this.passengerHash = passengerHash;
@@ -120,7 +119,7 @@ public abstract class Passenger {
     return this.luggages;
   }
 
-  public boolean isJunior() {
+  public boolean isChild() {
     return this.isChild;
   }
 
