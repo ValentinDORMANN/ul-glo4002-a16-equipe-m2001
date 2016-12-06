@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
+package ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy;
 
 import java.util.List;
 

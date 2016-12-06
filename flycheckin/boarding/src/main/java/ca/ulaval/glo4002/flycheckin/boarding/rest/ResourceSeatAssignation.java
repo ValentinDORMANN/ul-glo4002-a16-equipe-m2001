@@ -43,12 +43,10 @@ public class ResourceSeatAssignation {
   @Path(PATH_SEAT_ASSIGNATIONS)
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response assignSeatToPassenger(@Context UriInfo uriInfo, SeatAssignationDto seatAssignationDto)
-      throws URISyntaxException {
+  public Response assignSeatToPassenger(@Context UriInfo uriInfo, SeatAssignationDto seatAssignationDto) throws URISyntaxException {
     try {
       Passenger passenger = passengerService.getPassengerByHash(seatAssignationDto.passenger_hash);
-      SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(passenger,
-          seatAssignationDto.mode);
+      SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(passenger, seatAssignationDto.mode);
       seatAssignationDto = transformSeatAssignationDto(seatAssignationDto, seatAssignation.getSeatNumber());
       URI url = createUrlforLocation(uriInfo, seatAssignation);
       return Response.status(Status.CREATED).location(url).entity(seatAssignationDto).build();

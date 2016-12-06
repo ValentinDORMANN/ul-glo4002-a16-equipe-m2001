@@ -10,6 +10,11 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationCheapestStrategy;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationLandScapeStrategy;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationLegroomStrategy;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationRandomStrategy;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationStrategy;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.services.external.PlaneModelService;
 
