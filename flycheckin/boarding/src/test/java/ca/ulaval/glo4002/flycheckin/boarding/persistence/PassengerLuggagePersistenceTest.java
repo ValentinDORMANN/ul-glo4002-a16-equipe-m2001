@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 
 public class PassengerLuggagePersistenceTest {
 
@@ -33,16 +34,6 @@ public class PassengerLuggagePersistenceTest {
 
     assertTrue(luggages.isEmpty());
   }
-
-  /*  @Test(expected = NotFoundPassengerException.class)
-  public void givenRealPassengerWhenGetPassengerWithLuggageAssignedThenReturnNotEmptyLuggageList() {
-    willReturn(HASH).given(passengerMock).getPassengerHash();
-    passengerLuggagePersistence.savePassengerLuggage(passengerMock);
-  
-    List<Luggage> luggages = passengerLuggagePersistence.getPassengerLuggage(HASH);
-  
-    assertFalse(luggages.isEmpty());
-  }*/
 
   @After
   public void clearMap() {
