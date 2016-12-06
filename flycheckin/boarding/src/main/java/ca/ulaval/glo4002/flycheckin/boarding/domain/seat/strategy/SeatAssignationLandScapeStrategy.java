@@ -9,9 +9,9 @@ import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
 public class SeatAssignationLandScapeStrategy extends SeatAssignationStrategy {
 
   @Override
-  public String assignSeatNumber(List<Seat> availableSeats, String seatClass, boolean isJunior) throws NoSeatAvailableException {
+  public String assignSeatNumber(List<Seat> availableSeats, String seatClass, boolean isChild) throws NoSeatAvailableException {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
-    siftAvailableSeatAccordingPassengerAge(availableSeats, isJunior);
+    siftAvailableSeatAccordingPassengerAge(availableSeats, isChild);
 
     Seat selectedSeat = getSeatWithBestView(availableSeats);
     return selectedSeat.getSeatNumber();
