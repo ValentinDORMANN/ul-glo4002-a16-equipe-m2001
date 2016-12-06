@@ -18,6 +18,7 @@ public abstract class Passenger {
   private static final double VIP_DISCOUNT = 0.95;
   protected static final String CHECKED_LUGGAGE_TYPE = "checked";
   protected static final String CARRY_ON_LUGGAGE_TYPE = "carry-on";
+  private static final String TOO_MUCH_LUGGAGE = "too much luggage !";
 
   private String flightNumber;
   private Date flightDate;
@@ -27,7 +28,8 @@ public abstract class Passenger {
   private boolean isChild;
   private List<Luggage> luggages;
 
-  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip,boolean isChild) {
+  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip,
+      boolean isChild) {
     this.flightNumber = flightNumber;
     this.flightDate = flightDate;
     this.passengerHash = passengerHash;
@@ -57,14 +59,14 @@ public abstract class Passenger {
 
   private void verifyAnotherCarryOnLuggageAllowable() {
     if (countTypeLuggageAssigned(CARRY_ON_LUGGAGE_TYPE) == CARRY_ON_LUGGAGE_LIMIT)
-      throw new NotAllowableLuggageException();
+      throw new NotAllowableLuggageException(TOO_MUCH_LUGGAGE);
   }
 
   private void verifyAnotherCheckedLuggageAllowable() {
     if (!isVip && countTypeLuggageAssigned(CHECKED_LUGGAGE_TYPE) == CHECKED_LUGGAGE_LIMIT)
-      throw new NotAllowableLuggageException();
+      throw new NotAllowableLuggageException(TOO_MUCH_LUGGAGE);
     else if (isVip && countTypeLuggageAssigned(CHECKED_LUGGAGE_TYPE) == VIP_CHECKED_LUGGAGE_LIMIT)
-      throw new NotAllowableLuggageException();
+      throw new NotAllowableLuggageException(TOO_MUCH_LUGGAGE);
   }
 
   protected int countTypeLuggageAssigned(String type) {
