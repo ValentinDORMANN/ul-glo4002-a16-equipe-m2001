@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 
 import java.util.Date;
 
@@ -13,6 +14,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationStrategy;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationStrategyFactory;
 
 public class SeatAssignationServiceTest {
 
@@ -23,6 +25,7 @@ public class SeatAssignationServiceTest {
   
   private Passenger passengerMock;
   private SeatAssignation seatAssignationMock;
+  private SeatAssignationStrategyFactory seatAssignationStrategyFactoryMock;
   private SeatAssignationStrategy seatAssignationStrategyMock;
   private SeatAssignationRepository SeatAssignationRepositoryMock;
   
@@ -32,17 +35,19 @@ public class SeatAssignationServiceTest {
   public void initiateTest() {
     passengerMock = mock(Passenger.class);
     seatAssignationMock = mock(SeatAssignation.class);
+    seatAssignationStrategyFactoryMock = mock(SeatAssignationStrategyFactory.class);
     seatAssignationStrategyMock = mock(SeatAssignationStrategy.class);
     SeatAssignationRepositoryMock = mock(SeatAssignationRepository.class);
     
-    //when(seatAssignationStrategyMock.assignSeatNumber(any(), any(), any(boolean.class))).thenReturn(SEAT_NUMBER);
     givenPassenger();
     
-    seatAssignationService = new SeatAssignationService(seatAssignationMock, SeatAssignationRepositoryMock, seatAssignationStrategyMock);
+    seatAssignationService = new SeatAssignationService(seatAssignationMock, SeatAssignationRepositoryMock, seatAssignationStrategyFactoryMock);
   }
 
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyChooseSeatNumber() {
+    given(seatAssignationStrategyFactoryMock.createSeatAssignationStrategy(RANDOM_MODE)).willReturn(seatAssignationStrategyMock);
+
     seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);
 
     verify(seatAssignationStrategyMock, times(1)).assignSeatNumber(any(), any(), any(boolean.class));
@@ -50,6 +55,8 @@ public class SeatAssignationServiceTest {
 
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyAssignationCreated() {
+    given(seatAssignationStrategyFactoryMock.createSeatAssignationStrategy(RANDOM_MODE)).willReturn(seatAssignationStrategyMock);
+
     seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);
 
     verify(seatAssignationMock, times(1)).createAssignation(any(String.class), any(String.class), any(Integer.class));
@@ -57,6 +64,8 @@ public class SeatAssignationServiceTest {
 
   @Test
   public void givenPassengerWithNoSeatAssignedWhenAssignSeatToPassengerThenVerifyPersistAssignation() {
+    given(seatAssignationStrategyFactoryMock.createSeatAssignationStrategy(RANDOM_MODE)).willReturn(seatAssignationStrategyMock);
+  
     seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);
 
     verify(SeatAssignationRepositoryMock, times(1)).persistSeatAssignation(seatAssignationMock);
@@ -64,7 +73,8 @@ public class SeatAssignationServiceTest {
 
   @Test
   public void givenPassengerWhenAssignSeatToPassengerThenReturnSeatAssignationWithPassengerHash() {
-    seatAssignationService = new SeatAssignationService(new SeatAssignation(), SeatAssignationRepositoryMock, seatAssignationStrategyMock);
+    given(seatAssignationStrategyFactoryMock.createSeatAssignationStrategy(RANDOM_MODE)).willReturn(seatAssignationStrategyMock);
+    seatAssignationService = new SeatAssignationService(new SeatAssignation(), SeatAssignationRepositoryMock, seatAssignationStrategyFactoryMock);
 
     SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);
 

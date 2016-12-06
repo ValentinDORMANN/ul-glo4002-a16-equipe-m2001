@@ -11,6 +11,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationStrategy;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy.SeatAssignationStrategyFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.services.external.PlaneModelService;
 
@@ -20,22 +21,23 @@ public class SeatAssignationService {
   private static Map<String, List<Seat>> availableSeatMap = new HashMap<String, List<Seat>>();
   private SeatAssignation seatAssignation;
   private SeatAssignationRepository seatAssignationRepository;
-  private SeatAssignationStrategy seatAssignationStrategy;
+  private SeatAssignationStrategyFactory seatAssignationStrategyFactory;
 
   public SeatAssignationService(SeatAssignation seatAssignation, SeatAssignationRepository seatAssignationRepository) {
     this.seatAssignation = seatAssignation;
     this.seatAssignationRepository = seatAssignationRepository;
+    this.seatAssignationStrategyFactory = new SeatAssignationStrategyFactory();
   }
 
   public SeatAssignationService(SeatAssignation seatAssignation, SeatAssignationRepository seatAssignationRepository,
-      SeatAssignationStrategy seatAssignationStrategy) {
+      SeatAssignationStrategyFactory seatAssignationStrategyFactory) {
     this.seatAssignation = seatAssignation;
     this.seatAssignationRepository = seatAssignationRepository;
-    this.seatAssignationStrategy = seatAssignationStrategy;
+    this.seatAssignationStrategyFactory = seatAssignationStrategyFactory;
   }
 
   public SeatAssignation assignSeatToPassenger(Passenger passenger, String mode) throws BoardingModuleException {
-    // setSeatAssignationStrategy(mode);
+    SeatAssignationStrategy seatAssignationStrategy =  seatAssignationStrategyFactory.createSeatAssignationStrategy(mode);
     List<Seat> availableSeats = getAvalaibleSeatsForFlight(passenger.getFlightNumber(), passenger.getFlightDate());
 
     String seatNumber = seatAssignationStrategy.assignSeatNumber(availableSeats, passenger.getSeatClass(), passenger.isChild());
