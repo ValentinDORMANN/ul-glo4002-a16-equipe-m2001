@@ -17,15 +17,14 @@ public class LuggageDto {
   public int weight;
   public String weight_unit;
   public String type;
-  @JsonInclude(JsonInclude.Include.NON_DEFAULT)
   public double price;
 
   public LuggageDto() {
   }
 
   public LuggageDto(Luggage luggage) {
-    linear_dimension = (int)luggage.getDimensionInCm() * MM_CONVERSION;
-    weight = (int)luggage.getWeightInKg() * GRAMME_CONVERSION;
+    linear_dimension = (int) luggage.getDimensionInCm() * MM_CONVERSION;
+    weight = (int) luggage.getWeightInKg() * GRAMME_CONVERSION;
     price = luggage.getPrice();
   }
 }
