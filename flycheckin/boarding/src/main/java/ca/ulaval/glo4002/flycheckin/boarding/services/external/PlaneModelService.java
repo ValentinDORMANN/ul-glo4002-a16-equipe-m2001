@@ -12,6 +12,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatDto;
 
 public class PlaneModelService {
 
+  private static final String ECONOMY = "economy";
+  private static final String BUSINESS = "business";
   private PlaneModelHttpClient planeModelHttpClient;
 
   public PlaneModelService() {
@@ -41,8 +43,13 @@ public class PlaneModelService {
 
   private Seat createSeat(SeatDto seatDto, ClassPassengerDto[] classes, int[] exitRows) throws BoardingModuleException {
     for (ClassPassengerDto classPassengerDto : classes) {
-      if (contains(classPassengerDto.rows, seatDto.row))
-        return constructSeatFromDto(seatDto, classPassengerDto.name, exitRows);
+      if (contains(classPassengerDto.rows, seatDto.row)) {
+        if (classPassengerDto.name.equals(BUSINESS)) {
+          return constructSeatFromDto(seatDto, BUSINESS, exitRows);
+        } else {
+          return constructSeatFromDto(seatDto, ECONOMY, exitRows);
+        }
+      }
     }
     throw new BoardingModuleException();
   }
