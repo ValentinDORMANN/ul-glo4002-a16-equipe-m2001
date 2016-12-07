@@ -17,11 +17,6 @@ public class SeatAssignationCheapestStrategy extends SeatAssignationStrategy {
   }
 
   private Seat getCheapestSeat(List<Seat> availableSeats) {
-    Seat selectedSeat = availableSeats.get(0);
-    for (Seat seat : availableSeats) {
-      if (seat.isCheaperThan(selectedSeat))
-        selectedSeat = seat;
-    }
-    return selectedSeat;
+    return selectCheapestSeat(availableSeats);
   }
 }

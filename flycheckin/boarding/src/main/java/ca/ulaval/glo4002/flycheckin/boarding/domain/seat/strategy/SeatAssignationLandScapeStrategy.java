@@ -50,13 +50,4 @@ public class SeatAssignationLandScapeStrategy extends SeatAssignationStrategy {
       return availableSeats;
     return filteredSeatList;
   }
-
-  private Seat selectCheapestSeat(List<Seat> availableSeats) {
-    Seat selectedSeat = availableSeats.get(0);
-    for (Seat seat : availableSeats) {
-      if (seat.isCheaperThan(selectedSeat))
-        selectedSeat = seat;
-    }
-    return selectedSeat;
-  }
 }
