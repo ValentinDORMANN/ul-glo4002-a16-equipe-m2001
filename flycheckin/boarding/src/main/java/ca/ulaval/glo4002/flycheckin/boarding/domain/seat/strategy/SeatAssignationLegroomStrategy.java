@@ -9,7 +9,9 @@ public class SeatAssignationLegroomStrategy extends SeatAssignationStrategy {
   @Override
   public String assignSeatNumber(List<Seat> availableSeats, String seatClass, boolean isChild) {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
-    siftAvailableSeatAccordingPassengerAge(availableSeats, isChild);
+    afficherListe(availableSeats, 1);
+    availableSeats = siftAvailableSeatAccordingPassengerAge(availableSeats, isChild);
+    afficherListe(availableSeats, 2);
 
     Seat selectedSeat = getCheapestLargeLegroomSeat(availableSeats);
     return selectedSeat.getSeatNumber();
@@ -22,5 +24,17 @@ public class SeatAssignationLegroomStrategy extends SeatAssignationStrategy {
         selectedSeat = seat;
     }
     return selectedSeat;
+  }
+
+  private void afficherListe(List<Seat> seatList, int moment) {
+    if (moment == 1)
+      System.out.println("AVANT FILTRE DE EXITROW **** " + seatList.size() + " sieges\n");
+    else
+      System.out.println("APRÈS FILTRE DE EXITROW **** " + seatList.size() + " sieges\n");
+
+    for (Seat seat : seatList) {
+      System.out.println(seat.getSeatNumber() + " : ExitRow = " + seat.isExitRow());
+      System.out.println();
+    }
   }
 }

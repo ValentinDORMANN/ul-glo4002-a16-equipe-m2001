@@ -95,7 +95,7 @@ public class SeatAssignationCheapestStrategyTest {
     expensiveSeatMock = mock(Seat.class);
     when(expensiveSeatMock.getSeatNumber()).thenReturn(EXPENSIVE_SEAT_NUMBER);
     when(expensiveSeatMock.hasClass(seatClass)).thenReturn(true);
-    when(expensiveSeatMock.isCheaperThan(seatMock)).thenReturn(true);
+    when(expensiveSeatMock.isCheaperThan(seatMock)).thenReturn(false);
     availableSeats.add(expensiveSeatMock);
   }
 

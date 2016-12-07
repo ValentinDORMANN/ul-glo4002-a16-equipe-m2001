@@ -11,7 +11,7 @@ public class SeatAssignationLandScapeStrategy extends SeatAssignationStrategy {
   @Override
   public String assignSeatNumber(List<Seat> availableSeats, String seatClass, boolean isChild) throws NoSeatAvailableException {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
-    siftAvailableSeatAccordingPassengerAge(availableSeats, isChild);
+    availableSeats = siftAvailableSeatAccordingPassengerAge(availableSeats, isChild);
 
     Seat selectedSeat = getSeatWithBestView(availableSeats);
     return selectedSeat.getSeatNumber();

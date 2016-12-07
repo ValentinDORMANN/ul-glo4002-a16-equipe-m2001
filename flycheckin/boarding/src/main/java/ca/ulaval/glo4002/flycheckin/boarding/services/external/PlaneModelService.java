@@ -56,8 +56,8 @@ public class PlaneModelService {
 
   private Seat constructSeatFromDto(SeatDto seatDto, String seatClass, int[] exitRows) {
     String seatNumber = Integer.toString(seatDto.row) + "-" + seatDto.seat.toUpperCase();
-    Seat seat = new Seat(seatClass, seatNumber, seatDto.legroom, seatDto.window, seatDto.clear_view,
-        contains(exitRows, seatDto.row), seatDto.price);
+    Seat seat = new Seat(seatClass, seatNumber, seatDto.legroom, seatDto.window, seatDto.clear_view, contains(exitRows, seatDto.row),
+        seatDto.price);
     return seat;
   }
 

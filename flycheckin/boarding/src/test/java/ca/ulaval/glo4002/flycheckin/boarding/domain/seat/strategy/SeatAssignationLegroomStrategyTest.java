@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.seat.strategy;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ public class SeatAssignationLegroomStrategyTest {
   }
 
   @Test(expected = NoSeatAvailableException.class)
-  public void test1() {
+  public void givenOnlySeatInExitRowWhenAssignSeatToPassengerThenReturnException() {
     givenOnlySmallLegroomSeatAvailable(PASSENGER_SEAT_CLASS);
     when(smallSeatMock.isExitRow()).thenReturn(true);
 
@@ -81,7 +80,7 @@ public class SeatAssignationLegroomStrategyTest {
   }
 
   @Test
-  public void test2() {
+  public void givenSmallLegroomSeatAndLargeLegroomSeatInExitRowWhenAssignToJuniorPassengerThenAssignSmallLegroomSeat() {
     givenSmallSeatLegroom(PASSENGER_SEAT_CLASS);
     givenLargeSeatLegroom(PASSENGER_SEAT_CLASS);
     when(smallSeatMock.isExitRow()).thenReturn(false);
@@ -117,7 +116,7 @@ public class SeatAssignationLegroomStrategyTest {
     largeSeatMock = mock(Seat.class);
     when(largeSeatMock.getSeatNumber()).thenReturn(LARGE_SEAT_NUMBER);
     when(largeSeatMock.hasClass(seatClass)).thenReturn(true);
-    when(largeSeatMock.isLegroomGreaterThan(any(Seat.class))).thenReturn(true);
+    when(largeSeatMock.isLegroomGreaterThan(smallSeatMock)).thenReturn(true);
     availableSeats.add(largeSeatMock);
   }
 }

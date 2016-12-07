@@ -46,7 +46,7 @@ public class SeatAssignationServiceTest {
   }
 
   @Test
-  public void test() {
+  public void givenAssignationModeWhenAssignSeatToPassengerThenVerifySeatAssignationStrategyWasCreate() {
     given(seatAssignationStrategyFactoryMock.createSeatAssignationStrategy(RANDOM_MODE)).willReturn(seatAssignationStrategyMock);
 
     seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);

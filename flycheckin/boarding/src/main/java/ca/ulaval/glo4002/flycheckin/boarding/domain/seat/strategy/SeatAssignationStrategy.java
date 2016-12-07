@@ -24,16 +24,18 @@ public abstract class SeatAssignationStrategy {
     return availableSeatClass;
   }
 
-  protected void siftAvailableSeatAccordingPassengerAge(List<Seat> availableSeats, boolean isChild) {
+  protected List<Seat> siftAvailableSeatAccordingPassengerAge(List<Seat> availableSeats, boolean isChild) {
+    List<Seat> availableChildSeats = new ArrayList<Seat>();
     if (isChild) {
-      for (int index = 0; index < availableSeats.size(); index++) {
-        if (availableSeats.get(index).isExitRow()) {
-          availableSeats.remove(index);
-          index--;
+      for (Seat seat : availableSeats) {
+        if (!seat.isExitRow()) {
+          availableChildSeats.add(seat);
         }
       }
-      if (availableSeats.isEmpty())
+      if (availableChildSeats.isEmpty())
         throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
+      return availableChildSeats;
     }
+    return availableSeats;
   }
 }
