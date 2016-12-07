@@ -26,30 +26,30 @@ public class SeatAssignationStrategyFactoryTest {
   }
 
   @Test
-  public void WhenCreateSeatAssignationStrategyWithRandomModeThenReturnSeatAssignationRandomStrategy() {
-    SeatAssignationStrategy SeatAssignationStrategy = seatAssignationStrategyFactory.createSeatAssignationStrategy(RANDOM_MODE);
+  public void whenCreateSeatAssignationStrategyWithRandomModeThenReturnSeatAssignationRandomStrategy() {
+    SeatAssignationStrategy seatAssignationStrategy = seatAssignationStrategyFactory.createSeatAssignationStrategy(RANDOM_MODE);
 
-    assertTrue(SeatAssignationStrategy instanceof SeatAssignationRandomStrategy);
+    assertTrue(seatAssignationStrategy instanceof SeatAssignationRandomStrategy);
   }
 
   @Test
-  public void WhenCreateSeatAssignationStrategyWithCheapestModeThenReturnSeatAssignationCheapestStrategy() {
-    SeatAssignationStrategy SeatAssignationStrategy = seatAssignationStrategyFactory.createSeatAssignationStrategy(CHEAPEST_MODE);
+  public void whenCreateSeatAssignationStrategyWithCheapestModeThenReturnSeatAssignationCheapestStrategy() {
+    SeatAssignationStrategy seatAssignationStrategy = seatAssignationStrategyFactory.createSeatAssignationStrategy(CHEAPEST_MODE);
 
-    assertTrue(SeatAssignationStrategy instanceof SeatAssignationCheapestStrategy);
+    assertTrue(seatAssignationStrategy instanceof SeatAssignationCheapestStrategy);
   }
 
   @Test
-  public void WhenCreateSeatAssignationStrategyWithLegroomModeThenReturnSeatAssignationLegroomStrategy() {
-    SeatAssignationStrategy SeatAssignationStrategy = seatAssignationStrategyFactory.createSeatAssignationStrategy(LEGROOM_MODE);
+  public void whenCreateSeatAssignationStrategyWithLegroomModeThenReturnSeatAssignationLegroomStrategy() {
+    SeatAssignationStrategy seatAssignationStrategy = seatAssignationStrategyFactory.createSeatAssignationStrategy(LEGROOM_MODE);
 
-    assertTrue(SeatAssignationStrategy instanceof SeatAssignationLegroomStrategy);
+    assertTrue(seatAssignationStrategy instanceof SeatAssignationLegroomStrategy);
   }
 
   @Test
-  public void WhenCreateSeatAssignationStrategyWithLandscapeModeThenReturnSeatAssignationLandscapeStrategy() {
-    SeatAssignationStrategy SeatAssignationStrategy = seatAssignationStrategyFactory.createSeatAssignationStrategy(LANDSCAPE_MODE);
+  public void whenCreateSeatAssignationStrategyWithLandscapeModeThenReturnSeatAssignationLandscapeStrategy() {
+    SeatAssignationStrategy seatAssignationStrategy = seatAssignationStrategyFactory.createSeatAssignationStrategy(LANDSCAPE_MODE);
 
-    assertTrue(SeatAssignationStrategy instanceof SeatAssignationLandScapeStrategy);
+    assertTrue(seatAssignationStrategy instanceof SeatAssignationLandScapeStrategy);
   }
 }

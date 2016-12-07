@@ -18,12 +18,12 @@ public class CarryOnLuggageTest {
 
   @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageWeightInKgOverLimitWhenCheckLuggageAllowableThenThrowException() {
-    carryOnLuggage = new CarryOnLuggage(DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG +1);
+    carryOnLuggage = new CarryOnLuggage(DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG + 1);
 
     carryOnLuggage.verifyAllowableWeight(WEIGHT_LIMIT_KG);
   }
 
- @Test
+  @Test
   public void givenLuggageWeightInKgLimitWhenCheckLuggageAllowableThenDoNothing() {
     carryOnLuggage = new CarryOnLuggage(DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
@@ -39,21 +39,21 @@ public class CarryOnLuggageTest {
 
   @Test
   public void givenLuggageWeightInKgUnderLimitWhenCheckLuggageAllowableThenDoNothing() {
-    carryOnLuggage = new CarryOnLuggage(DIMENSION_LIMIT_CM -1, WEIGHT_LIMIT_KG -1);
+    carryOnLuggage = new CarryOnLuggage(DIMENSION_LIMIT_CM - 1, WEIGHT_LIMIT_KG - 1);
 
     carryOnLuggage.verifyAllowableWeight(WEIGHT_LIMIT_KG);
   }
 
   @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageDimensionInCmOverLimitWhenCheckLuggageAllowableThenThrowException() {
-    carryOnLuggage = new CarryOnLuggage(DIMENSION_LIMIT_CM +1, WEIGHT_LIMIT_KG);
+    carryOnLuggage = new CarryOnLuggage(DIMENSION_LIMIT_CM + 1, WEIGHT_LIMIT_KG);
 
     carryOnLuggage.verifyAllowableDimension();
   }
 
   @Test
   public void givenCarryOnLuggageWhenCompareItsTypeWithCarryOnLuggageThenReturnTrue() {
-    carryOnLuggage = new CarryOnLuggage(DIMENSION_LIMIT_CM -1, WEIGHT_LIMIT_KG -1);
+    carryOnLuggage = new CarryOnLuggage(DIMENSION_LIMIT_CM - 1, WEIGHT_LIMIT_KG - 1);
     
     boolean hasTheSameType = carryOnLuggage.isType(LUGGAGE_TYPE);
 

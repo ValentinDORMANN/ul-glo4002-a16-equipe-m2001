@@ -10,12 +10,15 @@ public class SeatTest {
   private static final String SEAT_CLASS = "class";
   private static final String SEAT_NUMBER = "12-A";
   private static final String OTHER_SEAT_CLASS = "wrongClass";
+  
   private static final double NORMAL_PRICE = 125.00;
   private static final double CHEAPER_PRICE = 75.00;
   private static final double EXPENSIVE_PRICE = 175.00;
+  
   private static final int LESS_LEGROOM = 38;
   private static final int LEGROOM = 58;
   private static final int MORE_LEGROOM = 78;
+  
   private Seat seat;
 
   @Before

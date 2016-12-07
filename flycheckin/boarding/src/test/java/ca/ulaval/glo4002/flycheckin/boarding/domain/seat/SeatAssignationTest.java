@@ -13,6 +13,7 @@ public class SeatAssignationTest {
   private static final String HASH = "hash";
   private static final String SEAT_NUMBER = "12-A";
   private static final int ASSIGNATION_NUMBER = 1;
+  
   private SeatAssignation seatAssignation;
 
   @Before

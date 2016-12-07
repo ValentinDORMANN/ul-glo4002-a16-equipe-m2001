@@ -20,7 +20,8 @@ public class SeatAssignationLandScapeStrategyTest {
   private static final String SECOND_SEAT_NUMBER = "1D";
   private static final boolean IS_JUNIOR = true;
 
-  private Seat firstSeatMock, secondSeatMock;
+  private Seat firstSeatMock;
+  private Seat secondSeatMock;
   private List<Seat> availableSeats;
   private SeatAssignationLandScapeStrategy bestViewSeatAssignation;
 

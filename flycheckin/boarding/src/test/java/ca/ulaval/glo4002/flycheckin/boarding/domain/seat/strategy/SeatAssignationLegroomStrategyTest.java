@@ -20,8 +20,10 @@ public class SeatAssignationLegroomStrategyTest {
   private static final String PASSENGER_SEAT_CLASS = "business";
   private static final String ANOTHER_SEAT_CLASS = "economy";
 
-  private Seat smallSeatMock, largeSeatMock;
+  private Seat smallSeatMock;
+  private Seat largeSeatMock;
   private List<Seat> availableSeats;
+  
   private SeatAssignationLegroomStrategy legroomSeatAssignation;
 
   @Before

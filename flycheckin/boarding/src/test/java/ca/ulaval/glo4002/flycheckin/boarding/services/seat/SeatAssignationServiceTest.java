@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.seat;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
 
 import java.util.Date;
 
@@ -27,7 +25,7 @@ public class SeatAssignationServiceTest {
   private SeatAssignation seatAssignationMock;
   private SeatAssignationStrategyFactory seatAssignationStrategyFactoryMock;
   private SeatAssignationStrategy seatAssignationStrategyMock;
-  private SeatAssignationRepository SeatAssignationRepositoryMock;
+  private SeatAssignationRepository seatAssignationRepositoryMock;
 
   private SeatAssignationService seatAssignationService;
 
@@ -37,11 +35,11 @@ public class SeatAssignationServiceTest {
     seatAssignationMock = mock(SeatAssignation.class);
     seatAssignationStrategyFactoryMock = mock(SeatAssignationStrategyFactory.class);
     seatAssignationStrategyMock = mock(SeatAssignationStrategy.class);
-    SeatAssignationRepositoryMock = mock(SeatAssignationRepository.class);
+    seatAssignationRepositoryMock = mock(SeatAssignationRepository.class);
 
     givenPassenger();
 
-    seatAssignationService = new SeatAssignationService(seatAssignationMock, SeatAssignationRepositoryMock,
+    seatAssignationService = new SeatAssignationService(seatAssignationMock, seatAssignationRepositoryMock,
         seatAssignationStrategyFactoryMock);
   }
 
@@ -78,13 +76,13 @@ public class SeatAssignationServiceTest {
 
     seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);
 
-    verify(SeatAssignationRepositoryMock, times(1)).persistSeatAssignation(seatAssignationMock);
+    verify(seatAssignationRepositoryMock, times(1)).persistSeatAssignation(seatAssignationMock);
   }
 
   @Test
   public void givenPassengerWhenAssignSeatToPassengerThenReturnSeatAssignationWithPassengerHash() {
     given(seatAssignationStrategyFactoryMock.createSeatAssignationStrategy(RANDOM_MODE)).willReturn(seatAssignationStrategyMock);
-    seatAssignationService = new SeatAssignationService(new SeatAssignation(), SeatAssignationRepositoryMock,
+    seatAssignationService = new SeatAssignationService(new SeatAssignation(), seatAssignationRepositoryMock,
         seatAssignationStrategyFactoryMock);
 
     SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(passengerMock, RANDOM_MODE);

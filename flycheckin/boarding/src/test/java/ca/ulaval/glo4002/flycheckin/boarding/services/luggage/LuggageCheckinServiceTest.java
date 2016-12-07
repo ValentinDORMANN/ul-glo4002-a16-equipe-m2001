@@ -28,7 +28,7 @@ public class LuggageCheckinServiceTest {
   private LuggageDto luggageDto = new LuggageDto();
   private PassengerService passengerServiceMock;
   private LuggageFactory LuggageFactoryMock;
-  private PassengerLuggagePersistence PassengerLuggagePersistenceMock;
+  private PassengerLuggagePersistence passengerLuggagePersistenceMock;
   private CheckinHttpClient checkinHttpClientMock;
   private LuggageCheckinService luggageCheckinService;
 
@@ -38,10 +38,10 @@ public class LuggageCheckinServiceTest {
     passengerServiceMock = mock(PassengerService.class);
     mockPassenger = mock(Passenger.class);
     LuggageFactoryMock = mock(LuggageFactory.class);
-    PassengerLuggagePersistenceMock = mock(PassengerLuggagePersistence.class);
+    passengerLuggagePersistenceMock = mock(PassengerLuggagePersistence.class);
     checkinHttpClientMock = mock(CheckinHttpClient.class);
     luggageCheckinService = new LuggageCheckinService(passengerServiceMock, mockPassenger, LuggageFactoryMock,
-        PassengerLuggagePersistenceMock, checkinHttpClientMock);
+        passengerLuggagePersistenceMock, checkinHttpClientMock);
   }
 
   private void assignedDtoAttribut(LuggageDto luggageDto) {
@@ -126,6 +126,6 @@ public class LuggageCheckinServiceTest {
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 
-    verify(PassengerLuggagePersistenceMock, times(1)).savePassengerLuggage(mockPassenger);
+    verify(passengerLuggagePersistenceMock, times(1)).savePassengerLuggage(mockPassenger);
   }
 }

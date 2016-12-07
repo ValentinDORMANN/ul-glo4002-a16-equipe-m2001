@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.external;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
 import java.util.List;
 

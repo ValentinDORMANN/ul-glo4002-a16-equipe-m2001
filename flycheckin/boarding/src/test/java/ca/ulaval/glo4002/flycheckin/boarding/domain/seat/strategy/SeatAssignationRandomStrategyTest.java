@@ -21,11 +21,13 @@ public class SeatAssignationRandomStrategyTest {
 
   private Seat seatMock;
   private List<Seat> availableSeats;
+  
   private SeatAssignationRandomStrategy randomSeatAssignation;
 
   @Before
   public void initiateTest() {
     seatMock = mock(Seat.class);
+    
     availableSeats = new ArrayList<Seat>();
     randomSeatAssignation = new SeatAssignationRandomStrategy();
   }
