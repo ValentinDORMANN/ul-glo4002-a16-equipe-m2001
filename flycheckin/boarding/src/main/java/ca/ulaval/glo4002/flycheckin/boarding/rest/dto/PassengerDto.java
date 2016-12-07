@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.flycheckin.boarding.rest.dto;
 
-
 public class PassengerDto {
 
   public String first_name;
@@ -8,5 +7,6 @@ public class PassengerDto {
   public String passport_number;
   public String seat_class;
   public boolean child;
+  public boolean isVip;
   public String passenger_hash;
 }

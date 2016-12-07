@@ -2,4 +2,6 @@
 .metadata/
 .settings/
 .recommenders/
-**/.checkstyle
+*.project
+*.checkstyle
+**/checkstyle

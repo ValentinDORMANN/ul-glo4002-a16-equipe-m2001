@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.flycheckin.boarding.rest.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SeatAssignationDto {
 
   public String passenger_hash;

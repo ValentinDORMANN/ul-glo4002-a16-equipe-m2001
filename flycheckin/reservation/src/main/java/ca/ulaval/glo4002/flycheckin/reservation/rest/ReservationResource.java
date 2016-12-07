@@ -15,11 +15,15 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.dto.ReservationDto;
+import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 @Path("")
 public class ReservationResource {
@@ -27,26 +31,9 @@ public class ReservationResource {
   private static final String GET_RESERVATION_PATH = "/reservations/{reservation_number}";
   private static final String GET_RESERVATION_BY_HASH_PATH = "/reservations/hash/{passenger_hash}";
   private static final String POST_RESERVATION_PATH = "/events/reservation-created";
-
-  @POST
-  @Path(POST_RESERVATION_PATH)
-  @Consumes(MediaType.APPLICATION_JSON)
-  public Response createReserversation(@Context UriInfo uriInfo, ReservationDto reservationDto) {
-    try {
-      Reservation reservation = new Reservation(reservationDto);
-      URI url = createUrlforGetReservation(uriInfo, reservation);
-      return Response.status(Status.CREATED).location(url).build();
-    } catch (URISyntaxException ex) {
-      return Response.status(Status.CREATED).build();
-    } catch (FlyCheckinApplicationException ex) {
-      return Response.status(Status.BAD_REQUEST).build();
-    }
-  }
-
-  private URI createUrlforGetReservation(UriInfo uriInfo, Reservation reservation) throws URISyntaxException {
-    String location = uriInfo.getBaseUri().toString() + "reservations/" + reservation.getReservationNumber();
-    return new URI(location);
-  }
+  private static CheckinInMemory checkinInMemory = new CheckinInMemory();
+  private static ReservationInMemory reservationInMemory = new ReservationInMemory();
+  private static CheckinService checkinService = new CheckinService(checkinInMemory, reservationInMemory);
 
   @GET
   @Path(GET_RESERVATION_PATH)
@@ -55,24 +42,43 @@ public class ReservationResource {
     Reservation reservation = new Reservation();
     try {
       reservation = reservation.readReservationByNumber(reservationNumber);
+      ReservationDto reservationDto = new ReservationDto(reservation);
+      return Response.status(Status.OK).entity(reservationDto).build();
     } catch (NotFoundReservationException ex) {
       return Response.status(Status.NOT_FOUND).build();
     }
-    ReservationDto reservationDto = new ReservationDto(reservation);
-    return Response.status(Status.OK).entity(reservationDto).build();
   }
 
   @GET
   @Path(GET_RESERVATION_BY_HASH_PATH)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getReservationByHash(@PathParam("passenger_hash") String passenger_hash) {
+  public Response getReservationByHash(@PathParam("passenger_hash") String passengerHash) {
     Reservation reservation = new Reservation();
     try {
-      reservation = reservation.searchReservationByPassengerHash(passenger_hash);
+      reservation = reservation.searchReservationByPassengerHash(passengerHash);
+      ReservationDto reservationDto = new ReservationDto(reservation, passengerHash);
+      return Response.ok(reservationDto).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
     }
-    ReservationDto reservationDto = new ReservationDto(reservation, passenger_hash);
-    return Response.ok(reservationDto).build();
+  }
+
+  @POST
+  @Path(POST_RESERVATION_PATH)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response createReserversation(@Context UriInfo uriInfo, ReservationDto reservationDto)
+      throws NotCheckedinException {
+    try {
+      Reservation reservation = new Reservation(reservationDto);
+      URI url = createUrlforGetReservation(uriInfo, reservation);
+      return Response.status(Status.CREATED).location(url).build();
+    } catch (ReservationModuleException | URISyntaxException ex) {
+      return Response.status(Status.BAD_REQUEST).build();
+    }
+  }
+
+  private URI createUrlforGetReservation(UriInfo uriInfo, Reservation reservation) throws URISyntaxException {
+    String location = uriInfo.getBaseUri().toString() + "reservations/" + reservation.getReservationNumber();
+    return new URI(location);
   }
 }

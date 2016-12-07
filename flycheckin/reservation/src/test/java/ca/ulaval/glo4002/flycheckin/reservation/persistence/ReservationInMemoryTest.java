@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.flycheckin.reservation.persistence;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
-
 import java.text.ParseException;
 
 import org.junit.Before;

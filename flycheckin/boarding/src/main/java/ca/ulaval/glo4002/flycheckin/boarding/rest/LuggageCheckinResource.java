@@ -15,18 +15,24 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.Passenger;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.ExcededCheckedLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
+import ca.ulaval.glo4002.flycheckin.boarding.exception.InvalidUnitException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageInfoDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ResultLuggageCheckinDto;
-import ca.ulaval.glo4002.flycheckin.boarding.services.externe.PassengerService;
-import ca.ulaval.glo4002.flycheckin.boarding.services.interne.LuggageCheckinService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.luggage.LuggageCheckinService;
+import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 
 @Path("")
 public class LuggageCheckinResource {
 
+  private static final String CM = "cm";
+  private static final String KG = "kg";
+  private static final double DIMENSION_CONVERSION_RATE = 2.5484;
+  private static final double WEIGHT_CONVERSION_RATE = 0.46;
   private static final boolean ALLOWED = true;
   private static final boolean NOT_ALLOWED = false;
   private LuggageCheckinService luggageCheckinService;
@@ -42,7 +48,7 @@ public class LuggageCheckinResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getLuggage(@Context UriInfo uriInfo, @PathParam("passenger_hash") String passengerHash) {
     try {
-      Passenger passenger = passengerService.getPassenger(passengerHash);
+      Passenger passenger = passengerService.getPassengerByHash(passengerHash);
       LuggageInfoDto luggageInfoDto = new LuggageInfoDto(passenger);
       return Response.status(Status.OK).entity(luggageInfoDto).build();
     } catch (NotFoundPassengerException ex) {
@@ -57,13 +63,16 @@ public class LuggageCheckinResource {
   public Response checkinLuggage(@Context UriInfo uriInfo, @PathParam("passenger_hash") String passengerHash,
       LuggageDto luggageDto) throws URISyntaxException {
     try {
+      convertLuggageDto(luggageDto);
       String luggageHash = luggageCheckinService.assignLuggage(passengerHash, luggageDto);
       URI location = createUrlLocation(uriInfo, passengerHash, luggageHash);
       return Response.status(Status.CREATED).location(location).entity(createAllowedLuggageDto()).build();
     } catch (NotFoundPassengerException ex) {
       return Response.status(Status.NOT_FOUND).build();
-    } catch (ExcededCheckedLuggageException ex) {
+    } catch (NotAllowableLuggageException ex) {
       return Response.status(Status.OK).entity(createNotAllowedLuggageDto(ex.getMessage())).build();
+    } catch (BoardingModuleException ex) {
+      return Response.status(Status.BAD_REQUEST).build();
     }
   }
 
@@ -83,5 +92,22 @@ public class LuggageCheckinResource {
     resultLuggageCheckinDto.allowed = NOT_ALLOWED;
     resultLuggageCheckinDto.refusation_reason = message;
     return resultLuggageCheckinDto;
+  }
+
+  private void convertLuggageDto(LuggageDto luggageDto) throws InvalidUnitException {
+    convertDimensionDto(luggageDto);
+    convertWeightDto(luggageDto);
+  }
+
+  private void convertWeightDto(LuggageDto luggageDto) throws InvalidUnitException {
+    if (!luggageDto.weight_unit.equals(KG))
+      Math.ceil(luggageDto.weight *= WEIGHT_CONVERSION_RATE);
+
+  }
+
+  private void convertDimensionDto(LuggageDto luggageDto) throws InvalidUnitException {
+    if (!luggageDto.linear_dimension_unit.equals(CM))
+      Math.ceil(luggageDto.linear_dimension *= DIMENSION_CONVERSION_RATE);
+
   }
 }

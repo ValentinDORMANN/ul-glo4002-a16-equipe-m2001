@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.reservation.exception;
 
-public class NotFoundPassengerException extends FlyCheckinApplicationException {
+public class NotFoundPassengerException extends ReservationModuleException {
 
   private static final long serialVersionUID = 1L;
 

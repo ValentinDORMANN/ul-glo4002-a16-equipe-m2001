@@ -1,13 +1,14 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
-import ca.ulaval.glo4002.flycheckin.reservation.api.dto.CheckinDto;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.FlyCheckinApplicationException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
 public class CheckinService {
 
-  private static final String MSG_ERROR = "Passenger Information incorrect";
+  private static final String MESSAGE_ERROR = "Passenger Information incorrect";
   private CheckinInMemory checkinInMemory;
   private ReservationInMemory reservationInMemory;
 
@@ -16,13 +17,23 @@ public class CheckinService {
     this.reservationInMemory = reservationInMemory;
   }
 
-  public int saveCheckin(CheckinDto checkinDto) throws FlyCheckinApplicationException {
-    String hash = checkinDto.passenger_hash;
+  public int saveCheckin(CheckinDto checkinDto) throws ReservationModuleException {
     String by = checkinDto.by;
+    String hash = checkinDto.passenger_hash;
+    boolean isVip = checkinDto.vip;
+    validateCheckin(by, hash, isVip);
+    return checkinInMemory.doPassengerCheckin(hash);
+  }
+
+  private void validateCheckin(String by, String hash, boolean isVip) {
     Reservation reservation = reservationInMemory.getReservationByPassengerHash(hash);
     reservation.validateCheckinPeriod(by);
-    if (reservation.isPassengerInfosValid(hash))
-      return checkinInMemory.doPassengerCheckin(hash);
-    throw new FlyCheckinApplicationException(MSG_ERROR);
+    reservation.changePassengerVipStatus(hash, isVip);
+    if (!reservation.isPassengerInfosValid(hash))
+      throw new ReservationModuleException(MESSAGE_ERROR);
+  }
+
+  public void isCheckInPassengerDone(String passengerHash) throws NotCheckedinException {
+    checkinInMemory.isCheckinDone(passengerHash);
   }
 }
