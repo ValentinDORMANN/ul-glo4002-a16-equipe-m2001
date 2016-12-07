@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.luggage;
 
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,11 +24,11 @@ public class LuggageCheckinServiceTest {
   private static final int OVER_WEIGHT = 25;
   private static final String TYPE = "checked";
   private static final int OVER_LINEAR_DIMENSION = 1000;
-  private static final String LINEAR_DIMENSION_UNIT = "cm";
+
   private Passenger mockPassenger;
   private LuggageDto luggageDto = new LuggageDto();
   private PassengerService passengerServiceMock;
-  private LuggageFactory LuggageFactoryMock;
+  private LuggageFactory luggageFactoryMock;
   private PassengerLuggagePersistence passengerLuggagePersistenceMock;
   private CheckinHttpClient checkinHttpClientMock;
   private LuggageCheckinService luggageCheckinService;
@@ -37,23 +38,22 @@ public class LuggageCheckinServiceTest {
     assignedDtoAttribut(luggageDto);
     passengerServiceMock = mock(PassengerService.class);
     mockPassenger = mock(Passenger.class);
-    LuggageFactoryMock = mock(LuggageFactory.class);
+    luggageFactoryMock = mock(LuggageFactory.class);
     passengerLuggagePersistenceMock = mock(PassengerLuggagePersistence.class);
     checkinHttpClientMock = mock(CheckinHttpClient.class);
-    luggageCheckinService = new LuggageCheckinService(passengerServiceMock, mockPassenger, LuggageFactoryMock,
+    luggageCheckinService = new LuggageCheckinService(passengerServiceMock, mockPassenger, luggageFactoryMock,
         passengerLuggagePersistenceMock, checkinHttpClientMock);
   }
 
   private void assignedDtoAttribut(LuggageDto luggageDto) {
     luggageDto.linear_dimension = ALLOWED_LINEAR_DIMENSION;
-    luggageDto.linear_dimension_unit = LINEAR_DIMENSION_UNIT;
     luggageDto.weight = ALLOWED_WEIGHT;
     luggageDto.type = TYPE;
   }
 
   @Test(expected = NotFoundPassengerException.class)
   public void givenInexistantPassengerHashWhenAssignLuggageThenThrowException() {
-    willReturn(new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT)).given(LuggageFactoryMock)
+    willReturn(new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT)).given(luggageFactoryMock)
         .createLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT, TYPE);
     willThrow(NotFoundPassengerException.class).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
 
@@ -62,7 +62,7 @@ public class LuggageCheckinServiceTest {
 
   @Test(expected = NotCheckedinException.class)
   public void givenNotCheckedinPassengerHashWhenAssignLuggageThenThrowException() {
-    willReturn(new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT)).given(LuggageFactoryMock)
+    willReturn(new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT)).given(luggageFactoryMock)
         .createLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT, TYPE);
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     willThrow(NotCheckedinException.class).given(checkinHttpClientMock).verifyCheckinFromReservation(PASSENGER_HASH);
@@ -72,7 +72,7 @@ public class LuggageCheckinServiceTest {
 
   @Test
   public void givenCheckedinPassengerHashWhenAssignLuggage() {
-    willReturn(new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT)).given(LuggageFactoryMock)
+    willReturn(new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT)).given(luggageFactoryMock)
         .createLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT, TYPE);
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
 
@@ -86,8 +86,7 @@ public class LuggageCheckinServiceTest {
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     luggageDto.linear_dimension = OVER_LINEAR_DIMENSION;
     CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto.linear_dimension, ALLOWED_WEIGHT);
-    willReturn(checkedLuggage).given(LuggageFactoryMock).createLuggage(luggageDto.linear_dimension, ALLOWED_WEIGHT,
-        TYPE);
+    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(luggageDto.linear_dimension, ALLOWED_WEIGHT, TYPE);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 
@@ -99,8 +98,7 @@ public class LuggageCheckinServiceTest {
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     luggageDto.weight = OVER_WEIGHT;
     CheckedLuggage checkedLuggage = new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, luggageDto.weight);
-    willReturn(checkedLuggage).given(LuggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, luggageDto.weight,
-        TYPE);
+    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, luggageDto.weight, TYPE);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 
@@ -111,7 +109,7 @@ public class LuggageCheckinServiceTest {
   public void givenAllowableLuggageWhenAssignLuggageToPassengerVerifyAddLuggageIsCalled() {
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     CheckedLuggage checkedLuggage = new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT);
-    willReturn(checkedLuggage).given(LuggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT, TYPE);
+    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT, TYPE);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 
@@ -122,7 +120,7 @@ public class LuggageCheckinServiceTest {
   public void givenALuggageWhenAssignToPassengerVerifySavePassengerLuggageIsCalledFormPersistence() {
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     CheckedLuggage checkedLuggage = new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT);
-    willReturn(checkedLuggage).given(LuggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT, TYPE);
+    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT, TYPE);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 
