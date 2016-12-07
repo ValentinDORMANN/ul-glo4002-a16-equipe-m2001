@@ -38,5 +38,4 @@ public class LuggageFactoryTest {
   public void whenCreateLuggageWithUndefinedTypeThenReturnException() {
     luggageFactory.createLuggage(LINEAR_DIMENSION, WEIGHT, UNDEFINED_LUGGAGE);
   }
-
 }

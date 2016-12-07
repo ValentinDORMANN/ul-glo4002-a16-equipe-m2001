@@ -25,17 +25,17 @@ public class PassengerFactoryTest {
   }
 
   @Test
-  public void givenPassengerWithEconomicSeatClassWhenCreatePassengerThenReturnRegularPassenger() {
+  public void givenPassengerWithEconomySeatClassWhenCreatePassengerThenReturnRegularPassenger() {
     Passenger passenger = passengerFactory.createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, PASSENGER_HASH,
-        ECONOMIC_SEAT_CLASS, IS_VIP,!IS_CHILD);
+        ECONOMIC_SEAT_CLASS, IS_VIP, !IS_CHILD);
 
     assertTrue(passenger instanceof RegularPassenger);
   }
 
   @Test
-  public void givenPassengerWithOtheThanEconomicSeatClassWhenCreatePassengerThenReturnRegularPassenger() {
+  public void givenPassengerWithOtheThanEconomySeatClassWhenCreatePassengerThenReturnBusinessPassenger() {
     Passenger passenger = passengerFactory.createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, PASSENGER_HASH, OTHER_SEAT_CLASS,
-        IS_VIP,!IS_CHILD);
+        IS_VIP, !IS_CHILD);
 
     assertTrue(passenger instanceof BusinessPassenger);
   }

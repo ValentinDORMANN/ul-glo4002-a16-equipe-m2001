@@ -15,7 +15,7 @@ public class CheckedLuggageTest {
   private static final double SECOND_STAGE_PENALTY_PRICE = BASE_PRICE + BASE_PRICE * (double) 21 / (double) 100;
   private static final double DELTA = 0.001;
 
-  private static final Object UNDEFINED_HASH = "";
+  private static final String UNDEFINED_HASH = "";
 
   private CheckedLuggage checkedLuggage;
 

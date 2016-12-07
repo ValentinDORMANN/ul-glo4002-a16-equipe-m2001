@@ -13,6 +13,7 @@ public class AmsMapClientTest {
   private static final String FLIGHT_DASH = "QK-918";
   private static final String AIRBUS = "a320";
   private static final String FLIGHT_AIRBUS = "NK-750";
+  
   private AmsMapClient amsMapClient;
 
   @Before

@@ -37,7 +37,7 @@ public class RegularPassengerTest {
   public void initiateTest() {
     luggageMock = mock(Luggage.class);
 
-    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS,!IS_CHILD);
+    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, VIP_STATUS, !IS_CHILD);
   }
 
   @Test(expected = NotAllowableLuggageException.class)
@@ -83,7 +83,7 @@ public class RegularPassengerTest {
   }
 
   @Test
-  public void givenStandardCarryOnLuggageWhenAddLuggageToPassengerThenCalculateHisPrice() {
+  public void givenStandardCarryOnLuggageWhenAddLuggageToPassengerThenCalculateItsPrice() {
     givenStandardCarryOnLuggage(luggageMock);
 
     regularPassenger.addLuggage(luggageMock);
@@ -158,7 +158,7 @@ public class RegularPassengerTest {
   }
 
   @Test
-  public void givenThreeCheckedLuggageWhenAddLuggageThenVerifyItCalculatesPrice3times() {
+  public void givenThreeCheckedLuggageWhenAddLuggageThenVerifyItCalculatesPriceThreetimes() {
     givenStandardCheckedLuggage(luggageMock);
 
     regularPassenger.addLuggage(luggageMock);

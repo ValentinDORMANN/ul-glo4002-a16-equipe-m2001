@@ -13,6 +13,7 @@ public class CarryOnLuggageTest {
   
   private static final String LUGGAGE_TYPE = "carry-on";
   private static final String OTHER_LUGGAGE_TYPE = "other";
+  
   private CarryOnLuggage carryOnLuggage;
 
   @Test(expected = NotAllowableLuggageException.class)
