@@ -26,16 +26,15 @@ public class PassengerService {
     checkinHttpClient = new CheckinHttpClient();
   }
 
-  public PassengerService(ReservationHttpClient reservationHttpClient,
-      PassengerLuggagePersistence passengerLuggagePersistence, PassengerFactory passengerFactory,
-      CheckinHttpClient checkinHttpClient) {
+  public PassengerService(ReservationHttpClient reservationHttpClient, PassengerLuggagePersistence passengerLuggagePersistence,
+      PassengerFactory passengerFactory, CheckinHttpClient checkinHttpClient) {
     this.reservationHttpClient = reservationHttpClient;
     this.passengerLuggagePersistence = passengerLuggagePersistence;
     this.passengerFactory = passengerFactory;
     this.checkinHttpClient = checkinHttpClient;
   }
 
-  public Passenger getPassengerCheckedByHash(String passengerHash) throws BoardingModuleException {
+  public Passenger getCheckedPassengerByHash(String passengerHash) throws BoardingModuleException {
     Passenger passenger = getPassengerByHash(passengerHash);
     passenger.isCheckinDone(checkinHttpClient);
     return passenger;
@@ -57,6 +56,6 @@ public class PassengerService {
   private Passenger createPassengerFromDto(ReservationDto reservationDto) {
     return passengerFactory.createPassenger(reservationDto.flight_number, reservationDto.flight_date,
         reservationDto.passengers[SINGLE_INDEX].passenger_hash, reservationDto.passengers[SINGLE_INDEX].seat_class,
-        reservationDto.passengers[SINGLE_INDEX].isVip,! reservationDto.passengers[SINGLE_INDEX].child);
+        reservationDto.passengers[SINGLE_INDEX].isVip, reservationDto.passengers[SINGLE_INDEX].child);
   }
 }

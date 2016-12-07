@@ -9,8 +9,8 @@ public class SeatAssignationLegroomStrategy extends SeatAssignationStrategy {
   @Override
   public String assignSeatNumber(List<Seat> availableSeats, String seatClass, boolean isChild) {
     availableSeats = siftAvailableSeatsBySeatClass(availableSeats, seatClass);
-    afficherListe(availableSeats, 1);
     availableSeats = siftAvailableSeatAccordingPassengerAge(availableSeats, isChild);
+    System.out.println("MON PASSAGER EST UN JUNIOR = " + isChild + "\n");
     afficherListe(availableSeats, 2);
 
     Seat selectedSeat = getCheapestLargeLegroomSeat(availableSeats);

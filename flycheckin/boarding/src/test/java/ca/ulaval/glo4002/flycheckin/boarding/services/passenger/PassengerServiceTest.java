@@ -44,25 +44,23 @@ public class PassengerServiceTest {
 
   @Before
   public void initiateTest() {
-	passengerDto = new PassengerDto();
-	reservationDto = new ReservationDto();	 
-	givenPassengerDto(passengerDto);
-	PassengerDto[] passengersDto = { passengerDto };
-	givenReservationDto(reservationDto, passengersDto);
+    passengerDto = new PassengerDto();
+    reservationDto = new ReservationDto();
+    givenPassengerDto(passengerDto);
+    PassengerDto[] passengerListDto = { passengerDto };
+    givenReservationDto(reservationDto, passengerListDto);
+
     reservationHttpClientMock = mock(ReservationHttpClient.class);
     inMemoryPassengerMock = mock(PassengerLuggagePersistence.class);
     passengerMock = mock(Passenger.class);
-    
-    
     passengerFactoryMock = mock(PassengerFactory.class);
     checkinHttpClientMock = mock(CheckinHttpClient.class);
-    passengerService = new PassengerService(reservationHttpClientMock, inMemoryPassengerMock, passengerFactoryMock,
-        checkinHttpClientMock);
-    
+
+    passengerService = new PassengerService(reservationHttpClientMock, inMemoryPassengerMock, passengerFactoryMock, checkinHttpClientMock);
   }
 
   @Test
-  public void givenPassengerHashWithNoLuggageWhenGetPassengerByHashThenVerifyPassengerIsGetInReservation() {
+  public void givenPassengerHashWhenGetPassengerByHashThenVerifyPassengerIsGetFromReservationModule() {
     willReturn(reservationDto).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
 
     passengerService.getPassengerByHash(HASH);
@@ -71,25 +69,13 @@ public class PassengerServiceTest {
   }
 
   @Test
-  public void givenValidPassengerHashWhenGetPassengerByHashThenVerifyPassengerIsCreated() {
+  public void givenPassengerHashStoredInReservationModuleWhenGetPassengerByHashThenVerifyPassengerIsCreated() {
     willReturn(reservationDto).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
 
     passengerService.getPassengerByHash(HASH);
 
-    verify(passengerFactoryMock, times(1)).createPassenger(any(String.class), any(Date.class), any(String.class),
-        any(String.class), any(boolean.class),any(boolean.class));
-  }
-
-  @Test
-  public void givenPassengerHashWithNoLuggageWhenGetPassengerByHashThenGetGoogPassengerFromReservation() {
-    willReturn(reservationDto).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
-    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS,
-        IS_VIP,!IS_CHILD);
-    willReturn(HASH).given(passengerMock).getPassengerHash();
-
-    Passenger passenger = passengerService.getPassengerByHash(HASH);
-
-    assertEquals(HASH, passenger.getPassengerHash());
+    verify(passengerFactoryMock, times(1)).createPassenger(any(String.class), any(Date.class), any(String.class), any(String.class),
+        any(boolean.class), any(boolean.class));
   }
 
   @Test(expected = NotFoundPassengerException.class)
@@ -100,39 +86,50 @@ public class PassengerServiceTest {
   }
 
   @Test(expected = NotCheckedinException.class)
-  public void givenPassengerNotCHeckedWhenGetPassengerCheckedThenThrowException() {
+  public void givenPassengerDoesNotCheckInWhenGetPassengerWithCheckInDoneThenThrowException() {
     willReturn(reservationDto).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
-    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS,
-        IS_VIP,!IS_CHILD);
+    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS, IS_VIP, IS_CHILD);
     willReturn(HASH).given(passengerMock).getPassengerHash();
     willThrow(NotCheckedinException.class).given(passengerMock).isCheckinDone(checkinHttpClientMock);
 
-    passengerService.getPassengerCheckedByHash(HASH);
+    passengerService.getCheckedPassengerByHash(HASH);
   }
 
   @Test
-  public void test() {
+  public void givenPassengerAlreadyCheckInWhenGetPassengerWithCheckInDoneThenVerifyIfCheckinIsDone() {
     willReturn(reservationDto).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
-    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS,
-        IS_VIP,!IS_CHILD);
+    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS, IS_VIP, IS_CHILD);
     willReturn(HASH).given(passengerMock).getPassengerHash();
 
-    passengerService.getPassengerCheckedByHash(HASH);
+    passengerService.getCheckedPassengerByHash(HASH);
+
+    verify(passengerMock, times(1)).isCheckinDone(any());
   }
-  private void givenReservationDto(ReservationDto reservationDto,PassengerDto[] passengersDto){
-	  	reservationDto.passengers = passengersDto;
-	    reservationDto.flight_date = FLIGHT_DATE;
-	    reservationDto.flight_number = FLIGHT_NUMBER;
-	  
+
+  @Test
+  public void givenPassengerAlreadyCheckInWhenGetPassengerWithCheckInDoneThenReturnPassenger() {
+    willReturn(reservationDto).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
+    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS, IS_VIP, IS_CHILD);
+    willReturn(HASH).given(passengerMock).getPassengerHash();
+
+    passengerService.getCheckedPassengerByHash(HASH);
+
+    assertEquals(HASH, passengerMock.getPassengerHash());
   }
-  private void givenPassengerDto(PassengerDto passengerDto){
-	  passengerDto.first_name = FIRST_NAME;
-	  	passengerDto.passenger_hash = HASH;
-	  	passengerDto.seat_class = SEAT_CLASS;
-	  	passengerDto.child= IS_CHILD;
-	    passengerDto.isVip = IS_VIP;
-	    passengerDto.last_name = LAST_NAME;
-	    passengerDto.passport_number= PASPORT_NUMBER;
-	  
+
+  private void givenReservationDto(ReservationDto reservationDto, PassengerDto[] passengersDto) {
+    reservationDto.passengers = passengersDto;
+    reservationDto.flight_date = FLIGHT_DATE;
+    reservationDto.flight_number = FLIGHT_NUMBER;
+  }
+
+  private void givenPassengerDto(PassengerDto passengerDto) {
+    passengerDto.first_name = FIRST_NAME;
+    passengerDto.passenger_hash = HASH;
+    passengerDto.seat_class = SEAT_CLASS;
+    passengerDto.child = IS_CHILD;
+    passengerDto.isVip = IS_VIP;
+    passengerDto.last_name = LAST_NAME;
+    passengerDto.passport_number = PASPORT_NUMBER;
   }
 }

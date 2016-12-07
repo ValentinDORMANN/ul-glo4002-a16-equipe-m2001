@@ -35,7 +35,7 @@ public abstract class SeatAssignationStrategy {
       if (availableChildSeats.isEmpty())
         throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
       return availableChildSeats;
-    }
-    return availableSeats;
+    } else
+      return availableSeats;
   }
 }
