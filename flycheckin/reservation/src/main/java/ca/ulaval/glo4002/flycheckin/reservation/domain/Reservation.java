@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
@@ -22,9 +29,17 @@ public class Reservation {
   private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
   private static ReservationInMemory reservationInMemory = new ReservationInMemory();
+  
+  @Id
+  @Column(name = "reservationNumber", unique = true, nullable = false)
   private int reservationNumber;
+  @Column(name = "flightNumber")
   private String flightNumber;
+  @Column(name = "reservationDate")
+  @Temporal(TemporalType.TIMESTAMP)
   private Date flightDate;
+  @Column(name = "passengers")
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Passenger> passengers;
 
   public Reservation() {
