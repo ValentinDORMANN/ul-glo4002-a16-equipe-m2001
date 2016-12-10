@@ -10,11 +10,11 @@ public class CheckinService {
 
   private static final String MESSAGE_ERROR = "Passenger Information incorrect";
   private CheckinInMemory checkinInMemory;
-  private ReservationInMemory reservationInMemory;
+  private ReservationRegistry reservationRegistry;
 
-  public CheckinService(CheckinInMemory checkinInMemory, ReservationInMemory reservationInMemory) {
+  public CheckinService(CheckinInMemory checkinInMemory, ReservationRegistry reservationRegistry) {
     this.checkinInMemory = checkinInMemory;
-    this.reservationInMemory = reservationInMemory;
+    this.reservationRegistry = reservationRegistry;
   }
 
   public int saveCheckin(CheckinDto checkinDto) throws ReservationModuleException {
@@ -26,7 +26,7 @@ public class CheckinService {
   }
 
   private void validateCheckin(String by, String hash, boolean isVip) {
-    Reservation reservation = reservationInMemory.getReservationByPassengerHash(hash);
+    Reservation reservation = reservationRegistry.getReservationByPassengerHash(hash);
     reservation.validateCheckinPeriod(by);
     reservation.changePassengerVipStatus(hash, isVip);
     if (!reservation.isPassengerInfosValid(hash))

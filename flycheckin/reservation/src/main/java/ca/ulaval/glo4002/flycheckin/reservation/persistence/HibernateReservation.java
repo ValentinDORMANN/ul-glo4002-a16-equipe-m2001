@@ -6,11 +6,12 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
+import ca.ulaval.glo4002.flycheckin.reservation.domain.ReservationRegistry;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
-public class HibernateReservation {
+public class HibernateReservation implements ReservationRegistry {
 
   private static final String UNFOUND_RESERVATION_ERROR = "Error : reservation not found !";
   private static final String INVALID_PASSENGER_ERROR = "Error : no reservation for this passenger!";
@@ -21,7 +22,8 @@ public class HibernateReservation {
     this.entityManager = new EntityManagerProvider().getEntityManager();
   }
 
-  public void insertNewReservation(Reservation newReservation) throws IllegalArgumentReservationException {
+  @Override
+  public void saveNewReservation(Reservation newReservation) throws IllegalArgumentReservationException {
     try {
       EntityTransaction transaction = entityManager.getTransaction();
       transaction.begin();
@@ -33,7 +35,8 @@ public class HibernateReservation {
     }
   }
 
-  public Reservation findReservationByNumber(int reservationNumber) {
+  @Override
+  public Reservation getReservationByNumber(int reservationNumber) {
     Reservation reservationFound;
     try {
       reservationFound = entityManager.find(Reservation.class, reservationNumber);
@@ -43,7 +46,8 @@ public class HibernateReservation {
     return reservationFound;
   }
 
-  public Reservation findReservationByPassengerHash(String hash) throws NotFoundPassengerException {
+  @Override
+  public Reservation getReservationByPassengerHash(String hash) throws NotFoundPassengerException {
     String hql = "select r from Reservation as r inner join Passenger where r.passengerHash = :passengerHash";
     TypedQuery<Reservation> query = entityManager.createQuery(hql, Reservation.class);
     query.setParameter("passengerHash", hash);

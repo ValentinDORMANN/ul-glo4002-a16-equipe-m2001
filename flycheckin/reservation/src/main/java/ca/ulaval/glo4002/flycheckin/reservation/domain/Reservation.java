@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -20,6 +21,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinExcept
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
+@Entity
 public class Reservation {
 
   private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
