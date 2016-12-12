@@ -1,12 +1,12 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
-public class CheckedLuggage extends Luggage {
+public class RegularLuggage extends Luggage {
 
   private static final String TYPE = "checked";
   private static final int DIMENSION_LIMIT = 158;
   private static final double SURPLUS_PRICE = 50;
 
-  public CheckedLuggage(String category, int linearDimension, int weight) {
+  public RegularLuggage(String category, int linearDimension, int weight) {
     super(category, linearDimension, weight);
   }
 

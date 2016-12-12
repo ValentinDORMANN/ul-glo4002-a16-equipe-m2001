@@ -10,10 +10,10 @@ public class LuggageFactory {
     Luggage luggage = null;
     switch (type) {
       case REGULAR_LUGGAGE:
-        luggage = new CheckedLuggage(linearDimension, weight, REGULAR_LUGGAGE);
+        luggage = new RegularLuggage(REGULAR_LUGGAGE, linearDimension, weight);
         break;
       case CARRY_ON_LUGGAGE:
-        luggage = new CarryOnLuggage(linearDimension, weight, CARRY_ON_CATEGORY);
+        luggage = new CarryOnLuggage(CARRY_ON_CATEGORY, linearDimension, weight);
         break;
       default:
         throw new UndefinedTypeLuggageException();
