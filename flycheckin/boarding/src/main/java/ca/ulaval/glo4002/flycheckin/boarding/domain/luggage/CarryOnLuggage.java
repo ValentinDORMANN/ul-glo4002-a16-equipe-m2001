@@ -7,8 +7,8 @@ public class CarryOnLuggage extends Luggage {
   private static final String TYPE = "carry-on";
   private static final int BASE_PRICE = 30;
 
-  public CarryOnLuggage(int linearDimension, int weight) {
-    super(linearDimension, weight);
+  public CarryOnLuggage(String category, int linearDimension, int weight) {
+    super(category, linearDimension, weight);
   }
 
   @Override
