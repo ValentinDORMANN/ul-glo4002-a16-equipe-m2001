@@ -55,6 +55,10 @@ public abstract class Luggage {
     return this.price == 0 ? true : false;
   }
 
+  public boolean isSameType(Luggage luggage) {
+    return category.equals(luggage.category);
+  }
+
   protected void applyPenalty() {
     if (penaltyFee == FIRST_STAGE_PENALTY_FEE_IN_PERCENTAGE)
       penaltyFee = SECOND_STAGE_PENALTY_FEE_IN_PERCENTAGE;

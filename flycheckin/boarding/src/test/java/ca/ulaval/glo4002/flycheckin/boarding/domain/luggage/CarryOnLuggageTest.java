@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class CarryOnLuggageTest {
@@ -11,10 +12,15 @@ public class CarryOnLuggageTest {
   private static final double BASE_PRICE = 30;
   private static final double DELTA = 0.01;
   private static final String CATEGORY = "standard";
-  private static final String LUGGAGE_TYPE = "carry-on";
-  private static final String OTHER_LUGGAGE_TYPE = "other";
+  private static final String OTHER_CATEGORY = "standard";
 
   private CarryOnLuggage carryOnLuggage;
+  private CarryOnLuggage otherLuggage;
+
+  @Before
+  public void initiateTest() {
+    otherLuggage = new CarryOnLuggage(OTHER_CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
+  }
 
   @Test(expected = NotAllowableLuggageException.class)
   public void givenLuggageWeightInKgOverLimitWhenCheckLuggageAllowableThenThrowException() {
@@ -55,7 +61,7 @@ public class CarryOnLuggageTest {
   public void givenCarryOnLuggageWhenCompareItsTypeWithCarryOnLuggageThenReturnTrue() {
     carryOnLuggage = new CarryOnLuggage(CATEGORY, DIMENSION_LIMIT_CM - 1, WEIGHT_LIMIT_KG - 1);
 
-    boolean hasTheSameType = carryOnLuggage.isSameCategoryWithThisLuggage(LUGGAGE_TYPE);
+    boolean hasTheSameType = carryOnLuggage.isSameType(otherLuggage);
 
     assertTrue(hasTheSameType);
   }
@@ -64,7 +70,7 @@ public class CarryOnLuggageTest {
   public void givenOtherLuggageWhenCompareItsTypeWithCarryOnLuggageThenReturnFalse() {
     carryOnLuggage = new CarryOnLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
-    boolean hasTheSameType = carryOnLuggage.isSameCategoryWithThisLuggage(OTHER_LUGGAGE_TYPE);
+    boolean hasTheSameType = carryOnLuggage.isSameType(otherLuggage);
 
     assertFalse(hasTheSameType);
   }

@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.RegularLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageFactory;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.RegularLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
@@ -86,7 +86,8 @@ public class LuggageCheckinServiceTest {
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     luggageDto.linear_dimension = OVER_LINEAR_DIMENSION;
     RegularLuggage checkedLuggage = new RegularLuggage(luggageDto.linear_dimension, ALLOWED_WEIGHT);
-    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(luggageDto.linear_dimension, ALLOWED_WEIGHT, TYPE);
+    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(luggageDto.linear_dimension, ALLOWED_WEIGHT,
+        TYPE);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 
@@ -98,7 +99,8 @@ public class LuggageCheckinServiceTest {
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     luggageDto.weight = OVER_WEIGHT;
     RegularLuggage checkedLuggage = new RegularLuggage(ALLOWED_LINEAR_DIMENSION, luggageDto.weight);
-    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, luggageDto.weight, TYPE);
+    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, luggageDto.weight,
+        TYPE);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 

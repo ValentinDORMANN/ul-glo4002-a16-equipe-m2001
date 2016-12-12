@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class RegularLuggageTest {
@@ -9,6 +10,7 @@ public class RegularLuggageTest {
   private static final int WEIGHT_LIMIT_KG = 23;
   private static final int DIMENSION_LIMIT_CM = 158;
   private static final String CATEGORY = "checked";
+  private static final String OTHER_CATEGORY = "other";
   private static final String LUGGAGE_TYPE = "checked";
   private static final String OTHER_LUGGAGE_TYPE = "other";
   private static final double BASE_PRICE = 50;
@@ -19,6 +21,12 @@ public class RegularLuggageTest {
   private static final String UNDEFINED_HASH = "";
 
   private RegularLuggage checkedLuggage;
+  private RegularLuggage otherLuggage;
+
+  @Before
+  public void initiateTest() {
+    otherLuggage = new RegularLuggage(OTHER_CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
+  }
 
   @Test
   public void givenLuggageWeightInKgOverLimitWhenCheckLuggageAllowableThenFirstStagePenaltyPrice() {
@@ -95,7 +103,7 @@ public class RegularLuggageTest {
   public void givenCheckedLuggageWhenCompareItsTypeWithCheckedLuggageThenReturnTrue() {
     checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
-    boolean hasTheSameType = checkedLuggage.isSameCategoryWithThisLuggage(LUGGAGE_TYPE);
+    boolean hasTheSameType = checkedLuggage.isSameType(otherLuggage);
 
     assertTrue(hasTheSameType);
   }
@@ -104,7 +112,7 @@ public class RegularLuggageTest {
   public void givenOtherLuggageWhenCompareItsTypeWithCheckedLuggageThenReturnFalse() {
     checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
-    boolean hasTheSameType = checkedLuggage.isSameCategoryWithThisLuggage(OTHER_LUGGAGE_TYPE);
+    boolean hasTheSameType = checkedLuggage.isSameType(otherLuggage);
 
     assertFalse(hasTheSameType);
   }
