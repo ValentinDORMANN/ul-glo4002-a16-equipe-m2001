@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.passenger;
 
+import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -9,8 +10,9 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.CarryOnLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.RegularLuggage;
 
 public class BusinessPassengerTest {
 
@@ -30,13 +32,15 @@ public class BusinessPassengerTest {
   private static final double VIP_LUGGAGE_PRICE = 95;
   private static final double DELTA = 0.01;
 
-  private Luggage luggageMock;
+  private RegularLuggage regularLuggageMock;
+  private CarryOnLuggage carryOnLuggageMock;
 
   private BusinessPassenger businessPassenger;
 
   @Before
   public void initiateTest() {
-    luggageMock = mock(Luggage.class);
+    regularLuggageMock = mock(RegularLuggage.class);
+    carryOnLuggageMock = mock(CarryOnLuggage.class);
 
     businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !IS_VIP, !IS_CHILD);
   }
@@ -45,207 +49,208 @@ public class BusinessPassengerTest {
   public void givenUnusualWeightCheckedLuggageWhenAddLuggageToPassengerThenThrowException() {
     givenUnusualWeightRegularCheckedLuggage();
 
-    businessPassenger.addLuggage(luggageMock);
+    businessPassenger.addLuggage(regularLuggageMock);
   }
 
   @Test(expected = NotAllowableLuggageException.class)
   public void givenUnusualSizeCheckedLuggageWhenAddLuggageToPassengerThenThrowException() {
     givenUnusualSizeRegularCheckedLuggage();
 
-    businessPassenger.addLuggage(luggageMock);
+    businessPassenger.addLuggage(regularLuggageMock);
   }
 
   @Test
-  public void givenStandardCheckedLuggageWhenAddLuggageToPassengerThenVerifyLinearDimensionLimit() {
-    givenStandardCheckedLuggage();
+  public void givenAllowableCheckedLuggageWhenAddLuggageToPassengerThenVerifyLinearDimensionLimit() {
+    givenRegularCheckedLuggage();
 
-    businessPassenger.addLuggage(luggageMock);
+    businessPassenger.addLuggage(regularLuggageMock);
 
-    verify(luggageMock, times(1)).verifyAllowableDimension();
+    verify(regularLuggageMock, times(1)).verifyAllowableDimension();
   }
-  /*   
+
   @Test
-  public void givenStandardCheckedLuggageWhenAddLuggageToPassengerThenVerifyWeightLimit() {
-    givenStandardCheckedLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
-  
-    verify(luggageMock, times(1)).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
+  public void givenAllowableCheckedLuggageWhenAddLuggageToPassengerThenVerifyWeightLimit() {
+    givenRegularCheckedLuggage();
+
+    businessPassenger.addLuggage(regularLuggageMock);
+
+    verify(regularLuggageMock, times(1)).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
   }
-  
+
   @Test
-  public void givenStandardCheckedLuggageWhenAddLuggageToPassengerThenVerifyLuggageCalculateHisPrice() {
-    givenStandardCheckedLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
-  
-    verify(luggageMock, times(1)).calculatePrice();
+  public void givenAllowableCheckedLuggageWhenAddLuggageToPassengerThenVerifyLuggageCalculateHisPrice() {
+    givenRegularCheckedLuggage();
+
+    businessPassenger.addLuggage(regularLuggageMock);
+
+    verify(regularLuggageMock, times(1)).calculatePrice();
   }
-  
+
   @Test
   public void givenNoFreeLuggageAssignWhenAddLuggageToPassengerThenVerifyLuggageAssignLuggageAsFree() {
-    givenStandardCheckedLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
-  
-    verify(luggageMock, times(1)).assignLuggageFree();
+    givenRegularCheckedLuggage();
+
+    businessPassenger.addLuggage(regularLuggageMock);
+
+    verify(regularLuggageMock, times(1)).assignLuggageFree();
   }
-  
+
   @Test
-  public void givenVipPassengerWhenGetTotalLuggagePriceThenApplyDiscount() {
-    givenStandardCheckedLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
-  
+  public void givenBusinessPassengerWhenGetTotalLuggagePriceThenReturnLuggageTotalPrice() {
+    givenRegularCheckedLuggage();
+
+    businessPassenger.addLuggage(regularLuggageMock);
+
     assertEquals(LUGGAGE_PRICE, businessPassenger.getTotalPrice(), DELTA);
   }
-  
+
   @Test
-  public void given() {
+  public void givenVipBusinessPassengerWhenGetTotalLuggagePriceThenApplyDiscount() {
     businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, IS_VIP, !IS_CHILD);
-    givenStandardCheckedLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
-  
+    givenRegularCheckedLuggage();
+
+    businessPassenger.addLuggage(regularLuggageMock);
+
     assertEquals(VIP_LUGGAGE_PRICE, businessPassenger.getTotalPrice(), DELTA);
   }
-  
+
   @Test(expected = NotAllowableLuggageException.class)
-  public void givenAllowableCheckedLuggageAssignedWhenAddAnotherCheckedLuggageToPassengerThenReturnException() {
+  public void givenAllCheckedLuggageRecordedWhenAddAnotherCheckedLuggageToPassengerThenReturnException() {
     givenNotVipBusinessPassengerWithCheckedLuggageLimitReached();
-  
-    businessPassenger.addLuggage(luggageMock);
+
+    businessPassenger.addLuggage(regularLuggageMock);
   }
-  
+
   @Test
-  public void givenAllowableCheckedLuggageAssignedWhenAddCarryOnLuggageToPassengerThenAddLuggage() {
+  public void givenAllowableRegularLuggageAssignedWhenAddCarryOnLuggageToPassengerThenAddLuggage() {
     givenNotVipBusinessPassengerWithCheckedLuggageLimitReached();
     int luggagesAssigned = businessPassenger.getLuggages().size();
-  
+
     givenStandardCarryOnLuggage();
-    businessPassenger.addLuggage(luggageMock);
-  
+    businessPassenger.addLuggage(carryOnLuggageMock);
+
     assertEquals(luggagesAssigned + 1, businessPassenger.getLuggages().size());
   }
-  
+
   @Test(expected = NotAllowableLuggageException.class)
   public void whenAddAnotherCheckedLuggageToPassengerThenReturnException() {
     givenVipBusinessPassengerWithCheckedLuggageLimitReached();
-  
-    businessPassenger.addLuggage(luggageMock);
+
+    businessPassenger.addLuggage(regularLuggageMock);
   }
-  
+
   @Test
   public void givenBusinessPassengerWithTwoFreeCheckedLuggageWhenAddCheckedLuggageThenDontAssignLuggageAsFree() {
     givenBusinessPassengerWithFreeCheckedLuggagesAlreadyAssigned();
-  
-    businessPassenger.addLuggage(luggageMock);
-  
-    verify(luggageMock, times(FREE_LUGGAGE_LIMIT)).assignLuggageFree();
+
+    businessPassenger.addLuggage(regularLuggageMock);
+
+    verify(regularLuggageMock, times(FREE_LUGGAGE_LIMIT)).assignLuggageFree();
   }
-  
+
   @Test(expected = NotAllowableLuggageException.class)
   public void givenUnusualWeightCarryOnLuggageWhenAddLuggageToPassengerThenThrowException() {
     givenUnusualWeightCarryOnLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
+
+    businessPassenger.addLuggage(carryOnLuggageMock);
   }
-  
+
   @Test(expected = NotAllowableLuggageException.class)
   public void givenUnusualSizeCarryOnLuggageWhenAddLuggageToPassengerThenThrowException() {
     givenUnusualSizeCarryOnLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
+
+    businessPassenger.addLuggage(carryOnLuggageMock);
   }
-  
+
   @Test
   public void givenStandardCarryOnLuggageWhenAddLuggageToPassengerThenVerifyLinearDimensionLimit() {
     givenStandardCarryOnLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
-  
-    verify(luggageMock, times(1)).verifyAllowableDimension();
+
+    businessPassenger.addLuggage(carryOnLuggageMock);
+
+    verify(carryOnLuggageMock, times(1)).verifyAllowableDimension();
   }
-  
+
   @Test
   public void givenStandardCarryOnLuggageWhenAddLuggageToPassengerThenVerifyWeightLimit() {
     givenStandardCarryOnLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
-  
-    verify(luggageMock, times(1)).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
+
+    businessPassenger.addLuggage(carryOnLuggageMock);
+
+    verify(carryOnLuggageMock, times(1)).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
   }
-  
+
   @Test
   public void givenStandardCarryOnLuggageWhenAddLuggageToPassengerThenVerifyLuggageCalculateHisPrice() {
     givenStandardCarryOnLuggage();
-  
-    businessPassenger.addLuggage(luggageMock);
-  
-    verify(luggageMock, times(1)).calculatePrice();
+
+    businessPassenger.addLuggage(carryOnLuggageMock);
+
+    verify(carryOnLuggageMock, times(1)).calculatePrice();
   }
-  
+
   @Test(expected = NotAllowableLuggageException.class)
   public void givenCarryOnLuggageAssignedWhenAddAnotherCarryOnLuggageToPassengerThenReturnException() {
     givenStandardCarryOnLuggage();
-    businessPassenger.addLuggage(luggageMock);
-  
-    businessPassenger.addLuggage(luggageMock);
-  }*/
+    businessPassenger.addLuggage(carryOnLuggageMock);
 
-  private void givenStandardCheckedLuggage() {
-    willReturn(CHECKED_LUGGAGE_CATEGORY).given(luggageMock).getCategory();
-    willReturn(LUGGAGE_PRICE).given(luggageMock).getPrice();
+    businessPassenger.addLuggage(carryOnLuggageMock);
+  }
+
+  private void givenRegularCheckedLuggage() {
+    willReturn(CHECKED_LUGGAGE_CATEGORY).given(regularLuggageMock).getCategory();
+    willReturn(true).given(regularLuggageMock).hasSameCategory(regularLuggageMock);
+    willReturn(false).given(regularLuggageMock).hasSameCategory(carryOnLuggageMock);
+    willReturn(LUGGAGE_PRICE).given(regularLuggageMock).getPrice();
   }
 
   private void givenUnusualWeightRegularCheckedLuggage() {
-    willReturn(CHECKED_LUGGAGE_CATEGORY).given(luggageMock).getCategory();
-    doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
+    willReturn(CHECKED_LUGGAGE_CATEGORY).given(regularLuggageMock).getCategory();
+    doThrow(new NotAllowableLuggageException()).when(regularLuggageMock).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
   }
 
   private void givenUnusualSizeRegularCheckedLuggage() {
-    willReturn(CHECKED_LUGGAGE_CATEGORY).given(luggageMock).getCategory();
-    doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableDimension();
+    willReturn(CHECKED_LUGGAGE_CATEGORY).given(regularLuggageMock).getCategory();
+    doThrow(new NotAllowableLuggageException()).when(regularLuggageMock).verifyAllowableDimension();
   }
 
   private void givenNotVipBusinessPassengerWithCheckedLuggageLimitReached() {
-    givenStandardCheckedLuggage();
-    businessPassenger.addLuggage(luggageMock);
-    businessPassenger.addLuggage(luggageMock);
-    businessPassenger.addLuggage(luggageMock);
+    givenRegularCheckedLuggage();
+    businessPassenger.addLuggage(regularLuggageMock);
+    businessPassenger.addLuggage(regularLuggageMock);
+    businessPassenger.addLuggage(regularLuggageMock);
   }
 
   private void givenVipBusinessPassengerWithCheckedLuggageLimitReached() {
     businessPassenger = new BusinessPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, IS_VIP, !IS_CHILD);
-    givenStandardCheckedLuggage();
-    businessPassenger.addLuggage(luggageMock);
-    businessPassenger.addLuggage(luggageMock);
-    businessPassenger.addLuggage(luggageMock);
-    businessPassenger.addLuggage(luggageMock);
+    givenRegularCheckedLuggage();
+    businessPassenger.addLuggage(regularLuggageMock);
+    businessPassenger.addLuggage(regularLuggageMock);
+    businessPassenger.addLuggage(regularLuggageMock);
+    businessPassenger.addLuggage(regularLuggageMock);
   }
 
   private void givenBusinessPassengerWithFreeCheckedLuggagesAlreadyAssigned() {
-    givenStandardCheckedLuggage();
-    willReturn(true).given(luggageMock).isFree();
-    businessPassenger.addLuggage(luggageMock);
-    businessPassenger.addLuggage(luggageMock);
+    givenRegularCheckedLuggage();
+    willReturn(true).given(regularLuggageMock).isFree();
+    businessPassenger.addLuggage(regularLuggageMock);
+    businessPassenger.addLuggage(regularLuggageMock);
   }
 
   private void givenStandardCarryOnLuggage() {
-    // willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
-    // willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CARRYON_LUGGAGE_TYPE);
-    willReturn(LUGGAGE_PRICE).given(luggageMock).getPrice();
+    willReturn(CARRYON_LUGGAGE_CATEGORY).given(carryOnLuggageMock).getCategory();
+    willReturn(true).given(carryOnLuggageMock).hasSameCategory(carryOnLuggageMock);
+    willReturn(false).given(carryOnLuggageMock).hasSameCategory(regularLuggageMock);
+    willReturn(LUGGAGE_PRICE).given(carryOnLuggageMock).getPrice();
   }
 
   private void givenUnusualWeightCarryOnLuggage() {
-    // willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
-    // willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CARRYON_LUGGAGE_TYPE);
-    doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableWeight(any(Integer.class));
+    givenStandardCarryOnLuggage();
+    doThrow(new NotAllowableLuggageException()).when(carryOnLuggageMock).verifyAllowableWeight(any(Integer.class));
   }
 
   private void givenUnusualSizeCarryOnLuggage() {
-    // willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
-    // willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CARRYON_LUGGAGE_TYPE);
-    doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableDimension();
+    givenStandardCarryOnLuggage();
+    doThrow(new NotAllowableLuggageException()).when(carryOnLuggageMock).verifyAllowableDimension();
   }
 }
