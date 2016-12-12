@@ -50,7 +50,7 @@ public abstract class Passenger {
   protected abstract void calculateLuggagePrice(Luggage luggage);
 
   private void verifyLuggageAllowableByNumber(Luggage luggage) throws NotAllowableLuggageException {
-    if (luggage.isType(CARRY_ON_LUGGAGE_TYPE))
+    if (luggage.isSameCategoryWithThisLuggage(CARRY_ON_LUGGAGE_TYPE))
       verifyAnotherCarryOnLuggageAllowable();
     else
       verifyAnotherCheckedLuggageAllowable();
@@ -71,7 +71,7 @@ public abstract class Passenger {
   protected int countTypeLuggageAssigned(String type) {
     int typeLuggageNumber = 0;
     for (int i = 0; i < luggages.size(); i++) {
-      if (luggages.get(i).isType(type))
+      if (luggages.get(i).isSameCategoryWithThisLuggage(type))
         typeLuggageNumber++;
     }
     return typeLuggageNumber;

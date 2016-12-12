@@ -200,15 +200,15 @@ public class RegularPassengerTest {
   }
 
   private void givenStandardCarryOnLuggage(Luggage luggageMock) {
-    willReturn(true).given(luggageMock).isType(CARRY_ON_LUGGAGE_TYPE);
-    willReturn(false).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CARRY_ON_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
     willReturn(false).given(luggageMock).isFree();
     willReturn(CARRY_ON_LUGGAGE_PRICE).given(luggageMock).getPrice();
   }
 
   private void givenStandardCheckedLuggage(Luggage luggageMock) {
-    willReturn(false).given(luggageMock).isType(CARRY_ON_LUGGAGE_TYPE);
-    willReturn(true).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CARRY_ON_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
     willReturn(true).given(luggageMock).isFree();
   }
 }

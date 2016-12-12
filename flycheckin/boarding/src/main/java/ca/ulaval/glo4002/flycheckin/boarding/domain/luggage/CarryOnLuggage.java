@@ -4,7 +4,6 @@ public class CarryOnLuggage extends Luggage {
 
   private static final int WEIGHT_LIMIT = 10;
   private static final int DIMENSION_LIMIT = 118;
-  private static final String TYPE = "carry-on";
   private static final int BASE_PRICE = 30;
 
   public CarryOnLuggage(String category, int linearDimension, int weight) {
@@ -21,11 +20,6 @@ public class CarryOnLuggage extends Luggage {
   public void verifyAllowableDimension() throws NotAllowableLuggageException {
     if (getDimensionInCm() > DIMENSION_LIMIT)
       throw new NotAllowableLuggageException(LUGGAGE_DIMENSION_NOT_ALLOWED);
-  }
-
-  @Override
-  public boolean isType(String type) {
-    return TYPE.equals(type);
   }
 
   @Override

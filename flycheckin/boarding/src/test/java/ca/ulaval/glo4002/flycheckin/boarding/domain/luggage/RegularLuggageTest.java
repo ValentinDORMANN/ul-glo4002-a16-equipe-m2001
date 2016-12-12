@@ -95,7 +95,7 @@ public class RegularLuggageTest {
   public void givenCheckedLuggageWhenCompareItsTypeWithCheckedLuggageThenReturnTrue() {
     checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
-    boolean hasTheSameType = checkedLuggage.isType(LUGGAGE_TYPE);
+    boolean hasTheSameType = checkedLuggage.isSameCategoryWithThisLuggage(LUGGAGE_TYPE);
 
     assertTrue(hasTheSameType);
   }
@@ -104,7 +104,7 @@ public class RegularLuggageTest {
   public void givenOtherLuggageWhenCompareItsTypeWithCheckedLuggageThenReturnFalse() {
     checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
-    boolean hasTheSameType = checkedLuggage.isType(OTHER_LUGGAGE_TYPE);
+    boolean hasTheSameType = checkedLuggage.isSameCategoryWithThisLuggage(OTHER_LUGGAGE_TYPE);
 
     assertFalse(hasTheSameType);
   }

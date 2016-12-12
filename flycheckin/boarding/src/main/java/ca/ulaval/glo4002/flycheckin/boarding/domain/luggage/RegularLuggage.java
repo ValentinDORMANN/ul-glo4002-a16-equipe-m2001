@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
 public class RegularLuggage extends Luggage {
 
-  private static final String TYPE = "checked";
   private static final int DIMENSION_LIMIT = 158;
   private static final double SURPLUS_PRICE = 50;
 
@@ -13,11 +12,6 @@ public class RegularLuggage extends Luggage {
   @Override
   public void calculatePrice() {
     this.setPrice(SURPLUS_PRICE);
-  }
-
-  @Override
-  public boolean isType(String type) {
-    return TYPE.equals(type);
   }
 
   @Override

@@ -24,14 +24,14 @@ public class LuggageFactoryTest {
   public void whenCreateLuggageWithTypeCheckedThenCreateCheckedLuggage() {
     Luggage luggage = luggageFactory.createLuggage(LINEAR_DIMENSION, WEIGHT, CHECKED_LUGGAGE);
 
-    assertTrue(luggage.isType(CHECKED_LUGGAGE));
+    assertTrue(luggage.isSameCategoryWithThisLuggage(CHECKED_LUGGAGE));
   }
 
   @Test
   public void whenCreateLuggageWithTypeCarryOnThenCreateCarryOnLuggage() {
     Luggage luggage = luggageFactory.createLuggage(LINEAR_DIMENSION, WEIGHT, CARRY_ON_LUGGAGE);
 
-    assertTrue(luggage.isType(CARRY_ON_LUGGAGE));
+    assertTrue(luggage.isSameCategoryWithThisLuggage(CARRY_ON_LUGGAGE));
   }
 
   @Test(expected = UndefinedTypeLuggageException.class)

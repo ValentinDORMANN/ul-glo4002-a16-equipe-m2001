@@ -193,20 +193,20 @@ public class BusinessPassengerTest {
   }
 
   private void givenStandardCheckedLuggage() {
-    willReturn(true).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
-    willReturn(false).given(luggageMock).isType(CARRYON_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CARRYON_LUGGAGE_TYPE);
     willReturn(LUGGAGE_PRICE).given(luggageMock).getPrice();
   }
 
   private void givenUnusualWeightCheckedLuggage() {
-    willReturn(true).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
-    willReturn(false).given(luggageMock).isType(CARRYON_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CARRYON_LUGGAGE_TYPE);
     doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
   }
 
   private void givenUnusualSizeCheckedLuggage() {
-    willReturn(true).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
-    willReturn(false).given(luggageMock).isType(CARRYON_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CARRYON_LUGGAGE_TYPE);
     doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableDimension();
   }
 
@@ -234,20 +234,20 @@ public class BusinessPassengerTest {
   }
 
   private void givenStandardCarryOnLuggage() {
-    willReturn(false).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
-    willReturn(true).given(luggageMock).isType(CARRYON_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CARRYON_LUGGAGE_TYPE);
     willReturn(LUGGAGE_PRICE).given(luggageMock).getPrice();
   }
 
   private void givenUnusualWeightCarryOnLuggage() {
-    willReturn(false).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
-    willReturn(true).given(luggageMock).isType(CARRYON_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CARRYON_LUGGAGE_TYPE);
     doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableWeight(any(Integer.class));
   }
 
   private void givenUnusualSizeCarryOnLuggage() {
-    willReturn(false).given(luggageMock).isType(CHECKED_LUGGAGE_TYPE);
-    willReturn(true).given(luggageMock).isType(CARRYON_LUGGAGE_TYPE);
+    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
+    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CARRYON_LUGGAGE_TYPE);
     doThrow(new NotAllowableLuggageException()).when(luggageMock).verifyAllowableDimension();
   }
 }
