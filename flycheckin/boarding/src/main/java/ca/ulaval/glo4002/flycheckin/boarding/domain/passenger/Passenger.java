@@ -86,8 +86,8 @@ public abstract class Passenger {
 
   protected int countFreeLuggage() {
     int freeLuggage = 0;
-    for (int i = 0; i < luggages.size(); i++) {
-      if (luggages.get(i).isFree())
+    for (Luggage storedLuggage : luggages) {
+      if (storedLuggage.isFree())
         freeLuggage++;
     }
     return freeLuggage;
