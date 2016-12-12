@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.flycheckin.boarding.domain.passenger;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Date;
 
@@ -103,7 +104,7 @@ public class RegularPassengerTest {
 
   @Test(expected = NotAllowableLuggageException.class)
   public void givenVipPassengerWithAllowableCheckedLuggagesAssignedWhenAddAnotherCheckedLuggageThenThrowException() {
-    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS,!IS_CHILD);
+    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS, !IS_CHILD);
     givenStandardCheckedLuggage(luggageMock);
 
     regularPassenger.addLuggage(luggageMock);
@@ -190,7 +191,7 @@ public class RegularPassengerTest {
 
   @Test
   public void givenCarryOnLuggageToVipPassengerWhenGetTotalPriceThenApplyDiscount() {
-    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS,!IS_CHILD);
+    regularPassenger = new RegularPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, ECONOMY, !VIP_STATUS, !IS_CHILD);
     givenStandardCarryOnLuggage(luggageMock);
 
     regularPassenger.addLuggage(luggageMock);
@@ -200,15 +201,15 @@ public class RegularPassengerTest {
   }
 
   private void givenStandardCarryOnLuggage(Luggage luggageMock) {
-    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CARRY_ON_LUGGAGE_TYPE);
-    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
+    // willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CARRY_ON_LUGGAGE_TYPE);
+    // willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
     willReturn(false).given(luggageMock).isFree();
     willReturn(CARRY_ON_LUGGAGE_PRICE).given(luggageMock).getPrice();
   }
 
   private void givenStandardCheckedLuggage(Luggage luggageMock) {
-    willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CARRY_ON_LUGGAGE_TYPE);
-    willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
+    // willReturn(false).given(luggageMock).isSameCategoryWithThisLuggage(CARRY_ON_LUGGAGE_TYPE);
+    // willReturn(true).given(luggageMock).isSameCategoryWithThisLuggage(CHECKED_LUGGAGE_TYPE);
     willReturn(true).given(luggageMock).isFree();
   }
 }
