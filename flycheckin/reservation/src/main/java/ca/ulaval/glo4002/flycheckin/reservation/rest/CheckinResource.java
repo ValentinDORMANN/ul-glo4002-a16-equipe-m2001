@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
+import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
@@ -27,7 +28,8 @@ public class CheckinResource {
 
   private static CheckinInMemory checkinInMemory = new CheckinInMemory();
   private static ReservationInMemory reservationInMemory = new ReservationInMemory();
-  private static CheckinService checkinService = new CheckinService(checkinInMemory, reservationInMemory);
+  private static Reservation reservation = new Reservation();
+  private static CheckinService checkinService = new CheckinService(checkinInMemory, reservationInMemory,reservation);
 
   public CheckinResource() {
   }
