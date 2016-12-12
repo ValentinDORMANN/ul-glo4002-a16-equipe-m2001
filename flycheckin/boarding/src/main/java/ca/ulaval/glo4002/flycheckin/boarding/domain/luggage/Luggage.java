@@ -55,7 +55,11 @@ public abstract class Luggage {
     return this.price == 0 ? true : false;
   }
 
-  public boolean isSameType(Luggage luggage) {
+  public String getCategory() {
+    return category;
+  }
+
+  public boolean hasSameCategory(Luggage luggage) {
     return category.equals(luggage.category);
   }
 

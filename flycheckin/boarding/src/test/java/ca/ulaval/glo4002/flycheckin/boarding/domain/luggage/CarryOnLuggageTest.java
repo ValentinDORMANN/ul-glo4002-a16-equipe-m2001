@@ -61,7 +61,7 @@ public class CarryOnLuggageTest {
   public void givenCarryOnLuggageWhenCompareItsTypeWithCarryOnLuggageThenReturnTrue() {
     carryOnLuggage = new CarryOnLuggage(CATEGORY, DIMENSION_LIMIT_CM - 1, WEIGHT_LIMIT_KG - 1);
 
-    boolean hasTheSameType = carryOnLuggage.isSameType(otherLuggage);
+    boolean hasTheSameType = carryOnLuggage.hasSameCategory(otherLuggage);
 
     assertTrue(hasTheSameType);
   }
@@ -70,7 +70,7 @@ public class CarryOnLuggageTest {
   public void givenOtherLuggageWhenCompareItsTypeWithCarryOnLuggageThenReturnFalse() {
     carryOnLuggage = new CarryOnLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
-    boolean hasTheSameType = carryOnLuggage.isSameType(otherLuggage);
+    boolean hasTheSameType = carryOnLuggage.hasSameCategory(otherLuggage);
 
     assertFalse(hasTheSameType);
   }
