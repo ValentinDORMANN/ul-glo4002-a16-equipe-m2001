@@ -9,7 +9,7 @@ public class LuggageFactory {
     Luggage luggage = null;
     switch (type) {
       case CHECKED_LUGGAGE:
-        luggage = new CheckedLuggage(linearDimension, weight);
+        luggage = new RegularLuggage(linearDimension, weight);
         break;
       case CARRY_ON_LUGGAGE:
         luggage = new CarryOnLuggage(linearDimension, weight);

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class CheckedLuggageTest {
+public class RegularLuggageTest {
 
   private static final int WEIGHT_LIMIT_KG = 23;
   private static final int DIMENSION_LIMIT_CM = 158;
@@ -18,11 +18,11 @@ public class CheckedLuggageTest {
 
   private static final String UNDEFINED_HASH = "";
 
-  private CheckedLuggage checkedLuggage;
+  private RegularLuggage checkedLuggage;
 
   @Test
   public void givenLuggageWeightInKgOverLimitWhenCheckLuggageAllowableThenFirstStagePenaltyPrice() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG + 1);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG + 1);
 
     checkedLuggage.verifyAllowableWeight(WEIGHT_LIMIT_KG);
     checkedLuggage.calculatePrice();
@@ -32,7 +32,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenLuggageWeightInKgLimitWhenCheckLuggageAllowableThenReturnBasePrice() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
     checkedLuggage.verifyAllowableWeight(WEIGHT_LIMIT_KG);
     checkedLuggage.calculatePrice();
@@ -42,7 +42,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenLuggageWeightInKgUnderLimitWhenCheckLuggageAllowableThenReturnBasePrice() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM - 1, WEIGHT_LIMIT_KG);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM - 1, WEIGHT_LIMIT_KG);
 
     checkedLuggage.verifyAllowableWeight(WEIGHT_LIMIT_KG);
     checkedLuggage.calculatePrice();
@@ -52,7 +52,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenLuggageDimensionInCmOverLimitWhenCheckLuggageAllowableReturnFirstStagePenaltyPrice() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM + 1, WEIGHT_LIMIT_KG);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM + 1, WEIGHT_LIMIT_KG);
 
     checkedLuggage.verifyAllowableDimension();
     checkedLuggage.calculatePrice();
@@ -62,7 +62,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenLuggageWithDimensionLimitWhenCheckLuggageAllowableThenReturnBasePrice() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
     checkedLuggage.verifyAllowableDimension();
     checkedLuggage.calculatePrice();
@@ -72,7 +72,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenLuggageDimensionInCmUnderLimitWhenCheckLuggageAllowableThenReturnBasePrice() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG - 1);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG - 1);
 
     checkedLuggage.verifyAllowableDimension();
     checkedLuggage.calculatePrice();
@@ -82,7 +82,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenLuggageDimensionAndWeightOverLimitWhenCheckLuggageAllowableReturnSecondStagePenaltyPrice() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM + 1, WEIGHT_LIMIT_KG + 1);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM + 1, WEIGHT_LIMIT_KG + 1);
 
     checkedLuggage.verifyAllowableDimension();
     checkedLuggage.verifyAllowableWeight(WEIGHT_LIMIT_KG);
@@ -93,7 +93,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenCheckedLuggageWhenCompareItsTypeWithCheckedLuggageThenReturnTrue() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
     boolean hasTheSameType = checkedLuggage.isType(LUGGAGE_TYPE);
 
@@ -102,7 +102,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenOtherLuggageWhenCompareItsTypeWithCheckedLuggageThenReturnFalse() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
     boolean hasTheSameType = checkedLuggage.isType(OTHER_LUGGAGE_TYPE);
 
@@ -111,7 +111,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenLuggageAllowableWhenCalculatePriceThenGetBasePrice() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
     checkedLuggage.calculatePrice();
 
@@ -120,7 +120,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenLuggageAllowableWhenAssignLuggageFreeThenLuggageIsFree() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
     checkedLuggage.assignLuggageFree();
 
@@ -129,7 +129,7 @@ public class CheckedLuggageTest {
 
   @Test
   public void givenLuggageWhenNeededHashCodeThenReturnDefineHash() {
-    checkedLuggage = new CheckedLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
+    checkedLuggage = new RegularLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
     String hashLuggage = checkedLuggage.getLuggageHash();
 
