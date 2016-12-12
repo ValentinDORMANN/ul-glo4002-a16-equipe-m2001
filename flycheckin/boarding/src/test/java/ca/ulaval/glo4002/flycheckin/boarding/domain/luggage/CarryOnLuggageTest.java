@@ -12,7 +12,7 @@ public class CarryOnLuggageTest {
   private static final double BASE_PRICE = 30;
   private static final double DELTA = 0.01;
   private static final String CATEGORY = "standard";
-  private static final String OTHER_CATEGORY = "standard";
+  private static final String OTHER_CATEGORY = "other";
 
   private CarryOnLuggage carryOnLuggage;
   private CarryOnLuggage otherLuggage;
@@ -60,19 +60,20 @@ public class CarryOnLuggageTest {
   @Test
   public void givenCarryOnLuggageWhenCompareItsTypeWithCarryOnLuggageThenReturnTrue() {
     carryOnLuggage = new CarryOnLuggage(CATEGORY, DIMENSION_LIMIT_CM - 1, WEIGHT_LIMIT_KG - 1);
+    otherLuggage = new CarryOnLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
-    boolean hasTheSameType = carryOnLuggage.hasSameCategory(otherLuggage);
+    boolean isTheSameCategory = carryOnLuggage.hasSameCategory(otherLuggage);
 
-    assertTrue(hasTheSameType);
+    assertTrue(isTheSameCategory);
   }
 
   @Test
   public void givenOtherLuggageWhenCompareItsTypeWithCarryOnLuggageThenReturnFalse() {
     carryOnLuggage = new CarryOnLuggage(CATEGORY, DIMENSION_LIMIT_CM, WEIGHT_LIMIT_KG);
 
-    boolean hasTheSameType = carryOnLuggage.hasSameCategory(otherLuggage);
+    boolean isTheSameCategory = carryOnLuggage.hasSameCategory(otherLuggage);
 
-    assertFalse(hasTheSameType);
+    assertFalse(isTheSameCategory);
   }
 
   @Test

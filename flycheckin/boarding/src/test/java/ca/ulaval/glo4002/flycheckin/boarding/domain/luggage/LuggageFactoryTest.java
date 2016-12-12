@@ -7,8 +7,9 @@ import org.junit.Test;
 
 public class LuggageFactoryTest {
 
-  private static final String CHECKED_LUGGAGE = "checked";
-  private static final String CARRY_ON_LUGGAGE = "carry-on";
+  private static final String CARRY_ON_TYPE = "carry-on";
+  private static final String CHECKED_CATEGORY = "checked";
+  private static final String CARRY_ON_CATEGORY = "standard";
   private static final String UNDEFINED_LUGGAGE = "undefined";
   private static final int LINEAR_DIMENSION = 142;
   private static final int WEIGHT = 25;
@@ -22,16 +23,16 @@ public class LuggageFactoryTest {
 
   @Test
   public void whenCreateLuggageWithTypeCheckedThenCreateCheckedLuggage() {
-    Luggage luggage = luggageFactory.createLuggage(LINEAR_DIMENSION, WEIGHT, CHECKED_LUGGAGE);
+    Luggage luggage = luggageFactory.createLuggage(LINEAR_DIMENSION, WEIGHT, CHECKED_CATEGORY);
 
-    assertEquals(CHECKED_LUGGAGE, luggage.getCategory());
+    assertEquals(CHECKED_CATEGORY, luggage.getCategory());
   }
 
   @Test
   public void whenCreateLuggageWithTypeCarryOnThenCreateCarryOnLuggage() {
-    Luggage luggage = luggageFactory.createLuggage(LINEAR_DIMENSION, WEIGHT, CARRY_ON_LUGGAGE);
+    Luggage luggage = luggageFactory.createLuggage(LINEAR_DIMENSION, WEIGHT, CARRY_ON_TYPE);
 
-    assertEquals(CARRY_ON_LUGGAGE, luggage.getCategory());
+    assertEquals(CARRY_ON_CATEGORY, luggage.getCategory());
   }
 
   @Test(expected = UndefinedTypeLuggageException.class)
