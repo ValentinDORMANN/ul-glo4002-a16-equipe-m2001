@@ -11,8 +11,6 @@ public class RegularLuggageTest {
   private static final int DIMENSION_LIMIT_CM = 158;
   private static final String CATEGORY = "checked";
   private static final String OTHER_CATEGORY = "other";
-  private static final String LUGGAGE_TYPE = "checked";
-  private static final String OTHER_LUGGAGE_TYPE = "other";
   private static final double BASE_PRICE = 50;
   private static final double FIRST_STAGE_PENALTY_PRICE = BASE_PRICE + BASE_PRICE * (double) 10 / (double) 100;
   private static final double SECOND_STAGE_PENALTY_PRICE = BASE_PRICE + BASE_PRICE * (double) 21 / (double) 100;
