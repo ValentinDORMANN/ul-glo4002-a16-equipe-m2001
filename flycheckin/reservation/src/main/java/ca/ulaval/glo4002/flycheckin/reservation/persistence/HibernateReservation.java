@@ -21,7 +21,7 @@ public class HibernateReservation {
 	    this.entityManager = new EntityManagerProvider().getEntityManager();
 	  }
 
-	  public void insertNewReservation(Reservation newReservation) throws IllegalArgumentReservationException {
+	  public void persisteReservation(Reservation newReservation) throws IllegalArgumentReservationException {
 	    EntityTransaction transaction = entityManager.getTransaction();
 	    transaction.begin();  
 	    if(entityManager.contains(newReservation)) {
@@ -51,5 +51,9 @@ public class HibernateReservation {
 	    if (reservationFound == null)
 	      throw new NotFoundReservationException(INVALID_PASSENGER_ERROR);
 	    return reservationFound;
+	  }
+	  
+	  public void update(Reservation reservation) {
+		  persisteReservation(reservation);
 	  }
 	}

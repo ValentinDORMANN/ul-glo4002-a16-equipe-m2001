@@ -16,11 +16,6 @@ public class CheckinService {
 	private HibernateCheckin hibernateCheckin;
 	
 
-	public CheckinService() {
-		this.checkinInMemory = checkinInMemory;
-		this.hibernateReservation = hibernateReservation;
-	}
-
 	public CheckinService(CheckinInMemory checkinInMemory, HibernateReservation hibernateReservation) {
 		this.checkinInMemory = checkinInMemory;
 		this.hibernateReservation = hibernateReservation;
@@ -29,11 +24,13 @@ public class CheckinService {
 	public int saveCheckin(CheckinDto checkinDto) throws ReservationModuleException {
 		String hash = checkinDto.passenger_hash;
 		String by = checkinDto.by;
+		boolean isVip=checkinDto.vip;
 		Reservation reservation = hibernateReservation.findReservationByPassengerHash(hash);
 		reservation.validateCheckinPeriod(by);
 		if (reservation.isPassengerInfosValid(hash)) {
-			// CheckIn checkin = new CheckIn(checkinDto);
-			// hibernateCheckin.persistCheckIn(checkin);
+			reservation.changePassengerVipStatus(hash, isVip);
+			if(isVip==true)
+				hibernateReservation.update(reservation);
 			return checkinInMemory.doPassengerCheckin(hash);
 		}
 		throw new ReservationModuleException(MESSAGE_ERROR);
