@@ -5,10 +5,12 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationExc
 
 public interface ReservationRegistry {
 
-  void saveNewReservation(Reservation newReservation) throws IllegalArgumentReservationException;
+  void persist(Reservation newReservation) throws IllegalArgumentReservationException;
 
-  Reservation getReservationByNumber(int reservationNumber) throws NotFoundReservationException;
+  Reservation findReservationByNumber(int reservationNumber) throws NotFoundReservationException;
 
-  Reservation getReservationByPassengerHash(String hash);
+  Reservation findReservationByPassengerHash(String hash);
+  
+  void update(Reservation reservation);
 
 }

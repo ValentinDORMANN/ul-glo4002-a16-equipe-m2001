@@ -4,10 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -15,11 +13,11 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
-import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateCheckin;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
@@ -28,25 +26,15 @@ public class CheckinResource {
 
   private static CheckinInMemory checkinInMemory = new CheckinInMemory();
   private static ReservationInMemory reservationInMemory = new ReservationInMemory();
-  private static Reservation reservation = new Reservation();
-  private static CheckinService checkinService = new CheckinService(checkinInMemory, reservationInMemory,reservation);
+  private static HibernateReservation hibernateReservation = new HibernateReservation();
+  private static HibernateCheckin hibernateCheckin= new HibernateCheckin();
+  private static CheckinService checkinService = new CheckinService(checkinInMemory, hibernateReservation);
 
   public CheckinResource() {
   }
 
   public CheckinResource(CheckinService checkinService) {
     CheckinResource.checkinService = checkinService;
-  }
-
-  @GET
-  @Path("/hash/{passengerHash}")
-  public Response verifyCheckin(@PathParam("passengerHash") String passengerHash) {
-    try {
-      checkinService.isCheckInPassengerDone(passengerHash);
-      return Response.ok().build();
-    } catch (NotCheckedinException ex) {
-      return Response.status(Status.NOT_FOUND).build();
-    }
   }
 
   @POST

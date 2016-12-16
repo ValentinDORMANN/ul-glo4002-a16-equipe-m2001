@@ -29,27 +29,27 @@ public class ReservationInMemoryTest {
 
   @Test(expected = NotFoundReservationException.class)
   public void withWrongReservationNumberWhenGetReservationThenReturnException() {
-    reservationRegistry.getReservationByNumber(WRONG_RESERVATION_NUMBER);
+    reservationRegistry.findReservationByNumber(WRONG_RESERVATION_NUMBER);
   }
 
   @Test
   public void givenNotEmptyReservationListWhenGetStoredReversationThenReturnReservation() {
-    reservationRegistry.saveNewReservation(reservationMock);
+    reservationRegistry.persist(reservationMock);
 
-    Reservation reservation = reservationRegistry.getReservationByNumber(RESERVATION_NUMBER);
+    Reservation reservation = reservationRegistry.findReservationByNumber(RESERVATION_NUMBER);
 
     assertEquals(reservationMock, reservation);
   }
 
   @Test(expected = IllegalArgumentReservationException.class)
   public void givenNotEmptyReservationListWhenSaveReversationAlreadyStoredThenReturnException() {
-    reservationRegistry.saveNewReservation(reservationMock);
+    reservationRegistry.persist(reservationMock);
   }
   
   @Test(expected = NotFoundPassengerException.class)
   public void givenNotEmptyReservationListContainingPassengerWhenGetReservationByHashThenThrowException() {
     given(reservationMock.isThisHashInReservation(PASSENGER_HASH)).willThrow(new NotFoundPassengerException()); 
     
-    reservationRegistry.getReservationByPassengerHash(PASSENGER_HASH);
+    reservationRegistry.findReservationByPassengerHash(PASSENGER_HASH);
   }
 }

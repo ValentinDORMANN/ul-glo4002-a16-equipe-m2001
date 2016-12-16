@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 public class CheckIn {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int id;
 	@Column(name = "passengerHash")
 	private String passengerHash;
@@ -33,5 +33,18 @@ public class CheckIn {
 	public int getId(){
 		return id;
 	}
+	
+	public String getPassengerHash(){
+		return passengerHash;
+	}
+	
+	public String getCheckedBy(){
+		return by;
+	}
+	
+	public boolean getStatus(){
+		return isVip;
+	}
+	
 
 }

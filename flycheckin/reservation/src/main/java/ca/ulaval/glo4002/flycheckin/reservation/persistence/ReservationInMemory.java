@@ -16,7 +16,7 @@ public class ReservationInMemory implements ReservationRegistry {
   private static final String MESSAGE_ERROR_RESERVATION2 = "Error : no reservation for this passenger !";
 
   @Override
-  public void saveNewReservation(Reservation newReservation) throws IllegalArgumentReservationException {
+  public void persist(Reservation newReservation) throws IllegalArgumentReservationException {
     int reservationNumber = newReservation.getReservationNumber();
     if (reservationMap.containsKey(reservationNumber))
       throw new IllegalArgumentReservationException("Reservation " + reservationNumber + " already exists.");
@@ -24,18 +24,24 @@ public class ReservationInMemory implements ReservationRegistry {
   }
 
   @Override
-  public Reservation getReservationByNumber(int reservationNumber) throws NotFoundReservationException {
+  public Reservation findReservationByNumber(int reservationNumber) throws NotFoundReservationException {
     if (reservationMap.isEmpty() || !reservationMap.containsKey(reservationNumber))
       throw new NotFoundReservationException(MESSAGE_ERROR_RESERVATION);
     return reservationMap.get(reservationNumber);
   }
 
   @Override
-  public Reservation getReservationByPassengerHash(String hash) {
+  public Reservation findReservationByPassengerHash(String hash) {
     for (Reservation reservation : reservationMap.values()) {
       if (reservation.isThisHashInReservation(hash))
         return reservation;
     }
     throw new NotFoundPassengerException(MESSAGE_ERROR_RESERVATION2);
   }
+
+@Override
+public void update(Reservation reservation) {
+	
+	
+}
 }

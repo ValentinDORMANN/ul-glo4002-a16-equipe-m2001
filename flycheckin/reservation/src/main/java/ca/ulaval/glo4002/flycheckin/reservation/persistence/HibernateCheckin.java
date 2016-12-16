@@ -9,7 +9,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinRepository;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 
-public class HibernateCheckin implements CheckinRepository {
+public class HibernateCheckin{
 	private EntityManager entityManager;
 	
 	public HibernateCheckin(){
@@ -17,7 +17,6 @@ public class HibernateCheckin implements CheckinRepository {
 		this.entityManager = new EntityManagerProvider().getEntityManager();
 	}
 
-	@Override
 	public void persistCheckIn(CheckIn checkIn) {
 		try{
 			entityManager.getTransaction().begin();
@@ -32,7 +31,6 @@ public class HibernateCheckin implements CheckinRepository {
 		
 	}
 
-	@Override
 	public CheckIn findCheckinByPassengerHash(String passengerHash) throws NotCheckedinException {
 		return entityManager.find(CheckIn.class, passengerHash);
 		

@@ -62,7 +62,7 @@ public class ReservationTest {
   public void whenReadReservationByNumberThenVerifyReservationInMemoryGetReservation() {
     reservation.readReservationByNumber(RESERVATION_NUMBER);
 
-    verify(reservationInMemoryMock).getReservationByNumber(RESERVATION_NUMBER);
+    verify(reservationInMemoryMock).findReservationByNumber(RESERVATION_NUMBER);
   }
 
   @Test(expected = NotTimeToCheckinException.class)

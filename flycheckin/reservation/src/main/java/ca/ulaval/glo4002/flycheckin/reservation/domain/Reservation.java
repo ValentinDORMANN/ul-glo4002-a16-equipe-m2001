@@ -69,15 +69,15 @@ public class Reservation {
   }
 
   private void storeReservation() throws IllegalArgumentReservationException {
-    reservationInMemory.saveNewReservation(this);
+    reservationInMemory.persist(this);
   }
 
   public Reservation readReservationByNumber(int reservationNumber) throws NotFoundReservationException {
-    return reservationInMemory.getReservationByNumber(reservationNumber);
+    return reservationInMemory.findReservationByNumber(reservationNumber);
   }
 
   public Reservation searchReservationByPassengerHash(String passenger_hash) throws NotFoundPassengerException {
-    return reservationInMemory.getReservationByPassengerHash(passenger_hash);
+    return reservationInMemory.findReservationByPassengerHash(passenger_hash);
   }
 
   public boolean isThisHashInReservation(String passengerHash) {
