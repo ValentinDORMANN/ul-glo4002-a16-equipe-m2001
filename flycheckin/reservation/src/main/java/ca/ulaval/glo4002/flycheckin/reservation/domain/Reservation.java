@@ -18,6 +18,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReserva
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
@@ -30,8 +31,7 @@ public class Reservation {
   private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
   private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
-  private static ReservationInMemory reservationInMemory = new ReservationInMemory();
-  
+  private static HibernateReservation hibernateReservation=new HibernateReservation();
   @Id
   @Column(name = "reservationNumber", unique = true, nullable = false)
   private int reservationNumber;
@@ -47,13 +47,13 @@ public class Reservation {
   public Reservation() {
   }
 
-  public Reservation(ReservationInMemory reservationInMemory, ReservationDto reservationDto,
+  public Reservation(HibernateReservation hibernateReservation, ReservationDto reservationDto,
       List<Passenger> passengers) {
     this.reservationNumber = reservationDto.reservation_number;
     this.flightNumber = reservationDto.flight_number;
     this.flightDate = reservationDto.flight_date;
     this.passengers = passengers;
-    Reservation.reservationInMemory = reservationInMemory;
+    Reservation.hibernateReservation = hibernateReservation;
   }
 
   public Reservation(ReservationDto reservationDto) throws IllegalArgumentReservationException {
@@ -69,15 +69,15 @@ public class Reservation {
   }
 
   private void storeReservation() throws IllegalArgumentReservationException {
-    reservationInMemory.persist(this);
+	  hibernateReservation.persisteReservation(this);
   }
 
   public Reservation readReservationByNumber(int reservationNumber) throws NotFoundReservationException {
-    return reservationInMemory.findReservationByNumber(reservationNumber);
+    return hibernateReservation.findReservationByNumber(reservationNumber);
   }
 
   public Reservation searchReservationByPassengerHash(String passenger_hash) throws NotFoundPassengerException {
-    return reservationInMemory.findReservationByPassengerHash(passenger_hash);
+    return hibernateReservation.findReservationByPassengerHash(passenger_hash);
   }
 
   public boolean isThisHashInReservation(String passengerHash) {
@@ -116,6 +116,7 @@ public class Reservation {
 
   public void changePassengerVipStatus(String hash, boolean isVip) {
     getPassengerByHash(hash).changeVipStatus(isVip);
+    hibernateReservation.update(this);
   }
 
   public int getReservationNumber() {
