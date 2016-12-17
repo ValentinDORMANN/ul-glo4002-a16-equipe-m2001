@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -40,8 +43,16 @@ public class Reservation {
   @Column(name = "reservationDate")
   @Temporal(TemporalType.TIMESTAMP)
   private Date flightDate;
-  @Column(name = "passengers")
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  
+  
+	
+  
+  
+ // @Column(name = "passengers")
+  //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany
+	@JoinColumn(name = "passengers")
+	@Cascade(value={CascadeType.ALL})
   private List<Passenger> passengers;
 
   public Reservation() {
@@ -116,7 +127,6 @@ public class Reservation {
 
   public void changePassengerVipStatus(String hash, boolean isVip) {
     getPassengerByHash(hash).changeVipStatus(isVip);
-    hibernateReservation.update(this);
   }
 
   public int getReservationNumber() {

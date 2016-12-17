@@ -54,6 +54,12 @@ public class HibernateReservation {
 	  }
 	  
 	  public void update(Reservation reservation) {
-		  persisteReservation(reservation);
+		  EntityTransaction transaction = entityManager.getTransaction();
+		    transaction.begin();  
+		    if(entityManager.contains(reservation)) {
+		    	throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);}
+		      else {
+		      	entityManager.persist(reservation);
+		      transaction.commit();}
 	  }
 	}
