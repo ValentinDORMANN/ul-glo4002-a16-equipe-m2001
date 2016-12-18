@@ -14,7 +14,7 @@ public class HibernateReservation {
   private static final String UNFOUND_RESERVATION_ERROR = "Error : reservation not found !";
   private static final String INVALID_PASSENGER_ERROR = "Error : no reservation for this passenger!";
   private static final String DOUBLE_RESERVATION_ERROR = "Error : This reservation exists already.";
-  
+
   private EntityManager entityManager;
 
   public HibernateReservation() {
@@ -23,21 +23,24 @@ public class HibernateReservation {
 
   public void persisteReservation(Reservation newReservation) throws IllegalArgumentReservationException {
     EntityTransaction transaction = entityManager.getTransaction();
-    transaction.begin();  
-    if(entityManager.contains(newReservation))
-      throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
-    else {
-      entityManager.persist(newReservation);
+    transaction.begin();
+    try {
+      if (entityManager.contains(newReservation))
+        throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
+      else {
+        entityManager.persist(newReservation);
+      }
+    } finally {
       transaction.commit();
     }
   }
 
   public Reservation findReservationByNumber(int reservationNumber) {
     Reservation reservationFound;
-       String hql = "select r from Reservation r where r.reservationNumber = :reservationNumber";
-       TypedQuery<Reservation> query = entityManager.createQuery(hql, Reservation.class);
-       query.setParameter("reservationNumber", reservationNumber);
-       reservationFound = query.getSingleResult();
+    String hql = "select r from Reservation r where r.reservationNumber = :reservationNumber";
+    TypedQuery<Reservation> query = entityManager.createQuery(hql, Reservation.class);
+    query.setParameter("reservationNumber", reservationNumber);
+    reservationFound = query.getSingleResult();
     if (reservationFound == null)
       throw new NotFoundReservationException(UNFOUND_RESERVATION_ERROR);
     return reservationFound;
@@ -52,14 +55,17 @@ public class HibernateReservation {
       throw new NotFoundReservationException(INVALID_PASSENGER_ERROR);
     return reservationFound;
   }
-  
+
   public void update(Reservation reservation) {
     EntityTransaction transaction = entityManager.getTransaction();
-    transaction.begin();  
-    if(entityManager.contains(reservation))
-      throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
-    else {
-      entityManager.persist(reservation);
+    transaction.begin();
+    try {
+      if (entityManager.contains(reservation))
+        throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
+      else {
+        entityManager.persist(reservation);
+      }
+    } finally {
       transaction.commit();
     }
   }
