@@ -20,7 +20,6 @@ public class CheckinResourceTest {
 
   private CheckinService mockCheckinService;
   private UriInfo uriInfoMock;
-  private CheckIn checkinMock;
   private CheckinDto checkinDto;
   private static final String AGENT="AGENT";
   private static final String PASSENGER_HASH="HASH";
@@ -35,7 +34,7 @@ public class CheckinResourceTest {
 	checkinDto.vip= ISVIP;
     mockCheckinService = mock(CheckinService.class);
     checkinResource = new CheckinResource(mockCheckinService);
-    checkinMock = mock(CheckIn.class);
+    mock(CheckIn.class);
   }
 
   @Test

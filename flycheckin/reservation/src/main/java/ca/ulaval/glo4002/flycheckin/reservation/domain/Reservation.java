@@ -22,131 +22,123 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerExcep
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 @Entity
 public class Reservation {
 
-  private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
-  private static final String MSG_INVALID_CHECKIN_DATE = "Error: immpossible to checkin at this moment !";
-  private static final String SELF = "SELF";
-  private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
-  private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
-  private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
-  private static HibernateReservation hibernateReservation=new HibernateReservation();
-  @Id
-  @Column(name = "reservationNumber", unique = true, nullable = false)
-  private int reservationNumber;
-  @Column(name = "flightNumber")
-  private String flightNumber;
-  @Column(name = "reservationDate")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date flightDate;
-  
-  
-	
-  
-  
- // @Column(name = "passengers")
-  //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @OneToMany
+	private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
+	private static final String MSG_INVALID_CHECKIN_DATE = "Error: immpossible to checkin at this moment !";
+	private static final String SELF = "SELF";
+	private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
+	private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
+	private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
+	private static HibernateReservation hibernateReservation = new HibernateReservation();
+	@Id
+	@Column(name = "reservationNumber", unique = true, nullable = false)
+	private int reservationNumber;
+	@Column(name = "flightNumber")
+	private String flightNumber;
+	@Column(name = "reservationDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date flightDate;
+	@OneToMany
 	@JoinColumn(name = "passengers")
-	@Cascade(value={CascadeType.ALL})
-  private List<Passenger> passengers;
+	@Cascade(value = { CascadeType.ALL })
+	private List<Passenger> passengers;
 
-  public Reservation() {
-  }
+	public Reservation() {
+	}
 
-  public Reservation(HibernateReservation hibernateReservation, ReservationDto reservationDto,
-      List<Passenger> passengers) {
-    this.reservationNumber = reservationDto.reservation_number;
-    this.flightNumber = reservationDto.flight_number;
-    this.flightDate = reservationDto.flight_date;
-    this.passengers = passengers;
-    Reservation.hibernateReservation = hibernateReservation;
-  }
+	public Reservation(HibernateReservation hibernateReservation, ReservationDto reservationDto,
+			List<Passenger> passengers) {
+		this.reservationNumber = reservationDto.reservation_number;
+		this.flightNumber = reservationDto.flight_number;
+		this.flightDate = reservationDto.flight_date;
+		this.passengers = passengers;
+		Reservation.hibernateReservation = hibernateReservation;
+	}
 
-  public Reservation(ReservationDto reservationDto) throws IllegalArgumentReservationException {
-    this.passengers = new ArrayList<Passenger>();
-    this.reservationNumber = reservationDto.reservation_number;
-    this.flightNumber = reservationDto.flight_number;
-    this.flightDate = reservationDto.flight_date;
-    for (int i = 0; i < reservationDto.passengers.size(); i++) {
-      Passenger passenger = new Passenger(reservationDto.passengers.get(i));
-      this.passengers.add(passenger);
-    }
-    storeReservation();
-  }
+	public Reservation(ReservationDto reservationDto) throws IllegalArgumentReservationException {
+		this.passengers = new ArrayList<Passenger>();
+		this.reservationNumber = reservationDto.reservation_number;
+		this.flightNumber = reservationDto.flight_number;
+		this.flightDate = reservationDto.flight_date;
+		for (int i = 0; i < reservationDto.passengers.size(); i++) {
+			Passenger passenger = new Passenger(reservationDto.passengers.get(i));
+			this.passengers.add(passenger);
+		}
+		storeReservation();
+	}
 
-  private void storeReservation() throws IllegalArgumentReservationException {
-	  hibernateReservation.persisteReservation(this);
-  }
+	private void storeReservation() throws IllegalArgumentReservationException {
+		hibernateReservation.persisteReservation(this);
+	}
 
-  public Reservation readReservationByNumber(int reservationNumber) throws NotFoundReservationException {
-    return hibernateReservation.findReservationByNumber(reservationNumber);
-  }
+	public Reservation readReservationByNumber(int reservationNumber) throws NotFoundReservationException {
+		return hibernateReservation.findReservationByNumber(reservationNumber);
+	}
 
-  public Reservation searchReservationByPassengerHash(String passenger_hash) throws NotFoundPassengerException {
-    return hibernateReservation.findReservationByPassengerHash(passenger_hash);
-  }
+	public Reservation searchReservationByPassengerHash(String passenger_hash) throws NotFoundPassengerException {
+		return hibernateReservation.findReservationByPassengerHash(passenger_hash);
+	}
 
-  public boolean isThisHashInReservation(String passengerHash) {
-    for (Passenger passenger : passengers) {
-      if (passenger.hasThisHash(passengerHash))
-        return true;
-    }
-    return false;
-  }
+	public boolean isThisHashInReservation(String passengerHash) {
+		for (Passenger passenger : passengers) {
+			if (passenger.hasThisHash(passengerHash))
+				return true;
+		}
+		return false;
+	}
 
-  public boolean isPassengerInfosValid(String passengerHash) throws NotFoundPassengerException {
-    Passenger passenger = getPassengerByHash(passengerHash);
-    return passenger.isValid();
-  }
+	public boolean isPassengerInfosValid(String passengerHash) throws NotFoundPassengerException {
+		Passenger passenger = getPassengerByHash(passengerHash);
+		return passenger.isValid();
+	}
 
-  public Passenger getPassengerByHash(String passengerHash) {
-    for (Passenger passenger : passengers) {
-      if (passenger.hasThisHash(passengerHash))
-        return passenger;
-    }
-    throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);
-  }
+	public Passenger getPassengerByHash(String passengerHash) {
+		for (Passenger passenger : passengers) {
+			if (passenger.hasThisHash(passengerHash))
+				return passenger;
+		}
+		throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);
+	}
 
-  public void validateCheckinPeriod(String by) throws NotTimeToCheckinException {
-    if (by.equals(SELF))
-      validateSelfCheckinPeriod();
-  }
+	public void validateCheckinPeriod(String by) throws NotTimeToCheckinException {
+		if (by.equals(SELF))
+			validateSelfCheckinPeriod();
+	}
 
-  private void validateSelfCheckinPeriod() {
-    long todayInMillisecond = new Date().getTime();
-    long flightDateInMillisecond = this.getFlightDate().getTime();
-    if (!((flightDateInMillisecond - SELF_CHECKIN_START_TIME <= todayInMillisecond)
-        && (todayInMillisecond <= flightDateInMillisecond - SELF_CHECKIN_END_TIME)))
-      throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
-  }
+	private void validateSelfCheckinPeriod() {
+		long todayInMillisecond = new Date().getTime();
+		long flightDateInMillisecond = this.getFlightDate().getTime();
+		if (!((flightDateInMillisecond - SELF_CHECKIN_START_TIME <= todayInMillisecond)
+				&& (todayInMillisecond <= flightDateInMillisecond - SELF_CHECKIN_END_TIME)))
+			throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
+	}
 
-  public void changePassengerVipStatus(String hash, boolean isVip) {
-    getPassengerByHash(hash).changeVipStatus(isVip);
-  }
+	public void changePassengerVipStatus(String hash, boolean isVip) {
+		getPassengerByHash(hash).changeVipStatus(isVip);
+	}
 
-  public int getReservationNumber() {
-    return reservationNumber;
-  }
+	public int getReservationNumber() {
+		return reservationNumber;
+	}
 
-  public String getFlightNumber() {
-    return flightNumber;
-  }
+	public String getFlightNumber() {
+		return flightNumber;
+	}
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
-  public Date getFlightDate() {
-    return flightDate;
-  }
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+	public Date getFlightDate() {
+		return flightDate;
+	}
 
-  public void setFlightDate(Date flightDate) {
-    this.flightDate = flightDate;
-  }
+	public void setFlightDate(Date flightDate) {
+		this.flightDate = flightDate;
+	}
 
-  public List<Passenger> getPassengers() {
-    return passengers;
-  }
+	public List<Passenger> getPassengers() {
+		return passengers;
+	}
 }

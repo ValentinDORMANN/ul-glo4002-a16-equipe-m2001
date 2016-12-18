@@ -2,13 +2,10 @@ package ca.ulaval.glo4002.flycheckin.reservation.persistence;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckIn;
-import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinRepository;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 
-public class CheckinInMemory implements CheckinRepository{
+public class CheckinInMemory {
 
   private static final String MESSAGE_ERROR_CHECKIN = "Error: This passenger checkin is already done. ";
   private static final int CHECKIN_ID_BEGIN = 100;
@@ -26,16 +23,4 @@ public class CheckinInMemory implements CheckinRepository{
     if (!checkinMap.containsValue(passengerHash))
       throw new NotCheckedinException();
   }
-
-@Override
-public void persistCheckIn(CheckIn checKin) {
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-public CheckIn findCheckinByPassengerHash(String passengerHash) {
-	// TODO Auto-generated method stub
-	return null;
-}
 }
