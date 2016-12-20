@@ -13,6 +13,7 @@ public class SeatAssignationPersistence implements SeatAssignationRepository {
   private static final String STRING_EMPTY = "";
   private static final String ERROR_SEAT_UNASSIGNED = "Error: This passenger seat is already assigned.";
   private static final String ERROR_ASSIGNATION_NUMBER_USED = "Error: This assignation number is already used.";
+  
   private static Map<Integer, SeatAssignation> seatAssignationMap = new HashMap<Integer, SeatAssignation>();
 
   @Override
