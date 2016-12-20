@@ -5,33 +5,40 @@ import java.util.List;
 import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageRegistry;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.PassengerLuggage;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.PassengerLuggageAssembler;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
-import ca.ulaval.glo4002.flycheckin.boarding.persistence.PassengerLuggagePersistence;
+import ca.ulaval.glo4002.flycheckin.boarding.persistence.PassengerLuggageHibernate;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class PassengerService {
 
   private static final int SINGLE_INDEX = 0;
   private ReservationHttpClient reservationHttpClient;
-  private PassengerLuggagePersistence passengerLuggagePersistence;
+  private LuggageRegistry luggageRegistry;
   private PassengerFactory passengerFactory;
   private CheckinHttpClient checkinHttpClient;
+  private PassengerLuggageAssembler passengerLuggageAssembler;
 
   public PassengerService() {
     reservationHttpClient = new ReservationHttpClient();
-    passengerLuggagePersistence = new PassengerLuggagePersistence();
+    luggageRegistry = new PassengerLuggageHibernate();
     passengerFactory = new PassengerFactory();
     checkinHttpClient = new CheckinHttpClient();
+    passengerLuggageAssembler = new PassengerLuggageAssembler();
   }
 
-  public PassengerService(ReservationHttpClient reservationHttpClient, PassengerLuggagePersistence passengerLuggagePersistence,
-      PassengerFactory passengerFactory, CheckinHttpClient checkinHttpClient) {
+  public PassengerService(ReservationHttpClient reservationHttpClient, LuggageRegistry luggageRegistry,
+      PassengerFactory passengerFactory, CheckinHttpClient checkinHttpClient,
+      PassengerLuggageAssembler passengerLuggageAssembler) {
     this.reservationHttpClient = reservationHttpClient;
-    this.passengerLuggagePersistence = passengerLuggagePersistence;
+    this.luggageRegistry = luggageRegistry;
     this.passengerFactory = passengerFactory;
     this.checkinHttpClient = checkinHttpClient;
+    this.passengerLuggageAssembler = passengerLuggageAssembler;
   }
 
   public Passenger getCheckedPassengerByHash(String passengerHash) throws BoardingModuleException {
@@ -42,7 +49,8 @@ public class PassengerService {
 
   public Passenger getPassengerByHash(String passengerHash) throws BoardingModuleException {
     Passenger passenger = getPassengerByHashInReservation(passengerHash);
-    List<Luggage> luggageList = passengerLuggagePersistence.getPassengerLuggage(passengerHash);
+    PassengerLuggage passengerLuggage = luggageRegistry.getPassengerLuggage(passengerHash);
+    List<Luggage> luggageList = passengerLuggageAssembler.createLuggageList(passengerLuggage);
     for (Luggage luggage : luggageList)
       passenger.getLuggages().add(luggage);
     return passenger;

@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.flycheckin.boarding.services.passenger;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Date;
 
@@ -11,10 +13,11 @@ import org.junit.Test;
 import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.client.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageRegistry;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.PassengerLuggageAssembler;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.boarding.persistence.PassengerLuggagePersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
@@ -31,12 +34,13 @@ public class PassengerServiceTest {
   private static final boolean IS_CHILD = true;
 
   private ReservationHttpClient reservationHttpClientMock;
-  private PassengerLuggagePersistence inMemoryPassengerMock;
+  private LuggageRegistry inMemoryPassengerMock;
   private Passenger passengerMock;
   private ReservationDto reservationDto;
   private PassengerDto passengerDto;
   private PassengerFactory passengerFactoryMock;
   private CheckinHttpClient checkinHttpClientMock;
+  private PassengerLuggageAssembler passengerLuggageAssemblerMock;
 
   private PassengerService passengerService;
 
@@ -49,12 +53,14 @@ public class PassengerServiceTest {
     givenReservationDto(reservationDto, passengerListDto);
 
     reservationHttpClientMock = mock(ReservationHttpClient.class);
-    inMemoryPassengerMock = mock(PassengerLuggagePersistence.class);
+    inMemoryPassengerMock = mock(LuggageRegistry.class);
     passengerMock = mock(Passenger.class);
     passengerFactoryMock = mock(PassengerFactory.class);
     checkinHttpClientMock = mock(CheckinHttpClient.class);
+    passengerLuggageAssemblerMock = mock(PassengerLuggageAssembler.class);
 
-    passengerService = new PassengerService(reservationHttpClientMock, inMemoryPassengerMock, passengerFactoryMock, checkinHttpClientMock);
+    passengerService = new PassengerService(reservationHttpClientMock, inMemoryPassengerMock, passengerFactoryMock,
+        checkinHttpClientMock, passengerLuggageAssemblerMock);
   }
 
   @Test
@@ -72,8 +78,8 @@ public class PassengerServiceTest {
 
     passengerService.getPassengerByHash(HASH);
 
-    verify(passengerFactoryMock, times(1)).createPassenger(any(String.class), any(Date.class), any(String.class), any(String.class),
-        any(boolean.class), any(boolean.class));
+    verify(passengerFactoryMock, times(1)).createPassenger(any(String.class), any(Date.class), any(String.class),
+        any(String.class), any(boolean.class), any(boolean.class));
   }
 
   @Test(expected = NotFoundPassengerException.class)
@@ -86,7 +92,8 @@ public class PassengerServiceTest {
   @Test(expected = NotCheckedinException.class)
   public void givenPassengerDoesNotCheckInWhenGetPassengerWithCheckInDoneThenThrowException() {
     willReturn(reservationDto).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
-    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS, IS_VIP, IS_CHILD);
+    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS,
+        IS_VIP, IS_CHILD);
     willReturn(HASH).given(passengerMock).getPassengerHash();
     willThrow(NotCheckedinException.class).given(passengerMock).isCheckinDone(checkinHttpClientMock);
 
@@ -96,7 +103,8 @@ public class PassengerServiceTest {
   @Test
   public void givenPassengerAlreadyCheckInWhenGetPassengerWithCheckInDoneThenVerifyIfCheckinIsDone() {
     willReturn(reservationDto).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
-    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS, IS_VIP, IS_CHILD);
+    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS,
+        IS_VIP, IS_CHILD);
     willReturn(HASH).given(passengerMock).getPassengerHash();
 
     passengerService.getCheckedPassengerByHash(HASH);
@@ -107,7 +115,8 @@ public class PassengerServiceTest {
   @Test
   public void givenPassengerAlreadyCheckInWhenGetPassengerWithCheckInDoneThenReturnPassenger() {
     willReturn(reservationDto).given(reservationHttpClientMock).getReservationDtoFromReservation(HASH);
-    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS, IS_VIP, IS_CHILD);
+    willReturn(passengerMock).given(passengerFactoryMock).createPassenger(FLIGHT_NUMBER, FLIGHT_DATE, HASH, SEAT_CLASS,
+        IS_VIP, IS_CHILD);
     willReturn(HASH).given(passengerMock).getPassengerHash();
 
     passengerService.getCheckedPassengerByHash(HASH);

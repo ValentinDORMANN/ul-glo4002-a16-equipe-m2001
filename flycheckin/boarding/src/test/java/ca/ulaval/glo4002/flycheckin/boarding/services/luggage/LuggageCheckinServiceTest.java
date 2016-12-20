@@ -10,11 +10,11 @@ import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.client.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.CheckedLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageFactory;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageRegistry;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.PassengerLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.PassengerLuggageAssembler;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.boarding.persistence.PassengerLuggagePersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 
@@ -31,7 +31,7 @@ public class LuggageCheckinServiceTest {
   private LuggageDto luggageDto = new LuggageDto();
   private PassengerService passengerServiceMock;
   private LuggageFactory luggageFactoryMock;
-  private PassengerLuggagePersistence passengerLuggagePersistenceMock;
+  private LuggageRegistry passengerLuggagePersistenceMock;
   private CheckinHttpClient checkinHttpClientMock;
   private PassengerLuggageAssembler passengerLuggageAssemblerMock;
   private PassengerLuggage passengerLuggageMock;
@@ -43,7 +43,7 @@ public class LuggageCheckinServiceTest {
     passengerServiceMock = mock(PassengerService.class);
     mockPassenger = mock(Passenger.class);
     luggageFactoryMock = mock(LuggageFactory.class);
-    passengerLuggagePersistenceMock = mock(PassengerLuggagePersistence.class);
+    passengerLuggagePersistenceMock = mock(LuggageRegistry.class);
     checkinHttpClientMock = mock(CheckinHttpClient.class);
     passengerLuggageAssemblerMock = mock(PassengerLuggageAssembler.class);
     passengerLuggageMock = mock(PassengerLuggage.class);

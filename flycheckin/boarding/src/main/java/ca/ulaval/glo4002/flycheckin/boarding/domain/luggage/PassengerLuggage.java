@@ -22,6 +22,9 @@ public class PassengerLuggage {
   @ElementCollection(targetClass = Luggage.class)
   private List<Luggage> luggage;
 
+  public PassengerLuggage() {
+  }
+
   public PassengerLuggage(String passengerHash, List<Luggage> luggage) {
     this.passengerHash = passengerHash;
     this.luggage = luggage;
