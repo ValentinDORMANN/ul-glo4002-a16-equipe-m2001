@@ -4,8 +4,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,6 +18,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
@@ -33,6 +36,17 @@ public class CheckinResource {
 
   public CheckinResource(CheckinService checkinService) {
     CheckinResource.checkinService = checkinService;
+  }
+
+  @GET
+  @Path("/hash/{passengerHash}")
+  public Response verifyCheckin(@PathParam("passengerHash") String passengerHash) {
+    try {
+      checkinService.isCheckInPassengerDone(passengerHash);
+      return Response.ok().build();
+    } catch (NotCheckedinException ex) {
+      return Response.status(Status.NOT_FOUND).build();
+    }
   }
 
   @POST

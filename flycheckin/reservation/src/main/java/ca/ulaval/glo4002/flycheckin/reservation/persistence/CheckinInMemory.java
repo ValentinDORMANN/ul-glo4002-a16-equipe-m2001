@@ -20,7 +20,7 @@ public class CheckinInMemory {
   }
 
   public void isCheckinDone(String passengerHash) {
-    if (checkinMap.containsValue(passengerHash))
+    if (!checkinMap.containsValue(passengerHash))
       throw new NotCheckedinException();
   }
 }

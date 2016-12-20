@@ -3,12 +3,13 @@ package ca.ulaval.glo4002.flycheckin.reservation.domain;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
 public class CheckinService {
 
   private static final String MESSAGE_ERROR = "Passenger Information incorrect";
-  
+
   private CheckinInMemory checkinInMemory;
   private HibernateReservation hibernateReservation;
 
@@ -19,7 +20,6 @@ public class CheckinService {
 
   public int saveCheckin(CheckinDto checkinDto) throws ReservationModuleException {
     String hash = checkinDto.passenger_hash;
-    checkinInMemory.isCheckinDone(hash);
     String by = checkinDto.by;
     boolean isVip = checkinDto.vip;
     Reservation reservation = hibernateReservation.findReservationByPassengerHash(hash);
@@ -31,5 +31,9 @@ public class CheckinService {
       return checkinInMemory.doPassengerCheckin(hash);
     }
     throw new ReservationModuleException(MESSAGE_ERROR);
+  }
+
+  public void isCheckInPassengerDone(String passengerHash) throws NotCheckedinException {
+    checkinInMemory.isCheckinDone(passengerHash);
   }
 }
