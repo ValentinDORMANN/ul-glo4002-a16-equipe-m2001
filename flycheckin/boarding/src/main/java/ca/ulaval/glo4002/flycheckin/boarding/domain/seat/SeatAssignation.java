@@ -1,9 +1,18 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.seat;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class SeatAssignation {
 
+  @Id
+  @Column(name = "assignationNumber", unique = true, nullable = false)
   private int assignationNumber;
+  @Column(name = "passengerHash")
   private String passengerHash;
+  @Column(name = "seatNumber")
   private String seatNumber;
 
   public SeatAssignation() {

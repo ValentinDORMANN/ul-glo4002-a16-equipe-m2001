@@ -18,6 +18,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.boarding.persistence.SeatAssignationHibernate;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.SeatAssignationPersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
@@ -34,7 +35,7 @@ public class ResourceSeatAssignation {
 
   public ResourceSeatAssignation() {
     SeatAssignation seatAssignation = new SeatAssignation();
-    SeatAssignationRepository seatAssignationRepository = new SeatAssignationPersistence();
+    SeatAssignationRepository seatAssignationRepository = new SeatAssignationHibernate();
     this.seatAssignationService = new SeatAssignationService(seatAssignation, seatAssignationRepository);
     this.passengerService = new PassengerService();
   }
