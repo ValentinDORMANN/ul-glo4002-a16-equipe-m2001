@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.boarding.client;
+package ca.ulaval.glo4002.flycheckin.boarding.persistence;
 
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 

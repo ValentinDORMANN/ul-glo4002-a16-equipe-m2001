@@ -8,10 +8,12 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.client.NotCheckedinException;
-import ca.ulaval.glo4002.flycheckin.boarding.client.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.CheckedLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageFactory;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.PassengerLuggage;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.PassengerLuggageAssembler;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.persistence.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.PassengerLuggagePersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
@@ -31,6 +33,8 @@ public class LuggageCheckinServiceTest {
   private LuggageFactory luggageFactoryMock;
   private PassengerLuggagePersistence passengerLuggagePersistenceMock;
   private CheckinHttpClient checkinHttpClientMock;
+  private PassengerLuggageAssembler passengerLuggageAssemblerMock;
+  private PassengerLuggage passengerLuggageMock;
   private LuggageCheckinService luggageCheckinService;
 
   @Before
@@ -41,8 +45,10 @@ public class LuggageCheckinServiceTest {
     luggageFactoryMock = mock(LuggageFactory.class);
     passengerLuggagePersistenceMock = mock(PassengerLuggagePersistence.class);
     checkinHttpClientMock = mock(CheckinHttpClient.class);
+    passengerLuggageAssemblerMock = mock(PassengerLuggageAssembler.class);
+    passengerLuggageMock = mock(PassengerLuggage.class);
     luggageCheckinService = new LuggageCheckinService(passengerServiceMock, mockPassenger, luggageFactoryMock,
-        passengerLuggagePersistenceMock, checkinHttpClientMock);
+        passengerLuggagePersistenceMock, checkinHttpClientMock, passengerLuggageAssemblerMock);
   }
 
   private void assignedDtoAttribut(LuggageDto luggageDto) {
@@ -86,7 +92,8 @@ public class LuggageCheckinServiceTest {
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     luggageDto.linear_dimension = OVER_LINEAR_DIMENSION;
     CheckedLuggage checkedLuggage = new CheckedLuggage(luggageDto.linear_dimension, ALLOWED_WEIGHT);
-    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(luggageDto.linear_dimension, ALLOWED_WEIGHT, TYPE);
+    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(luggageDto.linear_dimension, ALLOWED_WEIGHT,
+        TYPE);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 
@@ -98,7 +105,8 @@ public class LuggageCheckinServiceTest {
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     luggageDto.weight = OVER_WEIGHT;
     CheckedLuggage checkedLuggage = new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, luggageDto.weight);
-    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, luggageDto.weight, TYPE);
+    willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, luggageDto.weight,
+        TYPE);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 
@@ -121,9 +129,10 @@ public class LuggageCheckinServiceTest {
     willReturn(mockPassenger).given(passengerServiceMock).getPassengerByHash(PASSENGER_HASH);
     CheckedLuggage checkedLuggage = new CheckedLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT);
     willReturn(checkedLuggage).given(luggageFactoryMock).createLuggage(ALLOWED_LINEAR_DIMENSION, ALLOWED_WEIGHT, TYPE);
+    willReturn(passengerLuggageMock).given(passengerLuggageAssemblerMock).createPassengerLuggage(mockPassenger);
 
     luggageCheckinService.assignLuggage(PASSENGER_HASH, luggageDto);
 
-    verify(passengerLuggagePersistenceMock, times(1)).savePassengerLuggage(mockPassenger);
+    verify(passengerLuggagePersistenceMock, times(1)).savePassengerLuggage(passengerLuggageMock);
   }
 }
