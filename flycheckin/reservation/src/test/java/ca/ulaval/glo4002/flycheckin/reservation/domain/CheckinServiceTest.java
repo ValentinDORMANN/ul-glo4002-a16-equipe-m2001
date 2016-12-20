@@ -33,7 +33,7 @@ public class CheckinServiceTest {
   @Before
   public void initiateTest() {
     checkinDto = new CheckinDto();
-    mockCheckinInMemory = mock(CheckinInMemory.class);// go
+    mockCheckinInMemory = mock(CheckinInMemory.class);
     hibernateReservationMock = mock(HibernateReservation.class);
     reservationMock = mock(Reservation.class);
     assignElementToDto(checkinDto);
