@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.flycheckin.reservation.persistence;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 
@@ -20,7 +21,7 @@ public class CheckinInMemory {
   }
 
   public void isCheckinDone(String passengerHash) {
-    if (!checkinMap.containsValue(passengerHash))
+    if (checkinMap.containsValue(passengerHash))
       throw new NotCheckedinException();
   }
 }

@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.flycheckin.reservation.persistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
 
+import ca.ulaval.glo4002.flycheckin.reservation.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
@@ -25,7 +25,7 @@ public class HibernateReservation {
     EntityTransaction transaction = entityManager.getTransaction();
     transaction.begin();
     try {
-      if (entityManager.contains(newReservation))
+      if (entityManager.find(Reservation.class, newReservation.getReservationNumber()) != null)
         throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
       else {
         entityManager.persist(newReservation);
@@ -37,34 +37,25 @@ public class HibernateReservation {
 
   public Reservation findReservationByNumber(int reservationNumber) {
     Reservation reservationFound;
-    String hql = "select r from Reservation r where r.reservationNumber = :reservationNumber";
-    TypedQuery<Reservation> query = entityManager.createQuery(hql, Reservation.class);
-    query.setParameter("reservationNumber", reservationNumber);
-    reservationFound = query.getSingleResult();
+    reservationFound = entityManager.find(Reservation.class, reservationNumber);
     if (reservationFound == null)
       throw new NotFoundReservationException(UNFOUND_RESERVATION_ERROR);
     return reservationFound;
   }
 
   public Reservation findReservationByPassengerHash(String hash) throws NotFoundPassengerException {
-    String hql = "select r from Reservation as r inner join Passenger where r.passengerHash = :passengerHash";
-    TypedQuery<Reservation> query = entityManager.createQuery(hql, Reservation.class);
-    query.setParameter("passengerHash", hash);
-    Reservation reservationFound = query.getSingleResult();
-    if (reservationFound == null)
-      throw new NotFoundReservationException(INVALID_PASSENGER_ERROR);
-    return reservationFound;
+    Passenger passenger = entityManager.find(Passenger.class, hash);
+    if (passenger == null)
+      throw new NotFoundPassengerException();
+    return passenger.getReservation();
   }
 
   public void update(Reservation reservation) {
+    System.out.println("\n\n\n LALALA \n\n\n");
     EntityTransaction transaction = entityManager.getTransaction();
     transaction.begin();
     try {
-      if (entityManager.contains(reservation))
-        throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
-      else {
-        entityManager.persist(reservation);
-      }
+      entityManager.persist(reservation);
     } finally {
       transaction.commit();
     }
