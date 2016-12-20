@@ -32,6 +32,7 @@ public class SeatAssignationHibernate implements SeatAssignationRepository{
         throw new AssignationNumberUsedException(ERROR_ASSIGNATION_NUMBER_USED);
       else if (!getPassengerHashSeatNumber(seatAssignation.getPassengerHash()).isEmpty())
         throw new SeatAlreadyAssignedException(ERROR_SEAT_UNASSIGNED);
+      entityManager.persist(seatAssignation);
     } finally {
       transaction.commit();
     }
