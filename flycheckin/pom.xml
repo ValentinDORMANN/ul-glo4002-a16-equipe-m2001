@@ -8,9 +8,11 @@
 	<name>FlyCheckin</name>
 	<description>système d'enregistrement en vue de simplifier le service aux passagers avant l'embarquement</description>
 	<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
     <checkstyle.version>2.17</checkstyle.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<rest-assured.version>3.0.1</rest-assured.version>
+    <surefire.version>2.18.1</surefire.version>
 	</properties>
 	<build>
     <pluginManagement>
@@ -50,11 +52,18 @@
 			  <artifactId>checkstyle</artifactId>
 			  <version>6.5</version>
 			</dependency>
+      <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>rest-assured</artifactId>
+        <version>${rest-assured.version}</version>
+        <scope>test</scope>
+      </dependency>
 		</dependencies>
 	</dependencyManagement>
   	<modules>
     	<module>reservation</module>
     	<module>app</module>
     	<module>boarding</module>
-  	</modules>
+      <module>flycheckin-uat</module>
+   </modules>
 </project>
