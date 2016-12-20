@@ -12,8 +12,8 @@ import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckIn;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
 public class CheckinResourceTest {

@@ -13,10 +13,10 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
 @Path("/checkins")
