@@ -1,8 +1,9 @@
 package ca.ulaval.glo4002.flycheckin.boarding.rest.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
+@JsonInclude(Include.NON_EMPTY)
 public class ResultLuggageCheckinDto {
 
   public boolean allowed;
