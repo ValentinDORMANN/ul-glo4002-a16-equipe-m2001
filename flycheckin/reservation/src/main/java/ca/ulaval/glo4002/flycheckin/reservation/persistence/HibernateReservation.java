@@ -51,7 +51,6 @@ public class HibernateReservation {
   }
 
   public void update(Reservation reservation) {
-    System.out.println("\n\n\n LALALA \n\n\n");
     EntityTransaction transaction = entityManager.getTransaction();
     transaction.begin();
     try {
