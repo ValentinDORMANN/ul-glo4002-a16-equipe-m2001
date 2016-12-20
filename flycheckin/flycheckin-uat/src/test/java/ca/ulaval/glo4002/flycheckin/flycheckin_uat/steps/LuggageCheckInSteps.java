@@ -51,7 +51,7 @@ public class LuggageCheckInSteps implements En {
   public LuggageCheckInSteps() {
     Given("^a passenger \"([^\"]*)\" with an \"([^\"]*)\" class reservation on flight \"([^\"]*)\"$",
         (String name, String seatClass, String flightNumber) -> {
-          reservation = createPassengerBob(name, seatClass, flightNumber);
+          reservation = makeReservationOfPassenger(name, seatClass, flightNumber);
         });
 
     Given("^already has a \"([^\"]*)\" luggage meeting the standards$", (String type) -> {
@@ -68,7 +68,7 @@ public class LuggageCheckInSteps implements En {
 
   }
 
-  public Reservation createPassengerBob(String name, String seatClass, String flightNumber) {
+  public Reservation makeReservationOfPassenger(String name, String seatClass, String flightNumber) {
     reservationDto.flight_number = flightNumber;
     passengerDto.first_name = name;
     passengerDto.seat_class = seatClass;
