@@ -30,7 +30,7 @@ public class Passenger {
   private String passportNumber;
   @Column(name = "seatClass")
   private String seatClass;
-  @Column(name = "isvip")
+  @Column(name = "isVip")
   private boolean isVip;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn
