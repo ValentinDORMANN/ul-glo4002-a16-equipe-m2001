@@ -6,8 +6,6 @@ import javax.persistence.EntityTransaction;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Passenger;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 
 public class HibernateReservation {
 

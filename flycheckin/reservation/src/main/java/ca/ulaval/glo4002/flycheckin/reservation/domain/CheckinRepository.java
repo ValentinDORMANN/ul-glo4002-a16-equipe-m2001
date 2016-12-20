@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotCheckedinException;
 
 public interface CheckinRepository {
 

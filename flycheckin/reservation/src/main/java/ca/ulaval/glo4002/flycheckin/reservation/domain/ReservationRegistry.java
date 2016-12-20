@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundReservationException;
 
 public interface ReservationRegistry {
 

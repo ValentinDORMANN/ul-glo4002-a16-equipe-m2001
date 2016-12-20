@@ -1,4 +1,6 @@
-package ca.ulaval.glo4002.flycheckin.reservation.exception;
+package ca.ulaval.glo4002.flycheckin.reservation.persistence;
+
+import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 
 public class NotFoundPassengerException extends ReservationModuleException {
 

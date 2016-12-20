@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.flycheckin.reservation.persistence;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 
 public class CheckinInMemory {

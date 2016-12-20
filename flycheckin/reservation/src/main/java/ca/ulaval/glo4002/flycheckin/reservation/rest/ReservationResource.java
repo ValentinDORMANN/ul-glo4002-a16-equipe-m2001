@@ -16,10 +16,10 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotCheckedinException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 @Path("")

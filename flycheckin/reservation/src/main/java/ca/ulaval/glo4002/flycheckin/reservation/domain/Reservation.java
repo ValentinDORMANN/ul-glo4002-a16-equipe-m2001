@@ -20,10 +20,10 @@ import org.hibernate.annotations.CascadeType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
 @Entity
