@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageRegistry;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 
-public class PassengerLuggagePersistence implements LuggageRegistry{
+public class PassengerLuggagePersistence implements LuggageRegistry {
 
   private static final Map<String, List<Luggage>> passengerMap = new HashMap<String, List<Luggage>>();
 
