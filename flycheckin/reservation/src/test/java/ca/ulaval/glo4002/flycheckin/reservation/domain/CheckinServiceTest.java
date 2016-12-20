@@ -24,7 +24,7 @@ public class CheckinServiceTest {
   private static final boolean IS_VALID = true;
   private static final boolean IS_NOT_VALID = false;
 
-  private CheckinInMemory mockCheckinInMemory;// go
+  private CheckinInMemory mockCheckinInMemory;
   private HibernateReservation hibernateReservationMock;
   private CheckinDto checkinDto;
   private Reservation reservationMock;
