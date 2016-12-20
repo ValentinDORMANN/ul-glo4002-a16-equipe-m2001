@@ -18,12 +18,13 @@ import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
 public class CheckinResourceTest {
 
-  private CheckinService mockCheckinService;
-  private UriInfo uriInfoMock;
-  private CheckinDto checkinDto;
   private static final String AGENT = "AGENT";
   private static final String PASSENGER_HASH = "HASH";
   private static final boolean ISVIP = true;
+
+  private CheckinService checkinServiceMock;
+  private UriInfo uriInfoMock;
+  private CheckinDto checkinDto;
   private CheckinResource checkinResource;
 
   @Before
@@ -32,13 +33,13 @@ public class CheckinResourceTest {
     checkinDto.by = AGENT;
     checkinDto.by = PASSENGER_HASH;
     checkinDto.vip = ISVIP;
-    mockCheckinService = mock(CheckinService.class);
-    checkinResource = new CheckinResource(mockCheckinService);
+    checkinServiceMock = mock(CheckinService.class);
+    checkinResource = new CheckinResource(checkinServiceMock);
   }
 
   @Test
   public void givenPassengerHashNotInMemoryWhenCheckinThenReturnStatusNotFound() {
-    willThrow(NotFoundPassengerException.class).given(mockCheckinService).saveCheckin(checkinDto);
+    willThrow(NotFoundPassengerException.class).given(checkinServiceMock).saveCheckin(checkinDto);
 
     Response response = checkinResource.createCheckin(uriInfoMock, checkinDto);
 
@@ -47,7 +48,7 @@ public class CheckinResourceTest {
 
   @Test
   public void givenIncompletePassengerWhenCheckinThenReturnStatusBadRequest() {
-    willThrow(ReservationModuleException.class).given(mockCheckinService).saveCheckin(checkinDto);
+    willThrow(ReservationModuleException.class).given(checkinServiceMock).saveCheckin(checkinDto);
 
     Response response = checkinResource.createCheckin(uriInfoMock, checkinDto);
 
