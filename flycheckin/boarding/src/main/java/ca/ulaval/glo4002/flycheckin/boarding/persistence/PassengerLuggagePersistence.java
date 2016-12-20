@@ -7,20 +7,20 @@ import java.util.Map;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageRegistry;
-import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.PassengerLuggage;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 
-public class PassengerLuggagePersistence implements LuggageRegistry{
+public class PassengerLuggagePersistence implements LuggageRegistry {
 
   private static final Map<String, List<Luggage>> passengerMap = new HashMap<String, List<Luggage>>();
 
   @Override
-  public void savePassengerLuggage(Passenger newPassenger) {
-    String passengerHash = newPassenger.getPassengerHash();
+  public void savePassengerLuggage(PassengerLuggage passengerLuggage) {
+    String passengerHash = passengerLuggage.getPassengerHash();
     if (!passengerMap.containsKey(passengerHash))
-      passengerMap.put(passengerHash, newPassenger.getLuggages());
+      passengerMap.put(passengerHash, passengerLuggage.getLuggage());
     else
-      passengerMap.replace(passengerHash, newPassenger.getLuggages());
+      passengerMap.replace(passengerHash, passengerLuggage.getLuggage());
   }
 
   @Override
