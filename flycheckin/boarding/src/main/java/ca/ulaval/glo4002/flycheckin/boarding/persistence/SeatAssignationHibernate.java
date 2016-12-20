@@ -8,7 +8,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationReposito
 
 public class SeatAssignationHibernate implements SeatAssignationRepository {
 
-  private static final String EMPTY_STRING = "";
   private static final String ERROR_SEAT_UNASSIGNED = "Error: This passenger seat is already assigned.";
   private static final String ERROR_ASSIGNATION_NUMBER_USED = "Error: This assignation number is already used.";
 
@@ -27,9 +26,7 @@ public class SeatAssignationHibernate implements SeatAssignationRepository {
     EntityTransaction transaction = entityManager.getTransaction();
     transaction.begin();
     try {
-      if (entityManager.find(SeatAssignation.class, seatAssignation.getAssignationNumber()) != null)
-        throw new AssignationNumberUsedException(ERROR_ASSIGNATION_NUMBER_USED);
-      else if (isThisSeatAlreadyAssigned(seatAssignation.getPassengerHash()))
+      if (isThisSeatAlreadyAssigned(seatAssignation.getPassengerHash()))
         throw new SeatAlreadyAssignedException(ERROR_SEAT_UNASSIGNED);
       entityManager.persist(seatAssignation);
     } finally {

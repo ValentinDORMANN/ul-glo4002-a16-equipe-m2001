@@ -8,10 +8,10 @@ import javax.persistence.Id;
 public class SeatAssignation {
 
   @Id
-  @Column(name = "assignationNumber", unique = true, nullable = false)
-  private int assignationNumber;
-  @Column(name = "passengerHash")
+  @Column(name = "passengerHash", unique = true, nullable = false)
   private String passengerHash;
+  @Column(name = "assignationNumber")
+  private int assignationNumber;
   @Column(name = "seatNumber")
   private String seatNumber;
 
