@@ -36,8 +36,6 @@ public class Reservation {
   private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
 
-  @Transient
-  private HibernateReservation hibernateReservation;
   @Id
   @Column(name = "reservationNumber", unique = true, nullable = false)
   private int reservationNumber;
@@ -51,6 +49,9 @@ public class Reservation {
   @Cascade(value = { CascadeType.ALL })
   @ElementCollection(targetClass = Passenger.class)
   private List<Passenger> passengers;
+  
+  @Transient
+  private HibernateReservation hibernateReservation;
 
   public Reservation() {
     this.hibernateReservation = new HibernateReservation();
@@ -71,11 +72,13 @@ public class Reservation {
     this.reservationNumber = reservationDto.reservation_number;
     this.flightNumber = reservationDto.flight_number;
     this.flightDate = reservationDto.flight_date;
+    
     for (int i = 0; i < reservationDto.passengers.size(); i++) {
       Passenger passenger = new Passenger(reservationDto.passengers.get(i));
       passenger.setReservation(this);
       this.passengers.add(passenger);
     }
+    
     storeReservation();
   }
 
@@ -109,6 +112,7 @@ public class Reservation {
       if (passenger.hasThisHash(passengerHash))
         return passenger;
     }
+    
     throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);
   }
 
@@ -120,8 +124,8 @@ public class Reservation {
   private void validateSelfCheckinPeriod() {
     long todayInMillisecond = new Date().getTime();
     long flightDateInMillisecond = this.getFlightDate().getTime();
-    if (!((flightDateInMillisecond - SELF_CHECKIN_START_TIME <= todayInMillisecond)
-        && (todayInMillisecond <= flightDateInMillisecond - SELF_CHECKIN_END_TIME)))
+    if ((flightDateInMillisecond - SELF_CHECKIN_START_TIME > todayInMillisecond)
+        || (todayInMillisecond > flightDateInMillisecond - SELF_CHECKIN_END_TIME))
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
   }
 

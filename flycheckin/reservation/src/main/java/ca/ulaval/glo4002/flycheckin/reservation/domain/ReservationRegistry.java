@@ -12,5 +12,4 @@ public interface ReservationRegistry {
   Reservation findReservationByPassengerHash(String hash);
   
   void update(Reservation reservation);
-
 }
