@@ -16,32 +16,31 @@ import ca.ulaval.glo4002.flycheckin.reservation.persistence.EntityManagerProvide
 
 public class EntityManagerContextFilter implements Filter {
 
-	private EntityManagerFactory entityManagerFactory;
+  private EntityManagerFactory entityManagerFactory;
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		entityManagerFactory = EntityManagerFactoryProvider.getFactory();
-	}
+  @Override
+  public void init(FilterConfig filterConfig) throws ServletException {
+    entityManagerFactory = EntityManagerFactoryProvider.getFactory();
+  }
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		EntityManager entityManager = null;
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+    EntityManager entityManager = null;
 
-		try {
-			entityManager = entityManagerFactory.createEntityManager();
-			EntityManagerProvider.setEntityManager(entityManager);
-			chain.doFilter(request, response);
-		} finally {
-			if (entityManager != null)
-				entityManager.close();
-			EntityManagerProvider.clearEntityManager();
-		}
-	}
+    try {
+      entityManager = entityManagerFactory.createEntityManager();
+      EntityManagerProvider.setEntityManager(entityManager);
+      chain.doFilter(request, response);
+    } finally {
+      if (entityManager != null)
+        entityManager.close();
+      EntityManagerProvider.clearEntityManager();
+    }
+  }
 
-	@Override
-	public void destroy() {
-		entityManagerFactory.close();
-	}
-
+  @Override
+  public void destroy() {
+    entityManagerFactory.close();
+  }
 }
