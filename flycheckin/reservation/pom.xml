@@ -60,6 +60,13 @@
       <version>1.4.192</version>
     </dependency>
 			
-    	
+      <!-- Pour test de bordure -->
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>3.0.1</version>
+      <scope>test</scope>
+    </dependency>
+    
     </dependencies>
 </project>
