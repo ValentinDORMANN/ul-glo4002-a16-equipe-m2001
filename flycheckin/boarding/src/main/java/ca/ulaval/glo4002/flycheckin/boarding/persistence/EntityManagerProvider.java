@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.flycheckin.reservation.persistence;
+package ca.ulaval.glo4002.flycheckin.boarding.persistence;
 
 import javax.persistence.EntityManager;
 
