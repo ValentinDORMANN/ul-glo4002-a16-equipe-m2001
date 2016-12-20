@@ -14,6 +14,7 @@ public class PlaneModelService {
 
   private static final String ECONOMY = "economy";
   private static final String BUSINESS = "business";
+
   private PlaneModelHttpClient planeModelHttpClient;
 
   public PlaneModelService() {
@@ -44,11 +45,10 @@ public class PlaneModelService {
   private Seat createSeat(SeatDto seatDto, ClassPassengerDto[] classes, int[] exitRows) throws BoardingModuleException {
     for (ClassPassengerDto classPassengerDto : classes) {
       if (contains(classPassengerDto.rows, seatDto.row)) {
-        if (classPassengerDto.name.equals(BUSINESS)) {
+        if (classPassengerDto.name.equals(BUSINESS))
           return constructSeatFromDto(seatDto, BUSINESS, exitRows);
-        } else {
+        else
           return constructSeatFromDto(seatDto, ECONOMY, exitRows);
-        }
       }
     }
     throw new BoardingModuleException();
@@ -56,8 +56,8 @@ public class PlaneModelService {
 
   private Seat constructSeatFromDto(SeatDto seatDto, String seatClass, int[] exitRows) {
     String seatNumber = Integer.toString(seatDto.row) + "-" + seatDto.seat.toUpperCase();
-    Seat seat = new Seat(seatClass, seatNumber, seatDto.legroom, seatDto.window, seatDto.clear_view, contains(exitRows, seatDto.row),
-        seatDto.price);
+    Seat seat = new Seat(seatClass, seatNumber, seatDto.legroom, seatDto.window, seatDto.clear_view,
+        contains(exitRows, seatDto.row), seatDto.price);
     return seat;
   }
 
