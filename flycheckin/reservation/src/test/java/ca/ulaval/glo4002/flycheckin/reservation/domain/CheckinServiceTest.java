@@ -11,6 +11,7 @@ import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinExcept
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotCheckedinException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
@@ -73,6 +74,23 @@ public class CheckinServiceTest {
     int checkinNumber = checkinService.saveCheckin(checkinDto);
 
     assertEquals(CHECKIN_NUMBER, checkinNumber);
+  }
+
+  @Test
+  public void givenPassengerHashCheckedinWhenIsCheckinDoneThenVerifyCallToPersistence() {
+
+    mockCheckinInMemory.isCheckinDone(PASSENGER_HASH);
+
+    verify(mockCheckinInMemory).isCheckinDone(PASSENGER_HASH);
+  }
+
+  @Test(expected = NotCheckedinException.class)
+  public void givenPassengerHashNotCheckedinWhenIsCheckinDoneThenThrowException() {
+    willThrow(NotCheckedinException.class).given(mockCheckinInMemory).isCheckinDone(PASSENGER_HASH);
+
+    mockCheckinInMemory.isCheckinDone(PASSENGER_HASH);
+
+    verify(mockCheckinInMemory).isCheckinDone(PASSENGER_HASH);
   }
 
   private void driveMockObject(CheckinInMemory mockCheckinInMemory, HibernateReservation hibernateReservationMock,
