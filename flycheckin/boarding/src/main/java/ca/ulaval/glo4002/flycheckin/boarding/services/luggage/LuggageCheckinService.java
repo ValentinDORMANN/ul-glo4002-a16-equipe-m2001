@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.flycheckin.boarding.services.luggage;
 
-import javax.persistence.Transient;
-
 import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageFactory;
@@ -19,7 +17,6 @@ public class LuggageCheckinService {
   private PassengerService passengerService;
   private Passenger passenger;
   private LuggageFactory luggageFactory;
-  @Transient
   private LuggageRegistry luggagePersistence;
   private CheckinHttpClient checkinHttpClient;
   private PassengerLuggageAssembler passengerLuggageAssembler;
