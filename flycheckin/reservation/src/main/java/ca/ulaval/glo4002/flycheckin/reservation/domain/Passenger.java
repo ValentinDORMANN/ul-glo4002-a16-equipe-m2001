@@ -2,19 +2,42 @@ package ca.ulaval.glo4002.flycheckin.reservation.domain;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.PassengerDto;
 
+@Entity
 public class Passenger {
 
   private static final String EMPTY = "";
   private static final int CHILD_AGE = 21;
+
+  @Id
+  @Column(name = "passengerHash")
   private String passengerHash;
+  @Column(name = "firstName")
   private String firstName;
+  @Column(name = "lastName")
   private String lastName;
+  @Column(name = "age")
   private int age;
-  private boolean isVip;
+  @Column(name = "passeportNumber")
   private String passportNumber;
+  @Column(name = "seatClass")
   private String seatClass;
+  @Column(name = "isVip")
+  private boolean isVip;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn
+  private Reservation reservation;
+
+  public Passenger() {
+  }
 
   public Passenger(PassengerDto passengerDto) throws IllegalArgumentException {
     this.firstName = passengerDto.first_name;
@@ -67,5 +90,13 @@ public class Passenger {
 
   public boolean getIsVip() {
     return isVip;
+  }
+
+  public Reservation getReservation() {
+    return reservation;
+  }
+
+  public void setReservation(Reservation reservation) {
+    this.reservation = reservation;
   }
 }

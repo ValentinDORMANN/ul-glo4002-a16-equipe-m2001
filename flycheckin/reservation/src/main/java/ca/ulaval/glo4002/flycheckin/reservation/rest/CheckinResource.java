@@ -15,21 +15,23 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import ca.ulaval.glo4002.flycheckin.reservation.domain.CheckinService;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotCheckedinException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.ReservationModuleException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotCheckedinException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.CheckinDto;
 
 @Path("/checkins")
 public class CheckinResource {
 
   private static CheckinInMemory checkinInMemory = new CheckinInMemory();
-  private static ReservationInMemory reservationInMemory = new ReservationInMemory();
-  private static CheckinService checkinService = new CheckinService(checkinInMemory, reservationInMemory);
+  private static HibernateReservation hibernateReservation;
+  private static CheckinService checkinService;
 
   public CheckinResource() {
+    hibernateReservation = new HibernateReservation();
+    checkinService = new CheckinService(checkinInMemory, hibernateReservation);
   }
 
   public CheckinResource(CheckinService checkinService) {

@@ -30,6 +30,7 @@ public class BusinessPassengerTest {
   private static final boolean IS_CHILD = true;
   private static final double LUGGAGE_PRICE = 100;
   private static final double VIP_LUGGAGE_PRICE = 95;
+
   private static final double DELTA = 0.01;
 
   private RegularLuggage regularLuggageMock;
@@ -206,7 +207,8 @@ public class BusinessPassengerTest {
 
   private void givenUnusualWeightRegularCheckedLuggage() {
     willReturn(CHECKED_LUGGAGE_CATEGORY).given(regularLuggageMock).getCategory();
-    doThrow(new NotAllowableLuggageException()).when(regularLuggageMock).verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
+    doThrow(new NotAllowableLuggageException()).when(regularLuggageMock)
+        .verifyAllowableWeight(CHECKED_LUGGAGE_WEIGHT_LIMIT);
   }
 
   private void givenUnusualSizeRegularCheckedLuggage() {

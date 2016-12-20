@@ -29,7 +29,8 @@ public abstract class Passenger {
   private boolean isChild;
   private List<Luggage> luggages;
 
-  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip, boolean isChild) {
+  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip,
+      boolean isChild) {
     this.flightNumber = flightNumber;
     this.flightDate = flightDate;
     this.passengerHash = passengerHash;
@@ -99,6 +100,7 @@ public abstract class Passenger {
       totalPrice += luggage.getPrice();
     if (isVip)
       return appliedVipDiscount(totalPrice);
+
     return totalPrice;
   }
 

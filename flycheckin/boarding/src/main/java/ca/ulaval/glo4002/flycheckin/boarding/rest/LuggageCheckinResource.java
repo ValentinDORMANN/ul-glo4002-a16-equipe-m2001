@@ -19,7 +19,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageE
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.InvalidUnitException;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.boarding.persistence.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.LuggageInfoDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ResultLuggageCheckinDto;
@@ -35,6 +35,7 @@ public class LuggageCheckinResource {
   private static final double WEIGHT_CONVERSION_RATE = 0.46;
   private static final boolean ALLOWED = true;
   private static final boolean NOT_ALLOWED = false;
+
   private LuggageCheckinService luggageCheckinService;
   private PassengerService passengerService;
 
