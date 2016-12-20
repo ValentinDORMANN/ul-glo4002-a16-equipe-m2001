@@ -9,7 +9,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationReposito
 public class SeatAssignationHibernate implements SeatAssignationRepository {
 
   private static final String ERROR_SEAT_UNASSIGNED = "Error: This passenger seat is already assigned.";
-  private static final String ERROR_ASSIGNATION_NUMBER_USED = "Error: This assignation number is already used.";
 
   private EntityManager entityManager;
 

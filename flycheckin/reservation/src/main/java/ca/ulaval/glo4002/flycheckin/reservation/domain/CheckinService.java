@@ -19,16 +19,17 @@ public class CheckinService {
   }
 
   public int saveCheckin(CheckinDto checkinDto) throws ReservationModuleException {
-    String hash = checkinDto.passenger_hash;
+    String passengerHash = checkinDto.passenger_hash;
     String by = checkinDto.by;
     boolean isVip = checkinDto.vip;
-    Reservation reservation = hibernateReservation.findReservationByPassengerHash(hash);
+    Reservation reservation = hibernateReservation.findReservationByPassengerHash(passengerHash);
+
     reservation.validateCheckinPeriod(by);
-    if (reservation.isPassengerInfosValid(hash)) {
-      reservation.changePassengerVipStatus(hash, isVip);
+    if (reservation.isPassengerInfosValid(passengerHash)) {
+      reservation.changePassengerVipStatus(passengerHash, isVip);
       if (isVip)
         hibernateReservation.update(reservation);
-      return checkinInMemory.doPassengerCheckin(hash);
+      return checkinInMemory.doPassengerCheckin(passengerHash);
     }
     throw new ReservationModuleException(MESSAGE_ERROR);
   }
