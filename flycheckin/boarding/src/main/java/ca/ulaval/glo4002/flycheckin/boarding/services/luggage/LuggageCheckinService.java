@@ -43,10 +43,15 @@ public class LuggageCheckinService {
   public String assignLuggage(String passengerHash, LuggageDto luggageDto) throws BoardingModuleException {
     passenger = passengerService.getPassengerByHash(passengerHash);
     checkinHttpClient.verifyCheckinFromReservation(passengerHash);
+
     Luggage luggage = luggageFactory.createLuggage(luggageDto.linear_dimension, luggageDto.weight, luggageDto.type);
     passenger.addLuggage(luggage);
+    persistPassengerLuggage();
+    return luggage.getLuggageHash();
+  }
+
+  private void persistPassengerLuggage() throws BoardingModuleException {
     PassengerLuggage passengerLuggage = passengerLuggageAssembler.createPassengerLuggage(passenger);
     luggagePersistence.savePassengerLuggage(passengerLuggage);
-    return luggage.getLuggageHash();
   }
 }
