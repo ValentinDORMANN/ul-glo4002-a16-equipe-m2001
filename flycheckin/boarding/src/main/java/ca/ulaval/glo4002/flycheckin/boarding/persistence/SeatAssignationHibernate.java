@@ -19,6 +19,10 @@ public class SeatAssignationHibernate implements SeatAssignationRepository{
     this.entityManager = new EntityManagerProvider().getEntityManager();
   }
   
+  public SeatAssignationHibernate(EntityManager entityManager) {
+    this.entityManager = entityManager;
+  }
+  
   @Override
   public void persistSeatAssignation(SeatAssignation seatAssignation) {
     EntityTransaction transaction = entityManager.getTransaction();

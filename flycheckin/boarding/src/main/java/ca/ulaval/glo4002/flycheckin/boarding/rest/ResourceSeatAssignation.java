@@ -19,7 +19,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationReposito
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.SeatAssignationHibernate;
-import ca.ulaval.glo4002.flycheckin.boarding.persistence.SeatAssignationPersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationService;
