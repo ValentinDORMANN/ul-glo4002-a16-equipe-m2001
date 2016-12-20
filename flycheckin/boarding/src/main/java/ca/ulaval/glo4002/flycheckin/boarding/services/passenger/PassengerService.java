@@ -17,6 +17,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 public class PassengerService {
 
   private static final int SINGLE_INDEX = 0;
+
   private ReservationHttpClient reservationHttpClient;
   private LuggageRegistry luggageRegistry;
   private PassengerFactory passengerFactory;
@@ -51,8 +52,10 @@ public class PassengerService {
     Passenger passenger = getPassengerByHashInReservation(passengerHash);
     PassengerLuggage passengerLuggage = luggageRegistry.getPassengerLuggage(passengerHash);
     List<Luggage> luggageList = passengerLuggageAssembler.createLuggageList(passengerLuggage);
+
     for (Luggage luggage : luggageList)
       passenger.getLuggages().add(luggage);
+
     return passenger;
   }
 
