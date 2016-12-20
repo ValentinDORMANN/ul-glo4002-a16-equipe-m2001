@@ -13,11 +13,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
+import ca.ulaval.glo4002.flycheckin.boarding.client.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.SeatAssignationPersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;

@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.ulaval.glo4002.flycheckin.boarding.client.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageRegistry;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 
 public class PassengerLuggagePersistence implements LuggageRegistry {
 

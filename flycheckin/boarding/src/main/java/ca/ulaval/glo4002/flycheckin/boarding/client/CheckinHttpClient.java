@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.flycheckin.boarding.client;
 
 import javax.ws.rs.core.Response;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotCheckedinException;
-
 public class CheckinHttpClient extends HttpClient {
 
   private static final String LOCALHOST = "http://localhost:";

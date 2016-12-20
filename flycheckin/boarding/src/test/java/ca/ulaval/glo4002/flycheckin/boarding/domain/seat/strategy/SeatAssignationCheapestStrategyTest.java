@@ -9,8 +9,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.NoSeatAvailableException;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NoSeatAvailableException;
 
 public class SeatAssignationCheapestStrategyTest {
 

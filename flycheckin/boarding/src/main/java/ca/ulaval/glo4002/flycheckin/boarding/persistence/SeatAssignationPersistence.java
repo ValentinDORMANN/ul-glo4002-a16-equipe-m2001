@@ -5,8 +5,6 @@ import java.util.Map;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.AssignationNumberUsedException;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.SeatAlreadyAssignedException;
 
 public class SeatAssignationPersistence implements SeatAssignationRepository {
 

@@ -1,4 +1,6 @@
-package ca.ulaval.glo4002.flycheckin.boarding.exception;
+package ca.ulaval.glo4002.flycheckin.boarding.domain.seat;
+
+import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 
 public class NoSeatAvailableException extends BoardingModuleException {
 

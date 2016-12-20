@@ -9,11 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
+import ca.ulaval.glo4002.flycheckin.boarding.client.NotCheckedinException;
+import ca.ulaval.glo4002.flycheckin.boarding.client.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.client.ReservationHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotCheckedinException;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.persistence.PassengerLuggagePersistence;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;

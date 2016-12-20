@@ -4,7 +4,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.ReservationDto;
 
 public class ReservationHttpClient extends HttpClient {
