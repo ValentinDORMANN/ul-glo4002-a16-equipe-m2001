@@ -32,6 +32,9 @@ public abstract class Luggage {
     this.penaltyFee = 0;
   }
 
+  public Luggage() {
+  }
+
   public abstract boolean isType(String type);
 
   public abstract void calculatePrice();

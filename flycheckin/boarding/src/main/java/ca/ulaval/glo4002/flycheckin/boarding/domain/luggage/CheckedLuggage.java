@@ -1,10 +1,17 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
+import javax.persistence.Entity;
+
+@Entity
 public class CheckedLuggage extends Luggage {
 
   private static final String TYPE = "checked";
   private static final int DIMENSION_LIMIT = 158;
   private static final double SURPLUS_PRICE = 50;
+
+  public CheckedLuggage() {
+    super();
+  }
 
   public CheckedLuggage(int linearDimension, int weight) {
     super(linearDimension, weight);

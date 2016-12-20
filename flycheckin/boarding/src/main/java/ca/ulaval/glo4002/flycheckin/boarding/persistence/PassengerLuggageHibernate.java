@@ -18,7 +18,13 @@ public class PassengerLuggageHibernate implements LuggageRegistry {
     EntityTransaction transaction = entityManager.getTransaction();
     transaction.begin();
     try {
-      entityManager.persist(passengerLugage);
+      PassengerLuggage buffer = entityManager.find(PassengerLuggage.class, passengerLugage.getPassengerHash());
+      if (buffer == null)
+        entityManager.persist(passengerLugage);
+      else {
+        buffer.setLuggage(passengerLugage.getLuggage());
+        entityManager.persist(buffer);
+      }
     } finally {
       transaction.commit();
     }

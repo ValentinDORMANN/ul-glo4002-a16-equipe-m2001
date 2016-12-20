@@ -1,11 +1,18 @@
 package ca.ulaval.glo4002.flycheckin.boarding.domain.luggage;
 
+import javax.persistence.Entity;
+
+@Entity
 public class CarryOnLuggage extends Luggage {
 
   private static final int WEIGHT_LIMIT = 10;
   private static final int DIMENSION_LIMIT = 118;
   private static final String TYPE = "carry-on";
   private static final int BASE_PRICE = 30;
+
+  public CarryOnLuggage() {
+    super();
+  }
 
   public CarryOnLuggage(int linearDimension, int weight) {
     super(linearDimension, weight);
