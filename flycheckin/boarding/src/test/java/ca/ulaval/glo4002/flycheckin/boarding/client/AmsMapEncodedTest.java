@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AmsMapClientTest {
+public class AmsMapEncodedTest {
 
   private static final String BOEING = "boeing-777-300";
   private static final String FLIGHT_BOEING = "QK-432";
@@ -14,11 +14,11 @@ public class AmsMapClientTest {
   private static final String AIRBUS = "a320";
   private static final String FLIGHT_AIRBUS = "NK-750";
   
-  private AmsMapClient amsMapClient;
+  private AmsMapEncoded amsMapClient;
 
   @Before
   public void initiateTest() {
-    amsMapClient = new AmsMapClient();
+    amsMapClient = new AmsMapEncoded();
   }
 
   @Test

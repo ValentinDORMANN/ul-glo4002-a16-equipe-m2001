@@ -13,6 +13,7 @@ public abstract class Luggage {
   protected static final String LUGGAGE_WEIGHT_NOT_ALLOWED = "The weight of luggage is over boundary";
   private static final double FIRST_STAGE_PENALTY_FEE_IN_PERCENTAGE = 10;
   private static final double SECOND_STAGE_PENALTY_FEE_IN_PERCENTAGE = 21;
+
   @Id
   @Column(name = "luggageHash")
   private String luggageHash;
