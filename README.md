@@ -31,6 +31,12 @@
  Story8 | Bagages: Obtenir la liste par passager | 		   terminé|
  Story9 | Siège: Assigner le siège le moins cher | 		   terminé|
  Story10 | Siège: Assigner le siège en fonction du dégagement | 		   terminé|
+ Story11 | Bagage cabine: Article standard | terminé|
+ Story12 |  Bagage enregistré: Classe affaires | terminé|
+ Story13 | Siège: Assigner le siège ayant une bonne vue  | terminé|
+ Story14 | Bagages: Passager VIP  | terminé|
+ Story15 | Siège: Ne pas assigner de sièges dans l'allée de secours à un enfant  | terminé|
+ Story16 | Bagage enregistré: Hors normes  | terminé|
 
 ## 3 Résumé
 
@@ -48,6 +54,7 @@ mvn test
 4.1 Violation de principes
 
 Nous avons introduit les DTO dans le constructeur des objets dans le module de Réservation. Ce module étant en situation de CRUD, il n'y a pas de domaine d'affaire, ainsi on s'est autorisé de le faire.
+De plus, nous avons violé le Tell Don't Ask dans Luggage et Passenger.
 
 4.2 Décisions à communiquer
 
