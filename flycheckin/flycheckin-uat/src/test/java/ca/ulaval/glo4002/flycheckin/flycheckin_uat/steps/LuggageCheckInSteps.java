@@ -11,6 +11,7 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
+import ca.ulaval.glo4002.flycheckin.flycheckin_uat.fixtures.FakeHibernateReservationFixture;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.PassengerDto;
