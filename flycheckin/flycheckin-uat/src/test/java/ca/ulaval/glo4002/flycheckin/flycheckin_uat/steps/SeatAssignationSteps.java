@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
 import ca.ulaval.glo4002.flycheckin.boarding.client.AmsMapEncoded;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
@@ -20,7 +23,9 @@ import ca.ulaval.glo4002.flycheckin.boarding.persistence.SeatAssignationHibernat
 import ca.ulaval.glo4002.flycheckin.boarding.services.external.PlaneModelService;
 import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationService;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
+import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.CheckinInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.EntityManagerProvider;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 import cucumber.api.java8.En;
@@ -39,12 +44,14 @@ public class SeatAssignationSteps implements En {
 	private static final String NO_SEAT_AVAILABLE = "Aucun siège de la catégorie du passager n'est disponible";
 	private static final SimpleDateFormat DATE_FORMAT_COURT = new SimpleDateFormat("yyyy-MM-dd");
 	private static final SimpleDateFormat DATE_FORMAT_LONG = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	private static final String DOUBLE_RESERVATION_ERROR = "Error : This reservation exists already.";
 
 	PassengerDto passengerDto = new PassengerDto();
 	ReservationDto reservationDto = new ReservationDto();
 	Passenger passenger;
 	Reservation reservation;
 	SeatAssignation seatAssignation = null;
+	 private EntityManager entityManager;
 	
 	 @cucumber.api.java.Before
 	  public void beforeScenario() throws ParseException {
@@ -57,10 +64,12 @@ public class SeatAssignationSteps implements En {
 	    reservationDto.flight_date = flightDate;
 	    reservationDto.payment_location = PAYEMENT_LOCATION;
 
-	    passengerDto.first_name = FIRST_NAME;
+	   // passengerDto.first_name = FIRST_NAME;
 	    passengerDto.age = AGE;
 	    passengerDto.passport_number = PASSPORT_NUMBER;
 	    passengerDto.seat_class = SEAT_CLASS;
+	    
+	    entityManager = new EntityManagerProvider().getEntityManager();
 	  }
 
 	public SeatAssignationSteps() {
@@ -104,8 +113,10 @@ public class SeatAssignationSteps implements En {
 
 		  public Passenger createPassengerWithReservation(String passengerName) {
 		    reservationDto.passengers = new ArrayList<PassengerDto>();
+		    passengerDto.first_name=passengerName;
 		    reservationDto.passengers.add(passengerDto);
 		    reservation = new Reservation(reservationDto);
+		    saveReservation(reservation);
 		    return createBoardingPassenger(reservation);
 		  }
 
@@ -127,5 +138,18 @@ public class SeatAssignationSteps implements En {
 		      throw new NoSeatAvailableException(NO_SEAT_AVAILABLE);
 		    }
 		    return filterSeats;
+		  }
+		  
+		  private void saveReservation(Reservation reservation){
+			  EntityTransaction transaction = entityManager.getTransaction();
+			    transaction.begin();
+			    try {
+			      if (entityManager.find(Reservation.class, reservation.getReservationNumber()) != null)
+			        throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
+			      else
+			        entityManager.persist(reservation);
+			    } finally {    	
+			      transaction.commit();
+			    }  
 		  }
 }

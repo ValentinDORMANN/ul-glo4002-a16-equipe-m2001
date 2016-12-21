@@ -11,5 +11,5 @@ Scenario Outline:
 	Then a seat is assigned to him on that flight 
 	
 	Examples: 
-		|name  |mode  |
-		|Alice |random|
+		|name ||mode|
+		|Alice||random|
