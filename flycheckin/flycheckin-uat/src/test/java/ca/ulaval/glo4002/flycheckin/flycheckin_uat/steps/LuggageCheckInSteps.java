@@ -11,7 +11,6 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
-import ca.ulaval.glo4002.flycheckin.flycheckin_uat.fixtures.FakeHibernateReservation;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.PassengerDto;
@@ -49,8 +48,7 @@ public class LuggageCheckInSteps implements En {
     passengerDto.last_name = LAST_NAME;
     passengerDto.age = AGE;
     passengerDto.passport_number = PASSPORT_NUMBER;
-    fakeHibernateReservation = new FakeHibernateReservation();
-
+    fakeHibernateReservation = new FakeHibernateReservationFixture();
   }
 
   public LuggageCheckInSteps() {

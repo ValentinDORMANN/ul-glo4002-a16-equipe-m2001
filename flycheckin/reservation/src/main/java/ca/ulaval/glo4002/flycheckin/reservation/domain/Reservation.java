@@ -80,7 +80,7 @@ public class Reservation {
     }
   }
 
-  private void storeReservation() throws IllegalArgumentReservationException {
+  public void storeReservation() throws IllegalArgumentReservationException {
     hibernateReservation.persisteReservation(this);
   }
 

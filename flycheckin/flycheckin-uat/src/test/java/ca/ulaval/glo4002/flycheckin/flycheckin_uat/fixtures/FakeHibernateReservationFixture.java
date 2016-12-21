@@ -6,7 +6,7 @@ import java.util.Map;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
 import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
 
-public class FakeHibernateReservation extends HibernateReservation{
+public class FakeHibernateReservationFixture extends HibernateReservation{
 	
 	public Map<Integer, Reservation> store = new HashMap<>();
 	 private static final int RESERVATION_ID_BEGIN = 100;
