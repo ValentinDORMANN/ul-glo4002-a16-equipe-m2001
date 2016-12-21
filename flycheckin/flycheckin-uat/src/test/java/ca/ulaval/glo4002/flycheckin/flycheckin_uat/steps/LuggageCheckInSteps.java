@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageFactory;
@@ -51,13 +50,13 @@ public class LuggageCheckInSteps implements En {
     passengerDto.age = AGE;
     passengerDto.passport_number = PASSPORT_NUMBER;
     fakeHibernateReservation = new FakeHibernateReservation();
-   
+
   }
 
   public LuggageCheckInSteps() {
     Given("^a passenger \"([^\"]*)\" with an \"([^\"]*)\" class reservation on flight \"([^\"]*)\"$",
         (String name, String seatClass, String flightNumber) -> {
-          reservation = createPassengerBob(name, seatClass, flightNumber);
+          passenger = createPassengerBob(name, seatClass, flightNumber);
         });
 
     Given("^already has a \"([^\"]*)\" luggage meeting the standards$", (String type) -> {
@@ -74,7 +73,7 @@ public class LuggageCheckInSteps implements En {
 
   }
 
-  public Reservation createPassengerBob(String name, String seatClass, String flightNumber) {
+  public Passenger createPassengerBob(String name, String seatClass, String flightNumber) {
     reservationDto.flight_number = flightNumber;
     passengerDto.first_name = name;
     passengerDto.seat_class = seatClass;
@@ -82,11 +81,10 @@ public class LuggageCheckInSteps implements En {
     reservationDto.passengers.add(passengerDto);
     reservation = new Reservation(reservationDto);
     fakeHibernateReservation.persisteReservation(reservation);
-    return reservation;
+    return createBoardingPassenger(reservation);
   }
 
   public void addStandardLuggage(Reservation reservation, String type) {
-    passenger = createBoardingPassenger(reservation);
     int standardSize = 150;
     int standardWeight = 22;
     Luggage luggage = createLuggage(standardSize, standardWeight, type);
