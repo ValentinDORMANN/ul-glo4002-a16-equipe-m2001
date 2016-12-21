@@ -78,11 +78,9 @@ public class Reservation {
       passenger.setReservation(this);
       this.passengers.add(passenger);
     }
-    
-    storeReservation();
   }
 
-  private void storeReservation() throws IllegalArgumentReservationException {
+  public void storeReservation() throws IllegalArgumentReservationException {
     hibernateReservation.persisteReservation(this);
   }
 

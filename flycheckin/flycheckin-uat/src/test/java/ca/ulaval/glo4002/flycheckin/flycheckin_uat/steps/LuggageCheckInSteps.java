@@ -11,7 +11,9 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
+import ca.ulaval.glo4002.flycheckin.flycheckin_uat.fixtures.FakeHibernateReservationFixture;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 import cucumber.api.java8.En;
@@ -27,6 +29,7 @@ public class LuggageCheckInSteps implements En {
   private static final String PAYEMENT_LOCATION = "/payments/daghkjhg";
   private static final SimpleDateFormat DATE_FORMAT_COURT = new SimpleDateFormat("yyyy-MM-dd");
   private static final SimpleDateFormat DATE_FORMAT_LONG = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+  HibernateReservation fakeHibernateReservation;
   PassengerDto passengerDto = new PassengerDto();
   ReservationDto reservationDto = new ReservationDto();
   Passenger passenger;
@@ -46,12 +49,13 @@ public class LuggageCheckInSteps implements En {
     passengerDto.last_name = LAST_NAME;
     passengerDto.age = AGE;
     passengerDto.passport_number = PASSPORT_NUMBER;
+    fakeHibernateReservation = new FakeHibernateReservationFixture();
   }
 
   public LuggageCheckInSteps() {
     Given("^a passenger \"([^\"]*)\" with an \"([^\"]*)\" class reservation on flight \"([^\"]*)\"$",
         (String name, String seatClass, String flightNumber) -> {
-          reservation = createPassengerBob(name, seatClass, flightNumber);
+          passenger = createPassengerBob(name, seatClass, flightNumber);
         });
 
     Given("^already has a \"([^\"]*)\" luggage meeting the standards$", (String type) -> {
@@ -68,18 +72,18 @@ public class LuggageCheckInSteps implements En {
 
   }
 
-  public Reservation createPassengerBob(String name, String seatClass, String flightNumber) {
+  public Passenger createPassengerBob(String name, String seatClass, String flightNumber) {
     reservationDto.flight_number = flightNumber;
     passengerDto.first_name = name;
     passengerDto.seat_class = seatClass;
     reservationDto.passengers = new ArrayList<PassengerDto>();
     reservationDto.passengers.add(passengerDto);
     reservation = new Reservation(reservationDto);
-    return reservation;
+    fakeHibernateReservation.persisteReservation(reservation);
+    return createBoardingPassenger(reservation);
   }
 
   public void addStandardLuggage(Reservation reservation, String type) {
-    passenger = createBoardingPassenger(reservation);
     int standardSize = 150;
     int standardWeight = 22;
     Luggage luggage = createLuggage(standardSize, standardWeight, type);
