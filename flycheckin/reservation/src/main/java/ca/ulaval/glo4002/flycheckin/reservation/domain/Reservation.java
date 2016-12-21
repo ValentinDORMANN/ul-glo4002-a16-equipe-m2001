@@ -78,8 +78,6 @@ public class Reservation {
       passenger.setReservation(this);
       this.passengers.add(passenger);
     }
-    
-    storeReservation();
   }
 
   private void storeReservation() throws IllegalArgumentReservationException {

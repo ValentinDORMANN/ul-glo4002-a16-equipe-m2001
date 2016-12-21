@@ -6,12 +6,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.LuggageFactory;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.PassengerFactory;
+import ca.ulaval.glo4002.flycheckin.flycheckin_uat.fixtures.FakeHibernateReservation;
 import ca.ulaval.glo4002.flycheckin.reservation.domain.Reservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.PassengerDto;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 import cucumber.api.java8.En;
@@ -27,6 +30,7 @@ public class LuggageCheckInSteps implements En {
   private static final String PAYEMENT_LOCATION = "/payments/daghkjhg";
   private static final SimpleDateFormat DATE_FORMAT_COURT = new SimpleDateFormat("yyyy-MM-dd");
   private static final SimpleDateFormat DATE_FORMAT_LONG = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+  HibernateReservation fakeHibernateReservation;
   PassengerDto passengerDto = new PassengerDto();
   ReservationDto reservationDto = new ReservationDto();
   Passenger passenger;
@@ -46,6 +50,8 @@ public class LuggageCheckInSteps implements En {
     passengerDto.last_name = LAST_NAME;
     passengerDto.age = AGE;
     passengerDto.passport_number = PASSPORT_NUMBER;
+    fakeHibernateReservation = new FakeHibernateReservation();
+   
   }
 
   public LuggageCheckInSteps() {
@@ -75,6 +81,7 @@ public class LuggageCheckInSteps implements En {
     reservationDto.passengers = new ArrayList<PassengerDto>();
     reservationDto.passengers.add(passengerDto);
     reservation = new Reservation(reservationDto);
+    fakeHibernateReservation.persisteReservation(reservation);
     return reservation;
   }
 

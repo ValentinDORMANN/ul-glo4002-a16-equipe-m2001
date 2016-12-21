@@ -11,6 +11,7 @@ public class HibernateReservation {
 
   private static final String UNFOUND_RESERVATION_ERROR = "Error : reservation not found !";
   private static final String DOUBLE_RESERVATION_ERROR = "Error : This reservation exists already.";
+  
 
   private EntityManager entityManager;
 
@@ -20,14 +21,17 @@ public class HibernateReservation {
 
   public void persisteReservation(Reservation newReservation) throws IllegalArgumentReservationException {
     EntityTransaction transaction = entityManager.getTransaction();
-    transaction.begin();
+    //transaction.begin();
     try {
       if (entityManager.find(Reservation.class, newReservation.getReservationNumber()) != null)
         throw new IllegalArgumentReservationException(DOUBLE_RESERVATION_ERROR);
       else
+    	  transaction.begin();
         entityManager.persist(newReservation);
-    } finally {
       transaction.commit();
+    } finally {
+    	entityManager.close();
+      //transaction.commit();
     }
   }
 
