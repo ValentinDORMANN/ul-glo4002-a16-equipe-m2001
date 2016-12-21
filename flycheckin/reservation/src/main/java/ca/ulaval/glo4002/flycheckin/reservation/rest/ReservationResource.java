@@ -64,6 +64,7 @@ public class ReservationResource {
       throws NotCheckedinException {
     try {
       Reservation reservation = new Reservation(reservationDto);
+      reservation.storeReservation();
       URI url = createUrlforGetReservation(uriInfo, reservation);
       return Response.status(Status.CREATED).location(url).build();
     } catch (ReservationModuleException | URISyntaxException ex) {
