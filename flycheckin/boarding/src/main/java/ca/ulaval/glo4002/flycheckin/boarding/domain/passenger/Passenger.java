@@ -7,6 +7,7 @@ import java.util.List;
 import ca.ulaval.glo4002.flycheckin.boarding.client.CheckinHttpClient;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.Luggage;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.NotAllowableLuggageException;
+import ca.ulaval.glo4002.flycheckin.boarding.domain.luggage.UndefinedTypeLuggageException;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
 
 public abstract class Passenger {
@@ -16,8 +17,8 @@ public abstract class Passenger {
   private static final int VIP_CHECKED_LUGGAGE_LIMIT = 4;
   private static final int CARRY_ON_LUGGAGE_LIMIT = 1;
   private static final double VIP_DISCOUNT = 0.95;
-  protected static final String CHECKED_LUGGAGE_TYPE = "checked";
-  protected static final String CARRY_ON_LUGGAGE_TYPE = "carry-on";
+  protected static final String CHECKED_CATEGORY = "checked";
+  protected static final String CARRY_ON_CATEGORY = "standard";
   private static final String TOO_MUCH_LUGGAGE = "too much luggage !";
 
   private String flightNumber;
@@ -28,7 +29,8 @@ public abstract class Passenger {
   private boolean isChild;
   private List<Luggage> luggages;
 
-  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip, boolean isChild) {
+  public Passenger(String flightNumber, Date flightDate, String passengerHash, String seatClass, boolean isVip,
+      boolean isChild) {
     this.flightNumber = flightNumber;
     this.flightDate = flightDate;
     this.passengerHash = passengerHash;
@@ -39,7 +41,7 @@ public abstract class Passenger {
   }
 
   public void addLuggage(Luggage luggage) throws NotAllowableLuggageException {
-    verifyLuggageAllowableByNumber(luggage);
+    verifyLuggageCanBeAdd(luggage);
     verifyLuggageHasStandardDimension(luggage);
     calculateLuggagePrice(luggage);
     luggages.add(luggage);
@@ -49,29 +51,35 @@ public abstract class Passenger {
 
   protected abstract void calculateLuggagePrice(Luggage luggage);
 
-  private void verifyLuggageAllowableByNumber(Luggage luggage) throws NotAllowableLuggageException {
-    if (luggage.isType(CARRY_ON_LUGGAGE_TYPE))
-      verifyAnotherCarryOnLuggageAllowable();
-    else
-      verifyAnotherCheckedLuggageAllowable();
+  private void verifyLuggageCanBeAdd(Luggage luggage) throws NotAllowableLuggageException {
+    switch (luggage.getCategory()) {
+      case CHECKED_CATEGORY:
+        verifyCheckedLuggageCanBeAdd(luggage);
+        break;
+      case CARRY_ON_CATEGORY:
+        verifyCarryOnLuggageCanBeAdd(luggage);
+        break;
+      default:
+        throw new UndefinedTypeLuggageException();
+    }
   }
 
-  private void verifyAnotherCarryOnLuggageAllowable() {
-    if (countTypeLuggageAssigned(CARRY_ON_LUGGAGE_TYPE) == CARRY_ON_LUGGAGE_LIMIT)
+  private void verifyCheckedLuggageCanBeAdd(Luggage luggage) {
+    if (isVip && countStoredLuggageOfThisCategory(luggage) >= VIP_CHECKED_LUGGAGE_LIMIT)
+      throw new NotAllowableLuggageException(TOO_MUCH_LUGGAGE);
+    if (!isVip && countStoredLuggageOfThisCategory(luggage) >= CHECKED_LUGGAGE_LIMIT)
       throw new NotAllowableLuggageException(TOO_MUCH_LUGGAGE);
   }
 
-  private void verifyAnotherCheckedLuggageAllowable() {
-    if (!isVip && countTypeLuggageAssigned(CHECKED_LUGGAGE_TYPE) == CHECKED_LUGGAGE_LIMIT)
-      throw new NotAllowableLuggageException(TOO_MUCH_LUGGAGE);
-    else if (isVip && countTypeLuggageAssigned(CHECKED_LUGGAGE_TYPE) == VIP_CHECKED_LUGGAGE_LIMIT)
+  private void verifyCarryOnLuggageCanBeAdd(Luggage luggage) {
+    if (countStoredLuggageOfThisCategory(luggage) >= CARRY_ON_LUGGAGE_LIMIT)
       throw new NotAllowableLuggageException(TOO_MUCH_LUGGAGE);
   }
 
-  protected int countTypeLuggageAssigned(String type) {
+  protected int countStoredLuggageOfThisCategory(Luggage luggage) {
     int typeLuggageNumber = 0;
-    for (int i = 0; i < luggages.size(); i++) {
-      if (luggages.get(i).isType(type))
+    for (Luggage storedLuggage : luggages) {
+      if (luggage.hasSameCategory(storedLuggage))
         typeLuggageNumber++;
     }
     return typeLuggageNumber;
@@ -79,8 +87,8 @@ public abstract class Passenger {
 
   protected int countFreeLuggage() {
     int freeLuggage = 0;
-    for (int i = 0; i < luggages.size(); i++) {
-      if (luggages.get(i).isFree())
+    for (Luggage storedLuggage : luggages) {
+      if (storedLuggage.isFree())
         freeLuggage++;
     }
     return freeLuggage;
@@ -92,6 +100,7 @@ public abstract class Passenger {
       totalPrice += luggage.getPrice();
     if (isVip)
       return appliedVipDiscount(totalPrice);
+
     return totalPrice;
   }
 

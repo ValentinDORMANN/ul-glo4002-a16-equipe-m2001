@@ -8,9 +8,11 @@
 	<name>FlyCheckin</name>
 	<description>système d'enregistrement en vue de simplifier le service aux passagers avant l'embarquement</description>
 	<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
     <checkstyle.version>2.17</checkstyle.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<rest-assured.version>3.0.1</rest-assured.version>
+    <surefire.version>2.18.1</surefire.version>
 	</properties>
 	<build>
     <pluginManagement>
@@ -40,6 +42,21 @@
 				<artifactId>jersey-media-json-jackson</artifactId>
 				<version>2.23.2</version>
 			</dependency>
+			
+				    <!-- Pour Hibernate JPA2 (voir doc. de Hibernate) -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.2.3.Final</version>
+    </dependency>
+			
+			  <!-- Pour H2 -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.192</version>
+    </dependency>
+			
 			<dependency>
     		<groupId>org.mockito</groupId>
     		<artifactId>mockito-all</artifactId>
@@ -50,11 +67,18 @@
 			  <artifactId>checkstyle</artifactId>
 			  <version>6.5</version>
 			</dependency>
+      <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>rest-assured</artifactId>
+        <version>${rest-assured.version}</version>
+        <scope>test</scope>
+      </dependency>
 		</dependencies>
 	</dependencyManagement>
   	<modules>
     	<module>reservation</module>
     	<module>app</module>
     	<module>boarding</module>
-  	</modules>
+      <module>flycheckin-uat</module>
+   </modules>
 </project>

@@ -17,8 +17,8 @@ import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignationRepository;
 import ca.ulaval.glo4002.flycheckin.boarding.exception.BoardingModuleException;
-import ca.ulaval.glo4002.flycheckin.boarding.exception.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.boarding.persistence.SeatAssignationPersistence;
+import ca.ulaval.glo4002.flycheckin.boarding.persistence.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.boarding.persistence.SeatAssignationHibernate;
 import ca.ulaval.glo4002.flycheckin.boarding.rest.dto.SeatAssignationDto;
 import ca.ulaval.glo4002.flycheckin.boarding.services.passenger.PassengerService;
 import ca.ulaval.glo4002.flycheckin.boarding.services.seat.SeatAssignationService;
@@ -29,12 +29,13 @@ public class ResourceSeatAssignation {
   private static final String PATH_SEAT_ASSIGNATIONS = "/seat-assignations";
   private static final String SEAT_ASSIGNATIONS = "seat-assignations/";
   private static final String EMPTY_STRING = "";
+
   private SeatAssignationService seatAssignationService;
   private PassengerService passengerService;
 
   public ResourceSeatAssignation() {
     SeatAssignation seatAssignation = new SeatAssignation();
-    SeatAssignationRepository seatAssignationRepository = new SeatAssignationPersistence();
+    SeatAssignationRepository seatAssignationRepository = new SeatAssignationHibernate();
     this.seatAssignationService = new SeatAssignationService(seatAssignation, seatAssignationRepository);
     this.passengerService = new PassengerService();
   }
@@ -43,10 +44,12 @@ public class ResourceSeatAssignation {
   @Path(PATH_SEAT_ASSIGNATIONS)
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response assignSeatToPassenger(@Context UriInfo uriInfo, SeatAssignationDto seatAssignationDto) throws URISyntaxException {
+  public Response assignSeatToPassenger(@Context UriInfo uriInfo, SeatAssignationDto seatAssignationDto)
+      throws URISyntaxException {
     try {
       Passenger passenger = passengerService.getPassengerByHash(seatAssignationDto.passenger_hash);
-      SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(passenger, seatAssignationDto.mode);
+      SeatAssignation seatAssignation = seatAssignationService.assignSeatToPassenger(passenger,
+          seatAssignationDto.mode);
       seatAssignationDto = transformSeatAssignationDto(seatAssignationDto, seatAssignation.getSeatNumber());
       URI url = createUrlforLocation(uriInfo, seatAssignation);
       return Response.status(Status.CREATED).location(url).entity(seatAssignationDto).build();

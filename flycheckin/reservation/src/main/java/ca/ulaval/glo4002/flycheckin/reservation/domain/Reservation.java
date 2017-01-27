@@ -4,15 +4,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import ca.ulaval.glo4002.flycheckin.reservation.exception.IllegalArgumentReservationException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundPassengerException;
-import ca.ulaval.glo4002.flycheckin.reservation.exception.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.exception.NotTimeToCheckinException;
-import ca.ulaval.glo4002.flycheckin.reservation.persistence.ReservationInMemory;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.HibernateReservation;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundPassengerException;
+import ca.ulaval.glo4002.flycheckin.reservation.persistence.NotFoundReservationException;
 import ca.ulaval.glo4002.flycheckin.reservation.rest.dto.ReservationDto;
 
+@Entity
 public class Reservation {
 
   private static final String MSG_INVALID_PASSENGER = "Error : passenger not found !";
@@ -21,46 +35,63 @@ public class Reservation {
   private static final int CONVERT_HOUR_TO_MILLISECOND = 3600000;
   private static final int SELF_CHECKIN_START_TIME = 48 * CONVERT_HOUR_TO_MILLISECOND;
   private static final int SELF_CHECKIN_END_TIME = 6 * CONVERT_HOUR_TO_MILLISECOND;
-  private static ReservationInMemory reservationInMemory = new ReservationInMemory();
+
+  @Id
+  @Column(name = "reservationNumber", unique = true, nullable = false)
   private int reservationNumber;
+  @Column(name = "flightNumber")
   private String flightNumber;
+  @Column(name = "reservationDate")
+  @Temporal(TemporalType.TIMESTAMP)
   private Date flightDate;
+  @OneToMany
+  @JoinColumn(name = "reservationNumber")
+  @Cascade(value = { CascadeType.ALL })
+  @ElementCollection(targetClass = Passenger.class)
   private List<Passenger> passengers;
+  
+  @Transient
+  private HibernateReservation hibernateReservation;
 
   public Reservation() {
+    this.hibernateReservation = new HibernateReservation();
   }
 
-  public Reservation(ReservationInMemory reservationInMemory, ReservationDto reservationDto,
+  public Reservation(HibernateReservation hibernateReservation, ReservationDto reservationDto,
       List<Passenger> passengers) {
     this.reservationNumber = reservationDto.reservation_number;
     this.flightNumber = reservationDto.flight_number;
     this.flightDate = reservationDto.flight_date;
     this.passengers = passengers;
-    Reservation.reservationInMemory = reservationInMemory;
+    this.hibernateReservation = hibernateReservation;
   }
 
   public Reservation(ReservationDto reservationDto) throws IllegalArgumentReservationException {
+    this.hibernateReservation = new HibernateReservation();
     this.passengers = new ArrayList<Passenger>();
     this.reservationNumber = reservationDto.reservation_number;
     this.flightNumber = reservationDto.flight_number;
     this.flightDate = reservationDto.flight_date;
+    
     for (int i = 0; i < reservationDto.passengers.size(); i++) {
       Passenger passenger = new Passenger(reservationDto.passengers.get(i));
+      passenger.setReservation(this);
       this.passengers.add(passenger);
     }
+    
     storeReservation();
   }
 
   private void storeReservation() throws IllegalArgumentReservationException {
-    reservationInMemory.saveNewReservation(this);
+    hibernateReservation.persisteReservation(this);
   }
 
   public Reservation readReservationByNumber(int reservationNumber) throws NotFoundReservationException {
-    return reservationInMemory.getReservationByNumber(reservationNumber);
+    return hibernateReservation.findReservationByNumber(reservationNumber);
   }
 
   public Reservation searchReservationByPassengerHash(String passenger_hash) throws NotFoundPassengerException {
-    return reservationInMemory.getReservationByPassengerHash(passenger_hash);
+    return hibernateReservation.findReservationByPassengerHash(passenger_hash);
   }
 
   public boolean isThisHashInReservation(String passengerHash) {
@@ -81,6 +112,7 @@ public class Reservation {
       if (passenger.hasThisHash(passengerHash))
         return passenger;
     }
+    
     throw new NotFoundPassengerException(MSG_INVALID_PASSENGER);
   }
 
@@ -92,8 +124,8 @@ public class Reservation {
   private void validateSelfCheckinPeriod() {
     long todayInMillisecond = new Date().getTime();
     long flightDateInMillisecond = this.getFlightDate().getTime();
-    if (!((flightDateInMillisecond - SELF_CHECKIN_START_TIME <= todayInMillisecond)
-        && (todayInMillisecond <= flightDateInMillisecond - SELF_CHECKIN_END_TIME)))
+    if ((flightDateInMillisecond - SELF_CHECKIN_START_TIME > todayInMillisecond)
+        || (todayInMillisecond > flightDateInMillisecond - SELF_CHECKIN_END_TIME))
       throw new NotTimeToCheckinException(MSG_INVALID_CHECKIN_DATE);
   }
 

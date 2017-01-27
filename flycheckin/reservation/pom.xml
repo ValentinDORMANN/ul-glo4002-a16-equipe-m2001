@@ -44,5 +44,29 @@
       		<artifactId>httpclient</artifactId>
       		<version>4.5.2</version>
     	</dependency>
+    	
+    				
+				    <!-- Pour Hibernate JPA2 (voir doc. de Hibernate) -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.2.3.Final</version>
+    </dependency>
+			
+			  <!-- Pour H2 -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.192</version>
+    </dependency>
+			
+      <!-- Pour test de bordure -->
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>3.0.1</version>
+      <scope>test</scope>
+    </dependency>
+    
     </dependencies>
 </project>

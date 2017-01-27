@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.ulaval.glo4002.flycheckin.boarding.client.AmsMapClient;
+import ca.ulaval.glo4002.flycheckin.boarding.client.AmsMapEncoded;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.passenger.Passenger;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.Seat;
 import ca.ulaval.glo4002.flycheckin.boarding.domain.seat.SeatAssignation;
@@ -19,6 +19,7 @@ public class SeatAssignationService {
 
   private static int assignationNumberProvider = 1;
   private static Map<String, List<Seat>> availableSeatMap = new HashMap<String, List<Seat>>();
+
   private SeatAssignation seatAssignation;
   private SeatAssignationRepository seatAssignationRepository;
   private SeatAssignationStrategyFactory seatAssignationStrategyFactory;
@@ -37,10 +38,12 @@ public class SeatAssignationService {
   }
 
   public SeatAssignation assignSeatToPassenger(Passenger passenger, String mode) throws BoardingModuleException {
-    SeatAssignationStrategy seatAssignationStrategy =  seatAssignationStrategyFactory.createSeatAssignationStrategy(mode);
+    SeatAssignationStrategy seatAssignationStrategy = seatAssignationStrategyFactory
+        .createSeatAssignationStrategy(mode);
     List<Seat> availableSeats = getAvalaibleSeatsForFlight(passenger.getFlightNumber(), passenger.getFlightDate());
 
-    String seatNumber = seatAssignationStrategy.assignSeatNumber(availableSeats, passenger.getSeatClass(), passenger.isChild());
+    String seatNumber = seatAssignationStrategy.assignSeatNumber(availableSeats, passenger.getSeatClass(),
+        passenger.isChild());
     seatAssignation.createAssignation(seatNumber, passenger.getPassengerHash(), assignationNumberProvider);
     seatAssignationRepository.persistSeatAssignation(seatAssignation);
     makeSeatNumberUnavailable(passenger.getFlightNumber(), passenger.getFlightDate(), seatNumber);
@@ -53,7 +56,7 @@ public class SeatAssignationService {
     String flightInfos = flightNumber + flightDate.toString();
     if (!(availableSeatMap.containsKey(flightInfos))) {
       PlaneModelService planeModelService = new PlaneModelService();
-      AmsMapClient amsMapConnector = new AmsMapClient();
+      AmsMapEncoded amsMapConnector = new AmsMapEncoded();
       String planeModel = amsMapConnector.getPlaneModelByFlightNumber(flightNumber);
       availableSeatMap.put(flightInfos, planeModelService.getSeatsAccordingPlaneModel(planeModel));
     }
